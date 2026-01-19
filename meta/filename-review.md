@@ -87,8 +87,9 @@ workflows/
 ├── debug/
 │   └── bug-fix-workflow.md (renamed from debug.md)
 ├── documentation/
-│   ├── sync-documentation.md
-│   └── sync-summary-template.md (renamed)
+│   └── sync-documentation.md
+├── meta/
+│   └── sync-summary-template.md (template moved here)
 └── reference/
     └── severity-priority-rubric.md
 ```
@@ -118,7 +119,7 @@ workflows/
 
 #### 3. `documentation-sync-summary.md` → `sync-summary-template.md`
 **Current:** `documentation/documentation-sync-summary.md`
-**Proposed:** `documentation/sync-summary-template.md`
+**Proposed:** `meta/sync-summary-template.md` (moved to meta/ as it's a template, not a workflow)
 **Reason:**
 - "documentation-sync-summary" is redundant (it's already in the documentation folder)
 - Adding "template" clarifies it's a template, not an instruction
@@ -161,7 +162,8 @@ workflows/
 ├── debug/
 │   └── bug-fix-workflow.md
 ├── documentation/
-│   ├── sync-documentation.md
+│   └── sync-documentation.md
+├── meta/
 │   └── sync-summary-template.md
 └── reference/
     └── severity-priority-rubric.md

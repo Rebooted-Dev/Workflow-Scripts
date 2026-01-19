@@ -26,9 +26,8 @@ The workflows are organized into seven categories:
 4. **Debug** (`debug/`) - Systematically identify and fix bugs
 5. **Security** (`security/`) - Security reviews and vulnerability remediation
 6. **Documentation** (`documentation/`) - Keep documentation in sync with code
-7. **Reference** (`reference/`) - Shared standards and rubrics
 
-**Note:** The `meta/` directory contains analysis and review documents about the workflows themselves (e.g., parallel agent usage reviews, filename reviews). These are not workflow instructions but rather documentation about workflow design and improvements.
+**Note:** The `meta/` directory contains templates, rubrics, and analysis/review documents about the workflows themselves (e.g., sync summary template, severity-priority rubric, parallel agent usage reviews, filename reviews). These are not workflow instructions but rather supporting documents for workflow design and execution.
 
 ## Quick Start Guide
 
@@ -93,7 +92,7 @@ Workflow will:
 - Dependency mapping
 - Effort estimation (Small/Medium/Large)
 - Clear exit criteria per phase
-- Uses shared rubric from `reference/severity-priority-rubric.md`
+- Uses shared rubric from `meta/severity-priority-rubric.md`
 
 ---
 
@@ -425,7 +424,7 @@ Workflow will:
 
 ### 7. Reference Materials
 
-#### Severity & Priority Rubric (`reference/severity-priority-rubric.md`)
+#### Severity & Priority Rubric (`meta/severity-priority-rubric.md`)
 
 **Purpose:** Shared standard for scoring issues across all workflows.
 
@@ -605,6 +604,8 @@ workflows/
 ├── update-workflows.sh (helper script for updating workflows)
 ├── pull-workflows.sh (helper script for pulling workflow updates)
 ├── meta/
+│   ├── severity-priority-rubric.md (shared rubric)
+│   ├── sync-summary-template.md (template)
 │   ├── parallel-agents-review.md (analysis document)
 │   └── filename-review.md (analysis document)
 ├── planning/
@@ -619,14 +620,11 @@ workflows/
 │   └── bug-fix-workflow.md
 ├── security/
 │   └── security-fix.md
-├── documentation/
-│   ├── sync-documentation.md
-│   └── sync-summary-template.md
-└── reference/
-    └── severity-priority-rubric.md
+└── documentation/
+    └── sync-documentation.md
 ```
 
-**Note:** Files in `meta/` are analysis/review documents about the workflows, not workflow instructions themselves. Workflow instruction files do not reference these meta documents.
+**Note:** Files in `meta/` are templates, rubrics, and analysis/review documents about the workflows, not workflow instructions themselves. Workflow instruction files may reference templates and rubrics from `meta/` (e.g., `severity-priority-rubric.md`).
 
 ---
 
@@ -642,7 +640,7 @@ If you're unsure which workflow to use:
 6. **Fixing security issues?** → Use Security Fix workflow
 7. **Docs out of date?** → Use Documentation workflow
 
-All workflows reference the shared rubric in `reference/severity-priority-rubric.md` for consistent priority and severity scoring.
+All workflows reference the shared rubric in `meta/severity-priority-rubric.md` for consistent priority and severity scoring.
 
 ---
 

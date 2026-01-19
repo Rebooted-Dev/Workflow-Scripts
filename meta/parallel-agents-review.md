@@ -161,12 +161,12 @@ For Each Phase (implementation loop)
 
 ## Workflows That Don't Need Parallel Agents
 
-### Documentation Sync Summary (`documentation/sync-summary-template.md`)
+### Documentation Sync Summary (`meta/sync-summary-template.md`)
 **Status:** ✅ Appropriate
 
 **Assessment:** This is a template/reporting format, not an execution workflow. The mention of parallel agents in reporting guidelines (line 21) is appropriate for documenting how they were used, not for instructing their use.
 
-### Severity & Priority Rubric (`reference/severity-priority-rubric.md`)
+### Severity & Priority Rubric (`meta/severity-priority-rubric.md`)
 **Status:** ✅ Not applicable
 
 **Assessment:** This is a reference document defining standards, not an execution workflow. No parallel agent usage needed.

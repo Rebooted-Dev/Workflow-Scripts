@@ -10,7 +10,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 ## Prioritization Rule
 - Organize the implementation plan by priority, descending urgency/importance: P0, P1, P2, P3.
 - If you use phases, phase numbering must follow priority order (Phase 1 = P0 work).
-- Use the shared rubric: `../reference/severity-priority-rubric.md`.
+- Use the shared rubric: `../meta/severity-priority-rubric.md`.
 
 ## Steps
 1. Read the plan and all feedback sections; extract goals, constraints, and unresolved issues.

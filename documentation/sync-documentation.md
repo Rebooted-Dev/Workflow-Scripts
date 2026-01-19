@@ -9,7 +9,7 @@ Review code and update `../../docs/` so documentation accurately matches the cod
 
 ## Prioritization Rule
 - Organize doc work by priority, descending urgency/importance: P0, P1, P2, P3.
-- Use the shared rubric: `../reference/severity-priority-rubric.md`.
+- Use the shared rubric: `../meta/severity-priority-rubric.md`.
 
 ## Suggested Priority Buckets (docs)
 - P0: incorrect docs that could cause wrong usage, broken setup, or unsafe behavior.

@@ -11,7 +11,7 @@ Systematically identify, fix, and verify security vulnerabilities using a securi
 ## Prioritization Rule
 - Address security issues in priority order: P0 → P1 → P2 → P3.
 - Critical security vulnerabilities (P0/S0) must be fixed immediately.
-- Use the shared rubric: `../reference/severity-priority-rubric.md`.
+- Use the shared rubric: `../meta/severity-priority-rubric.md`.
 
 ## Steps
 
