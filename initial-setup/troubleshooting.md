@@ -166,3 +166,42 @@ To reuse this system in another repo:
 
 This keeps your debugging process teachable, repeatable, and easy to onboard others into.
 
+---
+
+## 8. For AI Agents / Coding Assistants
+
+### Understanding "Update the Logs" or "Update the Log Files"
+
+When a user instructs you to **"update the logs"** or **"update the log files"**, this refers to the **troubleshooting system** (`troubleshooting/` directory), NOT application logging files (`.log` files).
+
+**What to do:**
+1. **Create a troubleshooting entry** in the appropriate category folder
+2. **Update `troubleshooting/index.md`** to add the new entry at the top of the table
+3. **Optionally update `CHANGELOG.md`** if the issue was a bug fix that should be documented there
+
+### When to Create Troubleshooting Entries
+
+Create an entry when:
+- A bug is fixed or an issue is resolved
+- A non-trivial problem is encountered (took more than a few minutes to solve)
+- A workaround is implemented for an unresolved issue
+- A security issue is patched
+- An environment setup issue is discovered and resolved
+
+### Quick Reference for Agents
+
+**File Location**: `troubleshooting/<category>/<yyyy-mm-dd>-<category>-<short-title>.md`
+
+**Required Sections**:
+- Date (YYYY-MM-DD)
+- Category (build|runtime|data|environment|security)
+- Status (RESOLVED|OPEN|WORKAROUND)
+- Symptom
+- Root Cause
+- Fix
+- Verification
+- Notes / Lessons
+
+**Index Update**: Always add a new row at the **top** of the table in `troubleshooting/index.md` with: Date, Category, Title, File path, Status.
+
+**See Also**: `AGENTS.md` section "Changelog & Troubleshooting Updates" for full guidelines.
