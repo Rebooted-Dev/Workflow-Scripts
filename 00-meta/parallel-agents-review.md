@@ -1,8 +1,14 @@
 # Parallel Agents Usage Review
 
+**Status:** Historical (archived)  
+**Created:** 2026-01  
+**Last Updated:** 2026-01-21  
+
 ## Summary
 
 This document reviews all workflow instruction files to identify opportunities for improved parallel agent usage. Parallel agents can significantly accelerate workflows by allowing concurrent investigation, scanning, and validation tasks.
+
+> **Note:** Many of the recommendations in this document have been implemented. This serves as a historical record of the analysis that informed parallel agent patterns across workflows.
 
 ---
 

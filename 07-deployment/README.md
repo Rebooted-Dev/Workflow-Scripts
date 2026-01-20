@@ -1,0 +1,273 @@
+# Deployment Workflows
+
+This directory contains comprehensive guides for deploying applications across various platforms and scenarios. Each guide provides step-by-step instructions, troubleshooting, and best practices.
+
+## Quick Decision Tree
+
+**Which deployment guide do I need?**
+
+```
+Is your app a desktop application?
+├─ Yes → [Electron Desktop App Guide](./01-MACOS_ELECTRON_GUIDE.md)
+└─ No → Continue...
+
+Are you deploying to a cloud platform?
+├─ Firebase Hosting → [Firebase Setup Guide](./10-firebase-setup.md)
+├─ Nginx (local/server) → [Nginx Deployment Guide](./11-nginx.md)
+└─ Other → Continue...
+
+Are you migrating from AI Studio?
+└─ Yes → [AI Studio to Desktop Migration](./02-ai-studio-to-desktop.md)
+
+Do you need to manage development server ports?
+└─ Yes → [Port Management Guide](./08-port-relocation/port-management-guide.md)
+
+Do you need to apply security patches?
+└─ Yes → [Security Patches Guide](./09-react-bug.md)
+```
+
+## Deployment Guides
+
+### Desktop Applications
+
+#### [macOS Electron Desktop App Guide](./01-MACOS_ELECTRON_GUIDE.md)
+**When to use:** Building and distributing macOS desktop applications using Electron with Next.js.
+
+**Covers:**
+- Building and packaging Electron apps
+- Code signing and notarization
+- OAuth/authentication in Electron
+- Window management and custom protocols
+- Troubleshooting common Electron issues
+
+**Quick start:**
+```bash
+./scripts/mac-build.sh --dir
+```
+
+---
+
+### Cloud Hosting
+
+#### [Firebase Hosting Setup](./10-firebase-setup.md)
+**When to use:** Deploying static sites or SPAs to Firebase Hosting.
+
+**Covers:**
+- Initial Firebase setup and authentication
+- Build configuration for static sites
+- Local emulator testing
+- Deployment workflow
+- Troubleshooting deployment issues
+
+**Quick start:**
+```bash
+firebase login
+firebase use <project-id>
+npm run build
+firebase deploy --only hosting
+```
+
+#### [Nginx Deployment Guide](./11-nginx.md)
+**When to use:** Deploying applications using nginx on macOS, Linux, or servers.
+
+**Covers:**
+- Installing and configuring nginx
+- Serving static sites
+- Reverse proxy for Node.js apps
+- SSL/HTTPS setup
+- Local network and remote access
+- Security best practices
+
+**Quick start:**
+```bash
+brew install nginx
+# Configure nginx.conf
+nginx
+```
+
+---
+
+### Migration & Setup
+
+#### [AI Studio to Desktop Migration](./02-ai-studio-to-desktop.md)
+**When to use:** Migrating projects from Google AI Studio (Colab) to local desktop development.
+
+**Covers:**
+- Automated project extraction from notebooks
+- Dependency resolution and environment setup
+- Configuration migration
+- Validation and testing
+- Comprehensive migration framework
+
+**Note:** This is a comprehensive reference guide (2100+ lines) covering the complete migration framework.
+
+---
+
+### Development Tools
+
+#### [Port Management Guide](./08-port-relocation/port-management-guide.md)
+**When to use:** Resolving port conflicts, managing multiple dev servers, or configuring browser auto-open.
+
+**Covers:**
+- Simple port conflict resolution (Vite config)
+- Advanced process management
+- Browser auto-open configuration
+- Cross-platform compatibility
+- Troubleshooting port issues
+
+**Quick start:**
+```typescript
+// vite.config.ts
+server: {
+  strictPort: false,  // Auto-find available ports
+  open: true,         // Auto-open browser
+}
+```
+
+#### [Browser Auto-Open Guide](./08-port-relocation/browser-auto-open.md)
+**When to use:** Setting up automatic browser opening for development servers.
+
+**Covers:**
+- Vite, Webpack, Next.js configuration
+- Custom browser selection
+- Multiple browser support
+- Cross-platform setup
+
+---
+
+### Security
+
+#### [Security Patches Guide](./09-react-bug.md)
+**When to use:** Applying critical security patches for React/Next.js vulnerabilities.
+
+**Covers:**
+- React RCE vulnerability (CVE-2025-55182)
+- Version checking and patching
+- Verification steps
+- Troubleshooting patch failures
+
+**Quick start:**
+```bash
+npm i react@latest react-dom@latest next@latest
+```
+
+---
+
+## Common Deployment Scenarios
+
+### Scenario 1: Static Site to Firebase
+
+1. Build your site: `npm run build`
+2. Follow [Firebase Hosting Setup](./10-firebase-setup.md)
+3. Deploy: `firebase deploy --only hosting`
+
+### Scenario 2: Local Development with Port Conflicts
+
+1. Follow [Port Management Guide](./08-port-relocation/port-management-guide.md)
+2. Add `strictPort: false` to Vite config
+3. Run: `npm run dev`
+
+### Scenario 3: Desktop App Distribution
+
+1. Follow [Electron Desktop App Guide](./01-MACOS_ELECTRON_GUIDE.md)
+2. Build: `./scripts/mac-build.sh`
+3. Code sign and notarize (optional)
+
+### Scenario 4: Local Server Demo
+
+1. Follow [Nginx Deployment Guide](./11-nginx.md)
+2. Configure nginx for your app type
+3. Use ngrok for remote access (optional)
+
+---
+
+## File Structure
+
+```
+07-deployment/
+├── README.md                          # This file - deployment index
+├── DEPLOYMENT_OPTIMIZATION_REPORT.md  # Optimization history and results
+├── 01-MACOS_ELECTRON_GUIDE.md        # Electron desktop app guide
+├── 02-ai-studio-to-desktop.md        # AI Studio migration (reference)
+├── 09-react-bug.md                   # Security patches guide
+├── 10-firebase-setup.md              # Firebase Hosting setup
+├── 11-nginx.md                       # Nginx deployment guide
+└── 08-port-relocation/
+    ├── README.md                     # Port management overview
+    ├── port-management-guide.md      # Unified port management
+    └── browser-auto-open.md          # Browser auto-open guide
+```
+
+---
+
+## Best Practices
+
+### Before Deployment
+
+1. **Test locally** - Ensure your app works in development
+2. **Build successfully** - Run `npm run build` without errors
+3. **Check dependencies** - Verify all required packages are installed
+4. **Environment variables** - Configure production environment variables
+5. **Security patches** - Apply latest security updates
+
+### During Deployment
+
+1. **Follow the guide** - Use the appropriate deployment guide
+2. **Check logs** - Monitor deployment logs for errors
+3. **Verify configuration** - Double-check configuration files
+4. **Test incrementally** - Test each step before proceeding
+
+### After Deployment
+
+1. **Verify functionality** - Test all features on deployed site
+2. **Check performance** - Monitor load times and resource usage
+3. **Monitor errors** - Set up error tracking and monitoring
+4. **Update documentation** - Document any deployment-specific notes
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**Port conflicts:**
+- See [Port Management Guide](./08-port-relocation/port-management-guide.md)
+
+**Build failures:**
+- Check Node.js version compatibility
+- Clear build cache: `rm -rf node_modules/.cache`
+- Reinstall dependencies: `rm -rf node_modules && npm install`
+
+**Deployment errors:**
+- Check platform-specific guides for troubleshooting sections
+- Verify configuration files
+- Review deployment logs
+
+**Security vulnerabilities:**
+- See [Security Patches Guide](./09-react-bug.md)
+- Run `npm audit` regularly
+- Keep dependencies updated
+
+---
+
+## Related Documentation
+
+- [Workflow Scripts README](../README.md) - Complete workflow documentation
+- [Planning Workflows](../01-planning/) - Implementation planning
+- [Security Workflows](../06-security/) - Security reviews and fixes
+
+---
+
+## Contributing
+
+When adding new deployment guides:
+
+1. Follow the structure of existing guides
+2. Include quick start section
+3. Add troubleshooting section
+4. Update this README with new guide
+5. Test all steps before documenting
+
+---
+
+*Last updated: 2026-01-18*

@@ -1,4 +1,26 @@
-Preparation
+# Workflow: Execution
+
+## Purpose
+
+Execute implementation in phases with verification and documentation updates.
+
+## Inputs
+
+- Goal and acceptance criteria (user-facing behavior, performance targets, "done" definition)
+- Repository root
+- Implementation plan (optional, but recommended)
+
+## Output
+
+- Implemented code changes
+- Updated changelog (`docs/CHANGELOG.md` or `CHANGELOG.md`)
+- Troubleshooting entries (if bugs were fixed)
+- Task list with completion status
+
+---
+
+## Preparation
+
 - Confirm goal + acceptance criteria (user-facing behavior, performance targets, "done" definition).
 - Check repo state (avoid clobbering unrelated work): `git status`.
 - Break work into phases; for each phase define scope, out-of-scope, and exit criteria.
@@ -8,7 +30,7 @@ Preparation
   - Agent 3: Check for breaking changes or unintended impacts
   - Agent 4: Validate against acceptance criteria and test cases
 
-For Each Phase (implementation loop)
+## For Each Phase (Implementation Loop)
 - Phase definition (before coding)
   - Scope: what changes in this phase; what is out-of-scope.
   - Expected touch points: key files/areas likely to change.
@@ -29,9 +51,9 @@ For Each Phase (implementation loop)
   - If relevant, run: `npm run dev` and perform a quick smoke test of the affected flow.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
-  - Update task list with checkboxes using emoji format:
-    - Completed items: `✅ Task description`
-    - Pending items: `⏳ Task description`
+  - Update task list using Markdown checkbox format:
+    - Completed items: `- [x] Task description`
+    - Pending items: `- [ ] Task description`
   - Update the changelog with a dated entry: `- YYYY-MM-DD: ...`.
     - Preferred location: `docs/CHANGELOG.md`
     - Fallback location: `CHANGELOG.md`
@@ -41,6 +63,8 @@ For Each Phase (implementation loop)
     - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
   - Provide a concise summary (1-3 bullets) describing what changed and why.
 
-Finalization (after all phases)
+## Finalization (After All Phases)
+
 - Run a final `npm run build` to confirm the repo is shippable.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
+- Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.

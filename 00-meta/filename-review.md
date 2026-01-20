@@ -1,6 +1,10 @@
 # Filename Review and Recommendations
 
-Status: historical note. This document reflects an earlier snapshot of the workflows tree and may contain stale filenames/paths. Use it for naming principles, not as an authoritative map of the current directory structure.
+**Status:** Historical (archived)  
+**Created:** 2026-01  
+**Last Updated:** 2026-01-21  
+
+> **Note:** This document reflects an earlier snapshot of the workflows tree and may contain stale filenames/paths. Use it for naming principles and past decisions, not as an authoritative map of the current directory structure. The recommended directory structure changes documented here have been implemented.
 
 ## Current Structure
 

@@ -6,6 +6,38 @@ This workflow sets up a new project (or migrates an existing project) with:
 
 ---
 
+## Quick Start (Minimal Setup)
+
+For users who want a fast setup, here are the essential steps:
+
+```bash
+# 1. Navigate to your project
+cd <PROJECT_PATH>
+
+# 2. Clone workflows (if not already done)
+git clone https://github.com/Rebooted-Dev/Workflow-Scripts <WORKFLOWS_DIR>
+
+# 3. Add workflows to .gitignore
+echo "<WORKFLOWS_DIR>/" >> .gitignore
+
+# 4. Create troubleshooting structure
+mkdir -p troubleshooting/{build,runtime,data,environment,security}
+
+# 5. Create minimal index
+echo "# Troubleshooting Index" > troubleshooting/index.md
+echo "" >> troubleshooting/index.md
+echo "| Date | Category | Title | File | Status |" >> troubleshooting/index.md
+echo "|------|----------|-------|------|--------|" >> troubleshooting/index.md
+
+# 6. Verify setup
+git status | grep <WORKFLOWS_DIR> || echo "✓ Workflows ignored"
+ls troubleshooting/ && echo "✓ Troubleshooting structure created"
+```
+
+For a comprehensive setup with AGENTS.md configuration and backups, continue with the detailed steps below.
+
+---
+
 ## Purpose
 
 This setup ensures:
@@ -21,9 +53,56 @@ This setup ensures:
 - Git repository initialized
 - Access to both repositories:
   - Main project repository (your project)
-  - Workflow-Scripts repository (cloned into `workflows/` directory)
+  - Workflow-Scripts repository (cloned into `<WORKFLOWS_DIR>/` directory)
 
-**Note**: When executing this workflow, replace placeholder values (like `<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`) with your actual project details.
+**Note**: When executing this workflow, replace placeholder values with your actual project details:
+- `<PROJECT_NAME>` - Your project name (e.g., "My-App")
+- `<PROJECT_PATH>` - Full path to your project (e.g., "/Users/name/projects/my-app")
+- `<GIT_REMOTE>` - Your project's git remote URL
+- `<WORKFLOWS_DIR>` - Directory name for workflows (commonly `workflows/` or `Workflow-Scripts/`)
+- `<WORKFLOWS_REMOTE>` - Git remote for Workflow-Scripts (default: `https://github.com/Rebooted-Dev/Workflow-Scripts`, or your fork)
+
+---
+
+## Step 0: Verify Prerequisites
+
+Before proceeding, verify the environment is ready:
+
+```bash
+# Navigate to project root
+cd <PROJECT_PATH>
+
+# Verify git is initialized
+if [ ! -d ".git" ]; then
+  echo "ERROR: Not a git repository. Run 'git init' first."
+  exit 1
+fi
+echo "✓ Git repository initialized"
+
+# Verify .gitignore exists (create if missing)
+if [ ! -f ".gitignore" ]; then
+  touch .gitignore
+  echo "✓ Created .gitignore"
+else
+  echo "✓ .gitignore exists"
+fi
+
+# Verify workflows directory exists
+if [ ! -d "<WORKFLOWS_DIR>" ]; then
+  echo "WARNING: Workflows directory not found at <WORKFLOWS_DIR>/"
+  echo "  Clone with: git clone <WORKFLOWS_REMOTE> <WORKFLOWS_DIR>"
+else
+  echo "✓ Workflows directory exists"
+  # Verify it's a git repo
+  if [ -d "<WORKFLOWS_DIR>/.git" ]; then
+    echo "✓ Workflows is a separate git repository"
+  else
+    echo "WARNING: Workflows directory is not a git repository"
+  fi
+fi
+```
+
+If any checks fail, resolve them before continuing.
 
 ---
 
@@ -79,16 +158,16 @@ git commit -m "feat: description of changes"
 git push
 ```
 
-### 2. Workflow-Scripts Repository (Nested in workflows/ directory)
-- **Location**: `<PROJECT_PATH>/workflows/`
+### 2. Workflow-Scripts Repository (Nested in <WORKFLOWS_DIR>/ directory)
+- **Location**: `<PROJECT_PATH>/<WORKFLOWS_DIR>/`
 - **Purpose**: Reusable workflow instructions for development tasks (planning, review, development, debug, documentation)
-- **Git Remote**: `https://github.com/Rebooted-Dev/Workflow-Scripts`
-- **Note**: The `workflows/` directory is a separate git repository and is ignored by the main project repo (see `.gitignore`)
+- **Git Remote**: `<WORKFLOWS_REMOTE>`
+- **Note**: The `<WORKFLOWS_DIR>/` directory is a separate git repository and is ignored by the main project repo (see `.gitignore`)
 
 **Standard Git Operations:**
 ```bash
 # Navigate to workflows directory (nested in project root)
-cd <PROJECT_PATH>/workflows
+cd <PROJECT_PATH>/<WORKFLOWS_DIR>
 
 # Check status
 git status
@@ -115,11 +194,11 @@ git push
 - Update project-specific documentation in `docs/` (if it exists)
 - Always update the changelog for any code change (features, fixes, refactors). Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md` - create if missing. Prefer entries in the format: `- YYYY-MM-DD: Description of change`.
 - Update `troubleshooting/` only for bugs/issues or non-trivial problems encountered during development.
-- The `workflows/` directory is **ignored** by git (in `.gitignore`), so it won't be included in commits
+- The `<WORKFLOWS_DIR>/` directory is **ignored** by git (in `.gitignore`), so it won't be included in commits
 - Standard operations: `git add .`, `git commit`, `git push` - workflows will NOT be included
 
 **When Working on Workflow-Scripts (Nested Repo):**
-- Navigate to the workflows directory: `cd workflows/`
+- Navigate to the workflows directory: `cd <WORKFLOWS_DIR>/`
 - Focus on workflow instructions and templates
 - Update workflow documentation in `README.md` and `SHARING_AND_SYNC.md`
 - These workflows are shared across multiple projects
@@ -127,14 +206,14 @@ git push
 - Standard operations: `git add .`, `git commit`, `git push` - only workflows will be pushed
 
 **Important Git Behavior:**
-- The `workflows/` directory is listed in `.gitignore`, so it's completely ignored by the main repo
-- When you run `git status`, `git add .`, or `git commit` from the project root, workflows/ will NOT be included
-- To push workflow changes, you MUST `cd workflows/` first, then run git commands there
+- The `<WORKFLOWS_DIR>/` directory is listed in `.gitignore`, so it's completely ignored by the main repo
+- When you run `git status`, `git add .`, or `git commit` from the project root, `<WORKFLOWS_DIR>/` will NOT be included
+- To push workflow changes, you MUST `cd <WORKFLOWS_DIR>/` first, then run git commands there
 - The workflows directory has its own `.git` folder and is a completely separate repository
 
 **Best Practices:**
 - Always commit main project changes from the root directory
-- Always commit Workflow-Scripts changes from the `workflows/` directory
+- Always commit Workflow-Scripts changes from the `<WORKFLOWS_DIR>/` directory
 - Use clear commit messages indicating which repository you're working in
 - Pull latest changes from both repos before starting work
 - Keep workflow improvements in the workflows directory, not in the main repo
@@ -142,11 +221,12 @@ git push
 
 ### 1.4 Verify .gitignore
 
-Ensure `.gitignore` includes `workflows/`:
+Ensure `.gitignore` includes your workflows directory:
 
 ```bash
-# Check if workflows/ is in .gitignore
-grep -q "^workflows/$" .gitignore || echo "workflows/" >> .gitignore
+# Replace <WORKFLOWS_DIR> with your actual directory name (e.g., "workflows" or "Workflow-Scripts")
+# Check if workflows directory is in .gitignore
+grep -q "^<WORKFLOWS_DIR>/$" .gitignore || echo "<WORKFLOWS_DIR>/" >> .gitignore
 ```
 
 ---
@@ -190,77 +270,50 @@ mkdir -p troubleshooting/{build,runtime,data,environment,security}
 
 ### 2.3 Backup Existing Troubleshooting Files
 
-**If root-level TROUBLESHOOTING.md exists:**
+Use the following reusable function to back up any existing troubleshooting files:
 
 ```bash
-# Create backup in troubleshooting directory
-if [ -f "TROUBLESHOOTING.md" ]; then
-  BACKUP_DATE=$(date +%Y-%m-%d)
-  BACKUP_FILE="troubleshooting/TROUBLESHOOTING-backup-root-${BACKUP_DATE}.md"
+# Reusable backup function
+backup_troubleshooting_file() {
+  local src="$1"
+  local label="$2"
+  local note="$3"
   
-  # Copy with header explaining it's a backup
-  {
-    echo "# Backup of Root-Level TROUBLESHOOTING.md"
-    echo ""
-    echo "**Backup Date:** ${BACKUP_DATE}"
-    echo "**Original Location:** \`TROUBLESHOOTING.md\` (root level)"
-    echo "**Note:** This file was backed up during initial setup. Original troubleshooting entries should be migrated to the new organized structure."
-    echo ""
-    echo "---"
-    echo ""
-    cat TROUBLESHOOTING.md
-  } > "${BACKUP_FILE}"
-  
-  echo "✓ Backed up TROUBLESHOOTING.md to ${BACKUP_FILE}"
-fi
-```
+  if [ -f "$src" ]; then
+    BACKUP_DATE=$(date +%Y-%m-%d)
+    BACKUP_FILE="troubleshooting/TROUBLESHOOTING-backup-${label}-${BACKUP_DATE}.md"
+    
+    {
+      echo "# Backup of ${src}"
+      echo ""
+      echo "**Backup Date:** ${BACKUP_DATE}"
+      echo "**Original Location:** \`${src}\`"
+      echo "**Note:** ${note}"
+      echo ""
+      echo "---"
+      echo ""
+      cat "$src"
+    } > "${BACKUP_FILE}"
+    
+    echo "✓ Backed up ${src} to ${BACKUP_FILE}"
+  fi
+}
 
-**If docs/TROUBLESHOOTING.md exists:**
+# Back up all potential troubleshooting files
+backup_troubleshooting_file \
+  "TROUBLESHOOTING.md" \
+  "root" \
+  "This file was backed up during initial setup. Original troubleshooting entries should be migrated to the new organized structure."
 
-```bash
-# Backup existing docs/TROUBLESHOOTING.md if it exists
-if [ -f "docs/TROUBLESHOOTING.md" ]; then
-  BACKUP_DATE=$(date +%Y-%m-%d)
-  BACKUP_FILE="troubleshooting/TROUBLESHOOTING-backup-docs-${BACKUP_DATE}.md"
-  
-  {
-    echo "# Backup of docs/TROUBLESHOOTING.md"
-    echo ""
-    echo "**Backup Date:** ${BACKUP_DATE}"
-    echo "**Original Location:** \`docs/TROUBLESHOOTING.md\`"
-    echo "**Note:** This file was backed up during setup. If this file serves as a user-facing troubleshooting guide, it should be maintained separately. Individual troubleshooting entries should go in the \`troubleshooting/\` directory structure."
-    echo ""
-    echo "---"
-    echo ""
-    cat docs/TROUBLESHOOTING.md
-  } > "${BACKUP_FILE}"
-  
-  echo "✓ Backed up docs/TROUBLESHOOTING.md to ${BACKUP_FILE}"
-fi
-```
+backup_troubleshooting_file \
+  "docs/TROUBLESHOOTING.md" \
+  "docs" \
+  "This file was backed up during setup. If this file serves as a user-facing troubleshooting guide, it should be maintained separately. Individual troubleshooting entries should go in the troubleshooting/ directory structure."
 
-**If troubleshooting/TROUBLESHOOTING.md exists:**
-
-```bash
-# Backup existing troubleshooting/TROUBLESHOOTING.md if it exists
-if [ -f "troubleshooting/TROUBLESHOOTING.md" ]; then
-  BACKUP_DATE=$(date +%Y-%m-%d)
-  BACKUP_FILE="troubleshooting/TROUBLESHOOTING-backup-${BACKUP_DATE}.md"
-  
-  {
-    echo "# Backup of troubleshooting/TROUBLESHOOTING.md"
-    echo ""
-    echo "**Backup Date:** ${BACKUP_DATE}"
-    echo "**Original Location:** \`troubleshooting/TROUBLESHOOTING.md\`"
-    echo "**Note:** This file was backed up during setup. Existing entries should remain in the troubleshooting directory structure."
-    echo ""
-    echo "---"
-    echo ""
-    cat troubleshooting/TROUBLESHOOTING.md
-  } > "${BACKUP_FILE}"
-  
-  echo "✓ Backed up troubleshooting/TROUBLESHOOTING.md to ${BACKUP_FILE}"
-fi
+backup_troubleshooting_file \
+  "troubleshooting/TROUBLESHOOTING.md" \
+  "troubleshooting" \
+  "This file was backed up during setup. Existing entries should remain in the troubleshooting directory structure."
 ```
 
 ### 2.4 Create Troubleshooting README.md
@@ -399,11 +452,11 @@ After setup, verify everything is correct:
 ```bash
 # From project root - workflows should be ignored
 cd <PROJECT_PATH>
-git status | grep workflows || echo "✓ workflows/ is properly ignored"
+git status | grep <WORKFLOWS_DIR> || echo "✓ <WORKFLOWS_DIR>/ is properly ignored"
 
 # From workflows directory - should be separate repo
-cd workflows
-git remote -v | grep Workflow-Scripts && echo "✓ workflows is separate repo"
+cd <WORKFLOWS_DIR>
+git remote -v && echo "✓ workflows is separate repo"
 ```
 
 ### 3.2 Verify Troubleshooting Structure
@@ -469,8 +522,28 @@ When executing this setup workflow:
 3. **Update incrementally** - Don't overwrite existing AGENTS.md, add to it
 4. **Verify after each step** - Check that changes were applied correctly
 5. **Document what was done** - Note any backups created or files modified
-6. **Replace placeholders** - Ensure all `<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>` placeholders are replaced with actual values
+6. **Replace placeholders** - Ensure all `<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>` placeholders are replaced with actual values
 7. **Check multiple file locations** - Look for changelog and troubleshooting files in both root and `docs/` directories
+
+### Bash Script Best Practices
+
+When executing bash commands from this workflow:
+
+```bash
+# Add error handling at the start of scripts
+set -e          # Exit immediately if a command fails
+set -u          # Treat unset variables as errors
+set -o pipefail # Catch errors in pipelines
+
+# Optional: Add error trap for debugging
+trap 'echo "Error on line $LINENO. Exit code: $?"' ERR
+```
+
+**Error handling tips:**
+- Always check if files/directories exist before operating on them
+- Use `|| true` after optional commands that may fail
+- Provide meaningful error messages with `echo "ERROR: description" >&2`
+- Exit with non-zero status on failures: `exit 1`
 
 **Key Safety Rules:**
 - Never delete existing troubleshooting entries

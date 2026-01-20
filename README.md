@@ -742,33 +742,47 @@ workflows/
 ├── update-workflows.sh (helper for maintainers to commit/push workflow changes)
 ├── pull-workflows.sh (helper script for pulling workflow updates)
 ├── 00-initial-setup/
-│   └── 01-setup-project.md
+│   ├── README.md (directory index)
+│   ├── 01-setup-project.md
+│   └── 02-optimize-workflow-scripts.md
 ├── 00-meta/
+│   ├── README.md (directory index - active vs historical files)
 │   ├── severity-priority-rubric.md (shared rubric)
 │   ├── sync-summary-template.md (template)
-│   ├── parallel-agents-review.md (analysis document)
-│   └── filename-review.md (analysis document)
+│   ├── parallel-agents-review.md (historical analysis)
+│   └── filename-review.md (historical analysis)
 ├── 01-planning/
 │   ├── 01-plan-review.md
 │   └── 02-finalise-plan.md
 ├── 02-build-code/
+│   ├── README.md (directory index)
 │   ├── 01-execution.md
 │   └── 02-confirm-execution.md
 ├── 03-debug/
+│   ├── README.md (directory index - note on file ordering)
 │   ├── 01-bug-description.md
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
+│   ├── README.md (directory index)
 │   └── sync-documentation.md
 ├── 05-review-audit/
+│   ├── README.md (directory index)
 │   ├── 01-code-review.md
 │   ├── 02-code-optimization.md
 │   └── 03-code-refactoring.md
-└── 06-security/
-    ├── 01-security-review.md
-    └── 02-security-fix.md
+├── 06-security/
+│   ├── README.md (directory index)
+│   ├── 01-security-review.md
+│   └── 02-security-fix.md
+├── 07-deployment/
+│   ├── README.md (deployment guide index with decision tree)
+│   └── ... (deployment guides)
+└── 08-API-Integration/
+    ├── README.md (API integration index)
+    └── ... (integration guides)
 ```
 
-**Note:** Files in `00-meta/` are templates, rubrics, and analysis/review documents about the workflows, not workflow instructions themselves. Workflow instruction files may reference templates and rubrics from `00-meta/` (e.g., `severity-priority-rubric.md`).
+**Note:** Each directory now has a README.md with navigation guidance. Files in `00-meta/` are templates, rubrics, and analysis/review documents about the workflows, not workflow instructions themselves.
 
 ---
 
