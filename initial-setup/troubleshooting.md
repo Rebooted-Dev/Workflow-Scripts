@@ -1,8 +1,13 @@
 # Troubleshooting / Tech Notes Workflow Template
 
-This file is a **recipe** for setting up and using a troubleshooting + tech-notes system, like the one in this project’s `troubleshooting/` directory.
+This file is a **reference guide** for understanding and using the troubleshooting + tech-notes system.
 
-You can reuse this workflow in other projects by copying this file and the basic folder structure.
+**For initial setup of a new project**, use the [`setup-project.md`](./setup-project.md) workflow, which includes:
+- Setting up the troubleshooting directory structure
+- Backing up existing troubleshooting files
+- Configuring AGENTS.md with troubleshooting instructions
+
+**This file** (`troubleshooting.md`) provides detailed documentation about how the system works once it's set up.
 
 ---
 
