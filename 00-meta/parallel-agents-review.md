@@ -8,7 +8,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ## Workflows with Good Parallel Agent Coverage ✅
 
-### 1. Code Review (`review/code-review.md`)
+### 1. Code Review (`05-review-audit/03-code-review.md`)
 **Status:** ✅ Well covered
 
 **Current Usage:**
@@ -19,7 +19,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ---
 
-### 2. Bug Fix (`debug/bug-fix-workflow.md`)
+### 2. Bug Fix (`03-debug/02-bug-fix-workflow.md`)
 **Status:** ✅ Well covered
 
 **Current Usage:**
@@ -30,7 +30,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ---
 
-### 3. Sync Documentation (`documentation/sync-documentation.md`)
+### 3. Sync Documentation (`04-documentation/sync-documentation.md`)
 **Status:** ✅ Well covered
 
 **Current Usage:**
@@ -43,7 +43,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ## Workflows That Could Benefit from Enhanced Parallel Agent Usage ⚠️
 
-### 1. Implementation Plan (`planning/implementation-plan.md`)
+### 1. Implementation Plan (`01-planning/01-plan-review.md`)
 **Status:** ⚠️ Could be enhanced
 
 **Current Usage:**
@@ -77,7 +77,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ---
 
-### 2. Plan Review (`planning/plan-review.md`)
+### 2. Plan Review (`01-planning/02-finalise-plan.md`)
 **Status:** ⚠️ Could be enhanced
 
 **Current Usage:**
@@ -111,7 +111,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ---
 
-### 3. Execution (`development/execution.md`)
+### 3. Execution (`02-build-code/01-execution.md`)
 **Status:** ⚠️ Could be expanded
 
 **Current Usage:**
@@ -161,12 +161,12 @@ For Each Phase (implementation loop)
 
 ## Workflows That Don't Need Parallel Agents
 
-### Documentation Sync Summary (`meta/sync-summary-template.md`)
+### Documentation Sync Summary (`00-meta/sync-summary-template.md`)
 **Status:** ✅ Appropriate
 
 **Assessment:** This is a template/reporting format, not an execution workflow. The mention of parallel agents in reporting guidelines (line 21) is appropriate for documenting how they were used, not for instructing their use.
 
-### Severity & Priority Rubric (`meta/severity-priority-rubric.md`)
+### Severity & Priority Rubric (`00-meta/severity-priority-rubric.md`)
 **Status:** ✅ Not applicable
 
 **Assessment:** This is a reference document defining standards, not an execution workflow. No parallel agent usage needed.

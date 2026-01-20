@@ -187,13 +187,13 @@ fi
    ```bash
    cd /path/to/project-a/workflows
    # Edit the file you want to update
-   vim review/code-review.md
+   vim 05-review-audit/03-code-review.md
    ```
 
 2. **Commit to workflows submodule:**
    ```bash
    cd /path/to/project-a/workflows
-   git add review/code-review.md
+   git add 05-review-audit/03-code-review.md
    git commit -m "Update code-review workflow: add parallel file reading"
    git push origin main
    ```

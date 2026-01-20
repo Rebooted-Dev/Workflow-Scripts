@@ -11,7 +11,7 @@ Create a comprehensive, structured bug report when a bug persists after initial 
 - Recent changes documented in `../../CHANGELOG.md`.
 
 ## Prioritization Rule
-- Classify the bug using severity (S0–S3) and priority (P0–P3) per the shared rubric: `../meta/severity-priority-rubric.md`.
+- Classify the bug using severity (S0–S3) and priority (P0–P3) per the shared rubric: `../00-meta/severity-priority-rubric.md`.
 - Present findings ordered by priority (P0 to P3), then severity within each priority.
 - Critical bugs (P0/S0) that cause data loss, security issues, or service outages must be documented immediately with highest detail.
 

@@ -12,7 +12,7 @@ Perform a structured security review that identifies vulnerabilities, security r
 - Score each finding with severity (S0–S3) and priority (P0–P3).
 - Present the report ordered by priority (P0 to P3), then severity within each priority.
 - Security issues typically map to S0/S1 severity and P0/P1 priority.
-- Use the shared rubric: `../meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
 
 ## Steps
 1. Scan the codebase using parallel agents focused on security. Each agent should read files in parallel batches (read multiple files concurrently, not sequentially):

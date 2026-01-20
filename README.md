@@ -20,14 +20,14 @@ Workflows ensure that:
 
 The workflows are organized into seven categories:
 
-1. **Planning** (`planning/`) - Create structured implementation plans
-2. **Review** (`review/`) - Review code and plans for quality and correctness
-3. **Development** (`development/`) - Execute implementation with verification
-4. **Debug** (`debug/`) - Systematically identify and fix bugs
-5. **Security** (`security/`) - Security reviews and vulnerability remediation
-6. **Documentation** (`documentation/`) - Keep documentation in sync with code
+1. **Initial Setup** (`00-initial-setup/`) - Set up new projects with dual repository management and troubleshooting system
+2. **Planning** (`01-planning/`) - Create structured implementation plans
+3. **Build/Code** (`02-build-code/`) - Execute implementation with verification
+4. **Debug** (`03-debug/`) - Systematically identify and fix bugs
+5. **Documentation** (`04-documentation/`) - Keep documentation in sync with code
+6. **Review/Audit** (`05-review-audit/`) - Review code and plans for quality, correctness, and security
 
-**Note:** The `meta/` directory contains templates, rubrics, and analysis/review documents about the workflows themselves (e.g., sync summary template, severity-priority rubric, parallel agent usage reviews, filename reviews). These are not workflow instructions but rather supporting documents for workflow design and execution.
+**Note:** The `00-meta/` directory contains templates, rubrics, and analysis/review documents about the workflows themselves (e.g., sync summary template, severity-priority rubric, parallel agent usage reviews, filename reviews). These are not workflow instructions but rather supporting documents for workflow design and execution.
 
 ## Quick Start Guide
 
@@ -35,14 +35,15 @@ The workflows are organized into seven categories:
 
 | Task | Workflow | Location |
 |------|----------|----------|
-| Starting a new feature | Implementation Plan | `planning/implementation-plan.md` |
-| Reviewing code quality | Code Review | `review/code-review.md` |
-| Reviewing a plan | Plan Review | `review/plan-review.md` |
-| Security audit | Security Review | `review/security-review.md` |
-| Implementing changes | Execution | `development/execution.md` |
-| Fixing a bug | Bug Fix | `debug/bug-fix-workflow.md` |
-| Fixing security issues | Security Fix | `security/security-fix.md` |
-| Updating docs | Sync Documentation | `documentation/sync-documentation.md` |
+| Setting up new project | Project Setup | `00-initial-setup/01-setup-project.md` |
+| Starting a new feature | Implementation Plan | `01-planning/01-plan-review.md` |
+| Reviewing code quality | Code Review | `05-review-audit/03-code-review.md` |
+| Reviewing a plan | Plan Review | `01-planning/02-finalise-plan.md` |
+| Security audit | Security Review | `05-review-audit/01-security-review.md` |
+| Implementing changes | Execution | `02-build-code/01-execution.md` |
+| Fixing a bug | Bug Fix | `03-debug/02-bug-fix-workflow.md` |
+| Fixing security issues | Security Fix | `05-review-audit/02-security-fix.md` |
+| Updating docs | Sync Documentation | `04-documentation/sync-documentation.md` |
 
 ### Typical Workflow Sequence
 
@@ -59,7 +60,7 @@ The workflows are organized into seven categories:
 
 ### 1. Planning Workflows
 
-#### Implementation Plan (`planning/implementation-plan.md`)
+#### Implementation Plan (`01-planning/01-plan-review.md`)
 
 **Purpose:** Generate a consolidated, priority-ordered implementation plan from requirements and feedback.
 
@@ -92,13 +93,13 @@ Workflow will:
 - Dependency mapping
 - Effort estimation (Small/Medium/Large)
 - Clear exit criteria per phase
-- Uses shared rubric from `meta/severity-priority-rubric.md`
+- Uses shared rubric from `00-meta/severity-priority-rubric.md`
 
 ---
 
 ### 2. Review Workflows
 
-#### Code Review (`review/code-review.md`)
+#### Code Review (`05-review-audit/03-code-review.md`)
 
 **Purpose:** Perform structured code review identifying defects, risks, and refactoring opportunities.
 
@@ -135,7 +136,7 @@ Workflow will:
   - Suggested fix
   - Verification steps
 
-#### Plan Review (`review/plan-review.md`)
+#### Plan Review (`01-planning/02-finalise-plan.md`)
 
 **Purpose:** Review implementation plans for correctness, risk, feasibility, and completeness.
 
@@ -174,7 +175,7 @@ Workflow will:
 
 ### 3. Development Workflow
 
-#### Execution (`development/execution.md`)
+#### Execution (`02-build-code/01-execution.md`)
 
 **Purpose:** Execute implementation in phases with verification and documentation.
 
@@ -226,7 +227,7 @@ Workflow will:
 
 ### 4. Debug Workflow
 
-#### Bug Fix (`debug/bug-fix-workflow.md`)
+#### Bug Fix (`03-debug/02-bug-fix-workflow.md`)
 
 **Purpose:** Systematically identify and fix bugs using hypothesis-driven investigation.
 
@@ -275,7 +276,7 @@ Workflow will:
 
 ### 5. Security Workflows
 
-#### Security Review (`review/security-review.md`)
+#### Security Review (`05-review-audit/01-security-review.md`)
 
 **Purpose:** Perform a structured security review identifying vulnerabilities, security risks, and compliance issues.
 
@@ -323,7 +324,7 @@ Workflow will:
   - Suggested fix with security best practices
   - Verification steps
 
-#### Security Fix (`security/security-fix.md`)
+#### Security Fix (`05-review-audit/02-security-fix.md`)
 
 **Purpose:** Systematically identify, fix, and verify security vulnerabilities.
 
@@ -374,7 +375,7 @@ Workflow will:
 
 ### 6. Documentation Workflows
 
-#### Sync Documentation (`documentation/sync-documentation.md`)
+#### Sync Documentation (`04-documentation/sync-documentation.md`)
 
 **Purpose:** Review code and update documentation to match the codebase accurately.
 
@@ -424,7 +425,7 @@ Workflow will:
 
 ### 7. Reference Materials
 
-#### Severity & Priority Rubric (`meta/severity-priority-rubric.md`)
+#### Severity & Priority Rubric (`00-meta/severity-priority-rubric.md`)
 
 **Purpose:** Shared standard for scoring issues across all workflows.
 
@@ -603,28 +604,31 @@ workflows/
 ├── SHARING_AND_SYNC.md (guide for sharing workflows across projects)
 ├── update-workflows.sh (helper script for updating workflows)
 ├── pull-workflows.sh (helper script for pulling workflow updates)
-├── meta/
+├── 00-initial-setup/
+│   └── 01-setup-project.md
+├── 00-meta/
 │   ├── severity-priority-rubric.md (shared rubric)
 │   ├── sync-summary-template.md (template)
 │   ├── parallel-agents-review.md (analysis document)
 │   └── filename-review.md (analysis document)
-├── planning/
-│   ├── implementation-plan.md
-│   └── plan-review.md
-├── review/
-│   ├── code-review.md
-│   └── security-review.md
-├── development/
-│   └── execution.md
-├── debug/
-│   └── bug-fix-workflow.md
-├── security/
-│   └── security-fix.md
-└── documentation/
-    └── sync-documentation.md
+├── 01-planning/
+│   ├── 01-plan-review.md
+│   └── 02-finalise-plan.md
+├── 02-build-code/
+│   ├── 01-execution.md
+│   └── 02-confirm-execution.md
+├── 03-debug/
+│   ├── 01-bug-description.md
+│   └── 02-bug-fix-workflow.md
+├── 04-documentation/
+│   └── sync-documentation.md
+└── 05-review-audit/
+    ├── 01-security-review.md
+    ├── 02-security-fix.md
+    └── 03-code-review.md
 ```
 
-**Note:** Files in `meta/` are templates, rubrics, and analysis/review documents about the workflows, not workflow instructions themselves. Workflow instruction files may reference templates and rubrics from `meta/` (e.g., `severity-priority-rubric.md`).
+**Note:** Files in `00-meta/` are templates, rubrics, and analysis/review documents about the workflows, not workflow instructions themselves. Workflow instruction files may reference templates and rubrics from `00-meta/` (e.g., `severity-priority-rubric.md`).
 
 ---
 
@@ -640,7 +644,7 @@ If you're unsure which workflow to use:
 6. **Fixing security issues?** → Use Security Fix workflow
 7. **Docs out of date?** → Use Documentation workflow
 
-All workflows reference the shared rubric in `meta/severity-priority-rubric.md` for consistent priority and severity scoring.
+All workflows reference the shared rubric in `00-meta/severity-priority-rubric.md` for consistent priority and severity scoring.
 
 ---
 

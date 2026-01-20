@@ -11,7 +11,7 @@ Systematically identify, diagnose, and fix bugs using a structured debugging pro
 ## Prioritization Rule
 - Address bugs in priority order: P0 → P1 → P2 → P3.
 - Critical bugs (P0/S0) that cause data loss, security issues, or service outages must be fixed immediately.
-- Use the shared rubric: `../meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
 
 ## Steps
 

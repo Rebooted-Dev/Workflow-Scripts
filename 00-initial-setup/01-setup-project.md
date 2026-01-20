@@ -1,7 +1,7 @@
 # Project Initial Setup Workflow
 
 This workflow sets up a new project (or migrates an existing project) with:
-1. **Dual Repository Management** - Instructions for managing Info-Visualizer and Workflow-Scripts as separate repos
+1. **Dual Repository Management** - Instructions for managing the main project repository and Workflow-Scripts as separate repos
 2. **Troubleshooting System** - Organized troubleshooting directory structure with backup of existing logs
 
 ---
@@ -20,8 +20,10 @@ This setup ensures:
 
 - Git repository initialized
 - Access to both repositories:
-  - Main project repository (e.g., Info-Visualizer)
+  - Main project repository (your project)
   - Workflow-Scripts repository (cloned into `workflows/` directory)
+
+**Note**: When executing this workflow, replace placeholder values (like `<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`) with your actual project details.
 
 ---
 
@@ -36,7 +38,7 @@ If `AGENTS.md` exists, review it to see if dual repo instructions are already pr
 Add or update the execution guidelines section in `AGENTS.md`:
 
 ```markdown
-### Execution
+## Execution
 - Where possible, make clever and appropriate use of multiple parallel agents to orchestrate and execute tasks for better efficiency.
 - Parallel agents can be used for:
   - Scanning codebases across different directories simultaneously
@@ -48,22 +50,22 @@ Add or update the execution guidelines section in `AGENTS.md`:
 
 ### 1.3 Add Repository Management Section
 
-Add this section to `AGENTS.md` (or update existing section):
+Add this section to `AGENTS.md` (or update existing section). **Replace placeholders with your project's actual values:**
 
 ```markdown
 ## Repository Management
 
 This project uses two separate repositories that should be managed independently:
 
-### 1. Info-Visualizer Repository (This Repository)
-- **Location**: `/Users/jesse/Development/Personal/Info-Visualizer`
+### 1. <PROJECT_NAME> Repository (This Repository)
+- **Location**: `<PROJECT_PATH>`
 - **Purpose**: Main application code, components, services, documentation
-- **Git Remote**: `https://github.com/Rebooted-Dev/Info-Visualizer`
+- **Git Remote**: `<GIT_REMOTE>`
 
 **Standard Git Operations:**
 ```bash
-# Navigate to Info-Visualizer
-cd /Users/jesse/Development/Personal/Info-Visualizer
+# Navigate to project root
+cd <PROJECT_PATH>
 
 # Check status
 git status
@@ -78,15 +80,15 @@ git push
 ```
 
 ### 2. Workflow-Scripts Repository (Nested in workflows/ directory)
-- **Location**: `/Users/jesse/Development/Personal/Info-Visualizer/workflows/`
+- **Location**: `<PROJECT_PATH>/workflows/`
 - **Purpose**: Reusable workflow instructions for development tasks (planning, review, development, debug, documentation)
 - **Git Remote**: `https://github.com/Rebooted-Dev/Workflow-Scripts`
-- **Note**: The `workflows/` directory is a separate git repository and is ignored by the main Info-Visualizer repo (see `.gitignore`)
+- **Note**: The `workflows/` directory is a separate git repository and is ignored by the main project repo (see `.gitignore`)
 
 **Standard Git Operations:**
 ```bash
-# Navigate to workflows directory (nested in Info-Visualizer)
-cd /Users/jesse/Development/Personal/Info-Visualizer/workflows
+# Navigate to workflows directory (nested in project root)
+cd <PROJECT_PATH>/workflows
 
 # Check status
 git status
@@ -103,15 +105,15 @@ git push
 ### Managing Both Repositories
 
 **Important**: These repositories are **independent** and should be managed separately:
-- Changes to Info-Visualizer do NOT automatically sync to Workflow-Scripts
-- Changes to Workflow-Scripts do NOT automatically sync to Info-Visualizer
+- Changes to the main project do NOT automatically sync to Workflow-Scripts
+- Changes to Workflow-Scripts do NOT automatically sync to the main project
 - Each repository has its own git history and version control
 
-**When Working on Info-Visualizer (Main Repo):**
-- Work from the root directory: `/Users/jesse/Development/Personal/Info-Visualizer`
+**When Working on Main Project (Main Repo):**
+- Work from the root directory: `<PROJECT_PATH>`
 - Focus on application code, components, services
-- Update project-specific documentation in `docs/`
-- Always update `CHANGELOG.md` for any code change (features, fixes, refactors). Create `CHANGELOG.md` if it does not exist.
+- Update project-specific documentation in `docs/` (if it exists)
+- Always update the changelog for any code change (features, fixes, refactors). Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md` - create if missing.
 - Update `troubleshooting/` only for bugs/issues or non-trivial problems encountered during development.
 - The `workflows/` directory is **ignored** by git (in `.gitignore`), so it won't be included in commits
 - Standard operations: `git add .`, `git commit`, `git push` - workflows will NOT be included
@@ -126,12 +128,12 @@ git push
 
 **Important Git Behavior:**
 - The `workflows/` directory is listed in `.gitignore`, so it's completely ignored by the main repo
-- When you run `git status`, `git add .`, or `git commit` from the Info-Visualizer root, workflows/ will NOT be included
+- When you run `git status`, `git add .`, or `git commit` from the project root, workflows/ will NOT be included
 - To push workflow changes, you MUST `cd workflows/` first, then run git commands there
 - The workflows directory has its own `.git` folder and is a completely separate repository
 
 **Best Practices:**
-- Always commit Info-Visualizer changes from the root directory
+- Always commit main project changes from the root directory
 - Always commit Workflow-Scripts changes from the `workflows/` directory
 - Use clear commit messages indicating which repository you're working in
 - Pull latest changes from both repos before starting work
@@ -153,7 +155,7 @@ grep -q "^workflows/$" .gitignore || echo "workflows/" >> .gitignore
 
 ### 2.1 Check for Existing Troubleshooting Files
 
-Before setting up, check for existing troubleshooting data:
+Before setting up, check for existing troubleshooting data in multiple possible locations:
 
 ```bash
 # Check for root-level TROUBLESHOOTING.md
@@ -161,10 +163,20 @@ if [ -f "TROUBLESHOOTING.md" ]; then
   echo "Found root-level TROUBLESHOOTING.md - will back up"
 fi
 
+# Check for docs/TROUBLESHOOTING.md
+if [ -f "docs/TROUBLESHOOTING.md" ]; then
+  echo "Found docs/TROUBLESHOOTING.md - will back up"
+fi
+
 # Check for existing troubleshooting/ directory
 if [ -d "troubleshooting" ]; then
   echo "Found existing troubleshooting/ directory"
   ls -la troubleshooting/
+fi
+
+# Check for troubleshooting/TROUBLESHOOTING.md
+if [ -f "troubleshooting/TROUBLESHOOTING.md" ]; then
+  echo "Found troubleshooting/TROUBLESHOOTING.md - will back up"
 fi
 ```
 
@@ -184,7 +196,7 @@ mkdir -p troubleshooting/{build,runtime,data,environment,security}
 # Create backup in troubleshooting directory
 if [ -f "TROUBLESHOOTING.md" ]; then
   BACKUP_DATE=$(date +%Y-%m-%d)
-  BACKUP_FILE="troubleshooting/TROUBLESHOOTING-backup-${BACKUP_DATE}.md"
+  BACKUP_FILE="troubleshooting/TROUBLESHOOTING-backup-root-${BACKUP_DATE}.md"
   
   # Copy with header explaining it's a backup
   {
@@ -200,6 +212,30 @@ if [ -f "TROUBLESHOOTING.md" ]; then
   } > "${BACKUP_FILE}"
   
   echo "✓ Backed up TROUBLESHOOTING.md to ${BACKUP_FILE}"
+fi
+```
+
+**If docs/TROUBLESHOOTING.md exists:**
+
+```bash
+# Backup existing docs/TROUBLESHOOTING.md if it exists
+if [ -f "docs/TROUBLESHOOTING.md" ]; then
+  BACKUP_DATE=$(date +%Y-%m-%d)
+  BACKUP_FILE="troubleshooting/TROUBLESHOOTING-backup-docs-${BACKUP_DATE}.md"
+  
+  {
+    echo "# Backup of docs/TROUBLESHOOTING.md"
+    echo ""
+    echo "**Backup Date:** ${BACKUP_DATE}"
+    echo "**Original Location:** \`docs/TROUBLESHOOTING.md\`"
+    echo "**Note:** This file was backed up during setup. If this file serves as a user-facing troubleshooting guide, it should be maintained separately. Individual troubleshooting entries should go in the \`troubleshooting/\` directory structure."
+    echo ""
+    echo "---"
+    echo ""
+    cat docs/TROUBLESHOOTING.md
+  } > "${BACKUP_FILE}"
+  
+  echo "✓ Backed up docs/TROUBLESHOOTING.md to ${BACKUP_FILE}"
 fi
 ```
 
@@ -297,9 +333,11 @@ When adding a new entry:
 ## For AI Agents / Coding Assistants
 
 When instructed to **"update the logs"** or **"update the log files"**, this refers to:
-1. **Update `CHANGELOG.md`** for any code change (features, fixes, refactors). Create the file if missing.
-2. **Create a troubleshooting entry** in the appropriate category folder only for bugs/issues or non-trivial problems.
-3. **Update `troubleshooting/index.md`** to add the new entry at the top of the table when a troubleshooting entry is created.
+1. **Update the changelog** - Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md`. Always update for any code change (features, fixes, refactors). Create the file if missing.
+2. **Create a troubleshooting entry** - Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems.
+3. **Update `troubleshooting/index.md`** - Add the new entry at the top of the table when a troubleshooting entry is created.
+
+**Note about `docs/TROUBLESHOOTING.md`**: If this file exists, it may serve as a user-facing troubleshooting guide with common error states and solutions. It is maintained separately from the `troubleshooting/` directory system. Individual troubleshooting entries should go in the `troubleshooting/` directory, not in `docs/TROUBLESHOOTING.md`.
 
 See `AGENTS.md` section "Changelog & Troubleshooting Updates" for full guidelines.
 ```
@@ -316,9 +354,6 @@ Chronological index of troubleshooting entries.
 
 | Date       | Category    | Title                                                      | File                                                          | Status   |
 |-----------|-------------|------------------------------------------------------------|---------------------------------------------------------------|----------|
-| 2026-01-19 | environment | Workflow Scripts Git Ignore                                | `environment/2026-01-19-environment-workflow-scripts-git-ignore.md` | RESOLVED |
-| 2026-01-18 | runtime     | Image Generation Stuck                                      | `runtime/2026-01-18-runtime-image-generation-stuck.md`       | RESOLVED |
-| 2026-01-18 | environment | Gemini API Key Not Configured                              | `environment/2026-01-18-environment-gemini-api-key-not-configured.md` | RESOLVED |
 ```
 
 **Note:** If existing entries exist, preserve them in the table. Only add new entries at the top.
@@ -329,8 +364,12 @@ Add or update the troubleshooting section in `AGENTS.md`:
 
 ```markdown
 ### Troubleshooting System (`troubleshooting/` directory)
-- **When to update**: Document all bug fixes, issues, or non-trivial problems encountered during development.
-- **Location**: Use the `troubleshooting/` directory system (NOT `TROUBLESHOOTING.md`).
+- **When to create troubleshooting entries**: Document bugs, issues, or non-trivial problems that required investigation and resolution.
+  - **Bugs**: Any defect that causes incorrect behavior or crashes
+  - **Issues**: Problems that required debugging, investigation, or workarounds
+  - **Non-trivial problems**: Issues that took significant time to resolve, involved multiple steps, or have lessons worth preserving (e.g., complex configuration issues, unexpected framework behavior, tricky debugging scenarios)
+- **When NOT to create troubleshooting entries**: Simple code changes, routine refactoring, or straightforward feature additions that don't involve problem-solving
+- **Location**: Use the `troubleshooting/` directory system. Do NOT create individual entries in `TROUBLESHOOTING.md` or `docs/TROUBLESHOOTING.md`.
 - **Structure**: 
   - Create individual files in the appropriate category folder (`build/`, `runtime/`, `data/`, `environment/`, `security/`)
   - File naming: `<yyyy-mm-dd>-<category>-<short-title>.md`
@@ -338,11 +377,13 @@ Add or update the troubleshooting section in `AGENTS.md`:
 - **Index maintenance**: Always update `troubleshooting/index.md` when adding a new entry (add row at the top of the table).
 - **Template**: See `troubleshooting/README.md` for the entry template and full conventions.
 
+**Note about `docs/TROUBLESHOOTING.md`**: If this file exists, it serves as a user-facing troubleshooting guide with common error states and solutions. It is maintained separately from the `troubleshooting/` directory system. Individual troubleshooting entries should go in the `troubleshooting/` directory, not in `docs/TROUBLESHOOTING.md`.
+
 ### Interpreting "Update the Logs"
 When instructed to "update the logs" or "update the log files", this refers to:
-1. **CHANGELOG.md** - Always update for any code change (features, fixes, refactors). Create the file if missing.
-2. **Troubleshooting entries** - Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems.
-3. **Both** - When a bug fix requires both a troubleshooting entry AND a changelog entry.
+1. **Changelog** - Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md`. Always update for any code change (features, fixes, refactors). Create the file if missing.
+2. **Troubleshooting entries** - Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems that required investigation.
+3. **Both** - When a bug fix requires both a troubleshooting entry (for the problem-solving process) AND a changelog entry (for the change itself).
 
 **Note**: This project does NOT use application logging files (`.log` files). The "logs" refer to the troubleshooting knowledge base and changelog documentation.
 ```
@@ -357,7 +398,7 @@ After setup, verify everything is correct:
 
 ```bash
 # From project root - workflows should be ignored
-cd /path/to/project
+cd <PROJECT_PATH>
 git status | grep workflows || echo "✓ workflows/ is properly ignored"
 
 # From workflows directory - should be separate repo
@@ -397,6 +438,7 @@ If you're migrating an existing project:
 4. **Remove old files** - Once migration is complete and verified, you can remove:
    - Root-level `TROUBLESHOOTING.md` (if it exists and has been backed up)
    - `troubleshooting/TROUBLESHOOTING.md` (if it exists and has been backed up)
+   - **Note**: `docs/TROUBLESHOOTING.md` should typically be kept if it serves as a user-facing guide
 
 **Important:** Only remove old files after verifying all important information has been migrated to the new structure.
 
@@ -405,10 +447,10 @@ If you're migrating an existing project:
 ## Complete Setup Checklist
 
 - [ ] AGENTS.md updated with execution guidelines (parallel agents)
-- [ ] AGENTS.md updated with dual repository management section
+- [ ] AGENTS.md updated with dual repository management section (with project-specific values)
 - [ ] `.gitignore` includes `workflows/`
 - [ ] Troubleshooting directory structure created
-- [ ] Existing troubleshooting files backed up (if any)
+- [ ] Existing troubleshooting files backed up (root-level, docs/, and troubleshooting/ checked)
 - [ ] `troubleshooting/README.md` created
 - [ ] `troubleshooting/index.md` created or updated
 - [ ] AGENTS.md updated with troubleshooting system instructions
@@ -427,12 +469,15 @@ When executing this setup workflow:
 3. **Update incrementally** - Don't overwrite existing AGENTS.md, add to it
 4. **Verify after each step** - Check that changes were applied correctly
 5. **Document what was done** - Note any backups created or files modified
+6. **Replace placeholders** - Ensure all `<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>` placeholders are replaced with actual values
+7. **Check multiple file locations** - Look for changelog and troubleshooting files in both root and `docs/` directories
 
 **Key Safety Rules:**
 - Never delete existing troubleshooting entries
 - Always create backups before moving files
 - Preserve existing index.md entries when updating
 - Check for existing sections in AGENTS.md before adding new ones
+- Check both root-level and `docs/` directory for existing files
 
 **Execution Guidelines:**
 - Use multiple parallel agents when appropriate to accelerate tasks
@@ -449,5 +494,6 @@ If something goes wrong during setup:
 2. **Review git status** - Ensure workflows/ is still ignored
 3. **Verify directory structure** - All category folders should exist
 4. **Check file permissions** - Ensure files are readable/writable
+5. **Verify file locations** - Check both root and `docs/` directories for existing files
 
 For issues with the setup itself, create a troubleshooting entry in `troubleshooting/environment/` following the standard format.
