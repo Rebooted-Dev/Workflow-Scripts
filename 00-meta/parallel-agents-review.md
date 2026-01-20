@@ -8,7 +8,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ## Workflows with Good Parallel Agent Coverage ✅
 
-### 1. Code Review (`05-review-audit/03-code-review.md`)
+### 1. Code Review (`05-review-audit/01-code-review.md`)
 **Status:** ✅ Well covered
 
 **Current Usage:**
@@ -43,7 +43,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ## Workflows That Could Benefit from Enhanced Parallel Agent Usage ⚠️
 
-### 1. Implementation Plan (`01-planning/01-plan-review.md`)
+### 1. Implementation Plan (`01-planning/02-finalise-plan.md`)
 **Status:** ⚠️ Could be enhanced
 
 **Current Usage:**
@@ -77,7 +77,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ---
 
-### 2. Plan Review (`01-planning/02-finalise-plan.md`)
+### 2. Plan Review (`01-planning/01-plan-review.md`)
 **Status:** ⚠️ Could be enhanced
 
 **Current Usage:**

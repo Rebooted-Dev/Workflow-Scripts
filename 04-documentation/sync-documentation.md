@@ -1,11 +1,11 @@
 # Workflow: Sync Documentation
 
 ## Purpose
-Review code and update `../../docs/` so documentation accurately matches the codebase and is organized for clarity.
+Review code and update `docs/` so documentation accurately matches the codebase and is organized for clarity.
 
 ## Inputs
 - Repository root.
-- Existing `../../docs/` directory contents.
+- Existing `docs/` directory contents.
 
 ## Prioritization Rule
 - Organize doc work by priority, descending urgency/importance: P0, P1, P2, P3.
@@ -29,12 +29,12 @@ Review code and update `../../docs/` so documentation accurately matches the cod
    - fill missing critical docs next
    - then reorganize and consolidate
    - then add diagrams/polish
-4. Reorganize `../../docs/` into clear subdirectories by audience and purpose.
+4. Reorganize `docs/` into clear subdirectories by audience and purpose.
 5. Add diagrams and file maps where they clarify complex systems.
 6. Remove redundancy and cross-link related docs.
 
 ## Output Requirements
-- `../../docs/` is organized into meaningful subdirectories.
+- `docs/` is organized into meaningful subdirectories.
 - New files created only where coverage is missing.
 - Diagrams are text-based and directly reflect actual structure.
 - File maps are included to aid navigation (directory trees and/or module maps for key areas).
@@ -47,6 +47,6 @@ Review code and update `../../docs/` so documentation accurately matches the cod
 
 ## Notes
 - Keep updates minimal and accurate; avoid speculative content.
-- Prefer surgical edits over large rewrites; only reorganize `../../docs/` when you can point to concrete navigation or duplication pain.
+- Prefer surgical edits over large rewrites; only reorganize `docs/` when you can point to concrete navigation or duplication pain.
 - Use parallel agents to cover different domains efficiently.
 - When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.

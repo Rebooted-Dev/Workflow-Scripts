@@ -1,7 +1,7 @@
 # Workflow: Code Review
 
 ## Purpose
-Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `../../plans/`.
+Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `plans/` (project root).
 
 ## Inputs
 - Repository root.
@@ -26,7 +26,7 @@ Perform a structured code review that identifies defects, risks, and refactoring
    - verification step (how to confirm the fix)
 3. Group and order findings by priority, then severity.
 4. Add a summary with the top P0/P1 risks and recommended next steps.
-5. Save the report to `../../plans/` with a timestamped filename.
+5. Save the report to `plans/` (project root) with a dated filename.
 
 ## Output Requirements
 - Report title, date/time, scope, and summary.

@@ -4,9 +4,9 @@
 
 ## Overview
 
-This directory contains structured workflow instructions for common development tasks in the Info-Visualizer project. These workflows provide consistent, repeatable processes for planning, reviewing, implementing, debugging, and documenting code changes.
+This directory contains structured workflow instructions for common development tasks in the host project. These workflows provide consistent, repeatable processes for planning, reviewing, implementing, debugging, and documenting code changes.
 
-**Sharing Workflows Across Projects:** See [`SHARING_AND_SYNC.md`](./SHARING_AND_SYNC.md) for instructions on how to share and sync these workflows across multiple projects using Git submodules.
+**Sharing Workflows Across Projects:** See [`SHARING_AND_SYNC.md`](./SHARING_AND_SYNC.md) for the supported sync models. The recommended approach is to keep `workflows/` as its own git repository cloned into each project (a nested repo), managed independently from the main project repo.
 
 **Why Workflows?**  
 Workflows ensure that:
@@ -27,6 +27,8 @@ The workflows are organized into seven categories:
 5. **Documentation** (`04-documentation/`) - Keep documentation in sync with code
 6. **Review/Audit** (`05-review-audit/`) - Review code and plans for quality, correctness, and security
 
+7. **Meta** (`00-meta/`) - Templates, rubrics, and analysis documents about these workflows
+
 **Note:** The `00-meta/` directory contains templates, rubrics, and analysis/review documents about the workflows themselves (e.g., sync summary template, severity-priority rubric, parallel agent usage reviews, filename reviews). These are not workflow instructions but rather supporting documents for workflow design and execution.
 
 ## Quick Start Guide
@@ -36,13 +38,15 @@ The workflows are organized into seven categories:
 | Task | Workflow | Location |
 |------|----------|----------|
 | Setting up new project | Project Setup | `00-initial-setup/01-setup-project.md` |
-| Starting a new feature | Implementation Plan | `01-planning/01-plan-review.md` |
-| Reviewing code quality | Code Review | `05-review-audit/03-code-review.md` |
-| Reviewing a plan | Plan Review | `01-planning/02-finalise-plan.md` |
-| Security audit | Security Review | `05-review-audit/01-security-review.md` |
+| Starting a new feature | Implementation Plan | `01-planning/02-finalise-plan.md` |
+| Reviewing code quality | Code Review | `05-review-audit/01-code-review.md` |
+| Optimizing code performance | Code Optimization | `05-review-audit/02-code-optimization.md` |
+| Refactoring code | Code Refactoring | `05-review-audit/03-code-refactoring.md` |
+| Reviewing a plan | Plan Review | `01-planning/01-plan-review.md` |
+| Security audit | Security Review | `06-security/01-security-review.md` |
 | Implementing changes | Execution | `02-build-code/01-execution.md` |
 | Fixing a bug | Bug Fix | `03-debug/02-bug-fix-workflow.md` |
-| Fixing security issues | Security Fix | `05-review-audit/02-security-fix.md` |
+| Fixing security issues | Security Fix | `06-security/02-security-fix.md` |
 | Updating docs | Sync Documentation | `04-documentation/sync-documentation.md` |
 
 ### Typical Workflow Sequence
@@ -60,7 +64,7 @@ The workflows are organized into seven categories:
 
 ### 1. Planning Workflows
 
-#### Implementation Plan (`01-planning/01-plan-review.md`)
+#### Implementation Plan (`01-planning/02-finalise-plan.md`)
 
 **Purpose:** Generate a consolidated, priority-ordered implementation plan from requirements and feedback.
 
@@ -73,7 +77,7 @@ The workflows are organized into seven categories:
 1. Provide the primary plan document path
 2. Include any feedback or review comments
 3. The workflow will generate a priority-ordered plan (P0 → P3)
-4. Plan is saved to `../../plans/` with a timestamp
+4. Plan is saved to `plans/` (project root) with a dated filename
 
 **Example:**
 ```
@@ -99,7 +103,7 @@ Workflow will:
 
 ### 2. Review Workflows
 
-#### Code Review (`05-review-audit/03-code-review.md`)
+#### Code Review (`05-review-audit/01-code-review.md`)
 
 **Purpose:** Perform structured code review identifying defects, risks, and refactoring opportunities.
 
@@ -112,12 +116,12 @@ Workflow will:
 1. Specify repository root (or specific focus areas)
 2. Workflow scans codebase using parallel agents
 3. Findings are scored with severity (S0-S3) and priority (P0-P3)
-4. Report saved to `../../plans/` with timestamp
+4. Report saved to `plans/` (project root) with a dated filename
 
 **Example:**
 ```
-User: "Perform a code review focusing on security and error handling 
-       in the services/ directory."
+User: "Perform a code review focusing on security and error handling
+        in the services/ directory."
        
 Workflow will:
 - Scan services/ directory
@@ -136,7 +140,101 @@ Workflow will:
   - Suggested fix
   - Verification steps
 
-#### Plan Review (`01-planning/02-finalise-plan.md`)
+#### Code Optimization (`05-review-audit/02-code-optimization.md`)
+
+**Purpose:** Perform structured analysis to identify performance bottlenecks, resource inefficiencies, and optimization opportunities.
+
+**When to use:**
+- When performance issues are reported or suspected
+- Before scaling or handling increased load
+- Periodic performance audits
+- When bundle size or resource usage is a concern
+
+**How to use:**
+1. Specify repository root (or specific focus areas)
+2. Workflow scans codebase using parallel agents focused on performance
+3. Findings are scored with severity (S0-S3) and priority (P0-P3)
+4. Report saved to `plans/` (project root) with a dated filename
+
+**Example:**
+```
+User: "Analyze performance bottlenecks in the data processing pipeline."
+
+Workflow will:
+- Scan data processing code
+- Identify performance issues, resource inefficiencies
+- Score each finding (S0-S3, P0-P3)
+- Generate report: plans/code-optimization-YYYY-MM-DD-HH-MM.md
+```
+
+**Output Format:**
+- Summary with top P0/P1 performance risks
+- Findings ordered by priority, then severity
+- Each finding includes:
+  - File path and line reference
+  - Current performance characteristics
+  - Observed impact (latency, throughput, resource usage)
+  - Severity/priority with rationale
+  - Suggested optimization with expected improvement
+  - Verification steps to measure improvement
+
+**Focus Areas:**
+- Algorithm complexity and efficiency
+- Database query optimization
+- Network request batching and caching
+- Memory usage and leaks
+- Bundle size and code splitting
+- Rendering performance
+- Concurrent operations
+
+#### Code Refactoring (`05-review-audit/03-code-refactoring.md`)
+
+**Purpose:** Perform structured analysis to identify code quality issues, technical debt, and refactoring opportunities.
+
+**When to use:**
+- When code becomes difficult to maintain or extend
+- Before adding new features to complex areas
+- Periodic code quality audits
+- When technical debt is accumulating
+
+**How to use:**
+1. Specify repository root (or specific focus areas)
+2. Workflow scans codebase using parallel agents focused on code quality
+3. Findings are scored with severity (S0-S3) and priority (P0-P3)
+4. Report saved to `plans/` (project root) with a dated filename
+
+**Example:**
+```
+User: "Identify refactoring opportunities in the authentication module."
+
+Workflow will:
+- Scan authentication code
+- Identify code duplication, complexity, maintainability issues
+- Score each finding (S0-S3, P0-P3)
+- Generate report: plans/code-refactoring-YYYY-MM-DD-HH-MM.md
+```
+
+**Output Format:**
+- Summary with top P0/P1 refactoring priorities
+- Findings ordered by priority, then severity
+- Each finding includes:
+  - File path and line reference
+  - Current code structure and issue description
+  - Impact on maintainability, readability, extensibility
+  - Severity/priority with rationale
+  - Suggested refactoring approach with rationale
+  - Verification steps to ensure behavior is preserved
+
+**Focus Areas:**
+- Code duplication and DRY violations
+- Long functions and files (complexity)
+- Poor naming and unclear abstractions
+- Tight coupling and low cohesion
+- Missing or inappropriate design patterns
+- Inconsistent code style
+- Dead code and unused dependencies
+
+#### Plan Review (`01-planning/01-plan-review.md`)
 
 **Purpose:** Review implementation plans for correctness, risk, feasibility, and completeness.
 
@@ -163,7 +261,7 @@ Workflow will:
 ```
 
 **Output Format:**
-- Addendum appended to plan with timestamp
+- Addendum appended to plan with dated header
 - Sections: P0, P1, P2, P3
 - Each item includes:
   - Severity and priority
@@ -204,7 +302,7 @@ Workflow will:
 - Implement Phase 1 changes
 - Run npm run build
 - Test in dev server
-- Update CHANGELOG.md
+- Update the changelog (`docs/CHANGELOG.md` preferred)
 - Update task list with ✅/⏳
 - Proceed to next phase
 ```
@@ -220,8 +318,8 @@ Workflow will:
 - ⏳ Pending items
 
 **Documentation Updates:**
-- `CHANGELOG.md`: `YYYY-MM-DD HH:MM - Description`
-- `TROUBLESHOOTING.md`: Bug fixes with problem, observation, detection, fix
+- Changelog: update `docs/CHANGELOG.md` (preferred) or `CHANGELOG.md` with `- YYYY-MM-DD: Description`
+- Troubleshooting: add an entry under `troubleshooting/` and update `troubleshooting/index.md`
 
 ---
 
@@ -259,7 +357,7 @@ Workflow will:
 - Create fix plan
 - Implement fix
 - Test verification
-- Update TROUBLESHOOTING.md
+- Add a `troubleshooting/` entry and update `troubleshooting/index.md`
 ```
 
 **Process:**
@@ -276,7 +374,7 @@ Workflow will:
 
 ### 5. Security Workflows
 
-#### Security Review (`05-review-audit/01-security-review.md`)
+#### Security Review (`06-security/01-security-review.md`)
 
 **Purpose:** Perform a structured security review identifying vulnerabilities, security risks, and compliance issues.
 
@@ -291,7 +389,7 @@ Workflow will:
 1. Specify repository root (or focus areas)
 2. Workflow scans codebase using 6 parallel agents focused on different security domains
 3. Findings are scored with severity (S0-S3) and priority (P0-P3)
-4. Report saved to `../../plans/` with timestamp
+4. Report saved to `plans/` (project root) with a dated filename
 
 **Example:**
 ```
@@ -324,7 +422,7 @@ Workflow will:
   - Suggested fix with security best practices
   - Verification steps
 
-#### Security Fix (`05-review-audit/02-security-fix.md`)
+#### Security Fix (`06-security/02-security-fix.md`)
 
 **Purpose:** Systematically identify, fix, and verify security vulnerabilities.
 
@@ -352,7 +450,7 @@ Workflow will:
 - Implement fix (parameterized queries, input validation)
 - Add security tests
 - Verify fix works and doesn't break functionality
-- Update TROUBLESHOOTING.md
+- Add a `troubleshooting/` entry and update `troubleshooting/index.md`
 ```
 
 **Process:**
@@ -393,7 +491,7 @@ Workflow will:
    - P1: Missing critical docs
    - P2: Reorganization and consolidation
    - P3: Diagrams and polish
-4. Reorganizes `../../docs/` if needed
+4. Reorganizes `docs/` if needed
 5. Adds file maps and diagrams
 
 **Example:**
@@ -475,7 +573,7 @@ Step 3: Refine Plan
 Step 4: Development
 → Use "Execution" workflow
 → Input: Refined plan
-→ Output: Implemented code, updated CHANGELOG.md
+→ Output: Implemented code, updated `docs/CHANGELOG.md` (preferred)
 
 Step 5: Code Review
 → Use "Code Review" workflow
@@ -494,7 +592,7 @@ Step 6: Documentation
 Step 1: Debug
 → Use "Debug" workflow
 → Input: Bug report, logs, screenshots
-→ Output: Fixed code, updated TROUBLESHOOTING.md
+→ Output: Fixed code, added a `troubleshooting/` entry
 
 Step 2: Code Review
 → Use "Code Review" workflow
@@ -542,7 +640,7 @@ Step 1: Security Review
 Step 2: Security Fix (for critical issues)
 → Use "Security Fix" workflow
 → Input: Security review report, P0/S0 vulnerabilities
-→ Output: Fixed code, updated TROUBLESHOOTING.md
+→ Output: Fixed code, added a `troubleshooting/` entry
 
 Step 3: Code Review
 → Use "Code Review" workflow
@@ -553,6 +651,45 @@ Step 4: Documentation (if needed)
 → Use "Sync Documentation" workflow
 → Input: Repository root
 → Output: Updated security documentation
+```
+
+### Example 5: Performance Optimization and Refactoring
+
+```
+Step 1: Code Optimization Review
+→ Use "Code Optimization" workflow
+→ Input: Repository root (or specific focus area)
+→ Output: plans/code-optimization-2026-01-18-15-00.md
+
+Step 2: Planning
+→ Use "Implementation Plan" workflow
+→ Input: Optimization report findings
+→ Output: plans/optimization-plan-2026-01-18-15-30.md
+
+Step 3: Implementation
+→ Use "Execution" workflow
+→ Input: Optimization plan
+→ Output: Optimized code, updated `docs/CHANGELOG.md` (preferred)
+
+Step 4: Code Refactoring Review
+→ Use "Code Refactoring" workflow
+→ Input: Repository root (or specific focus area)
+→ Output: plans/code-refactoring-2026-01-18-16-00.md
+
+Step 5: Planning
+→ Use "Implementation Plan" workflow
+→ Input: Refactoring report findings
+→ Output: plans/refactoring-plan-2026-01-18-16-30.md
+
+Step 6: Implementation
+→ Use "Execution" workflow
+→ Input: Refactoring plan
+→ Output: Refactored code, updated `docs/CHANGELOG.md` (preferred)
+
+Step 7: Code Review
+→ Use "Code Review" workflow
+→ Input: Repository root (focus on optimized/refactored areas)
+→ Output: Verification that changes are correct and maintain functionality
 ```
 
 ---
@@ -570,8 +707,8 @@ Step 4: Documentation (if needed)
 - Don't skip verification steps
 
 ### 3. Document as You Go
-- Update `CHANGELOG.md` after each phase
-- Update `TROUBLESHOOTING.md` for bug fixes
+- Update the changelog after each phase (`docs/CHANGELOG.md` preferred)
+- Add a `troubleshooting/` entry for bug fixes and update `troubleshooting/index.md`
 - Keep documentation in sync with code
 
 ### 4. Use Parallel Agents
@@ -602,7 +739,7 @@ Step 4: Documentation (if needed)
 workflows/
 ├── README.md (this file)
 ├── SHARING_AND_SYNC.md (guide for sharing workflows across projects)
-├── update-workflows.sh (helper script for updating workflows)
+├── update-workflows.sh (helper for maintainers to commit/push workflow changes)
 ├── pull-workflows.sh (helper script for pulling workflow updates)
 ├── 00-initial-setup/
 │   └── 01-setup-project.md
@@ -622,10 +759,13 @@ workflows/
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
 │   └── sync-documentation.md
-└── 05-review-audit/
+├── 05-review-audit/
+│   ├── 01-code-review.md
+│   ├── 02-code-optimization.md
+│   └── 03-code-refactoring.md
+└── 06-security/
     ├── 01-security-review.md
-    ├── 02-security-fix.md
-    └── 03-code-review.md
+    └── 02-security-fix.md
 ```
 
 **Note:** Files in `00-meta/` are templates, rubrics, and analysis/review documents about the workflows, not workflow instructions themselves. Workflow instruction files may reference templates and rubrics from `00-meta/` (e.g., `severity-priority-rubric.md`).
@@ -653,5 +793,5 @@ All workflows reference the shared rubric in `00-meta/severity-priority-rubric.m
 - Workflows are designed to be used with AI agents that can execute them
 - Each workflow is self-contained but designed to work together
 - Priority ordering (P0-P3) is consistent across all workflows
-- All workflows produce timestamped outputs in `../../plans/` or update existing files
-- Documentation updates go to `../../docs/` and `../../CHANGELOG.md`
+- All workflows produce dated outputs in `plans/` (project root) or update existing files
+- Documentation updates go to `docs/` and the changelog (`docs/CHANGELOG.md` preferred)

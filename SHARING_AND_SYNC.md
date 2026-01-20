@@ -1,364 +1,117 @@
 # Sharing and Syncing Workflows Across Projects
 
-## Overview
+## Goal
 
-This document explains how to share and sync the `workflows/` directory across multiple projects while maintaining the ability to update workflows from any project.
+Keep a single source of truth for workflow instructions while allowing each project to consume updates on its own schedule.
 
-## Recommended Approach: Git Submodule
+## Recommended Model: Nested Repository (Independent From Parent Repo)
 
-**Why Git Submodules?**
-- ✅ Version controlled workflows
-- ✅ Can update from any project
-- ✅ Can pin different versions per project if needed
-- ✅ Works with GitHub
-- ✅ Selective updates (update only when you want)
-- ✅ Each project maintains its own copy
+In this model, `workflows/` is its own git repository cloned into each project.
 
-## Setup Options
+Key properties:
+- The main project repo and `workflows/` repo are managed independently.
+- The main project typically ignores `workflows/` (via `.gitignore`) so `git add .` from the project root never stages workflow changes.
+- Updating workflows in a project is just `git pull` inside `workflows/`.
 
-### Option A: Workflows as Separate Repository (Recommended)
+### Initial Setup (Per Project)
 
-Create a dedicated repository for workflows (e.g., `info-visualizer-workflows`) and include it as a submodule in each project.
+1. Ensure the project ignores the nested repo:
+   - Add `workflows/` to the project's `.gitignore`.
 
-#### Initial Setup
-
-1. **Create workflows repository:**
-   ```bash
-   # Create new repo on GitHub: info-visualizer-workflows
-   # Clone it locally
-   git clone https://github.com/yourusername/info-visualizer-workflows.git
-   cd info-visualizer-workflows
-   
-   # Copy your workflows directory content
-   cp -r /path/to/current-project/workflows/* .
-   git add .
-   git commit -m "Initial workflows"
-   git push origin main
-   ```
-
-2. **Add as submodule to each project:**
-   ```bash
-   cd /path/to/project-a
-   git submodule add https://github.com/yourusername/info-visualizer-workflows.git workflows
-   git commit -m "Add workflows as submodule"
-   git push
-   ```
-
-3. **Repeat for other projects:**
-   ```bash
-   cd /path/to/project-b
-   git submodule add https://github.com/yourusername/info-visualizer-workflows.git workflows
-   git commit -m "Add workflows as submodule"
-   git push
-   ```
-
-#### Updating Workflows from Any Project
-
-**When you're working in Project A and want to update workflows:**
-
-1. **Update the workflows submodule:**
-   ```bash
-   cd /path/to/project-a/workflows
-   git checkout main  # or your default branch
-   git pull origin main
-   cd ..
-   git add workflows
-   git commit -m "Update workflows to latest version"
-   git push
-   ```
-
-2. **Or use the helper script (see below)**
-
-#### Pulling Workflow Updates in Other Projects
-
-**When you want to get the latest workflows in Project B:**
+2. Clone Workflow-Scripts into the project:
 
 ```bash
-cd /path/to/project-b
-git pull
-git submodule update --remote workflows
-# Or to update to specific commit:
-cd workflows
-git pull origin main
-cd ..
-git add workflows
-git commit -m "Update workflows"
+cd /path/to/your-project
+git clone https://github.com/Rebooted-Dev/Workflow-Scripts workflows
 ```
 
-### Option B: Workflows in Current Project, Share via Submodule
+### Pull Updates (Per Project)
 
-If you want to keep workflows in your current project and share them:
+Option A (manual):
 
-1. **In the current project (Info-Visualizer):**
-   ```bash
-   # Workflows already exist here
-   # Just ensure it's committed and pushed
-   git add workflows/
-   git commit -m "Add workflows"
-   git push
-   ```
-
-2. **In other projects, add as submodule:**
-   ```bash
-   cd /path/to/other-project
-   git submodule add https://github.com/yourusername/Info-Visualizer.git temp-clone
-   git mv temp-clone/workflows workflows
-   git rm -r temp-clone
-   git commit -m "Add workflows submodule from Info-Visualizer"
-   ```
-
-   **Note:** This points to the workflows directory in your main project. Updates in the main project will be available to other projects.
-
-## Helper Scripts
-
-### Update Workflows Script
-
-Create a script to make updating workflows easier:
-
-**File: `workflows/update-workflows.sh`**
 ```bash
-#!/bin/bash
-# Update workflows submodule and commit the update
-
-set -e
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-
-echo "Updating workflows..."
-
-# Navigate to workflows directory
-cd "$SCRIPT_DIR"
-
-# Check if we're in a submodule
-if [ -f .git ]; then
-    echo "Detected submodule. Updating from remote..."
-    git checkout main || git checkout master
-    git pull origin main || git pull origin master
-    cd "$PROJECT_ROOT"
-    git add workflows
-    echo "Workflows updated. Commit with: git commit -m 'Update workflows'"
-else
-    echo "Not a submodule. This is the source repository."
-    echo "To update other projects, push changes and run 'git submodule update --remote' in those projects."
-fi
+cd /path/to/your-project/workflows
+git pull --ff-only
 ```
 
-**Make it executable:**
+Option B (helper script):
+
 ```bash
-chmod +x workflows/update-workflows.sh
+# From the project root:
+./workflows/pull-workflows.sh
+
+# Or from inside the workflows directory:
+./pull-workflows.sh
 ```
 
-### Pull Workflows Script
+Notes:
+- The helper script refuses to pull if the workflows repo has local uncommitted changes.
+- If the workflows repo is in detached HEAD, the helper script will fetch and instruct you to switch to a branch.
 
-For pulling updates in projects that use workflows:
+### Contribute Changes Back (Maintainers)
 
-**File: `workflows/pull-workflows.sh`**
-```bash
-#!/bin/bash
-# Pull latest workflows from remote
-
-set -e
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-
-echo "Pulling latest workflows..."
-
-cd "$SCRIPT_DIR"
-
-if [ -f .git ]; then
-    # It's a submodule
-    git checkout main || git checkout master
-    git pull origin main || git pull origin master
-    cd "$PROJECT_ROOT"
-    git add workflows
-    echo "Workflows pulled. Review changes and commit with: git commit -m 'Update workflows'"
-else
-    echo "Not a submodule. Use 'git pull' to update."
-fi
-```
-
-## Workflow: Updating Workflows from Any Project
-
-### Scenario: You're working in Project A and want to update a workflow
-
-1. **Edit the workflow file:**
-   ```bash
-   cd /path/to/project-a/workflows
-   # Edit the file you want to update
-   vim 05-review-audit/03-code-review.md
-   ```
-
-2. **Commit to workflows submodule:**
-   ```bash
-   cd /path/to/project-a/workflows
-   git add 05-review-audit/03-code-review.md
-   git commit -m "Update code-review workflow: add parallel file reading"
-   git push origin main
-   ```
-
-3. **Update the parent project reference:**
-   ```bash
-   cd /path/to/project-a
-   git add workflows
-   git commit -m "Update workflows: improved code-review"
-   git push
-   ```
-
-4. **In other projects, pull the update:**
-   ```bash
-   cd /path/to/project-b
-   git pull  # Gets the updated submodule reference
-   git submodule update --remote workflows
-   # Or use the pull script:
-   ./workflows/pull-workflows.sh
-   ```
-
-## Alternative: Symlink Approach (Not Recommended for Git)
-
-If you prefer symlinks (simpler but less git-friendly):
-
-### Setup
-
-1. **Create central workflows location:**
-   ```bash
-   mkdir -p ~/shared-workflows
-   cp -r /path/to/current-project/workflows ~/shared-workflows/
-   ```
-
-2. **Create symlinks in each project:**
-   ```bash
-   cd /path/to/project-a
-   rm -rf workflows  # Remove existing
-   ln -s ~/shared-workflows/workflows workflows
-   
-   cd /path/to/project-b
-   rm -rf workflows
-   ln -s ~/shared-workflows/workflows workflows
-   ```
-
-**Limitations:**
-- ❌ Symlinks don't work well with git (git will track the symlink, not the content)
-- ❌ Not portable across different machines
-- ❌ Requires central location setup
-- ❌ Harder to version control
-
-**Better alternative:** Use git submodules (Option A above).
-
-## Alternative: Git Subtree (Self-Contained)
-
-If you want workflows to be part of each project's history:
+If you are editing workflow files and want to publish those updates:
 
 ```bash
-# In the workflows repository
-git subtree push --prefix=workflows origin workflows-branch
-
-# In each project
-git subtree add --prefix=workflows https://github.com/yourusername/info-visualizer-workflows.git workflows-branch --squash
-
-# To update:
-git subtree pull --prefix=workflows https://github.com/yourusername/info-visualizer-workflows.git workflows-branch --squash
-```
-
-**Pros:** Self-contained, no submodule complexity  
-**Cons:** More complex update commands, merges workflows into project history
-
-## Recommended Workflow for Your Use Case
-
-Given your requirements:
-- ✅ Update from any project
-- ✅ Selective sharing
-- ✅ Work in progress
-- ✅ Don't want to switch projects
-
-**I recommend: Git Submodule (Option A)**
-
-### Quick Reference
-
-**Update workflows (from any project):**
-```bash
-cd workflows
+cd /path/to/your-project/workflows
+git status
 git add .
-git commit -m "Update workflow: [description]"
-git push origin main
-cd ..
-git add workflows
-git commit -m "Update workflows reference"
+git commit -m "docs: clarify execution log updates"
 git push
 ```
 
-**Pull latest workflows (in other projects):**
+Helper script (commits staged changes and pushes):
+
 ```bash
-git submodule update --remote workflows
-# Or
-cd workflows && git pull && cd ..
-git add workflows && git commit -m "Update workflows"
+cd /path/to/your-project/workflows
+git add .
+./update-workflows.sh "docs: clarify execution log updates"
 ```
 
-## GitHub Setup
+## Alternative Model: Git Submodule (Advanced)
 
-1. **Create workflows repository on GitHub:**
-   - Go to GitHub
-   - Create new repository: `info-visualizer-workflows`
-   - Make it public or private (your choice)
+Use a submodule only if you want the parent project to pin an exact workflows version in its own history.
 
-2. **Push workflows:**
-   ```bash
-   cd workflows
-   git remote add origin https://github.com/yourusername/info-visualizer-workflows.git
-   git push -u origin main
-   ```
+Important differences from the nested repo model:
+- The parent repo tracks the workflows pointer (gitlink) and `.gitmodules`.
+- `workflows/` must NOT be ignored by the parent repo.
+- The safe default update flow respects the parent-pinned commit.
 
-3. **Add to projects as submodule:**
-   ```bash
-   git submodule add https://github.com/yourusername/info-visualizer-workflows.git workflows
-   ```
+### Add as Submodule
 
-## Troubleshooting
-
-### Submodule shows as modified but you didn't change anything
 ```bash
-cd workflows
-git status  # Check what changed
-# If it's just the commit reference, that's normal after pulling
+cd /path/to/your-project
+git submodule add https://github.com/Rebooted-Dev/Workflow-Scripts workflows
+git commit -m "chore: add workflows submodule"
 ```
 
-### Want to update to specific version
+### Update Submodule (Safe Default)
+
+```bash
+git pull
+git submodule update --init --recursive
+```
+
+### Advance to a Newer Submodule Commit (Explicit)
+
 ```bash
 cd workflows
-git checkout <commit-hash>
+git fetch
+git switch main
+git pull --ff-only
 cd ..
 git add workflows
-git commit -m "Pin workflows to specific version"
+git commit -m "chore: bump workflows submodule"
 ```
 
-### Remove submodule (if needed)
-```bash
-git submodule deinit workflows
-git rm workflows
-rm -rf .git/modules/workflows
-```
+Avoid using `git submodule update --remote` as the default because it advances to remote HEAD and bypasses the parent repo's pin.
 
-## Best Practices
+## Alternatives (Generally Not Recommended)
 
-1. **Always commit submodule updates** in the parent project after updating workflows
-2. **Use descriptive commit messages** when updating workflows
-3. **Tag workflow versions** for important releases:
-   ```bash
-   cd workflows
-   git tag v1.0.0
-   git push origin v1.0.0
-   ```
-4. **Document breaking changes** in workflow files or CHANGELOG
-5. **Test workflow updates** in one project before pushing to all
+### Symlinks
 
-## Summary
+Symlinks can work locally but are not portable and are awkward with git (git tracks the symlink, not the content).
 
-**For your use case, use Git Submodules:**
-- Create separate `info-visualizer-workflows` repository
-- Add as submodule to each project
-- Update from any project by committing to workflows submodule
-- Pull updates in other projects with `git submodule update --remote`
+### Git Subtree / Copy-Vendoring
 
-This gives you version control, selective updates, and the ability to work from any project.
+Subtree or copy-based vendoring can work but merges workflow history into the project, which is usually not desired for reusable tooling.

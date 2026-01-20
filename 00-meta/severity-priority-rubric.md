@@ -46,13 +46,13 @@ Provide a shared rubric for scoring issues across reviews and plans.
 2. Classify: apply severity rubric with impact and likelihood.
 3. Prioritize: map to priority using the matrix.
 4. Validate: reviewer confirms scores or escalates.
-5. Publish: record scores with scorer, timestamp, and rationale.
+5. Publish: record scores with scorer, date, and rationale.
 6. Revisit: re-score on new evidence or milestone changes.
 7. Close: confirm final severity/priority and archive rationale.
 
 ## Acceptance Criteria
 - Definitions and thresholds are documented and consistently applied.
-- Each item records severity, priority, scorer, timestamp, and rationale.
+- Each item records severity, priority, scorer, date, and rationale.
 - Disputes follow an escalation path with resolution SLA.
 - Reports show score distribution and changes over time.
 

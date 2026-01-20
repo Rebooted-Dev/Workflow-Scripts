@@ -113,7 +113,7 @@ git push
 - Work from the root directory: `<PROJECT_PATH>`
 - Focus on application code, components, services
 - Update project-specific documentation in `docs/` (if it exists)
-- Always update the changelog for any code change (features, fixes, refactors). Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md` - create if missing.
+- Always update the changelog for any code change (features, fixes, refactors). Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md` - create if missing. Prefer entries in the format: `- YYYY-MM-DD: Description of change`.
 - Update `troubleshooting/` only for bugs/issues or non-trivial problems encountered during development.
 - The `workflows/` directory is **ignored** by git (in `.gitignore`), so it won't be included in commits
 - Standard operations: `git add .`, `git commit`, `git push` - workflows will NOT be included
@@ -333,7 +333,7 @@ When adding a new entry:
 ## For AI Agents / Coding Assistants
 
 When instructed to **"update the logs"** or **"update the log files"**, this refers to:
-1. **Update the changelog** - Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md`. Always update for any code change (features, fixes, refactors). Create the file if missing.
+1. **Update the changelog** - Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md`. Always update for any code change (features, fixes, refactors). Prefer entries in the format: `- YYYY-MM-DD: Description of change`. Create the file if missing.
 2. **Create a troubleshooting entry** - Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems.
 3. **Update `troubleshooting/index.md`** - Add the new entry at the top of the table when a troubleshooting entry is created.
 
@@ -381,7 +381,7 @@ Add or update the troubleshooting section in `AGENTS.md`:
 
 ### Interpreting "Update the Logs"
 When instructed to "update the logs" or "update the log files", this refers to:
-1. **Changelog** - Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md`. Always update for any code change (features, fixes, refactors). Create the file if missing.
+1. **Changelog** - Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md`. Always update for any code change (features, fixes, refactors). Prefer entries in the format: `- YYYY-MM-DD: Description of change`. Create the file if missing.
 2. **Troubleshooting entries** - Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems that required investigation.
 3. **Both** - When a bug fix requires both a troubleshooting entry (for the problem-solving process) AND a changelog entry (for the change itself).
 

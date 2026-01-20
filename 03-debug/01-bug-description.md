@@ -7,8 +7,8 @@ Create a comprehensive, structured bug report when a bug persists after initial 
 - Bug report or issue description (user-supplied).
 - Repository root.
 - Additional context: error logs, stack traces, screenshots, reproduction steps, affected users/systems.
-- Previous troubleshooting entries in `../../troubleshooting/`.
-- Recent changes documented in `../../CHANGELOG.md`.
+- Previous troubleshooting entries in `troubleshooting/`.
+- Recent changes documented in `docs/CHANGELOG.md` (preferred) or `CHANGELOG.md`.
 
 ## Prioritization Rule
 - Classify the bug using severity (S0–S3) and priority (P0–P3) per the shared rubric: `../00-meta/severity-priority-rubric.md`.
@@ -21,13 +21,13 @@ Create a comprehensive, structured bug report when a bug persists after initial 
 Use multiple parallel agents to gather comprehensive information about the bug. Each agent should read relevant files in parallel batches (read multiple files concurrently, not sequentially):
 
 - **Agent 1: Review Troubleshooting History**
-  - Read all entries in `../../troubleshooting/` directory (read index.md and category files in parallel)
+  - Read all entries in `troubleshooting/` directory (read index.md and category files in parallel)
   - Identify related or similar issues that were previously encountered
   - Extract patterns, attempted fixes, and lessons learned
   - Note any recurring issues or unresolved problems
 
 - **Agent 2: Analyze Changelog and Recent Changes**
-  - Read `../../CHANGELOG.md` (read in full)
+  - Read `docs/CHANGELOG.md` if present; otherwise read `CHANGELOG.md`
   - Identify recent changes that might have introduced or affected the bug
   - Map timeline of changes to bug occurrence
   - Extract context about related features or fixes
@@ -157,14 +157,14 @@ Create a structured bug description report with the following sections:
   - Related issues or bugs
 
 ### 5. Report Storage
-- Save the report to `../../plans/` directory with a timestamped filename:
+- Save the report to `plans/` (project root) with a dated filename:
   - Format: `bug-description-<YYYY-MM-DD>-<HH-MM>-<short-title>.md`
   - Example: `bug-description-2026-01-20-14-30-image-generation-failure.md`
 - Ensure the report is self-contained and includes all necessary context
 - Cross-reference related troubleshooting entries and changelog entries
 
 ## Output Requirements
-- Comprehensive bug description report saved to `../../plans/` with timestamp
+- Comprehensive bug description report saved to `plans/` (project root) with dated filename
 - Report includes all sections listed in Step 4
 - Evidence and references are properly documented
 - Severity and priority classification with rationale
@@ -179,7 +179,7 @@ Create a structured bug description report with the following sections:
 - Impact is assessed with severity and priority classification
 - Recommended next steps are actionable and prioritized
 - Evidence is properly referenced and accessible
-- Report is saved to plans directory with proper timestamp
+- Report is saved to plans directory with proper date
 - Report is self-contained and understandable without additional context
 
 ## Bug Description Best Practices
@@ -209,7 +209,7 @@ Create a structured bug description report with the following sections:
 - Recommend investigation steps to confirm root cause
 
 ## Notes
-- This workflow is designed for bugs that persist after initial fix attempts. For initial bug investigation, use `bug-fix-workflow.md`.
+- This workflow is designed for bugs that persist after initial fix attempts. For initial bug investigation, use `02-bug-fix-workflow.md`.
 - When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.
 - If information is incomplete or vague, document what is known and clearly identify what additional information is needed.
 - Cross-reference related troubleshooting entries to identify patterns or recurring issues.

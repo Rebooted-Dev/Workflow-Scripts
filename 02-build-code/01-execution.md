@@ -32,12 +32,13 @@ For Each Phase (implementation loop)
   - Update task list with checkboxes using emoji format:
     - Completed items: `✅ Task description`
     - Pending items: `⏳ Task description`
-  - Update `../../CHANGELOG.md` with a timestamped entry: `YYYY-MM-DD HH:MM - ...`.
-  - If a bug was fixed, update `../../TROUBLESHOOTING.md` with a timestamped entry using:
-    - Problem definition
-    - Observation
-    - Detection method
-    - Precise fix
+  - Update the changelog with a dated entry: `- YYYY-MM-DD: ...`.
+    - Preferred location: `docs/CHANGELOG.md`
+    - Fallback location: `CHANGELOG.md`
+  - If a bug was fixed, add a troubleshooting entry:
+    - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`
+    - Update `troubleshooting/index.md` (add the new entry at the top)
+    - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
   - Provide a concise summary (1-3 bullets) describing what changed and why.
 
 Finalization (after all phases)

@@ -40,10 +40,10 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
    - risks and mitigations
    - validation/verification steps and exit criteria
 6. Add effort level labels per task (Small/Medium/Large).
-7. Write the new plan to the `../../plans/` directory with a timestamped filename.
+7. Write the new plan to the `plans/` directory (project root) with a dated filename.
 
 ## Output Requirements
-- The new plan must begin with a timestamp line: `YYYY-MM-DD HH:MM`.
+- The new plan must begin with a timestamp header: `YYYY-MM-DD HH:MM`.
 - Title should describe the plan scope.
 - Include a concise summary and a priority-ordered roadmap.
 

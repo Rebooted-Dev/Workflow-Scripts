@@ -1,7 +1,7 @@
 # Workflow: Security Review
 
 ## Purpose
-Perform a structured security review that identifies vulnerabilities, security risks, and compliance issues, then file a report in `../../plans/`.
+Perform a structured security review that identifies vulnerabilities, security risks, and compliance issues, then file a report in `plans/` (project root).
 
 ## Inputs
 - Repository root.
@@ -48,7 +48,7 @@ Perform a structured security review that identifies vulnerabilities, security r
    - Recommended security hardening measures
    - Timeline for addressing critical issues
 
-5. Save the report to `../../plans/` with a timestamped filename (e.g., `security-review-YYYY-MM-DD-HH-MM.md`).
+5. Save the report to `plans/` (project root) with a dated filename (e.g., `security-review-YYYY-MM-DD-HH-MM.md`).
 
 ## Output Requirements
 - Report title, date/time, scope, and summary.

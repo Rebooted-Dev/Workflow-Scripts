@@ -35,7 +35,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 4. Score notable items with severity and priority (S0–S3, P0–P3) using the rubric.
 5. Note missing steps, dependencies, and acceptance criteria.
 6. Provide corrective guidance with concrete alternatives or code-level suggestions.
-7. Append an addendum to the plan document with a timestamp and model name.
+7. Append an addendum to the plan document with a dated header and model name.
 
 ## Output Format (append to plan)
 - Header: `YYYY-MM-DD HH:MM - Plan Review (Model: <model-name>)`

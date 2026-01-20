@@ -1,5 +1,7 @@
 # Filename Review and Recommendations
 
+Status: historical note. This document reflects an earlier snapshot of the workflows tree and may contain stale filenames/paths. Use it for naming principles, not as an authoritative map of the current directory structure.
+
 ## Current Structure
 
 ```
@@ -24,10 +26,11 @@ workflows/
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
 │   └── sync-documentation.md
-└── 05-review-audit/
+├── 05-review-audit/
+│   └── 01-code-review.md
+└── 06-security/
     ├── 01-security-review.md
-    ├── 02-security-fix.md
-    └── 03-code-review.md
+    └── 02-security-fix.md
 ```
 
 ## Issues Identified
@@ -101,10 +104,11 @@ workflows/
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
 │   └── sync-documentation.md
-└── 05-review-audit/
+├── 05-review-audit/
+│   └── 01-code-review.md
+└── 06-security/
     ├── 01-security-review.md
-    ├── 02-security-fix.md
-    └── 03-code-review.md
+    └── 02-security-fix.md
 ```
 
 **Rationale:** Better organization, separates workflow instructions from analysis documents.
@@ -181,10 +185,11 @@ workflows/
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
 │   └── sync-documentation.md
-└── 05-review-audit/
+├── 05-review-audit/
+│   └── 01-code-review.md
+└── 06-security/
     ├── 01-security-review.md
-    ├── 02-security-fix.md
-    └── 03-code-review.md
+    └── 02-security-fix.md
 ```
 
 ## Naming Convention Guidelines

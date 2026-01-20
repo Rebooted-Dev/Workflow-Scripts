@@ -64,13 +64,13 @@ Use parallel agents to verify the fix:
 Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### 7. Documentation
-- Update `../../CHANGELOG.md` with a timestamped entry: `YYYY-MM-DD HH:MM - Security fix: [vulnerability description]`.
-- Update `../../TROUBLESHOOTING.md` with a timestamped entry using:
-  - Problem definition (vulnerability type, CWE if applicable)
-  - Observation (how it was discovered, attack vector)
-  - Detection method (security review, penetration test, etc.)
-  - Precise fix (what was changed and why)
-  - Security impact (what was at risk, what's now protected)
+- Update the changelog with a dated entry: `- YYYY-MM-DD: Security fix: [vulnerability description]`.
+  - Preferred location: `docs/CHANGELOG.md`
+  - Fallback location: `CHANGELOG.md`
+- Add a troubleshooting entry (category `security`):
+  - Create a new file under `troubleshooting/security/` named `YYYY-MM-DD-security-<short-title>.md`
+  - Update `troubleshooting/index.md` (add the new entry at the top)
+  - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
 
 ### 8. Final Verification
 - Run final `npm run build` to confirm the repo is shippable.
@@ -113,7 +113,7 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 ## Output Requirements
 - Fixed code with security vulnerability remediated
 - Security tests added or updated
-- Documentation updated (CHANGELOG, TROUBLESHOOTING)
+- Documentation updated (changelog and troubleshooting entry)
 - Verification that fix doesn't introduce new vulnerabilities
 - Confirmation that functionality still works correctly
 

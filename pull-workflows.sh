@@ -1,31 +1,39 @@
 #!/bin/bash
-# Pull latest workflows from remote
-# Usage: ./pull-workflows.sh [commit-message]
+# Pull the latest Workflow-Scripts updates into this project.
+#
+# This assumes `workflows/` is a nested git repository managed independently
+# from the main project repo.
+#
+# Usage:
+#   ./workflows/pull-workflows.sh
 
-set -e
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-
-COMMIT_MSG="${1:-Update workflows to latest version}"
 
 echo "Pulling latest workflows..."
 
 cd "$SCRIPT_DIR"
 
-if [ -f .git ]; then
-    # It's a submodule
-    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "main")
-    git checkout "$CURRENT_BRANCH" 2>/dev/null || git checkout main || git checkout master
-    git pull origin "$CURRENT_BRANCH" 2>/dev/null || git pull origin main || git pull origin master
-    cd "$PROJECT_ROOT"
-    git add workflows
-    echo ""
-    echo "Workflows pulled successfully."
-    echo "Review changes with: git diff --cached"
-    echo "Commit with: git commit -m '$COMMIT_MSG'"
-    echo "Or auto-commit: git commit -m '$COMMIT_MSG' && git push"
-else
-    echo "Not a submodule. Use 'git pull' to update."
-    git pull
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "Error: '$SCRIPT_DIR' is not a git repository."
+    echo "Expected workflows to be cloned into ./workflows."
+    exit 1
 fi
+
+if [ -n "$(git status --porcelain)" ]; then
+    echo "Error: workflows repo has uncommitted changes."
+    echo "Commit/stash them before pulling updates."
+    exit 1
+fi
+
+CURRENT_BRANCH="$(git symbolic-ref --quiet --short HEAD || true)"
+if [ -z "$CURRENT_BRANCH" ]; then
+    echo "Note: workflows repo is in detached HEAD; fetching without switching branches."
+    git fetch --all --prune
+    echo "To get updates, switch to a branch first (e.g., 'git switch main')."
+    exit 0
+fi
+
+git pull --ff-only
+echo "Workflows updated (branch: $CURRENT_BRANCH)."
