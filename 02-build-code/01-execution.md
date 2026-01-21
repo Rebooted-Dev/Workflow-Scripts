@@ -51,9 +51,12 @@ Execute implementation in phases with verification and documentation updates.
   - If relevant, run: `npm run dev` and perform a quick smoke test of the affected flow.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
-  - Update task list using Markdown checkbox format:
-    - Completed items: `- [x] Task description`
-    - Pending items: `- [ ] Task description`
+  - **CRITICAL: Update task list using Markdown checkbox format:**
+    - **Completed items:** `- [x] Task description` - Mark IMMEDIATELY after task completion and verification
+    - **Pending items:** `- [ ] Task description` - For tasks not yet started or still in progress
+    - **Parent tasks:** Mark parent tasks as `- [x]` only when ALL sub-tasks are complete
+    - **Deferred tasks:** Leave as `- [ ]` and add a note explaining deferral (e.g., "Deferred to P3")
+    - **Systematic checking:** Review ALL tasks in the plan, not just the ones you worked on in this phase
   - Update the changelog with a dated entry: `- YYYY-MM-DD: ...`.
     - Preferred location: `docs/CHANGELOG.md`
     - Fallback location: `CHANGELOG.md`

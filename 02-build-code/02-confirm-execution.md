@@ -18,10 +18,24 @@ Validate that an implementation plan has actually been completed (in code and ve
 
 ## Marking Convention
 
-Use Markdown task list checkboxes:
+Use Markdown task list checkboxes consistently throughout the plan:
 
-- Completed: `- [x] Task description`
-- Not completed / still open: `- [ ] Task description`
+- **Completed:** `- [x] Task description` - Mark only if BOTH conditions are met:
+  1. The code change exists in the repository (verified via `git diff` or file inspection)
+  2. The stated verification/exit criteria were met (tests passed, build succeeded, manual verification completed)
+- **Not completed / still open:** `- [ ] Task description` - For tasks that are:
+  - Not yet started
+  - In progress but not verified
+  - Missing code changes
+  - Missing verification/exit criteria completion
+  - Explicitly deferred to a future phase
+
+**Important rules:**
+- **Systematic review:** Check EVERY task in the plan, not just the ones you remember working on
+- **Parent tasks:** Mark parent tasks as `- [x]` only when ALL sub-tasks are complete
+- **Sub-tasks:** Mark individual sub-tasks as `- [x]` when they are individually complete
+- **Deferred tasks:** Leave as `- [ ]` and add a note (e.g., "Deferred to P3" or "Future enhancement")
+- **Partial completion:** If a task is partially done, leave it as `- [ ]` and add a note explaining what remains
 
 If the plan does not use task list syntax, add an addendum section instead of rewriting the whole plan.
 
@@ -35,11 +49,22 @@ If the plan does not use task list syntax, add an addendum section instead of re
    - Agent 3: Spot-check user-facing behavior (if applicable) and confirm key flows still work.
    - Agent 4: Look for gaps: missing docs/log updates, missing edge-case handling, broken imports.
 
-3. For each task in the plan:
-   - Mark it completed only if:
-     - the code change exists, AND
-     - the stated verification/exit criteria were met (tests/build/manual verification).
-   - If it is not completed, leave it unchecked and add a short note explaining what is missing.
+3. **Systematically review every task in the plan:**
+   - Go through each priority phase (P0, P1, P2, P3) in order
+   - For each task and sub-task:
+     - **Mark as completed (`- [x]`) only if BOTH:**
+       - The code change exists (verify via `git diff`, file inspection, or code search)
+       - The stated verification/exit criteria were met (tests passed, build succeeded, manual verification completed)
+     - **Mark as incomplete (`- [ ]`) if:**
+       - Code changes are missing
+       - Verification/exit criteria were not met
+       - Task is explicitly deferred
+       - Only partially complete (add a note explaining what remains)
+   - **For parent tasks with sub-tasks:**
+     - Check if ALL sub-tasks are complete
+     - Mark parent as `- [x]` only when all sub-tasks are `- [x]`
+     - If any sub-task is incomplete, leave parent as `- [ ]`
+   - **Add notes for incomplete tasks:** Explain what is missing or why it was deferred
 
 4. Add a verification addendum to the plan containing:
    - Timestamp: `YYYY-MM-DD HH:MM`

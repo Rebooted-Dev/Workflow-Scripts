@@ -303,7 +303,7 @@ Workflow will:
 - Run npm run build
 - Test in dev server
 - Update the changelog (`docs/CHANGELOG.md` preferred)
-- Update task list with ✅/⏳
+- Update task list with checkboxes (`- [x]` for completed, `- [ ]` for pending)
 - Proceed to next phase
 ```
 
@@ -314,8 +314,8 @@ Workflow will:
 - **Report:** Update changelog, troubleshooting log, task list
 
 **Task List Format:**
-- ✅ Completed items
-- ⏳ Pending items
+- `- [x]` Completed items (mark immediately after completion)
+- `- [ ]` Pending items (not yet started or in progress)
 
 **Documentation Updates:**
 - Changelog: update `docs/CHANGELOG.md` (preferred) or `CHANGELOG.md` with `- YYYY-MM-DD: Description`
