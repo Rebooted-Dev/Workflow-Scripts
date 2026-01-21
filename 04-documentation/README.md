@@ -10,6 +10,7 @@ This directory contains workflows for keeping documentation in sync with code.
 | [`01-create-docs.md`](./01-create-docs.md) | Generate comprehensive documentation from scratch | New projects, major documentation overhaul, initial documentation |
 | [`02-sync-documentation.md`](./02-sync-documentation.md) | Review code and update docs to match | After code changes, periodic maintenance |
 | [`09-optional.md`](./09-optional.md) | Optional doc additions checklist + templates | When you want to recommend high-leverage extra docs without overdoing it |
+| [`ascii-art-prompts.md`](./ascii-art-prompts.md) | Standardized prompts for generating ASCII art diagrams | When adding visual diagrams to documentation (referenced by main workflows) |
 
 ## Quick Start
 
@@ -55,7 +56,7 @@ This workflow updates existing documentation to match code:
 2. **Inventory docs** - Catalog existing documentation, tag issues P0-P3
 3. **Fix in priority order** - P0 first, then P1, P2, P3
 4. **Reorganize** - Create meaningful subdirectories in `docs/`
-5. **Add diagrams** - Text-based diagrams (Mermaid recommended)
+5. **Add diagrams** - Text-based diagrams (ASCII art using `./ascii-art-prompts.md`, or Mermaid for complex diagrams)
 6. **Cross-link** - Remove redundancy, add references between related docs
 
 ## Expected `docs/` Structure

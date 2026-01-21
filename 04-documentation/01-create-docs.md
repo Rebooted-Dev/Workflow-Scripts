@@ -293,12 +293,24 @@ If you have fewer agents available, merge adjacent responsibilities (e.g., Agent
      - Add "See also" sections where relevant.
 
 22. **Add diagrams and visual aids (Agents C/D/E/F/I as applicable; Agent M validates):**
-     - Create text-based diagrams (Mermaid recommended) where they clarify complex systems.
+     - Create text-based diagrams where they clarify complex systems.
+     - **ASCII art diagrams**: Use prompts from `./ascii-art-prompts.md` to generate ASCII art diagrams for:
+       - Architecture diagrams (system overview, component relationships)
+       - Flowcharts and process flows (workflows, data flows)
+       - Hierarchy diagrams (file structure, class inheritance)
+       - Network and integration diagrams (API relationships, microservices)
+       - UI/UX flow diagrams (user journeys, state machines)
+       - Documentation-specific diagrams (hub structure, learning paths)
+     - **Mermaid diagrams**: Use Mermaid syntax for more complex diagrams that benefit from automatic rendering (sequence diagrams, complex flowcharts).
      - Architecture diagrams.
      - Data flow diagrams.
      - Sequence diagrams for key workflows.
      - Component interaction diagrams.
      - Class diagrams.
+     - When choosing between ASCII art and Mermaid:
+       - Use ASCII art for simple, static diagrams that render well in plain text (terminals, plain markdown viewers)
+       - Use Mermaid for complex diagrams that benefit from automatic layout and rendering in markdown viewers that support it
+       - Reference `./ascii-art-prompts.md` for standardized prompt templates and character reference
 
 23. **Verification pass (required; Agent M):**
     - Spot-check every doc for non-speculative claims.

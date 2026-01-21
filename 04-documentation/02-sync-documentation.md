@@ -45,7 +45,11 @@ If you discover missing "supporting" documentation (contributing/changelog/confi
    - then reorganize and consolidate
    - then add diagrams/polish
 4. Reorganize `docs/` into clear subdirectories by audience and purpose.
-5. Add diagrams and file maps where they clarify complex systems.
+5. Add diagrams and file maps where they clarify complex systems:
+   - **ASCII art diagrams**: Use prompts from `./ascii-art-prompts.md` to generate ASCII art diagrams for architecture, flows, hierarchies, and other visual aids that benefit from plain text rendering.
+   - **Mermaid diagrams**: Use Mermaid syntax for complex diagrams that benefit from automatic rendering.
+   - Reference `./ascii-art-prompts.md` for standardized prompt templates, character reference, and best practices.
+   - When adding diagrams, ensure they accurately reflect the current codebase structure and relationships.
 6. Remove redundancy and cross-link related docs.
 7. Normalize document structure:
    - For docs you touched, align their headings with `./00-doc-templates.md`.

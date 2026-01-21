@@ -494,3 +494,27 @@ These are common "missing" docs that materially improve maintainability and onbo
 
 ## Notes / Open Questions
 ```
+
+## Diagrams and Visual Aids
+
+When adding diagrams to documentation:
+
+- **ASCII art diagrams**: Use standardized prompts from `./ascii-art-prompts.md` to generate consistent ASCII art diagrams. These work well for:
+  - Architecture overviews and component relationships
+  - Simple flowcharts and process flows
+  - File system hierarchies and directory structures
+  - Class inheritance diagrams
+  - Network and API integration diagrams
+  - User journey flows and state machines
+
+- **Mermaid diagrams**: Use Mermaid syntax for more complex diagrams that benefit from automatic layout and rendering in markdown viewers that support it (sequence diagrams, complex flowcharts, entity-relationship diagrams).
+
+- **When to use each**:
+  - ASCII art: Simple, static diagrams that render well in plain text (terminals, plain markdown viewers, code reviews)
+  - Mermaid: Complex diagrams requiring automatic layout, or when markdown viewer support is guaranteed
+
+- **Reference**: See `./ascii-art-prompts.md` for:
+  - Standardized prompt templates for different diagram types
+  - Character reference for box-drawing and arrows
+  - Best practices and formatting guidelines
+  - Quality checklist for diagram generation
