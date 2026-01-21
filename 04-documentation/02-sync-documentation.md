@@ -7,6 +7,18 @@ Review code and update `docs/` so documentation accurately matches the codebase 
 - Repository root.
 - Existing `docs/` directory contents.
 
+## Document Templates (required)
+Use the shared templates in `./00-doc-templates.md` when:
+- creating new documentation files
+- reshaping an existing document that has no clear structure
+- adding new sections to an existing doc
+
+Template rules:
+- Prefer the smallest change that brings the doc back into conformance.
+- Keep headings stable; avoid churn unless it reduces real confusion.
+- If a section is not applicable, include it and state "Not applicable" with a brief reason.
+- Never include secret values; document only env var names and how to obtain them.
+
 ## Prioritization Rule
 - Organize doc work by priority, descending urgency/importance: P0, P1, P2, P3.
 - Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
@@ -16,6 +28,9 @@ Review code and update `docs/` so documentation accurately matches the codebase 
 - P1: missing docs for critical flows (setup, run, build, key architecture decisions).
 - P2: re-organization, consolidation, cross-links, and reference completeness.
 - P3: nice-to-have diagrams, polish, and deep examples.
+
+## Optional Add-Ons
+If you discover missing "supporting" documentation (contributing/changelog/config/security/errors/migrations/etc.), use `./09-optional.md` as a checklist to recommend a small, high-leverage set (usually 1-3 items).
 
 ## Steps
 1. Scan the codebase using parallel agents. Each agent should read code files in parallel batches (read multiple files concurrently):
@@ -32,6 +47,9 @@ Review code and update `docs/` so documentation accurately matches the codebase 
 4. Reorganize `docs/` into clear subdirectories by audience and purpose.
 5. Add diagrams and file maps where they clarify complex systems.
 6. Remove redundancy and cross-link related docs.
+7. Normalize document structure:
+   - For docs you touched, align their headings with `./00-doc-templates.md`.
+   - If a doc is intentionally structured differently, add a short "How to read this" section at the top.
 
 ## Output Requirements
 - `docs/` is organized into meaningful subdirectories.
