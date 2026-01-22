@@ -1,10 +1,10 @@
-# macOS Electron Desktop App Guide v2.9
+# macOS Electron Desktop App Guide v3.0
 
 How this repo builds and packages the macOS Electron app.
 
-This project uses a Vite + React renderer that is bundled to `dist/` and loaded in production via `BrowserWindow.loadFile()` (file://).
+This project uses a Vite + React renderer that is bundled to `renderer/` (NOT `dist/` - see critical note below) and loaded in production via custom `app://` protocol.
 
-Document version: 2.9 (2026-01)
+Document version: 3.0 (2026-01)
 
 ## When to use this
 
@@ -84,10 +84,24 @@ Rule of thumb: when resolving sibling paths from `desktop/main.cjs`, start with 
 
 In `electron-builder.config.cjs`, ensure these are true:
 
-- `files` includes `index.cjs`, `desktop/main.cjs`, `desktop/preload.cjs`, and `dist/**/*`.
+- `files` includes `index.cjs`, `desktop/main.cjs`, `desktop/preload.cjs`, and the renderer build directory.
 - Local builds should succeed without Apple credentials (ad-hoc signing + notarization disabled).
 
-Example (trim to what you actually ship):
+**CRITICAL: electron-builder excludes `dist/` by default.** The default file patterns include `!dist{,/**/*}` which excludes any directory named `dist`. If you use Vite's default output directory (`dist/`), your renderer will NOT be packaged.
+
+**Solution:** Configure Vite to output to a different directory (e.g., `renderer/`):
+
+```ts
+// vite.config.ts
+export default defineConfig(() => ({
+  base: './',
+  build: {
+    outDir: 'renderer',
+  },
+}));
+```
+
+Example electron-builder config (trim to what you actually ship):
 
 ```js
 module.exports = {
@@ -98,8 +112,8 @@ module.exports = {
     'desktop/main.cjs',
     'desktop/preload.cjs',
 
-    // Vite renderer build
-    'dist/**',
+    // Vite renderer build (NOT dist/ - that's excluded by default!)
+    'renderer/**',
 
     'package.json'
   ],
@@ -113,26 +127,29 @@ module.exports = {
 };
 ```
 
-## Renderer build (Vite + `dist/`)
+## Renderer build (Vite + `renderer/`)
 
-If you load `dist/index.html` via `loadFile()`, a Vite build MUST use relative asset paths.
+If you load `renderer/index.html` via `loadFile()`, a Vite build MUST use relative asset paths.
 
 In `vite.config.ts`:
 
 ```ts
 export default defineConfig(() => ({
-  base: './'
+  base: './',
+  build: {
+    outDir: 'renderer',
+  },
 }));
 ```
 
 In `desktop/main.ts`:
 
 ```ts
-const indexPath = path.join(__dirname, '..', 'dist', 'index.html');
+const indexPath = path.join(__dirname, '..', 'renderer', 'index.html');
 await win.loadFile(indexPath);
 ```
 
-If `dist/index.html` contains `/assets/...` (absolute) paths, the window will show blank in packaged builds.
+If `renderer/index.html` contains `/assets/...` (absolute) paths, the window will show blank in packaged builds.
 
 ## Loading packaged local files (optional)
 
@@ -274,19 +291,22 @@ Credentials (choose one approach; keep it consistent in CI):
 When in doubt, start by tailing the main log:
 
 ```bash
-tail -f "~/Library/Logs/PDF to PNG Converter/main.log"
+tail -f "~/Library/Logs/<AppName>/main.log"
 ```
 
 Common failures and the single fix that matters:
 
 | Symptom | Usually means | Fix |
 |---|---|---|
-| App opens but is blank | renderer assets not loading | confirm `vite.config.ts: base: './'`, then inspect `dist/index.html` for `./assets/...` |
-| App throws on launch | `dist/index.html` missing in the packaged app | confirm `npm run build` ran and `electron-builder.config.cjs` includes `dist/**/*` |
+| App opens but is blank | renderer assets not loading | confirm `vite.config.ts: base: './'`, then inspect `renderer/index.html` for `./assets/...` |
+| App throws on launch | `renderer/index.html` missing in packaged app | confirm Vite outputs to `renderer/` (NOT `dist/`), and `electron-builder` includes `renderer/**` |
+| `dist/` not in asar | electron-builder excludes `dist/` by default | **Change Vite output to `renderer/`** - the default patterns exclude `!dist{,/**/*}` |
 | "Cannot find module index.cjs" | not packaged | add `index.cjs` to `electron-builder` `files` |
 | Stuck on "Loading..." (packaged) | `fetch()` blocked by `file://` | use `app://` custom protocol (or serve over `http://`) |
 | Window not draggable | drag region/no-drag wrong | use 38px drag bar + global no-drag rule + traffic lights padding |
 | `electron-builder` dependency scan noise | npm optional deps confusion | build via the repo wrapper (or pin toolchain) |
+
+**Debugging tip:** Use `npx asar list "<app>.app/Contents/Resources/app.asar"` to verify what's actually packaged.
 
 ## Verification checklist
 
@@ -294,21 +314,25 @@ Build and inspect:
 
 ```bash
 npm run mac:build:dir
-ls -la "release/mac-arm64/PDF to PNG Converter.app/Contents/Resources/"
-npx asar list "release/mac-arm64/PDF to PNG Converter.app/Contents/Resources/app.asar"
+ls -la "release/mac-arm64/<AppName>.app/Contents/Resources/"
+npx asar list "release/mac-arm64/<AppName>.app/Contents/Resources/app.asar"
+
+# Verify renderer is packaged (CRITICAL - must see renderer/ directory):
+npx asar list "release/mac-arm64/<AppName>.app/Contents/Resources/app.asar" | grep renderer
 ```
 
 Run and watch logs:
 
 ```bash
-open "release/mac-arm64/PDF to PNG Converter.app"
-tail -f "~/Library/Logs/PDF to PNG Converter/main.log"
+open "release/mac-arm64/<AppName>.app"
+tail -f "~/Library/Logs/<AppName>/main.log"
 ```
 
 ## Document history
 
 | Version | Date | Notes |
 |---|---|---|
+| 3.0 | 2026-01 | **CRITICAL FIX:** Documented that electron-builder excludes `dist/` by default; changed Vite output to `renderer/` to avoid conflict |
 | 2.9 | 2026-01 | Updated to match PDF-to-PNG build (Vite `dist/` + `loadFile()`); removed Next.js/OAuth content; updated commands, paths, and troubleshooting |
 | 2.7 | 2026-01 | Added failure modes for relative Vite assets and macOS frameless dragging |
 | 2.6 | 2026-01 | Consolidated prevention checklist into the guide |
