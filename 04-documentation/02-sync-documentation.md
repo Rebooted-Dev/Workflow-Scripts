@@ -67,6 +67,14 @@ If you discover missing "supporting" documentation (contributing/changelog/confi
 - Each doc has a clear scope and audience.
 - Overlapping content is consolidated or explicitly cross-referenced.
 
+## Related Workflows
+
+- **[`01-create-docs.md`](./01-create-docs.md)** - Create comprehensive documentation from scratch (use this for new projects)
+- **[`00-doc-templates.md`](./00-doc-templates.md)** - Reference templates for consistent documentation structure
+- **[`09-optional.md`](./09-optional.md)** - Checklist of optional documentation types to consider
+- **[`ascii-art-prompts.md`](./ascii-art-prompts.md)** - Prompts for generating ASCII art diagrams
+- **[`../02-build-code/01-execution.md`](../02-build-code/01-execution.md)** - Update documentation after code changes
+
 ## Notes
 - Keep updates minimal and accurate; avoid speculative content.
 - Prefer surgical edits over large rewrites; only reorganize `docs/` when you can point to concrete navigation or duplication pain.

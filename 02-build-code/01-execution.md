@@ -57,13 +57,14 @@ Execute implementation in phases with verification and documentation updates.
     - **Parent tasks:** Mark parent tasks as `- [x]` only when ALL sub-tasks are complete
     - **Deferred tasks:** Leave as `- [ ]` and add a note explaining deferral (e.g., "Deferred to P3")
     - **Systematic checking:** Review ALL tasks in the plan, not just the ones you worked on in this phase
-  - Update the changelog with a dated entry: `- YYYY-MM-DD: ...`.
-    - Preferred location: `docs/CHANGELOG.md`
-    - Fallback location: `CHANGELOG.md`
-  - If a bug was fixed, add a troubleshooting entry:
-    - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`
-    - Update `troubleshooting/index.md` (add the new entry at the top)
-    - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
+  - **Update logs (only for completed tasks that change or affect project code):**
+    - Update the changelog with a dated entry: `- YYYY-MM-DD: ...`.
+      - Preferred location: `docs/CHANGELOG.md`
+      - Fallback location: `CHANGELOG.md`
+    - If a bug was fixed, add a troubleshooting entry:
+      - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`
+      - Update `troubleshooting/index.md` (add the new entry at the top)
+      - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
   - Provide a concise summary (1-3 bullets) describing what changed and why.
 
 ## Finalization (After All Phases)
@@ -71,3 +72,12 @@ Execute implementation in phases with verification and documentation updates.
 - Run a final `npm run build` to confirm the repo is shippable.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.
+
+## Related Workflows
+
+- **[`02-confirm-execution.md`](./02-confirm-execution.md)** - Validate that implementation matches the plan after execution
+- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plans before starting execution
+- **[`../01-planning/01-plan-review.md`](../01-planning/01-plan-review.md)** - Review plans for correctness before execution
+- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review code quality after implementation
+- **[`../03-debug/02-bug-fix-workflow.md`](../03-debug/02-bug-fix-workflow.md)** - Fix bugs discovered during implementation
+- **[`../04-documentation/02-sync-documentation.md`](../04-documentation/02-sync-documentation.md)** - Update documentation after code changes

@@ -4,6 +4,26 @@
 
 Validate that an implementation plan has actually been completed (in code and verification), and update the plan to reflect reality.
 
+## When to Use This Workflow
+
+**Use this workflow when:**
+- You need to verify that implementation work matches what's claimed in a plan
+- You want to audit task completion status in a plan document
+- You need to identify discrepancies between plan and actual code
+- You want to systematically check all tasks in a plan for completion
+
+**Use [`01-execution.md`](./01-execution.md) instead when:**
+- You are actively implementing code changes
+- You need to execute a plan step-by-step
+- You are making code changes and need verification
+
+**This workflow will:**
+- Read the plan document and extract claimed completions
+- Verify code changes exist in the repository
+- Check that verification criteria were met
+- Update the plan with accurate completion status
+- Add a verification addendum documenting what was checked
+
 ## Inputs
 
 - Plan document path (user-supplied).
@@ -72,3 +92,10 @@ If the plan does not use task list syntax, add an addendum section instead of re
    - What was verified manually (if any)
    - Any misreporting or mismatches (with file paths / evidence)
    - Next steps (only for incomplete items)
+
+## Related Workflows
+
+- **[`01-execution.md`](./01-execution.md)** - Execute implementation plans (run this first, then confirm)
+- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create the implementation plan being verified
+- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review code quality after verification
+- **[`../03-debug/02-bug-fix-workflow.md`](../03-debug/02-bug-fix-workflow.md)** - Fix any bugs discovered during verification

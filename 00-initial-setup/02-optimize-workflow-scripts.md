@@ -84,6 +84,12 @@ find <target-directory> -type f -name "*.md" | wc -l
 
 ### Step 1.2: Identify Overlaps
 
+Use parallel agents to analyze files concurrently. Each agent should read workflow files in parallel batches (read multiple files concurrently, not sequentially):
+- Agent 1: Scan file headers and table of contents to identify topics (read workflow files in parallel)
+- Agent 2: Search for common keywords across files (read workflow files in parallel)
+- Agent 3: Compare file purposes and scopes (read workflow files in parallel)
+- Agent 4: Identify duplicate or redundant sections (read workflow files in parallel)
+
 For each file, identify:
 - **Similar topics** - Files covering the same or related subjects
 - **Duplicate content** - Exact or near-exact duplicate sections
@@ -91,9 +97,9 @@ For each file, identify:
 - **Overlapping scope** - Files that partially cover the same ground
 
 **Method:**
-1. Read file headers and table of contents
-2. Search for common keywords across files
-3. Compare file purposes and scopes
+1. Use parallel agents to read file headers and table of contents concurrently
+2. Search for common keywords across files in parallel
+3. Compare file purposes and scopes concurrently
 4. Document overlaps in a matrix or list
 
 **Example Analysis:**
@@ -108,6 +114,12 @@ Redundancy: File C duplicates port checking from A and B
 
 ### Step 1.3: Identify Contradictions
 
+Use parallel agents to identify contradictions concurrently. Each agent should read workflow files in parallel batches:
+- Agent 1: Compare similar sections across files (read related workflow files in parallel)
+- Agent 2: Check for conflicting recommendations (read workflow files in parallel)
+- Agent 3: Identify version conflicts and requirements (read config and dependency files in parallel)
+- Agent 4: Cross-reference instructions for consistency (read workflow files in parallel)
+
 Look for:
 - **Conflicting approaches** - Different solutions to the same problem
 - **Inconsistent instructions** - Same task with different steps
@@ -115,8 +127,8 @@ Look for:
 - **Version conflicts** - Different version requirements
 
 **Method:**
-1. Compare similar sections across files
-2. Check for conflicting recommendations
+1. Use parallel agents to compare similar sections across files concurrently
+2. Check for conflicting recommendations in parallel
 3. Identify which approach is correct or preferred
 4. Document contradictions with file references
 
@@ -130,6 +142,12 @@ Contradiction: Port conflict resolution
 
 ### Step 1.4: Identify Ambiguities
 
+Use parallel agents to identify ambiguities concurrently. Each agent should read workflow files in parallel batches:
+- Agent 1: Identify unclear instructions and ambiguous steps (read workflow files in parallel)
+- Agent 2: Check for missing context and prerequisites (read workflow files in parallel)
+- Agent 3: Find vague references and unclear file paths (read workflow files in parallel)
+- Agent 4: Identify incomplete information and missing assumptions (read workflow files in parallel)
+
 Look for:
 - **Unclear instructions** - Steps that could be interpreted multiple ways
 - **Missing context** - Instructions without necessary background
@@ -137,10 +155,10 @@ Look for:
 - **Incomplete information** - Missing prerequisites or assumptions
 
 **Method:**
-1. Read instructions as if you're new to the topic
-2. Identify places where you'd need to guess
-3. Check for missing prerequisites
-4. Look for unclear terminology
+1. Use parallel agents to read instructions concurrently as if new to the topic
+2. Identify places where you'd need to guess in parallel
+3. Check for missing prerequisites concurrently
+4. Look for unclear terminology across files in parallel
 
 ### Step 1.5: Assess Organization
 

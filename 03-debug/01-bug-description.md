@@ -3,6 +3,28 @@
 ## Purpose
 Create a comprehensive, structured bug report when a bug persists after initial fix attempts. This workflow synthesizes information from troubleshooting entries, changelog, codebase analysis, and investigation to produce a detailed report that documents the problem, observed behavior, attempted solutions, and recommended next steps.
 
+## When to Use This Workflow
+
+**Use this workflow when:**
+- A bug persists after initial fix attempts
+- You need to create a comprehensive bug report for complex issues
+- Multiple troubleshooting attempts have failed
+- You need to document investigation history and attempted solutions
+- You want to create a detailed report for escalation or team review
+
+**Use [`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md) instead when:**
+- You are investigating a bug for the first time
+- You need to fix a bug immediately
+- The bug is straightforward and can be fixed quickly
+- You don't need comprehensive documentation
+
+**This workflow will:**
+- Gather information from troubleshooting history and changelog
+- Analyze the codebase context and error evidence
+- Create a comprehensive bug description report
+- Document all attempted solutions and their outcomes
+- Provide root cause hypotheses and recommended next steps
+
 ## Inputs
 - Bug report or issue description (user-supplied).
 - Repository root.
@@ -207,6 +229,13 @@ Create a structured bug description report with the following sections:
 - Formulate and rank hypotheses based on evidence
 - Identify gaps in understanding
 - Recommend investigation steps to confirm root cause
+
+## Related Workflows
+
+- **[`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md)** - Fix bugs (use this for initial bug investigation and fixes)
+- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for complex bug fixes
+- **[`../06-security/02-security-fix.md`](../06-security/02-security-fix.md)** - Fix security-related bugs
+- **[`../00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md)** - Reference for severity and priority classification
 
 ## Notes
 - This workflow is designed for bugs that persist after initial fix attempts. For initial bug investigation, use `02-bug-fix-workflow.md`.

@@ -1,5 +1,26 @@
 # Optional Documentation Additions (Checklist)
 
+## Purpose
+This file provides a checklist of optional documentation types that can improve project onboarding and maintainability. Use this as a reference when deciding what additional documentation to create beyond the core documentation set.
+
+## When to Use This Checklist
+
+**Use this checklist:**
+- After running [`01-create-docs.md`](./01-create-docs.md) or [`02-sync-documentation.md`](./02-sync-documentation.md)
+- When evaluating what additional documentation would be valuable
+- During documentation planning to identify gaps
+- When onboarding new team members and identifying documentation needs
+
+**How to use:**
+1. Review the recommended add-ons section first (high leverage items)
+2. Consider nice-to-haves only if they match real operational needs
+3. Default to the smallest set that removes real confusion/risk
+4. Only create documentation you can write truthfully from the repo
+
+**Important:** This is a reference checklist, not a workflow. Use it to inform decisions during documentation creation workflows.
+
+---
+
 Use this checklist after (or during) `./01-create-docs.md` or `./02-sync-documentation.md` to recommend extra docs that often improve onboarding and maintainability.
 
 Guardrails (avoid over-documenting):

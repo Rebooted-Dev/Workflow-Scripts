@@ -1,5 +1,31 @@
 # ASCII Art Diagram Generation Prompts
 
+## Purpose
+This guide provides clear and precise prompts for generating ASCII art diagrams that effectively illustrate documentation content. Use these standardized prompts to create consistent, readable diagrams across all documentation.
+
+## When to Use This Guide
+
+**Use this guide when:**
+- Creating documentation that needs visual aids (architecture, flows, hierarchies)
+- Generating ASCII art diagrams for documentation sections
+- You need standardized prompts for consistent diagram generation
+- Working with documentation workflows that reference diagram creation
+
+**How to use:**
+1. Identify the type of diagram needed (architecture, flowchart, hierarchy, etc.)
+2. Find the appropriate prompt template in this guide
+3. Adapt the prompt to your specific content
+4. Generate the ASCII art diagram
+5. Integrate into your documentation
+
+**This guide provides:**
+- Standardized prompt templates for different diagram types
+- Character reference for box-drawing and arrows
+- Best practices and formatting guidelines
+- Quality checklist for diagram generation
+
+---
+
 This guide provides clear and precise prompts for generating ASCII art diagrams that effectively illustrate documentation content.
 
 ## Architecture & System Diagrams

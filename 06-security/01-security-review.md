@@ -86,6 +86,13 @@ Perform a structured security review that identifies vulnerabilities, security r
 - The report is self-contained and reproducible.
 - Findings are actionable with specific remediation guidance.
 
+## Related Workflows
+
+- **[`02-security-fix.md`](./02-security-fix.md)** - Fix security vulnerabilities identified in reviews
+- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - General code review (includes security checks)
+- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for security fixes
+- **[`../00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring
+
 ## Notes
 - Use parallel agents to accelerate scanning, but verify findings directly.
 - When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.

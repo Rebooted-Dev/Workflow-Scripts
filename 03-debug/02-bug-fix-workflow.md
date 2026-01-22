@@ -71,6 +71,7 @@ Use parallel agents to verify the fix:
 Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### 7. Documentation
+**Update logs (only for completed tasks that change or affect project code):**
 - Update the changelog with a dated entry: `- YYYY-MM-DD: Bug fix: [bug description]`.
   - Preferred location: `docs/CHANGELOG.md`
   - Fallback location: `CHANGELOG.md`
@@ -125,6 +126,14 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 - Code builds and passes all tests
 - Documentation is updated
 - Fix is ready for review and deployment
+
+## Related Workflows
+
+- **[`01-bug-description.md`](./01-bug-description.md)** - Create comprehensive bug reports for complex or persistent bugs
+- **[`../02-build-code/01-execution.md`](../02-build-code/01-execution.md)** - Implement bug fixes using execution workflow
+- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review bug fixes before merging
+- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for complex bug fixes
+- **[`../06-security/02-security-fix.md`](../06-security/02-security-fix.md)** - Fix security-related bugs
 
 ## Notes
 - Critical bugs (P0/S0) should be fixed immediately; consider temporary mitigation if full fix requires more time.

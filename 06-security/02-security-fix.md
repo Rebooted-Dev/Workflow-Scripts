@@ -64,6 +64,7 @@ Use parallel agents to verify the fix:
 Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### 7. Documentation
+**Update logs (only for completed tasks that change or affect project code):**
 - Update the changelog with a dated entry: `- YYYY-MM-DD: Security fix: [vulnerability description]`.
   - Preferred location: `docs/CHANGELOG.md`
   - Fallback location: `CHANGELOG.md`
@@ -125,6 +126,14 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 - Code builds and passes all tests
 - Documentation is updated
 - Fix is ready for review and deployment
+
+## Related Workflows
+
+- **[`01-security-review.md`](./01-security-review.md)** - Identify security vulnerabilities (run this first)
+- **[`../03-debug/02-bug-fix-workflow.md`](../03-debug/02-bug-fix-workflow.md)** - Fix non-security bugs
+- **[`../02-build-code/01-execution.md`](../02-build-code/01-execution.md)** - Execute security fixes using execution workflow
+- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review security fixes before merging
+- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for complex security fixes
 
 ## Notes
 - Security fixes are time-sensitive; prioritize P0/S0 issues immediately.

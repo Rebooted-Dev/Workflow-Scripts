@@ -57,3 +57,10 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 ## Notes
 - Use parallel agents for scanning files or validating claims when helpful.
 - Do not modify source code in this workflow; only update the plan document.
+
+## Related Workflows
+
+- **[`02-finalise-plan.md`](./02-finalise-plan.md)** - Create or refine implementation plans after review
+- **[`../02-build-code/01-execution.md`](../02-build-code/01-execution.md)** - Execute plans after they've been reviewed
+- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review code after implementation
+- **[`../00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md)** - Reference for scoring issues

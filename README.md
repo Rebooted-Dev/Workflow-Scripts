@@ -733,6 +733,26 @@ Step 7: Code Review
 
 ---
 
+## File Naming Conventions
+
+Workflow files use a mixed naming convention that balances clarity and organization:
+
+**Numbered Prefixes (e.g., `01-`, `02-`):**
+- Used when files have a clear sequence or workflow order
+- Example: `01-plan-review.md` → `02-finalise-plan.md` (review before finalizing)
+- Example: `01-execution.md` → `02-confirm-execution.md` (execute then confirm)
+- **Note:** In some directories (like `03-debug/`), numbers indicate documentation depth, not workflow order - see directory READMEs for clarification
+
+**Descriptive Names:**
+- Used when files are standalone or don't have a clear sequence
+- Example: `sync-documentation.md`, `bug-fix-workflow.md`
+- Makes purpose immediately clear from filename
+
+**When in doubt:**
+- Check the directory's README.md for workflow sequence guidance
+- Look for "When to Use" sections in workflow files
+- Use the main README's decision trees and quick start guides
+
 ## Workflow File Structure
 
 ```

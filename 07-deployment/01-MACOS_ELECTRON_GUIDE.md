@@ -639,21 +639,20 @@ echo "release/" >> .gitignore
 
 ---
 
-## Update logs (after changes)
+## Update logs (after code changes)
 
-When this guide is updated or build issues are encountered:
+**Important:** Only update logs for completed tasks that change or affect the project's code.
 
-**1. Update CHANGELOG.md** (in project root):
-```bash
-# Add entry under [Unreleased] section with today's date
-# Categories: Added, Changed, Fixed, Security
-```
+When build configuration changes or build issues are encountered and fixed:
 
-**2. Create troubleshooting entry** (if new issues are encountered):
-```bash
-# Create file: troubleshooting/build/YYYY-MM-DD-build-<short-title>.md
-# Update troubleshooting/index.md with new entry
-```
+**1. Update the changelog** with a dated entry: `- YYYY-MM-DD: [description of changes]`.
+  - Preferred location: `docs/CHANGELOG.md`
+  - Fallback location: `CHANGELOG.md`
+
+**2. Add a troubleshooting entry** (if bugs or issues were encountered):
+  - Create a new file under `troubleshooting/build/` named `YYYY-MM-DD-build-<short-title>.md`
+  - Update `troubleshooting/index.md` (add the new entry at the top)
+  - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
 
 See `troubleshooting/README.md` for entry template and conventions.
 

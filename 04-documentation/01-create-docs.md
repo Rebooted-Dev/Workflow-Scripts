@@ -3,6 +3,26 @@
 ## Purpose
 Perform a detailed review of a project's codebase and produce a cohesive documentation set (user + developer) that is accurate, non-duplicative, and clearly scoped.
 
+## When to Use This Workflow
+
+**Use this workflow when:**
+- Starting documentation for a new project from scratch
+- Creating comprehensive documentation for an undocumented codebase
+- Generating a complete documentation set covering all aspects of the project
+- You need to create documentation for multiple audiences (users, developers, contributors)
+
+**Use [`02-sync-documentation.md`](./02-sync-documentation.md) instead when:**
+- Documentation already exists but needs updating
+- You need to fix incorrect or outdated documentation
+- You want to reorganize existing documentation
+- You need to add missing sections to existing docs
+
+**This workflow is comprehensive and will:**
+- Generate documentation from scratch
+- Create a complete documentation structure
+- Cover all major aspects of the project
+- Use parallel agents for efficiency
+
 ## Inputs
 - Repository root.
 - Existing codebase (all source files, configuration files, tests).
@@ -396,6 +416,14 @@ docs/
 - File maps aid navigation.
 - Code examples are practical and working.
 - Tutorials are clear and progressive.
+
+## Related Workflows
+
+- **[`02-sync-documentation.md`](./02-sync-documentation.md)** - Update existing documentation (use this instead if docs already exist)
+- **[`00-doc-templates.md`](./00-doc-templates.md)** - Reference templates for consistent documentation structure
+- **[`09-optional.md`](./09-optional.md)** - Checklist of optional documentation types to consider
+- **[`ascii-art-prompts.md`](./ascii-art-prompts.md)** - Prompts for generating ASCII art diagrams
+- **[`../02-build-code/01-execution.md`](../02-build-code/01-execution.md)** - Update documentation after code changes
 
 ## Notes
 - Use parallel agents throughout to maximize efficiency.
