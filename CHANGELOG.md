@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2026-01-21: Added directory README to 06-security/ - review→fix workflow sequence and security focus areas
 
 ### Changed
+- 2026-01-22: Rewrote macOS Electron desktop app guide with explicit renderer loading and macOS dragging instructions (loadFile, platform-specific frame config)
 - 2026-01-21: Updated main README.md file structure section - reflects new directory READMEs in all directories
 - 2026-01-21: Added historical status and timestamps to 00-meta/filename-review.md and parallel-agents-review.md
 - 2026-01-21: Enhanced 02-build-code/01-execution.md - added proper header (Purpose, Inputs, Output) to match 02-confirm-execution.md structure
