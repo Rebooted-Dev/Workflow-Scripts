@@ -25,6 +25,92 @@ Before using this guide, configure these values in `electron-builder.config.cjs`
 | Bundle ID | `com.yourcompany.yourapp` | `<YOUR_BUNDLE_ID>` |
 | Build config | `electron-builder.config.cjs` | `electron-builder.config.cjs` |
 
+## Initial setup and dependency installation
+
+### Installing dependencies
+
+Before building, ensure all dependencies are installed:
+
+```bash
+npm install
+```
+
+### Security best practices
+
+**Always verify package versions exist** before specifying them in `package.json`. Use `npm view <package> version` to check the latest available version:
+
+```bash
+# Check latest version of a package
+npm view electron-builder version
+npm view electron version
+npm view tar version
+```
+
+**After installation, run a security audit:**
+
+```bash
+npm audit
+```
+
+If vulnerabilities are found, `npm audit` will report them. Common issues:
+
+- **Transitive dependency vulnerabilities**: Vulnerabilities in packages you don't directly depend on (e.g., `tar` used by `electron-builder` dependencies)
+- **Outdated packages**: Packages with known security issues
+
+### Handling transitive dependency vulnerabilities
+
+If `npm audit` reports vulnerabilities in transitive dependencies (dependencies of your dependencies), you may need to use npm overrides to force secure versions.
+
+**Example:** If `tar` package vulnerabilities are reported (common with `electron-builder`):
+
+1. Check the latest secure version:
+   ```bash
+   npm view tar version
+   ```
+
+2. Add an override in `package.json`:
+   ```json
+   {
+     "overrides": {
+       "tar": "^7.5.6"
+     }
+   }
+   ```
+
+3. Reinstall dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Verify the fix:
+   ```bash
+   npm audit
+   ```
+
+**Why overrides are needed:** Transitive dependencies (like `@electron/rebuild` used by `electron-builder`) may pull in vulnerable versions. Overrides force all instances of a package to use the secure version you specify.
+
+**Important:** Only override to versions that actually exist. If `npm view <package> version` shows `7.5.6` is latest, don't specify `^8.0.0` (it doesn't exist).
+
+### Verifying installation
+
+After installation, verify everything is set up correctly:
+
+```bash
+# Check for vulnerabilities (should show 0 after fixes)
+npm audit
+
+# Verify Electron dependencies are installed
+npm list electron electron-builder
+
+# Test that build scripts work
+npm run build
+```
+
+If `npm audit` shows vulnerabilities that can't be resolved with overrides, consider:
+- Updating the parent package (e.g., `electron-builder`) to a newer version
+- Checking if the vulnerability affects your use case (some vulnerabilities may not be exploitable in your context)
+- Consulting the package maintainers or security advisories
+
 ## Quick start (preflight)
 
 Commands:
@@ -662,6 +748,7 @@ See `troubleshooting/README.md` for entry template and conventions.
 
 | Version | Date | Notes |
 |---|---|---|
+| 4.2 | 2026-01-23 | **SECURITY & SETUP:** Added "Initial setup and dependency installation" section with security best practices; documented npm audit workflow; explained how to handle transitive dependency vulnerabilities using npm overrides; added version verification steps |
 | 4.1 | 2026-01-22 | **IMPROVED CLARITY:** Added "Two Critical Decisions" summary table upfront; expanded verification checklist with debugging steps for blank UI and non-draggable window; added .gitignore and update logs sections |
 | 4.0 | 2026-01 | **MAJOR REWRITE:** Added explicit "CRITICAL" sections for renderer loading and window dragging; clarified that `loadFile()` is preferred over custom protocols; documented that `frame:false` and `titleBarStyle` conflict; added platform-specific window config pattern; added complete code examples |
 | 3.1 | 2026-01 | **GENERALIZED:** Removed project-specific references; replaced with placeholders (`<AppName>`, `<YOUR_APP_NAME>`, etc.) for use with any Electron project |
