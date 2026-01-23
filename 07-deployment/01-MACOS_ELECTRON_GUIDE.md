@@ -1,10 +1,10 @@
-# macOS Electron Desktop App Guide v4.0
+# macOS Electron Desktop App Guide v4.3
 
 How to build and package a macOS Electron desktop app for any project.
 
 This guide assumes your project uses a Vite + React renderer that is bundled to `renderer/` (NOT `dist/` - see critical note below) and loaded in production via `loadFile()`.
 
-Document version: 4.0 (2026-01)
+Document version: 4.3 (2026-01-23)
 
 > **Note:** Throughout this guide, you'll see placeholders like `<AppName>`, `<YOUR_APP_NAME>`, and `<YOUR_BUNDLE_ID>`. Replace these with your actual project values before running any commands.
 
@@ -68,14 +68,15 @@ If `npm audit` reports vulnerabilities in transitive dependencies (dependencies 
    npm view tar version
    ```
 
-2. Add an override in `package.json`:
+2. Add an override in `package.json` (use the version from step 1):
    ```json
    {
      "overrides": {
-       "tar": "^7.5.6"
+       "tar": "^X.Y.Z"
      }
    }
    ```
+   Replace `X.Y.Z` with the actual latest version from `npm view tar version`.
 
 3. Reinstall dependencies:
    ```bash
@@ -144,8 +145,8 @@ These two choices determine whether your app works correctly:
 
 Non-negotiables (these prevent most production-only failures):
 
-1. Build with `./scripts/mac-build.sh` (or `npm run mac:build:dir`) so the pipeline runs in the correct order.
-2. Use `npm` (repo scripts assume npm).
+1. Build with a wrapper script (e.g., `./scripts/mac-build.sh` or `npm run mac:build`) so the pipeline runs in the correct order.
+2. Use `npm` (scripts in this guide assume npm; adapt for yarn/pnpm as needed).
 3. Vite must output relative asset paths for packaged apps (`vite.config.ts: base: './'`).
 4. `electron-builder` must include `index.cjs`, `desktop/*.cjs`, and `renderer/**` in `files`.
 
@@ -344,14 +345,14 @@ function createWindow() {
           // Windows/Linux: Fully custom title bar
           frame: false,
           titleBarOverlay: {
-            color: '#1a1a2e',
-            symbolColor: '#ffffff',
+            color: '#1a1a2e',      // Customize to match your app's theme
+            symbolColor: '#ffffff', // Customize to match your app's theme
             height: 38
           }
         }
     ),
     
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#1a1a2e',  // Customize to match your app's background
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -531,22 +532,142 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ---
 
-## Build Script Configuration
+## CRITICAL: Build Script Configuration
 
-### esbuild Output Extension
+This section explains how to correctly configure esbuild for Electron. **This is the #3 cause of launch crashes.**
 
-When using esbuild to compile TypeScript to CommonJS, ensure the output files have `.cjs` extension:
+### The Module Format Problem
+
+When your `package.json` has `"type": "module"`, Node.js treats all `.js` files as ES modules. This creates conflicts with Electron's main process, which often works better with CommonJS.
+
+**The solution:** Use CommonJS format (`.cjs` files) for all Electron main process code.
+
+### Entry Point Configuration
+
+Your project needs a CommonJS entry point that Electron can load:
+
+```javascript
+// index.cjs - CommonJS entry point
+require('./desktop/main.cjs');
+```
+
+**CRITICAL:** The entry point must use `require()`, not `import`. If `package.json` has `"type": "module"`, an ES module entry point (`index.js` with `import`) cannot import CommonJS files.
+
+Update `package.json`:
+```json
+{
+  "type": "module",
+  "main": "index.cjs"  // NOT index.js
+}
+```
+
+### esbuild Configuration (Programmatic)
+
+When using esbuild programmatically to compile TypeScript:
+
+```typescript
+// scripts/build-desktop.ts
+import * as esbuild from 'esbuild';
+
+const commonOptions: esbuild.BuildOptions = {
+    bundle: true,
+    platform: 'node',
+    target: 'node20',        // Match your Electron's Node.js version (check with `npx electron -v`)
+    format: 'cjs',           // CRITICAL: Use CommonJS for Electron
+    sourcemap: true,
+    external: ['electron'],
+    outdir: 'desktop',       // Or your preferred output directory for Electron files
+    // NOTE: Do NOT add a banner for __dirname - see warning below
+};
+
+// Build main process
+await esbuild.build({
+    ...commonOptions,
+    entryPoints: ['desktop/main.ts'],
+    outExtension: { '.js': '.cjs' },  // CRITICAL: .cjs extension
+});
+
+// Build preload script
+await esbuild.build({
+    ...commonOptions,
+    entryPoints: ['desktop/preload.ts'],
+    outExtension: { '.js': '.cjs' },  // CRITICAL: .cjs extension
+});
+```
+
+### esbuild Configuration (CLI)
+
+If using esbuild via CLI in `package.json`:
 
 ```json
-// package.json
 {
   "scripts": {
-    "build:electron": "esbuild desktop/main.ts desktop/preload.ts --platform=node --target=node18.5 --bundle --outdir=desktop --format=cjs --external:electron --out-extension:.js=.cjs"
+    "build:electron": "esbuild desktop/main.ts desktop/preload.ts --platform=node --target=node20 --bundle --outdir=desktop --format=cjs --external:electron --out-extension:.js=.cjs"
   }
 }
 ```
 
-**Why:** If your `package.json` has `"type": "module"`, Node.js expects `.js` files to be ESM. The `.cjs` extension forces CommonJS interpretation.
+> **Note:** Adjust `--target=node20` to match your Electron's Node.js version. Check with `npx electron --version` and refer to [Electron releases](https://releases.electronjs.org/) to find the bundled Node.js version.
+
+### WARNING: Do NOT Use __dirname Banner with CommonJS
+
+**NEVER add a banner to inject `__dirname` when using `format: 'cjs'`:**
+
+```typescript
+// BAD - This will crash with "Identifier '__dirname' has already been declared"
+const commonOptions = {
+    format: 'cjs',
+    banner: {
+        js: 'const __dirname = require("path").dirname(__filename);',  // WRONG!
+    },
+};
+```
+
+**Why this crashes:** In CommonJS, `__dirname` and `__filename` are already global variables provided by Node.js. Attempting to redeclare them with `const` causes a SyntaxError.
+
+**When to use the banner:** Only when building ESM output (`format: 'esm'`) that needs `__dirname`:
+
+```typescript
+// ONLY for ESM builds (not recommended for Electron main process)
+const esmOptions = {
+    format: 'esm',
+    banner: {
+        js: 'import { dirname } from "path"; import { fileURLToPath } from "url"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);',
+    },
+};
+```
+
+### electron-builder Files Array
+
+Ensure `electron-builder.config.cjs` includes the correct files:
+
+```javascript
+module.exports = {
+    files: [
+        'index.cjs',           // Entry point (CommonJS)
+        'desktop/main.cjs',    // Main process (CommonJS)
+        'desktop/preload.cjs', // Preload script (CommonJS)
+        'renderer/**',         // Vite output (NOT dist/)
+        'package.json',
+        
+        // Exclude old .js files if migrating from ESM
+        '!desktop/**/*.js',
+    ],
+};
+```
+
+### Complete Module Chain
+
+For a working Electron app with `"type": "module"` in `package.json`:
+
+```
+package.json ("main": "index.cjs")
+    └── index.cjs (CommonJS: require('./desktop/main.cjs'))
+        └── desktop/main.cjs (esbuild output, format: 'cjs')
+            └── desktop/preload.cjs (esbuild output, format: 'cjs')
+```
+
+All files in the chain use CommonJS, avoiding ESM/CJS interop issues.
 
 ---
 
@@ -646,6 +767,8 @@ Common failures and the single fix that matters:
 | App throws on launch | `renderer/index.html` missing in packaged app | Confirm Vite outputs to `renderer/` (NOT `dist/`), and `electron-builder` includes `renderer/**` |
 | `dist/` not in asar | electron-builder excludes `dist/` by default | **Change Vite output to `renderer/`** - the default patterns exclude `!dist{,/**/*}` |
 | "Cannot find module index.cjs" | not packaged | Add `index.cjs` to `electron-builder` `files` |
+| **ERR_MODULE_NOT_FOUND: Cannot find module desktop/main.js** | Entry point is ESM but importing CommonJS | Use CommonJS entry point (`index.cjs` with `require()`) - see "Build Script Configuration" section |
+| **SyntaxError: Identifier '__dirname' has already been declared** | esbuild banner redeclaring CommonJS global | Remove `banner` from esbuild config when using `format: 'cjs'` - CommonJS provides `__dirname` automatically |
 | Stuck on "Loading..." (packaged) | `fetch()` blocked by `file://` | Use `app://` custom protocol (only if using fetch for local files) |
 | Window not draggable (macOS) | Wrong frame config or conflicting settings | Use ONLY `titleBarStyle: 'hiddenInset'` on macOS (NOT `frame: false`) |
 | Window not draggable (Windows) | Missing drag CSS | Add `.window-drag-bar` with `-webkit-app-region: drag` |
@@ -732,15 +855,13 @@ echo "release/" >> .gitignore
 When build configuration changes or build issues are encountered and fixed:
 
 **1. Update the changelog** with a dated entry: `- YYYY-MM-DD: [description of changes]`.
-  - Preferred location: `docs/CHANGELOG.md`
-  - Fallback location: `CHANGELOG.md`
+  - Use your project's changelog location (commonly `CHANGELOG.md` or `docs/CHANGELOG.md`)
 
 **2. Add a troubleshooting entry** (if bugs or issues were encountered):
-  - Create a new file under `troubleshooting/build/` named `YYYY-MM-DD-build-<short-title>.md`
-  - Update `troubleshooting/index.md` (add the new entry at the top)
+  - Document the issue in your project's troubleshooting system
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
 
-See `troubleshooting/README.md` for entry template and conventions.
+> **Note:** The specific file locations and formats depend on your project's documentation conventions. Adapt the above to match your project's structure.
 
 ---
 
@@ -748,6 +869,7 @@ See `troubleshooting/README.md` for entry template and conventions.
 
 | Version | Date | Notes |
 |---|---|---|
+| 4.3 | 2026-01-23 | **CRITICAL BUILD CONFIG:** Completely rewrote "Build Script Configuration" section; added detailed explanation of CommonJS entry point requirements; documented the `__dirname` banner trap (causes crash when used with `format: 'cjs'`); added complete module chain diagram; added two new troubleshooting entries for ERR_MODULE_NOT_FOUND and __dirname redeclaration errors |
 | 4.2 | 2026-01-23 | **SECURITY & SETUP:** Added "Initial setup and dependency installation" section with security best practices; documented npm audit workflow; explained how to handle transitive dependency vulnerabilities using npm overrides; added version verification steps |
 | 4.1 | 2026-01-22 | **IMPROVED CLARITY:** Added "Two Critical Decisions" summary table upfront; expanded verification checklist with debugging steps for blank UI and non-draggable window; added .gitignore and update logs sections |
 | 4.0 | 2026-01 | **MAJOR REWRITE:** Added explicit "CRITICAL" sections for renderer loading and window dragging; clarified that `loadFile()` is preferred over custom protocols; documented that `frame:false` and `titleBarStyle` conflict; added platform-specific window config pattern; added complete code examples |
