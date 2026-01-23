@@ -770,12 +770,27 @@ Common failures and the single fix that matters:
 | **ERR_MODULE_NOT_FOUND: Cannot find module desktop/main.js** | Entry point is ESM but importing CommonJS | Use CommonJS entry point (`index.cjs` with `require()`) - see "Build Script Configuration" section |
 | **SyntaxError: Identifier '__dirname' has already been declared** | esbuild banner redeclaring CommonJS global | Remove `banner` from esbuild config when using `format: 'cjs'` - CommonJS provides `__dirname` automatically |
 | Stuck on "Loading..." (packaged) | `fetch()` blocked by `file://` | Use `app://` custom protocol (only if using fetch for local files) |
+| "Provider gemini is not available" (packaged) | API key not present at runtime in Electron main process | Load `.env` in the **main process** before provider initialization (GUI apps often don't inherit shell env); verify main logs show providers registered |
 | Window not draggable (macOS) | Wrong frame config or conflicting settings | Use ONLY `titleBarStyle: 'hiddenInset'` on macOS (NOT `frame: false`) |
 | Window not draggable (Windows) | Missing drag CSS | Add `.window-drag-bar` with `-webkit-app-region: drag` |
 | Buttons don't work in header | Missing no-drag | Add `.no-drag` class to buttons or use CSS selector |
 | Content hidden behind drag bar | Missing padding | Add `padding-top: 38px` to app container |
 | Header overlaps traffic lights | Missing left padding on macOS | Add `padding-left: 80px` to header when `electron-macos` class is present |
 | `electron-builder` dependency scan noise | npm optional deps confusion | Build via the repo wrapper (or pin toolchain) |
+
+### Provider/API key errors in packaged apps
+
+If your renderer routes AI calls through IPC (keys kept in the main process), a packaged macOS app can fail with provider-not-available errors even though things work in dev.
+
+Most common cause:
+
+- The main process never loads `.env` files, and macOS GUI apps often **do not inherit your terminal environment**.
+
+Fix pattern:
+
+- In Electron **main process startup**, load `.env` from one or more known locations (for example: `~/.env`, app working dir `.env`, `.env.local`, `/etc/<app>/.env`) and copy values into `process.env`.
+- Initialize providers only *after* this env load.
+- Verify via `~/Library/Logs/<AppName>/main.log` that the env loader ran and the provider(s) registered.
 
 **Debugging tip:** Use `npx asar list "<app>.app/Contents/Resources/app.asar"` to verify what's actually packaged.
 
@@ -808,6 +823,7 @@ tail -f "~/Library/Logs/<AppName>/main.log"
 3. **Traffic lights work (macOS)** - Close/minimize/maximize buttons in top-left
 4. **Buttons are clickable** - Theme toggle, other header buttons respond to clicks (verify `-webkit-app-region: no-drag` on interactive elements)
 5. **No content hidden** - Header is not overlapped by traffic lights or cut off (verify `padding-left: 80px` on macOS header)
+6. **Providers available (if applicable)** - If using main-process API keys via IPC, confirm main log shows provider(s) registered and calls succeed
 
 ### If UI is blank:
 1. Check main log: `tail -f "~/Library/Logs/<AppName>/main.log"`
@@ -869,7 +885,7 @@ When build configuration changes or build issues are encountered and fixed:
 
 | Version | Date | Notes |
 |---|---|---|
-| 4.3 | 2026-01-23 | **CRITICAL BUILD CONFIG:** Completely rewrote "Build Script Configuration" section; added detailed explanation of CommonJS entry point requirements; documented the `__dirname` banner trap (causes crash when used with `format: 'cjs'`); added complete module chain diagram; added two new troubleshooting entries for ERR_MODULE_NOT_FOUND and __dirname redeclaration errors |
+| 4.3 | 2026-01-23 | **CRITICAL BUILD CONFIG & PACKAGED ENV:** Completely rewrote "Build Script Configuration" section; added detailed explanation of CommonJS entry point requirements; documented the `__dirname` banner trap (causes crash when used with `format: 'cjs'`); added complete module chain diagram; added two new troubleshooting entries for ERR_MODULE_NOT_FOUND and __dirname redeclaration errors; documented macOS packaged-app env loading requirement for IPC-based providers; added provider-not-available troubleshooting and verification checks |
 | 4.2 | 2026-01-23 | **SECURITY & SETUP:** Added "Initial setup and dependency installation" section with security best practices; documented npm audit workflow; explained how to handle transitive dependency vulnerabilities using npm overrides; added version verification steps |
 | 4.1 | 2026-01-22 | **IMPROVED CLARITY:** Added "Two Critical Decisions" summary table upfront; expanded verification checklist with debugging steps for blank UI and non-draggable window; added .gitignore and update logs sections |
 | 4.0 | 2026-01 | **MAJOR REWRITE:** Added explicit "CRITICAL" sections for renderer loading and window dragging; clarified that `loadFile()` is preferred over custom protocols; documented that `frame:false` and `titleBarStyle` conflict; added platform-specific window config pattern; added complete code examples |
