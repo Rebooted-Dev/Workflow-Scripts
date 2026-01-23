@@ -1,10 +1,10 @@
-# macOS Electron Desktop App Guide v4.3
+# macOS Electron Desktop App Guide v4.4
 
 How to build and package a macOS Electron desktop app for any project.
 
 This guide assumes your project uses a Vite + React renderer that is bundled to `renderer/` (NOT `dist/` - see critical note below) and loaded in production via `loadFile()`.
 
-Document version: 4.3 (2026-01-23)
+Document version: 4.4 (2026-01-24)
 
 > **Note:** Throughout this guide, you'll see placeholders like `<AppName>`, `<YOUR_APP_NAME>`, and `<YOUR_BUNDLE_ID>`. Replace these with your actual project values before running any commands.
 
@@ -532,6 +532,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ---
 
+## Window Sizing Considerations
+
+Default window dimensions can cause UI cropping on modern high-resolution displays. This section explains how to size windows appropriately.
+
+### The Problem
+
+A fixed window height (e.g., `height: 900`) may appear cropped on displays where:
+- The available vertical space (minus menu bar and dock) is less than the window height
+- The app's UI requires more vertical space than anticipated
+- Users have large dock sizes or multiple menu bars
+
+**Symptom:** UI appears vertically cut off, with content or controls hidden at the bottom of the window.
+
+### Recommended Approach
+
+1. **Set reasonable default dimensions** that fit most displays:
+
+```ts
+const mainWindow = new BrowserWindow({
+  width: 1400,
+  height: 1100,  // Increased from 900 to accommodate more displays
+  minWidth: 1200,
+  minHeight: 800,
+  // ...
+});
+```
+
+2. **Center the window** after creation to ensure it's positioned correctly:
+
+```ts
+mainWindow.center();
+```
+
+3. **Consider using screen dimensions** for dynamic sizing:
+
+```ts
+import { screen } from 'electron';
+
+function createWindow() {
+  const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize;
+  
+  // Use percentage of screen, with min/max constraints
+  const windowWidth = Math.min(Math.max(screenWidth * 0.8, 1200), 1600);
+  const windowHeight = Math.min(Math.max(screenHeight * 0.85, 800), 1200);
+  
+  const mainWindow = new BrowserWindow({
+    width: windowWidth,
+    height: windowHeight,
+    minWidth: 1200,
+    minHeight: 800,
+    // ...
+  });
+  
+  mainWindow.center();
+}
+```
+
+### Common Sizing Mistakes
+
+| Mistake | Result | Fix |
+|---------|--------|-----|
+| Fixed height too tall for display | Window extends below screen, content cut off | Use `screen.getPrimaryDisplay().workAreaSize` or reduce default height |
+| No `minWidth`/`minHeight` | Window can be resized to unusable dimensions | Set minimum constraints |
+| Not calling `center()` | Window positioned at (0,0), may be partially off-screen | Call `mainWindow.center()` after creation |
+| Ignoring `workAreaSize` vs `size` | Window overlaps dock/taskbar | Use `workAreaSize` (excludes system UI) not `size` |
+
+### Testing Window Sizing
+
+Test your app on displays with different characteristics:
+- Standard laptop displays (13-15")
+- High-resolution external monitors
+- Displays with large dock/taskbar configurations
+- Multiple monitor setups
+
+---
+
 ## CRITICAL: Build Script Configuration
 
 This section explains how to correctly configure esbuild for Electron. **This is the #3 cause of launch crashes.**
@@ -776,6 +852,7 @@ Common failures and the single fix that matters:
 | Buttons don't work in header | Missing no-drag | Add `.no-drag` class to buttons or use CSS selector |
 | Content hidden behind drag bar | Missing padding | Add `padding-top: 38px` to app container |
 | Header overlaps traffic lights | Missing left padding on macOS | Add `padding-left: 80px` to header when `electron-macos` class is present |
+| UI appears vertically cropped | Window height exceeds available display space | Reduce default height (e.g., 1100 instead of 900), use `screen.getPrimaryDisplay().workAreaSize`, call `mainWindow.center()` |
 | `electron-builder` dependency scan noise | npm optional deps confusion | Build via the repo wrapper (or pin toolchain) |
 
 ### Provider/API key errors in packaged apps
@@ -885,6 +962,7 @@ When build configuration changes or build issues are encountered and fixed:
 
 | Version | Date | Notes |
 |---|---|---|
+| 4.4 | 2026-01-24 | **WINDOW SIZING:** Added new "Window Sizing Considerations" section; documented common issue where fixed window height causes UI cropping on displays with limited vertical space; added recommendations for dynamic sizing using `screen.getPrimaryDisplay().workAreaSize`; added common sizing mistakes table |
 | 4.3 | 2026-01-23 | **CRITICAL BUILD CONFIG & PACKAGED ENV:** Completely rewrote "Build Script Configuration" section; added detailed explanation of CommonJS entry point requirements; documented the `__dirname` banner trap (causes crash when used with `format: 'cjs'`); added complete module chain diagram; added two new troubleshooting entries for ERR_MODULE_NOT_FOUND and __dirname redeclaration errors; documented macOS packaged-app env loading requirement for IPC-based providers; added provider-not-available troubleshooting and verification checks |
 | 4.2 | 2026-01-23 | **SECURITY & SETUP:** Added "Initial setup and dependency installation" section with security best practices; documented npm audit workflow; explained how to handle transitive dependency vulnerabilities using npm overrides; added version verification steps |
 | 4.1 | 2026-01-22 | **IMPROVED CLARITY:** Added "Two Critical Decisions" summary table upfront; expanded verification checklist with debugging steps for blank UI and non-draggable window; added .gitignore and update logs sections |
