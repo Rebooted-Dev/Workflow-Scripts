@@ -22,12 +22,18 @@ Systematically identify, fix, and verify security vulnerabilities using a securi
 - Formulate hypotheses about root cause and exploitation scenarios.
 
 ### 2. Investigation
-Use multiple parallel agents to investigate the security issue. Each agent should read relevant files in parallel batches (read multiple files concurrently, not sequentially):
-- Agent 1: Trace the vulnerability through the codebase (read affected files in parallel)
-- Agent 2: Identify all entry points and attack surfaces (read API endpoints, routes, handlers in parallel)
-- Agent 3: Check for similar vulnerabilities in related code (read similar patterns/files in parallel)
-- Agent 4: Review security controls and existing mitigations (read security middleware, validators in parallel)
-- Agent 5: Analyze data flow and sensitive data handling (read data processing files in parallel)
+Use multiple parallel agents to investigate the security issue. Suggested agent roles (spawn additional agents as needed):
+- Trace the vulnerability through the codebase (read affected files in parallel batches)
+- Identify all entry points and attack surfaces (read API endpoints, routes, handlers in parallel batches)
+- Check for similar vulnerabilities in related code (read similar patterns/files in parallel batches)
+- Review security controls and existing mitigations (read security middleware, validators in parallel batches)
+- Analyze data flow and sensitive data handling (read data processing files in parallel batches)
+- [Spawn additional agents if you discover other investigation needs, such as:
+  - Related attack vectors
+  - Additional entry points
+  - Similar patterns in other modules
+  - Compliance implications
+  - Supply chain risks]
 Agents should batch read files concurrently to maximize investigation speed.
 
 ### 3. Root Cause Identification
@@ -46,21 +52,33 @@ Create a detailed security fix plan:
 - Rollback plan if the fix causes issues
 
 ### 5. Implementation
-Use multiple parallel agents to implement the fix:
-- Agent 1: Implement the primary security fix
-- Agent 2: Add defense-in-depth measures (input validation, output encoding, etc.)
-- Agent 3: Update security tests and add regression tests
-- Agent 4: Review for unintended side effects or new vulnerabilities
-- Agent 5: Update security documentation and logging
+Use multiple parallel agents to implement the fix. Suggested agent roles (spawn additional agents as needed):
+- Implement the primary security fix
+- Add defense-in-depth measures (input validation, output encoding, etc.)
+- Update security tests and add regression tests
+- Review for unintended side effects or new vulnerabilities
+- Update security documentation and logging
+- [Spawn additional agents if you discover other implementation needs, such as:
+  - Additional security hardening
+  - Performance impact analysis
+  - Related code that needs similar fixes
+  - Documentation and training materials
+  - Monitoring and alerting]
 Each agent should read related files in parallel batches during implementation.
 
 ### 6. Verification
-Use parallel agents to verify the fix:
-- Agent 1: Run security tests and verify the vulnerability is closed
-- Agent 2: Test for regression (ensure functionality still works)
-- Agent 3: Check for similar vulnerabilities in related code
-- Agent 4: Verify security controls are properly implemented
-- Agent 5: Review code changes for new security issues introduced
+Use parallel agents to verify the fix. Suggested agent roles (spawn additional agents as needed):
+- Run security tests and verify the vulnerability is closed
+- Test for regression (ensure functionality still works)
+- Check for similar vulnerabilities in related code
+- Verify security controls are properly implemented
+- Review code changes for new security issues introduced
+- [Spawn additional agents if you discover other verification needs, such as:
+  - Penetration testing
+  - Compliance validation
+  - Performance testing
+  - Integration testing
+  - Documentation review]
 Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### 7. Documentation

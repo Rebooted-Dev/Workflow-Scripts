@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- 2026-01-26: Added agent flexibility review document (00-meta/agent-flexibility-review.md) - comprehensive analysis of fixed agent patterns and recommendations for flexible agent usage
 - 2026-01-21: Added directory README to 00-meta/ - index with active vs historical file status and quick reference
 - 2026-01-21: Added directory README to 02-build-code/ - workflow sequence diagram and task marking convention
 - 2026-01-21: Added directory README to 03-debug/ - explains file ordering (start with 02-bug-fix-workflow.md)
@@ -16,6 +17,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2026-01-21: Added directory README to 06-security/ - review→fix workflow sequence and security focus areas
 
 ### Changed
+- 2026-01-26: Implemented flexible agent pattern across all workflows - replaced fixed agent counts ("Agent 1", "Agent 2", etc.) with "Suggested agent roles (spawn additional agents as needed)" pattern to enable dynamic agent spawning based on task complexity
+- 2026-01-26: Updated 14 workflow files with flexible agent guidance:
+  - Planning: 01-plan-review.md, 02-finalise-plan.md
+  - Build/Code: 01-execution.md, 02-confirm-execution.md
+  - Review/Audit: 01-code-review.md, 02-code-optimization.md, 03-code-refactoring.md
+  - Security: 01-security-review.md, 02-security-fix.md
+  - Debug: 02-bug-fix-workflow.md
+  - Documentation: 01-create-docs.md, 02-sync-documentation.md
+- 2026-01-26: Enhanced all workflows with guidance to spawn additional agents when discovering new concerns, domain-specific needs, or increased task complexity
+- 2026-01-26: Updated README.md Best Practices section - clarified flexible agent pattern and dynamic spawning guidance
+- 2026-01-26: Updated 00-meta/parallel-agents-review.md - added note about new flexible agent approach implementation
 - 2026-01-22: Rewrote macOS Electron desktop app guide with explicit renderer loading and macOS dragging instructions (loadFile, platform-specific frame config)
 - 2026-01-21: Updated main README.md file structure section - reflects new directory READMEs in all directories
 - 2026-01-21: Added historical status and timestamps to 00-meta/filename-review.md and parallel-agents-review.md

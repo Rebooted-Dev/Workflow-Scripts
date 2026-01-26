@@ -63,11 +63,16 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 1. Read the plan end-to-end; extract the list of claimed completed tasks and their acceptance criteria.
 
-2. Use parallel agents to verify completion against the repo:
-   - Agent 1: Compare plan tasks to `git diff` / relevant files; confirm the code changes exist.
-   - Agent 2: Validate build/tooling checks were run (or run them now): `npm run build`.
-   - Agent 3: Spot-check user-facing behavior (if applicable) and confirm key flows still work.
-   - Agent 4: Look for gaps: missing docs/log updates, missing edge-case handling, broken imports.
+2. Use parallel agents to verify completion against the repo. Suggested agent roles (spawn additional agents as needed):
+   - Compare plan tasks to `git diff` / relevant files; confirm the code changes exist.
+   - Validate build/tooling checks were run (or run them now): `npm run build`.
+   - Spot-check user-facing behavior (if applicable) and confirm key flows still work.
+   - Look for gaps: missing docs/log updates, missing edge-case handling, broken imports.
+   - [Spawn additional agents if you discover other verification needs, such as:
+     - Test coverage validation
+     - Performance impact checks
+     - Security validation
+     - Documentation completeness]
 
 3. **Systematically review every task in the plan:**
    - Go through each priority phase (P0, P1, P2, P3) in order

@@ -28,12 +28,18 @@ Systematically identify, diagnose, and fix bugs using a structured debugging pro
 - Formulate initial hypotheses about potential root causes.
 
 ### 2. Investigation
-Use multiple parallel agents to investigate the bug. Each agent should read relevant files in parallel batches (read multiple files concurrently, not sequentially):
-- Agent 1: Trace the bug through the codebase (read affected files, entry points, and related code in parallel)
-- Agent 2: Analyze error logs and stack traces (read logging files, error handlers, and exception handling code in parallel)
-- Agent 3: Check for similar bugs or related issues in the codebase (read similar patterns/files in parallel)
-- Agent 4: Review recent changes that might have introduced the bug (read git history, recent commits, and related files in parallel)
-- Agent 5: Examine data flow and state management around the bug (read data processing, state files, and API handlers in parallel)
+Use multiple parallel agents to investigate the bug. Suggested agent roles (spawn additional agents as needed):
+- Trace the bug through the codebase (read affected files, entry points, and related code in parallel batches)
+- Analyze error logs and stack traces (read logging files, error handlers, and exception handling code in parallel batches)
+- Check for similar bugs or related issues in the codebase (read similar patterns/files in parallel batches)
+- Review recent changes that might have introduced the bug (read git history, recent commits, and related files in parallel batches)
+- Examine data flow and state management around the bug (read data processing, state files, and API handlers in parallel batches)
+- [Spawn additional agents if you discover other investigation needs, such as:
+  - Performance impact analysis
+  - Security implications
+  - Related code patterns that might have the same issue
+  - Integration points that might be affected
+  - Test coverage gaps]
 Agents should batch read files concurrently to maximize investigation speed.
 
 ### 3. Root Cause Identification
@@ -53,21 +59,32 @@ Create a detailed fix plan:
 - Consider edge cases and similar code that might need updates
 
 ### 5. Implementation
-Use multiple parallel agents to implement the fix:
-- Agent 1: Implement the primary bug fix
-- Agent 2: Add or update tests to verify the fix and prevent regression
-- Agent 3: Review for unintended side effects or new bugs introduced
-- Agent 4: Check for similar issues in related code that should be fixed
-- Agent 5: Update related documentation if the fix changes behavior
+Use multiple parallel agents to implement the fix. Suggested agent roles (spawn additional agents as needed):
+- Implement the primary bug fix
+- Add or update tests to verify the fix and prevent regression
+- Review for unintended side effects or new bugs introduced
+- Check for similar issues in related code that should be fixed
+- Update related documentation if the fix changes behavior
+- [Spawn additional agents if you discover other implementation needs, such as:
+  - Performance optimizations related to the fix
+  - Additional test coverage
+  - Documentation updates
+  - Related code cleanup
+  - Security hardening]
 Each agent should read related files in parallel batches during implementation.
 
 ### 6. Verification
-Use parallel agents to verify the fix:
-- Agent 1: Run the reproduction steps to confirm the bug is fixed
-- Agent 2: Run existing tests and check for regressions
-- Agent 3: Test edge cases and similar scenarios
-- Agent 4: Verify the fix doesn't break other functionality
-- Agent 5: Review code changes for quality and adherence to project conventions
+Use parallel agents to verify the fix. Suggested agent roles (spawn additional agents as needed):
+- Run the reproduction steps to confirm the bug is fixed
+- Run existing tests and check for regressions
+- Test edge cases and similar scenarios
+- Verify the fix doesn't break other functionality
+- Review code changes for quality and adherence to project conventions
+- [Spawn additional agents if you discover other verification needs, such as:
+  - Performance testing
+  - Security validation
+  - Integration testing
+  - Documentation review]
 Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### 7. Documentation

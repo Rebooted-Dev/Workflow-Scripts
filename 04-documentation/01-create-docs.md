@@ -94,15 +94,21 @@ Template rules:
 ## Steps
 
 ### Phase 1: Discovery and Analysis
-1. **Scan the codebase using parallel agents.** Each agent should read code files in parallel batches (read multiple files concurrently) and produce a short, source-backed outline (include file paths for key claims):
-   - Agent 1: Scan project structure and identify entry points (read package.json, main files, config files in parallel)
-   - Agent 2: Understand application architecture and system design (read architecture files, service files in parallel)
-   - Agent 3: Analyze code organization and module structure (read source directories in parallel)
-   - Agent 4: Identify APIs and endpoints (read API routes, controllers, services in parallel)
-   - Agent 5: Extract data models and schemas (read models, schemas, type definitions in parallel)
-   - Agent 6: Review UI/UX components and design patterns (read component files, styles, design files in parallel)
-   - Agent 7: Analyze testing structure and patterns (read test files in parallel)
-   - Agent 8: Review deployment configuration and infrastructure (read deployment configs, Dockerfiles, CI/CD files in parallel)
+1. **Scan the codebase using parallel agents.** Suggested agent roles (spawn additional agents as needed). Each agent should read code files in parallel batches (read multiple files concurrently) and produce a short, source-backed outline (include file paths for key claims):
+   - Scan project structure and identify entry points (read package.json, main files, config files in parallel batches)
+   - Understand application architecture and system design (read architecture files, service files in parallel batches)
+   - Analyze code organization and module structure (read source directories in parallel batches)
+   - Identify APIs and endpoints (read API routes, controllers, services in parallel batches)
+   - Extract data models and schemas (read models, schemas, type definitions in parallel batches)
+   - Review UI/UX components and design patterns (read component files, styles, design files in parallel batches)
+   - Analyze testing structure and patterns (read test files in parallel batches)
+   - Review deployment configuration and infrastructure (read deployment configs, Dockerfiles, CI/CD files in parallel batches)
+   - [Spawn additional agents if you discover other documentation needs, such as:
+     - Security documentation
+     - Performance documentation
+     - Troubleshooting guides
+     - Migration guides
+     - API documentation]
    Agents should batch read files concurrently to maximize scanning speed.
 
    Output from each agent (recommended format):

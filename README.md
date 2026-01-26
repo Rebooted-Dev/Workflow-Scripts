@@ -712,8 +712,10 @@ Step 7: Code Review
 - Keep documentation in sync with code
 
 ### 4. Use Parallel Agents
-- Many workflows support parallel agents
-- Use them to accelerate scanning and investigation
+- Many workflows support parallel agents with a flexible pattern
+- Workflows provide suggested agent roles, but you should spawn additional agents as needed
+- Adapt agent count and roles based on task complexity and discovered concerns
+- Use parallel batch reading (read multiple files concurrently) to maximize speed
 - Verify findings directly before acting
 
 ### 5. Keep Changes Small

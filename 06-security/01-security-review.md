@@ -15,13 +15,21 @@ Perform a structured security review that identifies vulnerabilities, security r
 - Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
 
 ## Steps
-1. Scan the codebase using parallel agents focused on security. Each agent should read files in parallel batches (read multiple files concurrently, not sequentially):
-   - Agent 1: Scan for authentication and authorization vulnerabilities (read auth files, middleware, route handlers in parallel)
-   - Agent 2: Scan for input validation and injection risks (read API endpoints, form handlers, data processing files in parallel)
-   - Agent 3: Scan for sensitive data exposure and secrets management (read config files, env handling, data storage files in parallel)
-   - Agent 4: Scan for dependency vulnerabilities and outdated packages (read package.json, lock files, dependency files in parallel)
-   - Agent 5: Scan for cryptographic issues and weak implementations (read encryption, hashing, token files in parallel)
-   - Agent 6: Scan for security misconfigurations and exposed endpoints (read server config, API definitions, deployment files in parallel)
+1. Scan the codebase using parallel agents focused on security. Suggested agent roles (spawn additional agents as needed):
+   - Scan for authentication and authorization vulnerabilities (read auth files, middleware, route handlers in parallel batches)
+   - Scan for input validation and injection risks (read API endpoints, form handlers, data processing files in parallel batches)
+   - Scan for sensitive data exposure and secrets management (read config files, env handling, data storage files in parallel batches)
+   - Scan for dependency vulnerabilities and outdated packages (read package.json, lock files, dependency files in parallel batches)
+   - Scan for cryptographic issues and weak implementations (read encryption, hashing, token files in parallel batches)
+   - Scan for security misconfigurations and exposed endpoints (read server config, API definitions, deployment files in parallel batches)
+   - [Spawn additional agents if you discover other security concerns, such as:
+     - API-specific security issues
+     - Frontend security vulnerabilities
+     - Infrastructure security misconfigurations
+     - Compliance and regulatory concerns
+     - Supply chain security risks
+     - Session management issues
+     - CSRF and XSS vulnerabilities]
    Agents should batch read files (e.g., read 5-10 files concurrently per agent) to maximize throughput.
 
 2. For each security finding, capture:

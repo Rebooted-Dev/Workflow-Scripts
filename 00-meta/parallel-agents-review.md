@@ -2,13 +2,15 @@
 
 **Status:** Historical (archived)  
 **Created:** 2026-01  
-**Last Updated:** 2026-01-21  
+**Last Updated:** 2026-01-26  
 
 ## Summary
 
 This document reviews all workflow instruction files to identify opportunities for improved parallel agent usage. Parallel agents can significantly accelerate workflows by allowing concurrent investigation, scanning, and validation tasks.
 
 > **Note:** Many of the recommendations in this document have been implemented. This serves as a historical record of the analysis that informed parallel agent patterns across workflows.
+>
+> **Update (2026-01-26):** All workflows have been updated to use a flexible agent pattern that encourages dynamic agent spawning based on task complexity and discovered needs. See [`agent-flexibility-review.md`](./agent-flexibility-review.md) for the new approach.
 
 ---
 

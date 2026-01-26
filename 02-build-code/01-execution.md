@@ -24,11 +24,17 @@ Execute implementation in phases with verification and documentation updates.
 - Confirm goal + acceptance criteria (user-facing behavior, performance targets, "done" definition).
 - Check repo state (avoid clobbering unrelated work): `git status`.
 - Break work into phases; for each phase define scope, out-of-scope, and exit criteria.
-- Plan parallel agents explicitly for each phase:
-  - Agent 1: Implement core functionality
-  - Agent 2: Review for security/risk issues and side effects
-  - Agent 3: Check for breaking changes or unintended impacts
-  - Agent 4: Validate against acceptance criteria and test cases
+- Plan parallel agents for each phase. Suggested agent roles (adapt as needed):
+  - Implement core functionality
+  - Review for security/risk issues and side effects
+  - Check for breaking changes or unintended impacts
+  - Validate against acceptance criteria and test cases
+  - [Spawn additional agents if the phase complexity requires it, such as:
+    - Performance impact analysis
+    - Documentation updates
+    - Test coverage validation
+    - Integration testing
+    - Accessibility checks]
 
 ## For Each Phase (Implementation Loop)
 - Phase definition (before coding)
@@ -37,17 +43,29 @@ Execute implementation in phases with verification and documentation updates.
   - Exit criteria: concrete checks that must pass.
 - Implement
   - Make the smallest change that satisfies the phase scope.
-  - Use parallel agents to:
-    - Agent 1: Implement the core change
-    - Agent 2: Concurrently review for risks, side effects, and breaking changes
-    - Agent 3: Check for unintended impacts on other modules or features
-    - Agent 4: Validate code quality and adherence to project conventions
+  - Use parallel agents. Suggested agent roles (spawn additional agents as needed):
+    - Implement the core change
+    - Concurrently review for risks, side effects, and breaking changes
+    - Check for unintended impacts on other modules or features
+    - Validate code quality and adherence to project conventions
+    - [Spawn additional agents if you discover other concerns during implementation, such as:
+      - Performance optimizations
+      - Additional test coverage
+      - Documentation updates
+      - Related code cleanup
+      - Security hardening]
 - Verify (repeat until exit criteria met)
-  - Use parallel agents to run checks concurrently:
-    - Agent 1: Run `npm run build` and check for build errors
-    - Agent 2: Check for TypeScript/ESLint errors and warnings
-    - Agent 3: Validate file structure and imports are correct
-    - Agent 4: Review git diff for unintended changes or secrets
+  - Use parallel agents to run checks concurrently. Suggested agent roles (spawn additional agents as needed):
+    - Run `npm run build` and check for build errors
+    - Check for TypeScript/ESLint errors and warnings
+    - Validate file structure and imports are correct
+    - Review git diff for unintended changes or secrets
+    - [Spawn additional agents if other verification needs are discovered, such as:
+      - Test execution and coverage
+      - Performance benchmarking
+      - Security scanning
+      - Documentation validation
+      - Integration testing]
   - If relevant, run: `npm run dev` and perform a quick smoke test of the affected flow.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)

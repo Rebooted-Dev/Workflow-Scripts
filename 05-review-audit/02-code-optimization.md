@@ -15,12 +15,19 @@ Perform a structured analysis to identify performance bottlenecks, resource inef
 - Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
 
 ## Steps
-1. Scan the codebase using parallel agents. Each agent should read files in parallel batches (read multiple files concurrently, not sequentially):
-   - Agent 1: Scan for performance bottlenecks (read implementation files, algorithms, data structures in parallel)
-   - Agent 2: Scan for resource inefficiencies (read memory usage, file I/O, network calls, database queries in parallel)
-   - Agent 3: Scan for optimization opportunities (read loops, recursive calls, caching opportunities in parallel)
-   - Agent 4: Scan for scalability concerns (read concurrent operations, state management, bottlenecks in parallel)
-   - Agent 5: Analyze build and bundle size (read build configs, dependencies, bundle analysis in parallel)
+1. Scan the codebase using parallel agents. Suggested agent roles (spawn additional agents as needed):
+   - Scan for performance bottlenecks (read implementation files, algorithms, data structures in parallel batches)
+   - Scan for resource inefficiencies (read memory usage, file I/O, network calls, database queries in parallel batches)
+   - Scan for optimization opportunities (read loops, recursive calls, caching opportunities in parallel batches)
+   - Scan for scalability concerns (read concurrent operations, state management, bottlenecks in parallel batches)
+   - Analyze build and bundle size (read build configs, dependencies, bundle analysis in parallel batches)
+   - [Spawn additional agents if you discover other optimization concerns, such as:
+     - Rendering performance issues
+     - Database query optimization
+     - Network request batching
+     - Code splitting opportunities
+     - Lazy loading opportunities
+     - Domain-specific performance issues]
    Agents should batch read files (e.g., read 5-10 files concurrently per agent) to maximize throughput.
 
 2. For each optimization finding, capture:

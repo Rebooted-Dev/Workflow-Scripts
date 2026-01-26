@@ -13,10 +13,17 @@ Perform a structured code review that identifies defects, risks, and refactoring
 - Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
 
 ## Steps
-1. Scan the codebase using parallel agents. Each agent should read files in parallel batches (read multiple files concurrently, not sequentially):
-   - Agent 1: Scan for bugs and software faults (read implementation files in parallel)
-   - Agent 2: Scan for security and safety issues (read security-critical files in parallel)
-   - Agent 3: Scan for optimization, modularization, and refactoring opportunities (read code files in parallel)
+1. Scan the codebase using parallel agents. Suggested agent roles (spawn additional agents as needed):
+   - Scan for bugs and software faults (read implementation files in parallel batches)
+   - Scan for security and safety issues (read security-critical files in parallel batches)
+   - Scan for optimization, modularization, and refactoring opportunities (read code files in parallel batches)
+   - [Spawn additional agents if you discover other concern areas, such as:
+     - Performance bottlenecks
+     - Accessibility issues
+     - Test coverage gaps
+     - Documentation inconsistencies
+     - Domain-specific concerns (database, API, UI, etc.)
+     - Compliance or regulatory issues]
    Agents should batch read files (e.g., read 5-10 files concurrently per agent) to maximize throughput.
 2. For each finding, capture:
    - file path and line reference

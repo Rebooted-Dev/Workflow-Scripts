@@ -15,12 +15,19 @@ Perform a structured analysis to identify code quality issues, technical debt, a
 - Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
 
 ## Steps
-1. Scan the codebase using parallel agents. Each agent should read files in parallel batches (read multiple files concurrently, not sequentially):
-   - Agent 1: Scan for code duplication and DRY violations (read implementation files in parallel)
-   - Agent 2: Scan for architectural issues and design patterns (read module structure, component organization in parallel)
-   - Agent 3: Scan for maintainability issues (read complex functions, long files, unclear naming in parallel)
-   - Agent 4: Scan for testability concerns (read tightly coupled code, missing abstractions in parallel)
-   - Agent 5: Scan for code smells and anti-patterns (read code files for common issues in parallel)
+1. Scan the codebase using parallel agents. Suggested agent roles (spawn additional agents as needed):
+   - Scan for code duplication and DRY violations (read implementation files in parallel batches)
+   - Scan for architectural issues and design patterns (read module structure, component organization in parallel batches)
+   - Scan for maintainability issues (read complex functions, long files, unclear naming in parallel batches)
+   - Scan for testability concerns (read tightly coupled code, missing abstractions in parallel batches)
+   - Scan for code smells and anti-patterns (read code files for common issues in parallel batches)
+   - [Spawn additional agents if you discover other refactoring concerns, such as:
+     - Type safety improvements
+     - Error handling patterns
+     - Documentation gaps
+     - Inconsistent coding styles
+     - Dead code and unused dependencies
+     - Domain-specific refactoring needs]
    Agents should batch read files (e.g., read 5-10 files concurrently per agent) to maximize throughput.
 
 2. For each refactoring finding, capture:

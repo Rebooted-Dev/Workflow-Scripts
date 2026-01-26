@@ -14,17 +14,29 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 
 ## Steps
 1. Read the plan end-to-end and list its explicit goals, scope, and assumptions.
-2. Use parallel agents to validate each item for technical feasibility and correctness. Each agent should read validation files in parallel batches:
-   - Agent 1: Validate API/interface compatibility and availability (read API/interface files in parallel)
-   - Agent 2: Check file structure, module dependencies, and imports (read module files in parallel)
-   - Agent 3: Verify configuration and environment assumptions (read config files in parallel)
-   - Agent 4: Cross-reference with existing patterns and conventions (read pattern files in parallel)
+2. Use parallel agents to validate each item for technical feasibility and correctness. Suggested agent roles (spawn additional agents as needed):
+   - Validate API/interface compatibility and availability (read API/interface files in parallel batches)
+   - Check file structure, module dependencies, and imports (read module files in parallel batches)
+   - Verify configuration and environment assumptions (read config files in parallel batches)
+   - Cross-reference with existing patterns and conventions (read pattern files in parallel batches)
+   - [Spawn additional agents if you discover other validation needs, such as:
+     - Performance impact analysis
+     - Security implications
+     - Testing requirements
+     - Documentation gaps
+     - Integration points]
    Consolidate validation results and flag any conflicts or issues.
-3. Use parallel agents to identify issues across different domains. Each agent should read code files in parallel batches:
-   - Agent 1: Scan for security and safety issues (read security-critical files in parallel)
-   - Agent 2: Identify design flaws and architectural concerns (read architecture files in parallel)
-   - Agent 3: Detect potential bugs and software faults (read implementation files in parallel)
-   - Agent 4: Flag scope creep and over-engineering risks (read feature files in parallel)
+3. Use parallel agents to identify issues across different domains. Suggested agent roles (spawn additional agents as needed):
+   - Scan for security and safety issues (read security-critical files in parallel batches)
+   - Identify design flaws and architectural concerns (read architecture files in parallel batches)
+   - Detect potential bugs and software faults (read implementation files in parallel batches)
+   - Flag scope creep and over-engineering risks (read feature files in parallel batches)
+   - [Spawn additional agents if you discover other concern areas, such as:
+     - Performance bottlenecks
+     - Accessibility issues
+     - Test coverage gaps
+     - Domain-specific concerns (database, API, UI, etc.)
+     - Compliance or regulatory issues]
    Consolidate findings and identify:
    - design flaws in the plan
    - potential bugs and software faults
@@ -55,7 +67,8 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
   - Push speculative refactors/optimizations to P3 unless they unblock P0/P1 work.
 
 ## Notes
-- Use parallel agents for scanning files or validating claims when helpful.
+- Use parallel agents for scanning files or validating claims when helpful. Spawn additional agents as needed when you discover new concerns or areas that need investigation.
+- When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.
 - Do not modify source code in this workflow; only update the plan document.
 
 ## Related Workflows

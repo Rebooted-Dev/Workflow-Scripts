@@ -14,20 +14,36 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 
 ## Steps
 1. Read the plan and all feedback sections; extract goals, constraints, and unresolved issues.
-2. Use parallel agents to scan the codebase for context. Each agent should read files in parallel batches (read multiple files concurrently, not sequentially):
-   - Agent 1: Identify existing implementations or similar patterns (read relevant files in parallel)
-   - Agent 2: Map dependencies and constraints in the codebase (read dependency files in parallel)
-   - Agent 3: Find related code that might be affected by the plan (read related files in parallel)
+2. Use parallel agents to scan the codebase for context. Suggested agent roles (spawn additional agents as needed):
+   - Identify existing implementations or similar patterns (read relevant files in parallel batches)
+   - Map dependencies and constraints in the codebase (read dependency files in parallel batches)
+   - Find related code that might be affected by the plan (read related files in parallel batches)
+   - [Spawn additional agents if you discover other areas that need investigation, such as:
+     - Performance implications
+     - Security considerations
+     - Testing requirements
+     - Documentation needs
+     - Integration points]
    Consolidate ideas into a single coherent plan that removes duplicates and contradictions.
-3. Use parallel agents to validate dependencies and ordering constraints. Each agent should read required files in parallel:
-   - Agent 1: Verify dependency claims against actual code structure (read dependency files in parallel)
-   - Agent 2: Check for potential conflicts or circular dependencies (read conflicting files in parallel)
-   - Agent 3: Validate ordering constraints are technically sound (read constraint-related files in parallel)
+3. Use parallel agents to validate dependencies and ordering constraints. Suggested agent roles (spawn additional agents as needed):
+   - Verify dependency claims against actual code structure (read dependency files in parallel batches)
+   - Check for potential conflicts or circular dependencies (read conflicting files in parallel batches)
+   - Validate ordering constraints are technically sound (read constraint-related files in parallel batches)
+   - [Spawn additional agents if you discover other dependency concerns, such as:
+     - Runtime dependencies
+     - Build-time dependencies
+     - Data flow dependencies
+     - External service dependencies]
    Define dependencies and ordering constraints (what must happen before what).
-4. Use parallel agents to cross-check technical feasibility of each priority bucket. Each agent should read feasibility-related files in parallel:
-   - Agent 1: Validate P0/P1 items are technically feasible (read implementation files in parallel)
-   - Agent 2: Check for existing solutions or patterns that could be reused (read pattern files in parallel)
-   - Agent 3: Identify potential blockers or risks for each priority level (read risk-related files in parallel)
+4. Use parallel agents to cross-check technical feasibility of each priority bucket. Suggested agent roles (spawn additional agents as needed):
+   - Validate P0/P1 items are technically feasible (read implementation files in parallel batches)
+   - Check for existing solutions or patterns that could be reused (read pattern files in parallel batches)
+   - Identify potential blockers or risks for each priority level (read risk-related files in parallel batches)
+   - [Spawn additional agents if you discover other feasibility concerns, such as:
+     - Resource constraints
+     - Timeline constraints
+     - Skill/team constraints
+     - External dependencies]
    Convert scope into a priority-ordered roadmap:
    - P0: blockers, active incidents, security-critical, release-stoppers
    - P1: urgent, high user impact, likely failures
@@ -66,5 +82,6 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 
 ## Notes
 - Prefer the smallest viable change that satisfies the objective and verification step.
-- Use parallel agents to cross-check feasibility or scan codebase references.
+- Use parallel agents to cross-check feasibility or scan codebase references. Spawn additional agents as needed when you discover new concerns or areas that need investigation.
+- When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.
 - Do not modify application code in this workflow; only produce the plan.

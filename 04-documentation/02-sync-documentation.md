@@ -33,10 +33,17 @@ Template rules:
 If you discover missing "supporting" documentation (contributing/changelog/config/security/errors/migrations/etc.), use `./09-optional.md` as a checklist to recommend a small, high-leverage set (usually 1-3 items).
 
 ## Steps
-1. Scan the codebase using parallel agents. Each agent should read code files in parallel batches (read multiple files concurrently):
-   - Agent 1: Scan codebase for current behavior (read implementation files in parallel)
-   - Agent 2: Understand architecture and structure (read architecture files in parallel)
-   - Agent 3: Identify documentation gaps (read code and compare with docs in parallel)
+1. Scan the codebase using parallel agents. Suggested agent roles (spawn additional agents as needed):
+   - Scan codebase for current behavior (read implementation files in parallel batches)
+   - Understand architecture and structure (read architecture files in parallel batches)
+   - Identify documentation gaps (read code and compare with docs in parallel batches)
+   - [Spawn additional agents if you discover other documentation needs, such as:
+     - API documentation gaps
+     - Architecture diagram needs
+     - Code example requirements
+     - Migration guide needs
+     - Configuration documentation
+     - Troubleshooting guide updates]
    Agents should batch read files concurrently to maximize scanning speed.
 2. Inventory existing docs; tag issues as P0–P3.
 3. Apply fixes in priority order:
