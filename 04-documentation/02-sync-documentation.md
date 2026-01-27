@@ -68,6 +68,11 @@ If you discover missing "supporting" documentation (contributing/changelog/confi
 - Diagrams are text-based and directly reflect actual structure.
 - File maps are included to aid navigation (directory trees and/or module maps for key areas).
 
+**Completion status convention:**  
+When a documentation sync effort is fully complete, clearly mark the sync summary or primary report document with a green check mark for visibility, for example:
+- `**Status:** ✅ COMPLETED`
+- A heading such as `## Documentation Sync ✅`
+
 ## Acceptance Criteria
 - Doc changes are delivered in priority order (P0 to P3).
 - No doc contradicts the current codebase.
