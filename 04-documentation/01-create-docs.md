@@ -39,6 +39,11 @@ Perform a detailed review of a project's codebase and produce a cohesive documen
 - Contributors (if applicable): contribution process (`CONTRIBUTING.md` or `docs/contributing.md`), expectations, local dev setup.
 - Maintainers (if applicable): changelog (`CHANGELOG.md` or `docs/CHANGELOG.md`), upgrade/migration notes.
 
+**Completion status convention:**  
+When this comprehensive documentation effort is fully finished, clearly mark the main summary or index document with a green check mark for quick visual scanning, for example:
+- `**Status:** ✅ COMPLETED`
+- A heading such as `## Documentation Overhaul ✅`
+
 ## Prioritization Rule
 - Organize doc generation by priority, descending urgency/importance: P0, P1, P2, P3.
 - Use the shared rubric: `../00-meta/severity-priority-rubric.md`.

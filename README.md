@@ -711,24 +711,32 @@ Step 7: Code Review
 - Add a `troubleshooting/` entry for bug fixes and update `troubleshooting/index.md`
 - Keep documentation in sync with code
 
-### 4. Use Parallel Agents
+### 4. Completion Status Conventions
+- **Plans and reports:** When a plan, optimization report, migration guide, or other long-form document is fully completed, clearly mark this with a **green check mark** for quick visual scanning. Recommended patterns:
+  - `**Status:** ✅ COMPLETED`
+  - A section or heading suffix like `## Implementation Status ✅` or `# Genkit Migration Implementation - COMPLETED ✅`
+- **Task lists inside plans/docs:** Continue to use Markdown checkboxes for individual tasks:
+  - `- [x]` for completed tasks
+  - `- [ ]` for pending or deferred tasks
+
+### 5. Use Parallel Agents
 - Many workflows support parallel agents with a flexible pattern
 - Workflows provide suggested agent roles, but you should spawn additional agents as needed
 - Adapt agent count and roles based on task complexity and discovered concerns
 - Use parallel batch reading (read multiple files concurrently) to maximize speed
 - Verify findings directly before acting
 
-### 5. Keep Changes Small
+### 6. Keep Changes Small
 - Prefer smallest viable change
 - Break large features into phases
 - Each phase should have clear exit criteria
 
-### 6. Evidence-Based Decisions
+### 7. Evidence-Based Decisions
 - Always include evidence for findings
 - Cite file paths and line numbers
 - Avoid unverified claims or assumptions
 
-### 7. Scope Management
+### 8. Scope Management
 - Avoid over-engineering
 - Push speculative refactors to P3
 - Focus on concrete, measurable goals
