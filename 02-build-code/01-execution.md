@@ -15,7 +15,7 @@ Execute implementation in phases with verification and documentation updates.
 - Implemented code changes
 - Updated changelog (`docs/CHANGELOG.md` or `CHANGELOG.md`)
 - Troubleshooting entries (if bugs were fixed)
-- Task list with completion status
+- Implementation plan in `plans/` updated with task list and completion status (`- [x]` / `- [ ]`)
 
 ---
 
@@ -69,9 +69,9 @@ Execute implementation in phases with verification and documentation updates.
   - If relevant, run: `npm run dev` and perform a quick smoke test of the affected flow.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
-  - **CRITICAL: Update task list using Markdown checkbox format:**
-    - **Completed items:** `- [x] Task description` - Mark IMMEDIATELY after task completion and verification
-    - **Pending items:** `- [ ] Task description` - For tasks not yet started or still in progress
+  - **CRITICAL: Update the implementation plan** (the plan document in `plans/`, e.g. `plans/implementation-plan-*.md`) with completed tasks marked so the plan reflects reality:
+    - **Completed items:** `- [x] Task description` (green check in rendered view) — Mark IMMEDIATELY after task completion and verification
+    - **Pending items:** `- [ ] Task description` — For tasks not yet started or still in progress
     - **Parent tasks:** Mark parent tasks as `- [x]` only when ALL sub-tasks are complete
     - **Deferred tasks:** Leave as `- [ ]` and add a note explaining deferral (e.g., "Deferred to P3")
     - **Systematic checking:** Review ALL tasks in the plan, not just the ones you worked on in this phase
@@ -89,6 +89,7 @@ Execute implementation in phases with verification and documentation updates.
 
 - Run a final `npm run build` to confirm the repo is shippable.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
+- **Update the implementation plan:** Ensure every completed task in the plan is marked with `- [x]`. When the plan is fully complete, add a visible completion marker for quick scanning (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.
 
 ## Related Workflows

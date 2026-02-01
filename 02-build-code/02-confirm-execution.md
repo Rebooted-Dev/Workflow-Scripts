@@ -98,6 +98,8 @@ If the plan does not use task list syntax, add an addendum section instead of re
    - Any misreporting or mismatches (with file paths / evidence)
    - Next steps (only for incomplete items)
 
+5. **When the plan is fully verified complete:** Add a visible completion marker for quick scanning (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions." Keep individual tasks as `- [x]` (checkbox format).
+
 ## Related Workflows
 
 - **[`01-execution.md`](./01-execution.md)** - Execute implementation plans (run this first, then confirm)

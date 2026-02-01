@@ -34,12 +34,16 @@ Use multiple parallel agents to investigate the bug. Suggested agent roles (spaw
 - Check for similar bugs or related issues in the codebase (read similar patterns/files in parallel batches)
 - Review recent changes that might have introduced the bug (read git history, recent commits, and related files in parallel batches)
 - Examine data flow and state management around the bug (read data processing, state files, and API handlers in parallel batches)
-- [Spawn additional agents if you discover other investigation needs, such as:
-  - Performance impact analysis
-  - Security implications
-  - Related code patterns that might have the same issue
-  - Integration points that might be affected
-  - Test coverage gaps]
+
+
+**When to spawn additional agents:**
+- Spawn 1 performance agent if bug causes slow operations, memory leaks, or resource exhaustion
+- Spawn 1 security agent if bug exposes sensitive data, bypasses authentication, or creates vulnerabilities
+- Spawn 1 pattern analysis agent if similar code patterns found in 5+ files that may have the same bug
+- Spawn 1 integration agent per external service/API affected by the bug (database, third-party services)
+- Spawn 1 test coverage agent if bug reveals untested critical paths or missing edge case tests
+
+**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
 Agents should batch read files concurrently to maximize investigation speed.
 
 ### 3. Root Cause Identification
@@ -65,12 +69,16 @@ Use multiple parallel agents to implement the fix. Suggested agent roles (spawn 
 - Review for unintended side effects or new bugs introduced
 - Check for similar issues in related code that should be fixed
 - Update related documentation if the fix changes behavior
-- [Spawn additional agents if you discover other implementation needs, such as:
-  - Performance optimizations related to the fix
-  - Additional test coverage
-  - Documentation updates
-  - Related code cleanup
-  - Security hardening]
+
+
+**When to spawn additional agents:**
+- Spawn 1 optimization agent if bug fix reveals performance issues or inefficient algorithms
+- Spawn 1 test agent if fix requires 5+ new test cases or complex test scenarios
+- Spawn 1 documentation agent if bug fix changes API behavior or user-facing functionality
+- Spawn 1 cleanup agent if fixing bug requires refactoring 3+ related files or removing dead code
+- Spawn 1 security agent if bug fix involves authentication, authorization, or data validation
+
+**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
 Each agent should read related files in parallel batches during implementation.
 
 ### 6. Verification
@@ -80,11 +88,15 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 - Test edge cases and similar scenarios
 - Verify the fix doesn't break other functionality
 - Review code changes for quality and adherence to project conventions
-- [Spawn additional agents if you discover other verification needs, such as:
-  - Performance testing
-  - Security validation
-  - Integration testing
-  - Documentation review]
+
+
+**When to spawn additional agents:**
+- Spawn 1 performance testing agent if bug fix may impact latency, throughput, or resource usage
+- Spawn 1 security validation agent if bug involved authentication, data exposure, or input handling
+- Spawn 1 integration testing agent per external system affected (database, API, third-party service)
+- Spawn 1 documentation review agent if bug fix changes documented behavior or requires user communication
+
+**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
 Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### 7. Documentation
@@ -96,6 +108,7 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
   - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`
   - Update `troubleshooting/index.md` (add the new entry at the top)
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
+- **Update the implementation plan (if applicable):** If this bug fix was tracked as a task in an implementation plan in `plans/`, identify the relevant plan (check active plans in `plans/` for a task matching this fix), update that plan: mark the completed task with `- [x]` (green check in rendered view) and add a brief note if needed. When all tasks in the plan are complete, add a completion marker (e.g. `**Status:** ✅ COMPLETED`) per the Workflow-Scripts main README, "Completion Status Conventions."
 
 ### 8. Final Verification
 - Run final `npm run build` to confirm the repo is shippable.
