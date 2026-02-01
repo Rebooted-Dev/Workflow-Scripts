@@ -9,6 +9,7 @@ This directory contains comprehensive guides for deploying applications across v
 ```
 Is your app a desktop application?
 ├─ Yes → [Electron Desktop App Guide](./01-MACOS_ELECTRON_GUIDE.md)
+│   (For new electron-vite migrations: [Electron-Vite Migration](./01b-electron-vite.md))
 └─ No → Continue...
 
 Are you deploying to a cloud platform?
@@ -43,6 +44,27 @@ Do you need to apply security patches?
 **Quick start:**
 ```bash
 ./scripts/mac-build.sh --dir
+```
+
+#### [Electron-Vite Migration Workflow](./01b-electron-vite.md)
+**When to use:** Migrating existing Electron apps or TypeScript apps to support electron-vite for macOS builds with dual web + desktop distribution.
+
+**Covers:**
+- Migrating from esbuild/webpack to electron-vite
+- Configuring electron-vite for main/preload processes
+- Setting up dev workflow with hot reload
+- Dual build support (web + desktop)
+- Path resolution in packaged apps
+- electron-builder integration
+
+**Quick start:**
+```bash
+# Follow the 5-phase workflow in the guide
+# Phase 1: Project setup and electron-vite config
+# Phase 2: Dev workflow with port coordination
+# Phase 3: electron-builder configuration
+# Phase 4: Path resolution
+# Phase 5: Verification
 ```
 
 ---
@@ -173,7 +195,14 @@ npm i react@latest react-dom@latest next@latest
 2. Build: `./scripts/mac-build.sh`
 3. Code sign and notarize (optional)
 
-### Scenario 4: Local Server Demo
+### Scenario 4: Adding Desktop Support to Web App
+
+1. Follow [Electron-Vite Migration Workflow](./01b-electron-vite.md)
+2. Set up electron-vite for main/preload builds
+3. Configure dual dev workflow (web + desktop)
+4. Build with: `./scripts/mac-build.sh`
+
+### Scenario 5: Local Server Demo
 
 1. Follow [Nginx Deployment Guide](./11-nginx.md)
 2. Configure nginx for your app type
@@ -188,6 +217,7 @@ npm i react@latest react-dom@latest next@latest
 ├── README.md                          # This file - deployment index
 ├── DEPLOYMENT_OPTIMIZATION_REPORT.md  # Optimization history and results
 ├── 01-MACOS_ELECTRON_GUIDE.md        # Electron desktop app guide
+├── 01b-electron-vite.md              # Electron-vite migration workflow
 ├── 02-ai-studio-to-desktop.md        # AI Studio migration (reference)
 ├── 09-react-bug.md                   # Security patches guide
 ├── 10-firebase-setup.md              # Firebase Hosting setup
@@ -270,4 +300,4 @@ When adding new deployment guides:
 
 ---
 
-*Last updated: 2026-01-18*
+*Last updated: 2026-02-01*
