@@ -21,13 +21,16 @@ Perform a structured analysis to identify performance bottlenecks, resource inef
    - Scan for optimization opportunities (read loops, recursive calls, caching opportunities in parallel batches)
    - Scan for scalability concerns (read concurrent operations, state management, bottlenecks in parallel batches)
    - Analyze build and bundle size (read build configs, dependencies, bundle analysis in parallel batches)
-   - [Spawn additional agents if you discover other optimization concerns, such as:
-     - Rendering performance issues
-     - Database query optimization
-     - Network request batching
-     - Code splitting opportunities
-     - Lazy loading opportunities
-     - Domain-specific performance issues]
+   
+   **When to spawn additional agents:**
+   - Spawn 1 rendering optimization agent if UI framework code (React/Vue/Angular) with multiple re-renders detected
+   - Spawn 1 database query agent per 3-5 complex queries or N+1 query patterns identified
+   - Spawn 1 network optimization agent if multiple API calls in sequence or large payloads detected
+   - Spawn 1 bundle analysis agent if bundle size >500KB or 10+ dependencies in package.json
+   - Spawn 1 lazy-loading agent if large routes/components loaded upfront (check router config)
+   - Spawn 1 domain specialist for platform-specific optimizations (mobile, embedded, serverless)
+   
+   **Maximum recommended:** 3-5 additional agents to avoid coordination overhead
    Agents should batch read files (e.g., read 5-10 files concurrently per agent) to maximize throughput.
 
 2. For each optimization finding, capture:

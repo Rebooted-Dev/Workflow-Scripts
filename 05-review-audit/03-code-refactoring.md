@@ -21,13 +21,16 @@ Perform a structured analysis to identify code quality issues, technical debt, a
    - Scan for maintainability issues (read complex functions, long files, unclear naming in parallel batches)
    - Scan for testability concerns (read tightly coupled code, missing abstractions in parallel batches)
    - Scan for code smells and anti-patterns (read code files for common issues in parallel batches)
-   - [Spawn additional agents if you discover other refactoring concerns, such as:
-     - Type safety improvements
-     - Error handling patterns
-     - Documentation gaps
-     - Inconsistent coding styles
-     - Dead code and unused dependencies
-     - Domain-specific refactoring needs]
+   
+   **When to spawn additional agents:**
+   - Spawn 1 type safety agent if TypeScript `any` types or missing interfaces found in >10 locations
+   - Spawn 1 error handling agent if try-catch blocks missing or inconsistent error responses detected
+   - Spawn 1 documentation agent if 20%+ of public functions lack JSDoc or inline comments
+   - Spawn 1 code style agent if linter disabled or inconsistent formatting across 5+ files
+   - Spawn 1 cleanup agent if unused imports/exports in 10+ files or dead code branches identified
+   - Spawn 1 domain specialist for architecture-specific refactoring (microservices, event-driven, monolith)
+   
+   **Maximum recommended:** 3-5 additional agents to avoid coordination overhead
    Agents should batch read files (e.g., read 5-10 files concurrently per agent) to maximize throughput.
 
 2. For each refactoring finding, capture:

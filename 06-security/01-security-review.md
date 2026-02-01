@@ -22,14 +22,17 @@ Perform a structured security review that identifies vulnerabilities, security r
    - Scan for dependency vulnerabilities and outdated packages (read package.json, lock files, dependency files in parallel batches)
    - Scan for cryptographic issues and weak implementations (read encryption, hashing, token files in parallel batches)
    - Scan for security misconfigurations and exposed endpoints (read server config, API definitions, deployment files in parallel batches)
-   - [Spawn additional agents if you discover other security concerns, such as:
-     - API-specific security issues
-     - Frontend security vulnerabilities
-     - Infrastructure security misconfigurations
-     - Compliance and regulatory concerns
-     - Supply chain security risks
-     - Session management issues
-     - CSRF and XSS vulnerabilities]
+   
+   **When to spawn additional agents:**
+   - Spawn 1 API security agent per 5-10 API endpoints discovered (focus on REST/GraphQL/gRPC)
+   - Spawn 1 frontend security agent if client-side code handles sensitive data or authentication
+   - Spawn 1 infrastructure agent if cloud configs (AWS, GCP, Azure) or container files (Docker, K8s) found
+   - Spawn 1 compliance agent if PII/PHI handling detected or regulatory requirements (GDPR, HIPAA) apply
+   - Spawn 1 supply chain agent if 20+ dependencies or outdated packages found in package.json/lock files
+   - Spawn 1 session management agent if custom session handling or token management implemented
+   - Spawn 1 injection prevention agent if user inputs processed in 10+ locations (SQL, XSS, command injection)
+   
+   **Maximum recommended:** 3-5 additional agents to avoid coordination overhead
    Agents should batch read files (e.g., read 5-10 files concurrently per agent) to maximize throughput.
 
 2. For each security finding, capture:
@@ -56,7 +59,7 @@ Perform a structured security review that identifies vulnerabilities, security r
    - Recommended security hardening measures
    - Timeline for addressing critical issues
 
-5. Save the report to `plans/` (project root) with a dated filename (e.g., `security-review-YYYY-MM-DD-HH-MM.md`).
+5. Save the report to `plans/` (project root) with a dated filename (e.g., `YYYY-MM-DD-security-review.md`).
 
 ## Output Requirements
 - Report title, date/time, scope, and summary.

@@ -47,7 +47,7 @@ The workflows are organized into seven categories:
 | Implementing changes | Execution | `02-build-code/01-execution.md` |
 | Fixing a bug | Bug Fix | `03-debug/02-bug-fix-workflow.md` |
 | Fixing security issues | Security Fix | `06-security/02-security-fix.md` |
-| Updating docs | Sync Documentation | `04-documentation/sync-documentation.md` |
+| Updating docs | Sync Documentation | `04-documentation/02-sync-documentation.md` |
 
 ### Typical Workflow Sequence
 
@@ -473,7 +473,7 @@ Workflow will:
 
 ### 6. Documentation Workflows
 
-#### Sync Documentation (`04-documentation/sync-documentation.md`)
+#### Sync Documentation (`04-documentation/02-sync-documentation.md`)
 
 **Purpose:** Review code and update documentation to match the codebase accurately.
 
@@ -709,15 +709,17 @@ Step 7: Code Review
 ### 3. Document as You Go
 - Update the changelog after each phase (`docs/CHANGELOG.md` preferred)
 - Add a `troubleshooting/` entry for bug fixes and update `troubleshooting/index.md`
+- **Update the implementation plan after each code build or bug fix:** If you are working from a plan in `plans/`, mark completed tasks with `- [x]` (green check in rendered view) immediately after completion and verification. After a build phase or after resolving a bug that was a plan task, update the plan document so it reflects reality. When the plan is fully complete, add a green check mark (e.g. `**Status:** ✅ COMPLETED`) per "Completion Status Conventions" below.
 - Keep documentation in sync with code
 
 ### 4. Completion Status Conventions
 - **Plans and reports:** When a plan, optimization report, migration guide, or other long-form document is fully completed, clearly mark this with a **green check mark** for quick visual scanning. Recommended patterns:
   - `**Status:** ✅ COMPLETED`
   - A section or heading suffix like `## Implementation Status ✅` or `# Genkit Migration Implementation - COMPLETED ✅`
-- **Task lists inside plans/docs:** Continue to use Markdown checkboxes for individual tasks:
-  - `- [x]` for completed tasks
+- **Task lists inside plans/docs:** Use Markdown checkboxes so completed items show as green check marks in rendered view:
+  - `- [x]` for completed tasks (mark immediately after completion and verification)
   - `- [ ]` for pending or deferred tasks
+- **When to update the plan:** After each code build phase (Execution workflow) or after debugging a problem that was tracked in a plan (Bug Fix workflow), update the implementation plan in `plans/` with accurate `- [x]` / `- [ ]` status so the plan stays in sync with reality.
 
 ### 5. Use Parallel Agents
 - Many workflows support parallel agents with a flexible pattern
@@ -755,7 +757,7 @@ Workflow files use a mixed naming convention that balances clarity and organizat
 
 **Descriptive Names:**
 - Used when files are standalone or don't have a clear sequence
-- Example: `sync-documentation.md`, `bug-fix-workflow.md`
+- Example: `02-sync-documentation.md`, `bug-fix-workflow.md`
 - Makes purpose immediately clear from filename
 
 **When in doubt:**
@@ -794,7 +796,7 @@ workflows/
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
 │   ├── README.md (directory index)
-│   └── sync-documentation.md
+│   └── 02-sync-documentation.md
 ├── 05-review-audit/
 │   ├── README.md (directory index)
 │   ├── 01-code-review.md

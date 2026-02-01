@@ -102,6 +102,8 @@ If your build fails after the update:
 - [React Security Advisory](https://react.dev/blog/2025/12/03/security-advisory)
 - [Next.js Security Advisory](https://nextjs.org/blog/security-advisory)
 - [CVE-2025-55182 Details](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-55182)
+## Example Status
 
-## Status
-- **PATCHED**: Updated `react` and `react-dom` to `^19.2.1` in `index.html` import map.
+When you complete the patch, update this section with your implementation:
+
+- **PATCHED**: Updated `react` and `react-dom` to `^19.2.1` in your import map or package.json

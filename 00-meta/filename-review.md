@@ -29,7 +29,7 @@ workflows/
 │   ├── 01-bug-description.md
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
-│   └── sync-documentation.md
+│   └── 02-sync-documentation.md
 ├── 05-review-audit/
 │   └── 01-code-review.md
 └── 06-security/
@@ -79,7 +79,7 @@ Add `workflow-` prefix to all workflow instruction files for clear identificatio
 3. `03-code-review.md` → `workflow-code-review.md`
 4. `01-execution.md` → `workflow-execution.md`
 5. `02-bug-fix-workflow.md` → `workflow-bug-fix.md`
-6. `sync-documentation.md` → `workflow-sync-documentation.md`
+6. `02-sync-documentation.md` → `workflow-sync-documentation.md`
 
 **Rationale:** Makes it immediately clear which files are workflow instructions vs. supporting docs.
 
@@ -107,7 +107,7 @@ workflows/
 │   ├── 01-bug-description.md
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
-│   └── sync-documentation.md
+│   └── 02-sync-documentation.md
 ├── 05-review-audit/
 │   └── 01-code-review.md
 └── 06-security/
@@ -188,7 +188,7 @@ workflows/
 │   ├── 01-bug-description.md
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
-│   └── sync-documentation.md
+│   └── 02-sync-documentation.md
 ├── 05-review-audit/
 │   └── 01-code-review.md
 └── 06-security/

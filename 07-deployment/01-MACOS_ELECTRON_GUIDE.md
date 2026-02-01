@@ -6,7 +6,7 @@ This guide assumes your project uses a Vite + React renderer that is bundled to 
 
 Document version: 4.4 (2026-01-24)
 
-> **Note:** Throughout this guide, you'll see placeholders like `<AppName>`, `<YOUR_APP_NAME>`, and `<YOUR_BUNDLE_ID>`. Replace these with your actual project values before running any commands.
+> **Note:** Throughout this guide, you'll see placeholders like `<YOUR_APP_NAME>` and `<YOUR_BUNDLE_ID>`. Replace these with your actual project values before running any commands.
 
 ## When to use this
 
@@ -90,7 +90,7 @@ If `npm audit` reports vulnerabilities in transitive dependencies (dependencies 
 
 **Why overrides are needed:** Transitive dependencies (like `@electron/rebuild` used by `electron-builder`) may pull in vulnerable versions. Overrides force all instances of a package to use the secure version you specify.
 
-**Important:** Only override to versions that actually exist. If `npm view <package> version` shows `7.5.6` is latest, don't specify `^8.0.0` (it doesn't exist).
+**Important:** Only override to versions that actually exist. If `npm view <PACKAGE_NAME> version` shows `7.5.6` is latest, don't specify `^8.0.0` (it doesn't exist).
 
 ### Verifying installation
 
@@ -123,11 +123,11 @@ npm run mac:build:dir
 # Distribution build (DMG + ZIP)
 npm run mac:build
 
-# Launch a built app (replace <AppName> with your actual app name)
-open "release/mac-arm64/<AppName>.app"
+# Launch a built app (replace <YOUR_APP_NAME> with your actual app name)
+open "release/mac-arm64/<YOUR_APP_NAME>.app"
 
-# Watch main process logs (replace <AppName> with your actual app name)
-tail -f "~/Library/Logs/<AppName>/main.log"
+# Watch main process logs (replace <YOUR_APP_NAME> with your actual app name)
+tail -f "~/Library/Logs/<YOUR_APP_NAME>/main.log"
 ```
 
 ## The Two Critical Decisions
@@ -166,7 +166,7 @@ Electron packages your app into `app.asar`. In production, `__dirname` from `des
 Typical structure:
 
 ```
-<AppName>.app/
+<YOUR_APP_NAME>.app/
   Contents/
     Resources/
       app.asar/
@@ -207,8 +207,8 @@ Example electron-builder config (trim to what you actually ship):
 
 ```js
 module.exports = {
-  appId: '<app-id>',
-  productName: '<AppName>',
+  appId: '<YOUR_BUNDLE_ID>',
+  productName: '<YOUR_APP_NAME>',
   files: [
     'index.cjs',
     'desktop/main.cjs',

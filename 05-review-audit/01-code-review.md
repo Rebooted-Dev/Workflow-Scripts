@@ -17,13 +17,16 @@ Perform a structured code review that identifies defects, risks, and refactoring
    - Scan for bugs and software faults (read implementation files in parallel batches)
    - Scan for security and safety issues (read security-critical files in parallel batches)
    - Scan for optimization, modularization, and refactoring opportunities (read code files in parallel batches)
-   - [Spawn additional agents if you discover other concern areas, such as:
-     - Performance bottlenecks
-     - Accessibility issues
-     - Test coverage gaps
-     - Documentation inconsistencies
-     - Domain-specific concerns (database, API, UI, etc.)
-     - Compliance or regulatory issues]
+   
+   **When to spawn additional agents:**
+   - Spawn 1 performance agent if bottlenecks/slow operations detected in profiling or code analysis
+   - Spawn 1 accessibility agent if UI components found without ARIA labels or keyboard navigation
+   - Spawn 1 test coverage agent if critical paths lack test coverage (check test files vs implementation)
+   - Spawn 1 documentation agent if API endpoints or public functions lack documentation
+   - Spawn 1 domain specialist per major subsystem (database, API, UI) if complex issues detected
+   - Spawn 1 compliance agent if regulatory requirements (GDPR, HIPAA, SOC2) apply to the codebase
+   
+   **Maximum recommended:** 3-5 additional agents to avoid coordination overhead
    Agents should batch read files (e.g., read 5-10 files concurrently per agent) to maximize throughput.
 2. For each finding, capture:
    - file path and line reference

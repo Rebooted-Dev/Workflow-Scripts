@@ -1,10 +1,10 @@
 #!/bin/bash
-# Helper for maintainers: commit + push changes in the workflows repo.
+# Helper for maintainers: commit + push changes in the Workflow-Scripts repo.
 #
 # This script intentionally does NOT touch the parent project repo.
 #
 # Usage:
-#   ./workflows/update-workflows.sh "docs: clarify workflow instructions"
+#   ./Workflow-Scripts/update-workflows.sh "docs: clarify workflow instructions"
 
 set -euo pipefail
 
@@ -21,7 +21,7 @@ fi
 if [ -z "$COMMIT_MSG" ]; then
     echo "No commit message provided."
     echo "Review and commit manually:" 
-    echo "  cd workflows"
+    echo "  cd Workflow-Scripts"
     echo "  git status"
     echo "  git add ."
     echo "  git commit -m 'docs: ...'"
@@ -41,4 +41,4 @@ fi
 
 git commit -m "$COMMIT_MSG"
 git push
-echo "Workflows changes pushed."
+echo "Workflow-Scripts changes pushed."

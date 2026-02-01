@@ -8,6 +8,7 @@ This directory contains templates, rubrics, and analysis documents about the wor
 |------|------|--------|---------|
 | [`severity-priority-rubric.md`](./severity-priority-rubric.md) | Reference | **Active** | Shared rubric for S0-S3 severity and P0-P3 priority scoring |
 | [`sync-summary-template.md`](./sync-summary-template.md) | Template | **Active** | Template for documentation sync summary reports |
+| [`agent-flexibility-review.md`](./agent-flexibility-review.md) | Analysis | **Active** | Guidelines for flexible agent spawning patterns |
 | [`filename-review.md`](./filename-review.md) | Analysis | Historical | Review of filename conventions (completed 2026-01) |
 | [`parallel-agents-review.md`](./parallel-agents-review.md) | Analysis | Historical | Analysis of parallel agent usage across workflows |
 
@@ -21,6 +22,11 @@ This directory contains templates, rubrics, and analysis documents about the wor
   - Mapping rules and evidence requirements
 
 - **`sync-summary-template.md`** - Use when creating documentation sync reports
+
+- **`agent-flexibility-review.md`** - Reference when designing workflows with parallel agents. Provides:
+  - Guidelines for flexible agent spawning (not fixed numbers)
+  - Decision criteria for when to spawn additional agents
+  - Patterns for agent role assignment
 
 ### Historical Files (For Reference Only)
 

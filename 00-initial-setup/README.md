@@ -69,7 +69,7 @@ Key features:
 
 ## Related Workflows
 
-- [Sync Documentation](../04-documentation/sync-documentation.md) - Keep documentation in sync with code
+- [Sync Documentation](../04-documentation/02-sync-documentation.md) - Keep documentation in sync with code
 - [Code Review](../05-review-audit/01-code-review.md) - Code quality review
 
 ## Notes

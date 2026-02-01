@@ -59,9 +59,16 @@ WORKFLOWS_DIR_NAME="Workflow-Scripts"
 WORKFLOWS_REMOTE="https://github.com/Rebooted-Dev/Workflow-Scripts"
 WORKFLOWS_BRANCH="main"
 
-# Project paths - UPDATE THESE WITH YOUR ACTUAL PROJECT PATHS
+# Non-interactive mode: Set to "true" for CI/CD or automated runs
+# When "true", automatically clones Workflow-Scripts if missing (no prompt)
+# When "false", prompts user for confirmation (interactive mode)
+NON_INTERACTIVE="${NON_INTERACTIVE:-false}"
+
+# Project paths - EXAMPLES (replace with your actual project paths)
+# These are placeholder examples showing the expected format.
+# Replace the entire PROJECTS array with your own project paths.
 PROJECTS=(
-  "/Volumes/Skynet/Software Development Projects/RBC Projects/New/Nu-Meta"
+  "/path/to/your/Project1"  # Example: Replace with your actual path
   # Add more project paths here, one per line
   # "/path/to/Project2"
   # "/path/to/Project3"
@@ -96,9 +103,25 @@ for project_path in "${PROJECTS[@]}"; do
   # Check if Workflow-Scripts directory exists
   if [ ! -d "$workflows_path" ]; then
     echo -e "  ${YELLOW}⚠ Workflow-Scripts not found${NC}"
-    echo -e "  ${YELLOW}  Would you like to clone it? (y/n)${NC}"
-    read -r response
-    if [[ "$response" =~ ^[Yy]$ ]]; then
+    
+    # Determine whether to clone based on interactive mode
+    clone_workflows=false
+    if [ "$NON_INTERACTIVE" = "true" ]; then
+      echo -e "  ${BLUE}→ Non-interactive mode: auto-cloning...${NC}"
+      clone_workflows=true
+    elif [ -t 0 ]; then
+      # Interactive mode with TTY available
+      echo -e "  ${YELLOW}  Would you like to clone it? (y/n)${NC}"
+      read -r response
+      if [[ "$response" =~ ^[Yy]$ ]]; then
+        clone_workflows=true
+      fi
+    else
+      # No TTY available in interactive mode - skip to avoid hanging
+      echo -e "  ${YELLOW}  No TTY available - skipping (set NON_INTERACTIVE=true to auto-clone)${NC}"
+    fi
+    
+    if [ "$clone_workflows" = "true" ]; then
       echo -e "  ${BLUE}→ Cloning Workflow-Scripts...${NC}"
       cd "$project_path"
       if git clone "$WORKFLOWS_REMOTE" "$WORKFLOWS_DIR_NAME"; then
@@ -229,6 +252,24 @@ WORKFLOWS_DIR_NAME="Workflow-Scripts"  # Change if you use a different directory
 WORKFLOWS_REMOTE="https://github.com/Rebooted-Dev/Workflow-Scripts"  # Your remote URL
 WORKFLOWS_BRANCH="main"  # Your default branch name
 ```
+
+**Non-Interactive Mode (for CI/CD):**
+
+For automated runs where user input is not available:
+
+```bash
+# Option 1: Set environment variable
+export NON_INTERACTIVE="true"
+./sync-workflow-scripts.sh
+
+# Option 2: One-time execution
+NON_INTERACTIVE="true" ./sync-workflow-scripts.sh
+```
+
+When `NON_INTERACTIVE="true"`, the script will:
+- Automatically clone Workflow-Scripts if missing (no prompt)
+- Skip operations requiring user confirmation
+- Never hang waiting for input
 
 ---
 

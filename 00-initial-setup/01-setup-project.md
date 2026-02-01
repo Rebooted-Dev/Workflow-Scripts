@@ -3,6 +3,10 @@
 This workflow sets up a new project (or migrates an existing project) with:
 1. **Dual Repository Management** - Instructions for managing the main project repository and Workflow-Scripts as separate repos
 2. **Troubleshooting System** - Organized troubleshooting directory structure with backup of existing logs
+3. **Changelog System** - Same pattern as troubleshooting: `changelog/` directory with type folders, one file per entry, index (newest first); backup of existing single-file CHANGELOG if present
+4. **Plans Directories** - `plans/` and `plans-completed/` at project root; completed items moved with `yyyy-mm-dd-` prefix and listed in `plans-completed/index.md` for easy navigation
+5. **Slim AGENTS Architecture (standard)** - Root `AGENTS.md` with essentials only and links to detailed docs in `docs/agents/`; `docs/` and `docs/agents/` created for every project
+6. **Slim CLAUDE.md and GEMINI.md** - Same slim pattern for Claude/Cursor and Gemini: essentials + "Detailed Documentation" linking to `docs/agents/` (created if they don't exist)
 
 ---
 
@@ -23,15 +27,35 @@ echo "<WORKFLOWS_DIR>/" >> .gitignore
 # 4. Create troubleshooting structure
 mkdir -p troubleshooting/{build,runtime,data,environment,security}
 
-# 5. Create minimal index
+# 5. Create changelog structure (same pattern: directory + index)
+mkdir -p changelog/{added,changed,fixed,improved,docs,refactor,config}
+echo "# Changelog Index" > changelog/index.md
+echo "" >> changelog/index.md
+echo "| Date | Type | Title | File |" >> changelog/index.md
+echo "|------|------|-------|------|" >> changelog/index.md
+
+# 6. Create plans directories and plans-completed index (if they don't exist)
+mkdir -p plans plans-completed
+echo "# Plans-Completed Index" > plans-completed/index.md
+echo "" >> plans-completed/index.md
+echo "| Date       | Title / Description | File or Directory |" >> plans-completed/index.md
+echo "|------------|---------------------|-------------------|" >> plans-completed/index.md
+
+# 7. Create docs and docs/agents (if they don't exist)
+mkdir -p docs docs/agents
+
+# 8. Create minimal troubleshooting index
 echo "# Troubleshooting Index" > troubleshooting/index.md
 echo "" >> troubleshooting/index.md
 echo "| Date | Category | Title | File | Status |" >> troubleshooting/index.md
 echo "|------|----------|-------|------|--------|" >> troubleshooting/index.md
 
-# 6. Verify setup
+# 9. Verify setup
 git status | grep <WORKFLOWS_DIR> || echo "✓ Workflows ignored"
 ls troubleshooting/ && echo "✓ Troubleshooting structure created"
+ls changelog/ && echo "✓ Changelog structure created"
+ls -d plans plans-completed 2>/dev/null && test -f plans-completed/index.md && echo "✓ Plans directories and plans-completed index created"
+ls -d docs docs/agents 2>/dev/null && echo "✓ docs/ and docs/agents/ created"
 ```
 
 For a comprehensive setup with AGENTS.md configuration and backups, continue with the detailed steps below.
@@ -41,10 +65,15 @@ For a comprehensive setup with AGENTS.md configuration and backups, continue wit
 ## Purpose
 
 This setup ensures:
+- **Consistent date format** – All dated file and directory names use **YYYY-MM-DD** (ISO date with hyphens) in `changelog/`, `troubleshooting/`, and `plans-completed/`. Examples: `changelog/added/2026-01-18-added-feature-x.md`, `troubleshooting/build/2026-01-18-build-error.md`, `plans-completed/2026-01-18-implementation-plan.md`. This keeps naming consistent and sortable across the project.
 - Clear separation between main project repo and workflows repo
 - Proper git configuration to manage both independently
-- Organized troubleshooting system that preserves existing troubleshooting data
+- Organized **troubleshooting** system (directory + index, same pattern as changelog) that preserves existing troubleshooting data
+- Organized **changelog** system (directory + index, same pattern as troubleshooting) so the changelog does not grow into a single large file
 - Consistent project structure across all projects using these workflows
+- **docs/** directory at project root (created if missing) and **docs/agents/** for agent-facing detailed documentation
+- Slim root AGENTS.md: essentials in the root file, with a "Detailed Documentation" section linking to `docs/agents/`; Execution, Repository Management, and Changelog & Troubleshooting are included as in Steps 1.2, 1.3, 2.7, and 2.6
+- Slim **CLAUDE.md** and **GEMINI.md** at project root (same pattern: essentials + links to `docs/agents/`), for Claude/Cursor and Gemini assistants; for repo management and changelog/troubleshooting they reference AGENTS.md
 
 ---
 
@@ -111,6 +140,8 @@ If any checks fail, resolve them before continuing.
 ### 1.1 Check for Existing AGENTS.md
 
 If `AGENTS.md` exists, review it to see if dual repo instructions are already present. If not, add the following section.
+
+**Slim architecture (standard):** Root AGENTS.md should stay slim: essentials only, plus a "Detailed Documentation" section linking to `docs/agents/` (e.g. project-structure.md, development-workflow.md, coding-standards.md). Step 2.9 creates `docs/` and `docs/agents/`; add Execution (1.2), Repository Management (1.3), and Changelog & Troubleshooting (2.6, 2.7) as below.
 
 ### 1.2 Add Execution Guidelines Section
 
@@ -192,7 +223,7 @@ git push
 - Work from the root directory: `<PROJECT_PATH>`
 - Focus on application code, components, services
 - Update project-specific documentation in `docs/` (if it exists)
-- Always update the changelog for any code change (features, fixes, refactors). Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md` - create if missing. Prefer entries in the format: `- YYYY-MM-DD: Description of change`.
+- Always update the changelog for any code change (features, fixes, refactors): create an entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. See `changelog/README.md` for the template.
 - Update `troubleshooting/` only for bugs/issues or non-trivial problems encountered during development.
 - The `<WORKFLOWS_DIR>/` directory is **ignored** by git (in `.gitignore`), so it won't be included in commits
 - Standard operations: `git add .`, `git commit`, `git push` - workflows will NOT be included
@@ -386,9 +417,9 @@ When adding a new entry:
 ## For AI Agents / Coding Assistants
 
 When instructed to **"update the logs"** or **"update the log files"**, this refers to:
-1. **Update the changelog** - Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md`. Always update for any code change (features, fixes, refactors). Prefer entries in the format: `- YYYY-MM-DD: Description of change`. Create the file if missing.
+1. **Update the changelog** - Create a new entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. See `changelog/README.md` for the template.
 2. **Create a troubleshooting entry** - Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems.
-3. **Update `troubleshooting/index.md`** - Add the new entry at the top of the table when a troubleshooting entry is created.
+3. **Update the relevant index** - When adding a changelog entry, update `changelog/index.md`; when adding a troubleshooting entry, update `troubleshooting/index.md` (new row at top).
 
 **Note about `docs/TROUBLESHOOTING.md`**: If this file exists, it may serve as a user-facing troubleshooting guide with common error states and solutions. It is maintained separately from the `troubleshooting/` directory system. Individual troubleshooting entries should go in the `troubleshooting/` directory, not in `docs/TROUBLESHOOTING.md`.
 
@@ -411,11 +442,21 @@ Chronological index of troubleshooting entries.
 
 **Note:** If existing entries exist, preserve them in the table. Only add new entries at the top.
 
-### 2.6 Update AGENTS.md with Troubleshooting Instructions
+### 2.6 Update AGENTS.md with Troubleshooting and Changelog Instructions
 
-Add or update the troubleshooting section in `AGENTS.md`:
+Add or update the troubleshooting and changelog sections in `AGENTS.md`:
 
 ```markdown
+### Changelog System (`changelog/` directory)
+- **When to create changelog entries**: For any code change (features, fixes, refactors, docs, config). One file per change.
+- **Location**: Use the `changelog/` directory system. Do NOT use a single `CHANGELOG.md` file at root or in `docs/`.
+- **Structure**:
+  - Create individual files in the appropriate type folder: `added/`, `changed/`, `fixed/`, `improved/`, `docs/`, `refactor/`, `config/`
+  - File naming: `<yyyy-mm-dd>-<type>-<short-title>.md`
+  - Each entry must include: Date, Type, Summary (and optional Scope)
+- **Index maintenance**: Always update `changelog/index.md` when adding a new entry (add row at the top of the table).
+- **Template**: See `changelog/README.md` for the entry template and full conventions.
+
 ### Troubleshooting System (`troubleshooting/` directory)
 - **When to create troubleshooting entries**: Document bugs, issues, or non-trivial problems that required investigation and resolution.
   - **Bugs**: Any defect that causes incorrect behavior or crashes
@@ -434,12 +475,439 @@ Add or update the troubleshooting section in `AGENTS.md`:
 
 ### Interpreting "Update the Logs"
 When instructed to "update the logs" or "update the log files", this refers to:
-1. **Changelog** - Check for `CHANGELOG.md` in root or `docs/CHANGELOG.md`. Always update for any code change (features, fixes, refactors). Prefer entries in the format: `- YYYY-MM-DD: Description of change`. Create the file if missing.
+1. **Changelog** - Create a new entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. Use the appropriate type folder (added, changed, fixed, improved, docs, refactor, config). See `changelog/README.md` for the template.
 2. **Troubleshooting entries** - Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems that required investigation.
 3. **Both** - When a bug fix requires both a troubleshooting entry (for the problem-solving process) AND a changelog entry (for the change itself).
 
-**Note**: This project does NOT use application logging files (`.log` files). The "logs" refer to the troubleshooting knowledge base and changelog documentation.
+**Note**: This project does NOT use application logging files (`.log` files). The "logs" refer to the `changelog/` directory and the troubleshooting knowledge base in `troubleshooting/`.
+
+### Documentation, Plans & Plans-Completed (Agent Awareness)
+
+- **Changelog**: `changelog/` at project root — one file per change in type folders (`added/`, `changed/`, `fixed/`, etc.); always update `changelog/index.md` (new row at top). See Changelog System above.
+- **Troubleshooting**: `troubleshooting/` at project root — one file per issue in category folders (`build/`, `runtime/`, etc.); always update `troubleshooting/index.md` (new row at top). See Troubleshooting System above.
+- **Docs**: `docs/` holds project documentation; `docs/agents/` holds agent-facing detailed guides (project structure, development workflow, coding standards, etc.). Root AGENTS.md stays slim and links to `docs/agents/`.
+- **Plans**: `plans/` holds active plans, implementation plans, and review reports. Use dated filenames.
+- **Plans-completed**: `plans-completed/` holds completed or archived plans. When moving from `plans/` to `plans-completed/`, **rename** the file or directory with a `yyyy-mm-dd-` prefix (e.g. `2026-01-18-implementation-plan-2026-01-18-17-14.md`) and **update `plans-completed/index.md`** (add a row at the top with Date, Title/Description, File or Directory). Use `plans-completed/index.md` to find records of work done. See `plans-completed/README.md` for full conventions.
 ```
+
+---
+
+## Step 2.7: Set Up Changelog System
+
+The changelog follows the same pattern as the troubleshooting system: a **directory** at project root (`changelog/`) with **category subdirectories**, **one file per entry**, and an **index** (newest first). This keeps the changelog from growing into a single large file.
+
+### 2.7.1 Check for Existing Changelog Files
+
+Before setting up, check for existing changelog data:
+
+```bash
+# Check for root-level CHANGELOG.md
+if [ -f "CHANGELOG.md" ]; then
+  echo "Found root-level CHANGELOG.md - will back up"
+fi
+
+# Check for docs/CHANGELOG.md
+if [ -f "docs/CHANGELOG.md" ]; then
+  echo "Found docs/CHANGELOG.md - will back up"
+fi
+
+# Check for existing changelog/ directory
+if [ -d "changelog" ]; then
+  echo "Found existing changelog/ directory"
+  ls -la changelog/
+fi
+```
+
+### 2.7.2 Create Changelog Directory Structure
+
+Create the directory structure. Types align with typical changelog sections and Conventional Commits:
+
+```bash
+mkdir -p changelog/{added,changed,fixed,improved,docs,refactor,config}
+```
+
+- **added/** – New features, capabilities
+- **changed/** – Changes in existing behavior or API
+- **fixed/** – Bug fixes
+- **improved/** – Improvements (performance, UX, DX) that aren't strictly "added" or "fixed"
+- **docs/** – Documentation-only changes
+- **refactor/** – Code refactoring, no behavior change
+- **config/** – Configuration, tooling, or environment changes
+
+### 2.7.3 Backup Existing CHANGELOG Files
+
+Back up any existing single-file changelog before migrating:
+
+```bash
+backup_changelog_file() {
+  local src="$1"
+  local label="$2"
+  local note="$3"
+
+  if [ -f "$src" ]; then
+    BACKUP_DATE=$(date +%Y-%m-%d)
+    BACKUP_FILE="changelog/CHANGELOG-backup-${label}-${BACKUP_DATE}.md"
+
+    {
+      echo "# Backup of ${src}"
+      echo ""
+      echo "**Backup Date:** ${BACKUP_DATE}"
+      echo "**Original Location:** \`${src}\`"
+      echo "**Note:** ${note}"
+      echo ""
+      echo "---"
+      echo ""
+      cat "$src"
+    } > "${BACKUP_FILE}"
+
+    echo "✓ Backed up ${src} to ${BACKUP_FILE}"
+  fi
+}
+
+backup_changelog_file \
+  "CHANGELOG.md" \
+  "root" \
+  "Single-file changelog backed up during setup. Migrate entries to changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md and add rows to changelog/index.md."
+
+backup_changelog_file \
+  "docs/CHANGELOG.md" \
+  "docs" \
+  "Single-file changelog backed up during setup. Migrate entries to changelog/ directory structure."
+```
+
+### 2.7.4 Create Changelog README.md
+
+Create `changelog/README.md` with the system documentation:
+
+```markdown
+# Changelog System
+
+This directory contains organized changelog entries, one file per change. **Newest entries are listed first** in `index.md`.
+
+## Directory Structure (by type)
+
+- `added/` - New features, capabilities
+- `changed/` - Changes in existing behavior or API
+- `fixed/` - Bug fixes
+- `improved/` - Improvements (performance, UX, DX)
+- `docs/` - Documentation-only changes
+- `refactor/` - Code refactoring
+- `config/` - Configuration, tooling, environment
+- `index.md` - Chronological index of all entries
+
+## File Naming Convention
+
+Each entry uses this pattern:
+
+\`\`\`
+<yyyy-mm-dd>-<type>-<short-title>.md
+\`\`\`
+
+Examples:
+- `2026-02-01-added-claude-gemini-slim-files.md`
+- `2026-01-22-fixed-intro-window-dragging.md`
+- `2026-01-18-docs-readme-dev-all.md`
+
+## Entry Template
+
+Each entry should include:
+
+\`\`\`markdown
+# <Short Title>
+**Date:** <YYYY-MM-DD>
+**Type:** <added|changed|fixed|improved|docs|refactor|config>
+
+---
+
+## Summary
+- One or two sentences describing the change.
+
+## Scope (optional)
+- Component, area, or ticket reference if relevant.
+\`\`\`
+
+## Maintaining the Index
+
+The `index.md` file is the single chronological index. **Newest entries are listed first.**
+
+When adding a new entry:
+1. Create the entry file in the appropriate type folder
+2. Add a new row at the **top** of the table in `index.md` with: Date, Type, Title, File
+```
+
+### 2.7.5 Create or Update Changelog Index
+
+Create `changelog/index.md` if it doesn't exist:
+
+```markdown
+# Changelog Index
+
+Chronological index of changelog entries.  
+**Newest entries are listed first.**
+
+| Date       | Type    | Title | File |
+|-----------|---------|-------|------|
+```
+
+**Note:** If migrating from a single-file CHANGELOG, preserve existing entries in the table (newest at top). Only add new entries at the top.
+
+### 2.7.6 Update AGENTS.md with Changelog System Instructions
+
+Add or update the changelog section in AGENTS.md so it describes the **directory** system (and update "Interpreting Update the Logs" to point to `changelog/`). See Step 2.6 below for the full AGENTS.md block that includes both Troubleshooting and Changelog.
+
+---
+
+## Step 2.8: Set Up Plans Directories
+
+Create `plans/` and `plans-completed/` at the project root if they don't already exist. These directories are used by the planning and review workflows (e.g. `01-plan-review.md`, `01-code-review.md`) to store active plans, review reports, and completed or archived plans.
+
+### 2.8.1 Create plans and plans-completed
+
+```bash
+# From project root
+cd <PROJECT_PATH>
+
+# Create plans directories only if they don't exist
+if [ ! -d "plans" ]; then
+  mkdir -p plans
+  echo "✓ Created plans/"
+else
+  echo "✓ plans/ already exists"
+fi
+
+if [ ! -d "plans-completed" ]; then
+  mkdir -p plans-completed
+  echo "✓ Created plans-completed/"
+else
+  echo "✓ plans-completed/ already exists"
+fi
+```
+
+### 2.8.2 Create plans-completed/index.md and README.md
+
+Create an index and README in `plans-completed/` so agents and humans can find completed work easily.
+
+**Create `plans-completed/index.md`** (if it doesn't exist):
+
+```markdown
+# Plans-Completed Index
+
+Chronological index of completed or archived plans. **Newest entries are listed first.**
+
+| Date       | Title / Description | File or Directory |
+|------------|---------------------|-------------------|
+```
+
+**Create `plans-completed/README.md`** (if it doesn't exist) with the following content:
+
+```markdown
+# Plans-Completed
+
+This directory holds completed or archived plans moved from `plans/` after implementation or closure.
+
+## Naming convention when moving here
+
+When moving a file or directory from `plans/` to `plans-completed/`:
+
+1. **Prepend a date stamp** in the form `yyyy-mm-dd-` (ISO date) to the name (e.g. `2026-01-18-implementation-plan-2026-01-18-17-14.md` or `2026-01-18-macos v.2.7/`). This matches the date format used in `changelog/` and `troubleshooting/`.
+2. If the item already has a leading date, keep it or normalize to `yyyy-mm-dd-` at the start for consistency.
+3. **Update `plans-completed/index.md`**: add a new row at the **top** of the table with: Date (YYYY-MM-DD), Title/Description, and the path to the file or directory.
+
+## Index maintenance
+
+- **Newest first**: Always add new rows at the top of the table in `index.md`.
+- One row per completed plan (file or directory). For directories, link to the directory path (e.g. `2026-01-18-macos v.2.7/`).
+
+## For AI agents
+
+- When archiving a plan: move it to `plans-completed/`, rename with `yyyy-mm-dd-` prefix (same date format as changelog and troubleshooting), then update `plans-completed/index.md`.
+- Use this index to find records of past work when answering questions about what was done or when something was completed.
+```
+
+```bash
+# From project root - create index and README only if missing
+cd <PROJECT_PATH>
+
+if [ ! -f "plans-completed/index.md" ]; then
+  # (Write the index.md content above)
+  echo "✓ Created plans-completed/index.md"
+else
+  echo "✓ plans-completed/index.md already exists"
+fi
+
+if [ ! -f "plans-completed/README.md" ]; then
+  # (Write the README.md content above)
+  echo "✓ Created plans-completed/README.md"
+else
+  echo "✓ plans-completed/README.md already exists"
+fi
+```
+
+### 2.8.3 Naming when moving to plans-completed
+
+When moving a plan (file or directory) from `plans/` to `plans-completed/`:
+
+- **Files**: Rename to `yyyy-mm-dd-<original-name>` (e.g. `implementation-plan-2026-01-18-17-14.md` → `2026-01-18-implementation-plan-2026-01-18-17-14.md`). Use the completion/archive date in **YYYY-MM-DD** form (same as changelog and troubleshooting).
+- **Directories**: Rename to `yyyy-mm-dd-<original-dir-name>` (e.g. `macos v.2.7` → `2026-01-18-macos v.2.7`).
+- **Index**: Add a row at the top of `plans-completed/index.md` with Date (YYYY-MM-DD), Title/Description, and File or Directory path.
+
+### 2.8.4 Usage summary
+
+- **`plans/`** – Active plans, implementation plans, and review reports (e.g. code review reports, plan reviews). Use dated filenames (e.g. `code-review-agents-proposal-2026-02-01.md`, `implementation-plan-2026-01-18.md`).
+- **`plans-completed/`** – Completed or archived plans moved here after implementation or closure. **Rename with `yyyy-mm-dd-` prefix** when moving; **always update `plans-completed/index.md`** (new row at top). Preserves history and makes it easy to find records of work done.
+
+---
+
+## Step 2.9: Set Up docs and Slim AGENTS Structure (Standard)
+
+Create `docs/` and `docs/agents/` at the project root if they don't already exist. Every project uses this structure so that root AGENTS.md can stay slim and point to detailed documentation in `docs/agents/`.
+
+### 2.9.1 Create docs and docs/agents
+
+```bash
+# From project root
+cd <PROJECT_PATH>
+
+# Create docs directory only if it doesn't exist
+if [ ! -d "docs" ]; then
+  mkdir -p docs
+  echo "✓ Created docs/"
+else
+  echo "✓ docs/ already exists"
+fi
+
+# Create docs/agents for agent-facing detailed documentation
+if [ ! -d "docs/agents" ]; then
+  mkdir -p docs/agents
+  echo "✓ Created docs/agents/"
+else
+  echo "✓ docs/agents/ already exists"
+fi
+```
+
+### 2.9.2 Slim AGENTS architecture (standard)
+
+- **Root AGENTS.md** – Keep only essentials in the root file: core principles, essential coding standards, critical "never do" rules, and a **"Detailed Documentation"** section with links to `docs/agents/project-structure.md`, `docs/agents/development-workflow.md`, `docs/agents/coding-standards.md`, etc. Also include Execution (Step 1.2), Repository Management (Step 1.3), Changelog & Troubleshooting (Steps 2.6, 2.7), and Documentation, Plans & Plans-Completed (agent awareness for changelog, troubleshooting, docs, plans, plans-completed).
+- **docs/agents/** – Holds detailed guides (project structure, development workflow, coding standards, testing, commit workflow, documentation workflow, security). Projects can add these files incrementally or follow a plan like AGENTS_PROPOSAL; the directory is created by default so links from root AGENTS.md are valid once files exist.
+
+---
+
+## Step 2.10: Set Up Slim CLAUDE.md and GEMINI.md (Standard)
+
+Create slim **CLAUDE.md** and **GEMINI.md** at the project root if they don't already exist. These files follow the same slim pattern as AGENTS.md: essentials only, plus a "Detailed Documentation" section linking to `docs/agents/`. They are used by Claude/Cursor and Gemini assistants; for repository management, changelog, and troubleshooting they reference AGENTS.md.
+
+### 2.10.1 Create CLAUDE.md (if missing)
+
+Create `CLAUDE.md` only if it doesn't exist. **Replace `<PROJECT_NAME>` and `<PROJECT_DESCRIPTION>` with your project's values.**
+
+```markdown
+# Repository Guidelines (Claude / Cursor)
+
+<PROJECT_NAME>: <PROJECT_DESCRIPTION>
+
+## Core Principles
+
+- Follow the project's architectural principles (prompt externalization, API encapsulation, configuration-driven, parallel execution where appropriate).
+- See AGENTS.md for Execution, Repository Management, Changelog & Troubleshooting.
+
+## Essential Standards
+
+- **Coding**: 2 spaces, single quotes, semicolons; PascalCase components, camelCase functions/variables; types in `types.ts`, constants in `constants.ts`.
+- **Commits**: Conventional Commits (`feat:`, `fix:`, `docs:`, etc.).
+- **Docs**: Update changelog (`changelog/` directory) and troubleshooting when applicable (see AGENTS.md).
+- **Plans**: Active plans live in `plans/`; completed/archived plans in `plans-completed/` (with `yyyy-mm-dd-` prefix and index). See AGENTS.md.
+
+## Quick Reference
+
+- **Build**: `npm run dev` (development), `npm run build` (production).
+- **Project structure**: See [Project Structure](docs/agents/project-structure.md).
+- **Changelog, troubleshooting, docs, plans**: See AGENTS.md (changelog/ and troubleshooting/ directories and indexes; docs/ and docs/agents/; plans/ and plans-completed/ with index).
+
+## Detailed Documentation
+
+For comprehensive information, see:
+
+- [Project Structure & Organization](docs/agents/project-structure.md)
+- [Development Workflow](docs/agents/development-workflow.md)
+- [Coding Standards](docs/agents/coding-standards.md)
+- [Testing Strategy](docs/agents/testing-strategy.md)
+- [Commit & PR Workflow](docs/agents/commit-workflow.md)
+- [Documentation Workflow](docs/agents/documentation-workflow.md)
+- [Security Guidelines](docs/agents/security-guidelines.md)
+
+For repository management, changelog, troubleshooting, and plans (plans-completed index), see **AGENTS.md**.
+```
+
+### 2.10.2 Create GEMINI.md (if missing)
+
+Create `GEMINI.md` only if it doesn't exist. **Replace `<PROJECT_NAME>` and `<PROJECT_DESCRIPTION>` with your project's values.**
+
+```markdown
+# Repository Guidelines (Gemini)
+
+<PROJECT_NAME>: <PROJECT_DESCRIPTION>
+
+## Core Principles
+
+- Follow the project's architectural principles (prompt externalization, API encapsulation, configuration-driven, parallel execution where appropriate).
+- See AGENTS.md for Execution, Repository Management, Changelog & Troubleshooting.
+
+## Essential Standards
+
+- **Coding**: 2 spaces, single quotes, semicolons; PascalCase components, camelCase functions/variables; types in `types.ts`, constants in `constants.ts`.
+- **Commits**: Conventional Commits (`feat:`, `fix:`, `docs:`, etc.).
+- **Docs**: Update changelog (`changelog/` directory) and troubleshooting when applicable (see AGENTS.md).
+- **Plans**: Active plans live in `plans/`; completed/archived plans in `plans-completed/` (with `yyyy-mm-dd-` prefix and index). See AGENTS.md.
+
+## Quick Reference
+
+- **Build**: `npm run dev` (development), `npm run build` (production).
+- **Project structure**: See [Project Structure](docs/agents/project-structure.md).
+- **Changelog, troubleshooting, docs, plans**: See AGENTS.md (changelog/ and troubleshooting/ directories and indexes; docs/ and docs/agents/; plans/ and plans-completed/ with index).
+
+## Detailed Documentation
+
+For comprehensive information, see:
+
+- [Project Structure & Organization](docs/agents/project-structure.md)
+- [Development Workflow](docs/agents/development-workflow.md)
+- [Coding Standards](docs/agents/coding-standards.md)
+- [Testing Strategy](docs/agents/testing-strategy.md)
+- [Commit & PR Workflow](docs/agents/commit-workflow.md)
+- [Documentation Workflow](docs/agents/documentation-workflow.md)
+- [Security Guidelines](docs/agents/security-guidelines.md)
+
+For repository management, changelog, troubleshooting, and plans (plans-completed index), see **AGENTS.md**.
+```
+
+### 2.10.3 Bash: Create files only if missing
+
+```bash
+# From project root
+cd <PROJECT_PATH>
+
+# Replace placeholders for your project
+PROJECT_NAME="<PROJECT_NAME>"
+PROJECT_DESC="<PROJECT_DESCRIPTION>"
+
+# Create CLAUDE.md only if it doesn't exist
+if [ ! -f "CLAUDE.md" ]; then
+  # (Write the CLAUDE.md content above, with PROJECT_NAME and PROJECT_DESC substituted)
+  echo "✓ Created CLAUDE.md (slim template)"
+else
+  echo "✓ CLAUDE.md already exists (not overwritten)"
+fi
+
+# Create GEMINI.md only if it doesn't exist
+if [ ! -f "GEMINI.md" ]; then
+  # (Write the GEMINI.md content above, with PROJECT_NAME and PROJECT_DESC substituted)
+  echo "✓ Created GEMINI.md (slim template)"
+else
+  echo "✓ GEMINI.md already exists (not overwritten)"
+fi
+```
+
+**Note:** The bash block above is a reminder to create the files; when executing this workflow, write the full markdown content (with placeholders replaced) to `CLAUDE.md` and `GEMINI.md` only when the files do not exist. Do not overwrite existing CLAUDE.md or GEMINI.md.
 
 ---
 
@@ -472,28 +940,160 @@ test -f troubleshooting/README.md && echo "✓ README.md exists"
 test -f troubleshooting/index.md && echo "✓ index.md exists"
 ```
 
-### 3.3 Check for Backups
+### 3.3 Verify Changelog Structure
+
+```bash
+# Check changelog directory structure
+test -d changelog/added && echo "✓ changelog/added/ exists"
+test -d changelog/changed && echo "✓ changelog/changed/ exists"
+test -d changelog/fixed && echo "✓ changelog/fixed/ exists"
+test -d changelog/improved && echo "✓ changelog/improved/ exists"
+test -d changelog/docs && echo "✓ changelog/docs/ exists"
+test -d changelog/refactor && echo "✓ changelog/refactor/ exists"
+test -d changelog/config && echo "✓ changelog/config/ exists"
+test -f changelog/README.md && echo "✓ changelog/README.md exists"
+test -f changelog/index.md && echo "✓ changelog/index.md exists"
+```
+
+### 3.4 Verify Plans Directories
+
+```bash
+# Check plans directories exist at project root
+test -d plans && echo "✓ plans/ exists"
+test -d plans-completed && echo "✓ plans-completed/ exists"
+test -f plans-completed/index.md && echo "✓ plans-completed/index.md exists"
+test -f plans-completed/README.md && echo "✓ plans-completed/README.md exists"
+```
+
+### 3.5 Verify docs and docs/agents
+
+```bash
+# Check docs directories exist at project root
+test -d docs && echo "✓ docs/ exists"
+test -d docs/agents && echo "✓ docs/agents/ exists"
+```
+
+### 3.6 Verify slim CLAUDE.md and GEMINI.md
+
+```bash
+# Check slim agent files exist (optional: may be skipped if project does not use them)
+test -f CLAUDE.md && echo "✓ CLAUDE.md exists"
+test -f GEMINI.md && echo "✓ GEMINI.md exists"
+```
+
+### 3.7 Check for Backups
 
 ```bash
 # List any backup files created
-ls -la troubleshooting/*backup*.md 2>/dev/null && echo "✓ Backup files found"
+ls -la troubleshooting/*backup*.md 2>/dev/null && echo "✓ Troubleshooting backup files found"
+ls -la changelog/CHANGELOG-backup*.md 2>/dev/null && echo "✓ Changelog backup files found"
 ```
+
+---
+
+## Slim AGENTS Architecture (Standard)
+
+The slim AGENTS architecture is **standard** for every project set up with this workflow.
+
+- **Step 2.9** creates `docs/` and `docs/agents/` if they don't exist.
+- **Root AGENTS.md** (Steps 1, 2.7, and 2.9) should follow the slim pattern: essentials only in the root file, plus a "Detailed Documentation" section linking to `docs/agents/*`, plus Execution (1.2), Repository Management (1.3), and Changelog & Troubleshooting (2.7, 2.6).
+- **Step 2.7** creates the **changelog/** directory system (same pattern as troubleshooting: type folders, one file per entry, index newest first).
+- **Step 2.10** creates slim **CLAUDE.md** and **GEMINI.md** if they don't exist (same pattern: essentials + "Detailed Documentation" linking to `docs/agents/`; they reference AGENTS.md for repo management, changelog/troubleshooting, and plans).
+- **Plans-completed**: When moving a plan to `plans-completed/`, rename with a `yyyy-mm-dd-` prefix and update `plans-completed/index.md` (new row at top). See Step 2.8 and `plans-completed/README.md`.
+
+**Populating docs/agents/:** The seven detailed guides (project-structure.md, development-workflow.md, coding-standards.md, testing-strategy.md, commit-workflow.md, documentation-workflow.md, security-guidelines.md) can be added incrementally per project or by following a plan like **AGENTS_PROPOSAL**. To adopt a full refactor plan:
+
+1. Put the proposal in `plans/` (e.g. `plans/AGENTS_PROPOSAL.md`).
+2. Run `05-review-audit/01-code-review.md` on the plan; address P0/P1 findings.
+3. Run `01-planning/01-plan-review.md` and `02-finalise-plan.md`; implement, retaining Repository Management and Changelog & Troubleshooting in root AGENTS.md and using the project's troubleshooting system (`troubleshooting/` directory and index).
+4. Move the completed plan to `plans-completed/` with a `yyyy-mm-dd-` prefix and add a row to `plans-completed/index.md`.
+
 
 ---
 
 ## Step 4: Migration Notes (If Applicable)
 
-If you're migrating an existing project:
+If you're migrating an existing project that already has files or directories in `changelog/`, `troubleshooting/`, `plans/`, or `plans-completed/`, follow the steps below. Use the **same date format everywhere**: **YYYY-MM-DD** (e.g. `2026-01-18`) in file and directory names.
 
-1. **Review backup files** - Check `troubleshooting/TROUBLESHOOTING-backup-*.md` for any entries that need to be migrated
-2. **Migrate entries** - Create new organized entries from old troubleshooting data if needed
-3. **Update index** - Ensure all migrated entries are in `troubleshooting/index.md`
-4. **Remove old files** - Once migration is complete and verified, you can remove:
-   - Root-level `TROUBLESHOOTING.md` (if it exists and has been backed up)
-   - `troubleshooting/TROUBLESHOOTING.md` (if it exists and has been backed up)
-   - **Note**: `docs/TROUBLESHOOTING.md` should typically be kept if it serves as a user-facing guide
+### 4.1 General migration order
 
-**Important:** Only remove old files after verifying all important information has been migrated to the new structure.
+1. **Back up** – Copy or commit current state before renaming or moving anything.
+2. **Rename/move** – Apply the conventions (e.g. `yyyy-mm-dd-` prefix, correct type/category folders).
+3. **Update indexes** – Ensure `changelog/index.md`, `troubleshooting/index.md`, and `plans-completed/index.md` have correct paths in their tables.
+4. **Scan for references** – Find any links or references to old paths (see Step 4.4).
+5. **Fix links** – Update markdown links, relative paths, and index table cells to point to the new paths.
+6. **Verify** – Run the link/reference check again and open key docs to confirm nothing is broken.
+
+### 4.2 Migrating single-file or ad-hoc logs
+
+**Troubleshooting (single-file or scattered):**
+1. **Review backup files** – Check `troubleshooting/TROUBLESHOOTING-backup-*.md` for any entries that need to be migrated.
+2. **Migrate entries** – Create one file per issue in the correct category folder with naming `<yyyy-mm-dd>-<category>-<short-title>.md` (e.g. `2026-01-18-build-css-error.md`). Use the date from the entry or the backup date.
+3. **Update index** – Add a row at the top of `troubleshooting/index.md` for each new file (Date, Category, Title, File path, Status).
+4. **Remove old files** – Only after migration and link check (Step 4.4); keep `docs/TROUBLESHOOTING.md` if it is a user-facing guide.
+
+**Changelog (single-file):**
+1. **Review backup files** – Check `changelog/CHANGELOG-backup-*.md` for entries from the old CHANGELOG.
+2. **Migrate entries** – Create one file per change in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add rows to `changelog/index.md` (newest first).
+3. **Remove old file** – Only after migration and link check; then you can remove root `CHANGELOG.md` or `docs/CHANGELOG.md` if backed up.
+
+### 4.3 Migrating existing directory structures
+
+**Existing `changelog/` or `troubleshooting/` with different naming:**
+
+- If files use another date format (e.g. `20260118` or `18-01-2026`), rename to **YYYY-MM-DD** at the start: `2026-01-18-<rest-of-name>.md`.
+- If files are in the wrong folder (e.g. all in one folder), move them into the correct type/category subfolder and keep the `<yyyy-mm-dd>-<type>-<short-title>.md` pattern.
+- After renaming or moving, update the corresponding **index.md** so every row points to the new path. Then run the reference scan (Step 4.4) and fix any links.
+
+**Existing `plans-completed/` without date prefix (or with old format):**
+
+- **Files**: Rename to `yyyy-mm-dd-<current-name>` (e.g. `implementation-plan.md` → `2026-01-18-implementation-plan.md`). Use the completion/archive date if known; otherwise use today’s date or a chosen convention.
+- **Directories**: Rename to `yyyy-mm-dd-<current-dir-name>` (e.g. `macos v.2.7` → `2026-01-18-macos v.2.7`).
+- **Index**: Create or update `plans-completed/index.md` with one row per file or directory (Date, Title/Description, File or Directory). Newest first. Ensure the "File or Directory" column uses the **new** path.
+- Then run the reference scan (Step 4.4) and fix any references to the old names.
+
+**Existing `plans/` when moving to `plans-completed/`:**
+
+- When you first move items from `plans/` to `plans-completed/`, rename with `yyyy-mm-dd-` prefix (completion date) and add a row to `plans-completed/index.md`. No need to rename files that stay in `plans/`.
+
+### 4.4 Verifying links and references after reorganisation
+
+After any renames or moves, scan for broken links and references so nothing points to old paths.
+
+**Where references may appear:**
+
+- Markdown links in `docs/`, `plans/`, `plans-completed/`, root `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and any other `.md` files.
+- Table cells in `changelog/index.md`, `troubleshooting/index.md`, and `plans-completed/index.md` (the "File" or "File or Directory" columns).
+- Plain text paths or filenames in prose (e.g. "see `plans/old-name.md`").
+
+**Scan for references to old paths or filenames:**
+
+```bash
+# From project root. Replace OLD_PATH or OLD_FILENAME with the path or name you renamed/moved.
+# Example: OLD_PATH="implementation-plan-2026-01-18-17-14.md" or "macos v.2.7"
+
+# Search markdown and text for old filename or path (exclude .git and node_modules)
+grep -r "OLD_PATH\|OLD_FILENAME" --include="*.md" --include="*.txt" . \
+  --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=dist -n
+
+# If you moved a directory, also search for the directory name
+grep -r "old-dir-name" --include="*.md" . --exclude-dir=.git --exclude-dir=node_modules -n
+```
+
+**Check index files:**
+
+- Open `changelog/index.md`, `troubleshooting/index.md`, and `plans-completed/index.md` and ensure every "File" or "File or Directory" cell points to an existing path (new name/location). Fix any rows that still use old paths.
+
+**Optional: check markdown links resolve:**
+
+- If you have a markdown link checker (e.g. `markdown-link-check`, `lychee`), run it on `docs/`, `plans/`, `plans-completed/`, and root `.md` files after reorganisation to catch broken `[text](path)` links.
+- Manually spot-check a few key documents that reference changelog, troubleshooting, or plans.
+
+**After fixing:**
+
+- Re-run the grep search for the old path/filename; there should be no remaining references (or only intentional ones, e.g. in a migration note). Then commit the reorganisation and index/link updates together.
+
+**Important:** Only remove old files (e.g. single-file CHANGELOG or TROUBLESHOOTING) after verifying all important information has been migrated and links/references have been updated.
 
 ---
 
@@ -506,10 +1106,24 @@ If you're migrating an existing project:
 - [ ] Existing troubleshooting files backed up (root-level, docs/, and troubleshooting/ checked)
 - [ ] `troubleshooting/README.md` created
 - [ ] `troubleshooting/index.md` created or updated
-- [ ] AGENTS.md updated with troubleshooting system instructions
+- [ ] AGENTS.md updated with troubleshooting and changelog system instructions
+- [ ] Changelog directory structure created (`changelog/{added,changed,fixed,improved,docs,refactor,config}`)
+- [ ] Existing CHANGELOG.md backed up (root and docs/ checked) if present
+- [ ] `changelog/README.md` and `changelog/index.md` created
+- [ ] `plans/` and `plans-completed/` created at project root (if they didn't exist)
+- [ ] `plans-completed/index.md` and `plans-completed/README.md` created (naming: yyyy-mm-dd- prefix when moving; index maintained)
+- [ ] AGENTS.md includes Documentation, Plans & Plans-Completed awareness (changelog, troubleshooting, docs, plans, plans-completed)
+- [ ] `docs/` and `docs/agents/` created at project root (if they didn't exist)
+- [ ] AGENTS.md follows slim architecture (essentials + links to docs/agents/ + Execution, Repository Management, Changelog & Troubleshooting)
+- [ ] CLAUDE.md and GEMINI.md created at project root (slim template, if they didn't exist)
 - [ ] Git configuration verified (workflows ignored in main repo)
 - [ ] Troubleshooting structure verified
+- [ ] Changelog structure verified
+- [ ] Plans directories verified
+- [ ] docs/ and docs/agents/ verified
+- [ ] CLAUDE.md and GEMINI.md verified (if created)
 - [ ] Backup files reviewed (if applicable)
+- [ ] If migrated: index files updated with new paths; link/reference scan run and broken links fixed (Step 4.4)
 
 ---
 
@@ -519,11 +1133,13 @@ When executing this setup workflow:
 
 1. **Read existing files first** - Check what already exists before making changes
 2. **Preserve existing data** - Always back up before modifying or moving files
-3. **Update incrementally** - Don't overwrite existing AGENTS.md, add to it
+3. **Update incrementally** - Don't overwrite existing AGENTS.md, CLAUDE.md, or GEMINI.md; add to them or create only if missing
 4. **Verify after each step** - Check that changes were applied correctly
 5. **Document what was done** - Note any backups created or files modified
 6. **Replace placeholders** - Ensure all `<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>` placeholders are replaced with actual values
-7. **Check multiple file locations** - Look for changelog and troubleshooting files in both root and `docs/` directories
+7. **Check multiple file locations** - Look for existing single-file CHANGELOG (root or `docs/`) to back up; use `changelog/` directory for new entries. For troubleshooting, use `troubleshooting/` directory.
+8. **Plans-completed** - When moving items to `plans-completed/`, rename with `yyyy-mm-dd-` prefix and add a row at the top of `plans-completed/index.md`.
+9. **After reorganisation** - When renaming or moving files/directories in changelog, troubleshooting, or plans-completed, run the link/reference scan (Step 4.4) and update index files and any markdown links so nothing is broken.
 
 ### Bash Script Best Practices
 
@@ -546,11 +1162,12 @@ trap 'echo "Error on line $LINENO. Exit code: $?"' ERR
 - Exit with non-zero status on failures: `exit 1`
 
 **Key Safety Rules:**
-- Never delete existing troubleshooting entries
-- Always create backups before moving files
-- Preserve existing index.md entries when updating
-- Check for existing sections in AGENTS.md before adding new ones
-- Check both root-level and `docs/` directory for existing files
+- Never delete existing troubleshooting or changelog entries
+- Always create backups before moving or migrating files (e.g. CHANGELOG.md → changelog/)
+- Preserve existing index.md entries when updating (both `troubleshooting/index.md` and `changelog/index.md`); when moving to `plans-completed/`, update `plans-completed/index.md` (new row at top)
+- Check for existing sections in AGENTS.md before adding new ones; create CLAUDE.md and GEMINI.md only if they don't exist
+- Check both root-level and `docs/` directory for existing CHANGELOG or TROUBLESHOOTING files to back up
+- After migrating or renaming files in changelog, troubleshooting, or plans-completed: update the relevant index.md and run the link/reference scan (Step 4.4) so links are not broken
 
 **Execution Guidelines:**
 - Use multiple parallel agents when appropriate to accelerate tasks

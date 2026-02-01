@@ -93,7 +93,7 @@ All workflows now have clear guidance on when to use them vs alternatives.
 
 **Issue:** File naming is inconsistent:
 - Some use `01-`, `02-` prefixes (e.g., `01-plan-review.md`, `02-finalise-plan.md`)
-- Some use descriptive names (e.g., `sync-documentation.md`, `bug-fix-workflow.md`)
+- Some use descriptive names (e.g., `02-sync-documentation.md`, `bug-fix-workflow.md`)
 - Some mix both (e.g., `01-execution.md`, `02-confirm-execution.md`)
 
 **Status:** ⚠️ **PARTIALLY ADDRESSED** - Added documentation explaining naming conventions:

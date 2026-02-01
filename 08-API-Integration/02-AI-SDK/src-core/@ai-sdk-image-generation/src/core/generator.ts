@@ -127,27 +127,32 @@ export class ImageGenerator {
     let lastError: unknown;
     let attemptCount = 0;
 
-    const result = await withRetryAndTimeout(
-      async () => {
-        attemptCount++;
-        return await this.generateSingleAttempt(request);
-      },
-      retryPolicy,
-      this.config.timeout || 60000,
-      (error, attempt, delay) => {
-        this.logWarn(`Generation attempt ${attempt} failed, retrying in ${delay}ms`, {
-          error: error instanceof Error ? error.message : String(error),
-          attempt,
-          delay
-        });
-        lastError = error;
-      }
-    );
+    try {
+      const result = await withRetryAndTimeout(
+        async () => {
+          attemptCount++;
+          return await this.generateSingleAttempt(request);
+        },
+        retryPolicy,
+        this.config.timeout || 60000,
+        (error, attempt, delay) => {
+          this.logWarn(`Generation attempt ${attempt} failed, retrying in ${delay}ms`, {
+            error: error instanceof Error ? error.message : String(error),
+            attempt,
+            delay
+          });
+          lastError = error;
+        }
+      );
 
-    return {
-      ...result.result,
-      retryCount: result.attempts - 1 // Don't count the successful attempt
-    };
+      return {
+        ...result.result,
+        retryCount: result.attempts - 1 // Don't count the successful attempt
+      };
+    } catch (error) {
+      // All retries exhausted, try fallback providers
+      return await this.tryFallbackProviders(request, error);
+    }
   }
 
   /**
@@ -232,7 +237,10 @@ export class ImageGenerator {
     });
 
     // Convert to expected format
-    const images = result.data.images?.[0]?.url || result.data.image?.url || '';
+    const images = result.data.images?.[0]?.url || result.data.image?.url;
+    if (!images) {
+      throw new ImageGenerationError('No image URL in streaming response', 'STREAMING_NO_IMAGE');
+    }
 
     return {
       images: [images],

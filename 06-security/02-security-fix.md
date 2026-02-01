@@ -28,12 +28,15 @@ Use multiple parallel agents to investigate the security issue. Suggested agent 
 - Check for similar vulnerabilities in related code (read similar patterns/files in parallel batches)
 - Review security controls and existing mitigations (read security middleware, validators in parallel batches)
 - Analyze data flow and sensitive data handling (read data processing files in parallel batches)
-- [Spawn additional agents if you discover other investigation needs, such as:
-  - Related attack vectors
-  - Additional entry points
-  - Similar patterns in other modules
-  - Compliance implications
-  - Supply chain risks]
+
+**When to spawn additional agents:**
+- Spawn 1 attack vector agent per additional exploitation method discovered beyond the primary vulnerability
+- Spawn 1 entry point agent if vulnerability affects 3+ different routes, endpoints, or input handlers
+- Spawn 1 pattern analysis agent if similar code patterns found in 5+ files that may have the same issue
+- Spawn 1 compliance agent if vulnerability exposes PII/PHI or violates regulatory requirements
+- Spawn 1 supply chain agent if vulnerability traced to third-party dependency or library
+
+**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
 Agents should batch read files concurrently to maximize investigation speed.
 
 ### 3. Root Cause Identification
@@ -58,12 +61,16 @@ Use multiple parallel agents to implement the fix. Suggested agent roles (spawn 
 - Update security tests and add regression tests
 - Review for unintended side effects or new vulnerabilities
 - Update security documentation and logging
-- [Spawn additional agents if you discover other implementation needs, such as:
-  - Additional security hardening
-  - Performance impact analysis
-  - Related code that needs similar fixes
-  - Documentation and training materials
-  - Monitoring and alerting]
+
+
+**When to spawn additional agents:**
+- Spawn 1 hardening agent if defense-in-depth measures needed (input validation, output encoding, rate limiting)
+- Spawn 1 performance agent if security fix adds encryption, hashing, or validation that may impact latency
+- Spawn 1 pattern fix agent per 5 similar code locations that need the same security fix applied
+- Spawn 1 documentation agent if security fix changes API behavior or requires user awareness
+- Spawn 1 monitoring agent if vulnerability requires logging, alerting, or ongoing detection mechanisms
+
+**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
 Each agent should read related files in parallel batches during implementation.
 
 ### 6. Verification
@@ -73,23 +80,28 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 - Check for similar vulnerabilities in related code
 - Verify security controls are properly implemented
 - Review code changes for new security issues introduced
-- [Spawn additional agents if you discover other verification needs, such as:
-  - Penetration testing
-  - Compliance validation
-  - Performance testing
-  - Integration testing
-  - Documentation review]
+
+
+**When to spawn additional agents:**
+- Spawn 1 penetration testing agent if vulnerability was S0/S1 severity (attempt exploitation post-fix)
+- Spawn 1 compliance agent if fix must meet regulatory requirements (GDPR, HIPAA, PCI-DSS)
+- Spawn 1 performance agent if security fix added encryption, validation, or processing overhead
+- Spawn 1 integration agent if fix affects 3+ subsystems or external service integrations
+- Spawn 1 documentation agent if security fix requires updated security docs, runbooks, or user guides
+
+**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
 Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### 7. Documentation
 **Update logs (only for completed tasks that change or affect project code):**
-- Update the changelog with a dated entry: `- YYYY-MM-DD: Security fix: [vulnerability description]`.
+- Update the changelog with a dated entry: `- YYYY-MM-DD: Fix [vulnerability type] in [component]`.
   - Preferred location: `docs/CHANGELOG.md`
   - Fallback location: `CHANGELOG.md`
 - Add a troubleshooting entry (category `security`):
-  - Create a new file under `troubleshooting/security/` named `YYYY-MM-DD-security-<short-title>.md`
+   - Create a new file under `troubleshooting/security/` named `<yyyy-mm-dd>-security-<short-title>.md`
   - Update `troubleshooting/index.md` (add the new entry at the top)
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
+- **Update the implementation plan (if applicable):** If this security fix was tracked as a task in an implementation plan in `plans/`, update that plan: mark the completed task with `- [x]` and add a brief note if needed. When all tasks in the plan are complete, add a completion marker (e.g. `**Status:** ✅ COMPLETED`) per the workflow repo's main README, "Completion Status Conventions."
 
 ### 8. Final Verification
 - Run final `npm run build` to confirm the repo is shippable.

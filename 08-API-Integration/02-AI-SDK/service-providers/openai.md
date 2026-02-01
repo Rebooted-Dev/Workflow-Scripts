@@ -504,7 +504,8 @@ const result = await generateText({
 
 <Note>
   The tool must be named `local_shell`. This name is required by OpenAI's API
-  specification and cannot be customized. The model can only be
+  specification and cannot be customized. The model can only be `gpt-5-codex` or
+  other models that explicitly support the Responses API with tool use.
 </Note>
 
 #### Image Inputs

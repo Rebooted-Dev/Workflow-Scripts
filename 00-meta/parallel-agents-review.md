@@ -38,7 +38,7 @@ This document reviews all workflow instruction files to identify opportunities f
 
 ---
 
-### 3. Sync Documentation (`04-documentation/sync-documentation.md`)
+### 3. Sync Documentation (`04-documentation/02-sync-documentation.md`)
 **Status:** ✅ Well covered
 
 **Current Usage:**
