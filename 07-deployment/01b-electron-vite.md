@@ -2,7 +2,7 @@
 
 A generalized workflow for migrating existing Electron apps or TypeScript apps to support **electron-vite** for macOS desktop builds, while maintaining support for web app builds.
 
-**Version:** 1.0 (2026-02-01)  
+**Version:** 1.2 (2026-02-02)  
 **Scope:** Build pipeline migration for dual web + desktop distribution  
 **Prerequisites:** Node.js 20.19+ or 22.12+, existing web app (Next.js/React/Vite)
 
@@ -116,12 +116,31 @@ desktop/
 
 **Alternative:** Use `src/main/` and `src/preload/` if you prefer colocating with web source.
 
-### 1.2 Main Process Template
+### 1.2 Vite renderer: base path for Electron (Vite + React only)
+
+If your **renderer** is built with **Vite** (not Next.js), you must set a relative base path so the packaged app loads correctly. Electron loads the app via `file://`; absolute paths (Vite’s default `/assets/...`) resolve from the filesystem root and cause a **blank screen** in the packaged app.
+
+**In `vite.config.ts` (or `vite.config.mts`):**
+
+```typescript
+export default defineConfig({
+  base: './',  // CRITICAL for Electron file:// protocol
+  // ... rest of config
+});
+```
+
+**Verify:** After `npm run build`, open `dist/index.html`. Script and link hrefs must be relative (e.g. `./assets/index-xxx.js`), not absolute (`/assets/...`).
+
+**Production load (Vite only):** In `desktop/main.ts`, for production use `mainWindow.loadFile(path.join(__dirname, '..', '..', '..', 'dist', 'index.html'))` instead of `loadURL(PROD_APP_ORIGIN)`.
+
+---
+
+### 1.3 Main Process Template
 
 Create `desktop/main.ts`:
 
 ```typescript
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell, screen } from 'electron';
 import * as path from 'path';
 import { spawn } from 'child_process';
 
@@ -133,10 +152,25 @@ let serverProcess: ReturnType<typeof spawn> | null = null;
 
 function createWindow(): BrowserWindow {
   const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
-  
+
+  // Optional: macOS – use full vertical space (excludes menu bar and dock)
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const workArea = primaryDisplay.workAreaSize;
+  const windowWidth = 1400;
+  const windowHeight = process.platform === 'darwin' ? workArea.height : 900;
+
+  const isMac = process.platform === 'darwin';
+
   mainWindow = new BrowserWindow({
-    width: 1400,
-    height: 900,
+    width: windowWidth,
+    height: windowHeight,
+    minWidth: 800,
+    minHeight: 600,
+    // CRITICAL (macOS): Use ONLY titleBarStyle. Do NOT use frame:false + titleBarStyle together — they conflict and break dragging. See 01a-MACOS_ELECTRON_GUIDE.
+    ...(isMac
+      ? { titleBarStyle: 'hiddenInset' }
+      : { frame: false }
+    ),
     webPreferences: {
       // Path relative to electron-vite output structure
       preload: path.join(__dirname, '..', 'preload', 'preload.js'),
@@ -151,7 +185,7 @@ function createWindow(): BrowserWindow {
     mainWindow.loadURL(DEV_APP_ORIGIN);
     mainWindow.webContents.openDevTools();
   } else {
-    // Production: load from embedded Next.js server
+    // Production: load from embedded Next.js server (or for Vite: loadFile from dist – see §1.2)
     mainWindow.loadURL(PROD_APP_ORIGIN);
   }
 
@@ -159,9 +193,50 @@ function createWindow(): BrowserWindow {
     mainWindow?.show();
   });
 
+  mainWindow.center();  // Avoid window partially off-screen on multi-monitor or small displays
+
   return mainWindow;
 }
+```
 
+**macOS window sizing:** `screen.getPrimaryDisplay().workAreaSize` gives usable height (excluding menu bar and dock). Use `workArea.height` for the window height so the app doesn’t sit under the dock. Use `size` only if you intend to overlap system UI.
+
+---
+
+### 1.4 macOS: Draggable window and traffic lights (optional)
+
+If you use `titleBarStyle: 'hiddenInset'` on macOS (recommended; do **not** add `frame: false` on macOS — the two conflict and break dragging; see 01a-MACOS_ELECTRON_GUIDE), add the following so the window is draggable and content doesn’t overlap the traffic lights.
+
+**1. Drag region (in `index.html` `<head>` or global CSS):**
+
+```css
+.window-drag-bar {
+  height: 38px;
+  -webkit-app-region: drag;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+}
+.window-drag-bar button,
+.window-drag-bar a,
+.window-drag-bar input,
+.window-drag-bar [role="button"],
+.window-drag-bar .no-drag {
+  -webkit-app-region: no-drag;
+}
+```
+
+Add a top bar element (e.g. `<div class="window-drag-bar" data-drag-region></div>`) so users can drag the window. Give all interactive elements in that bar `no-drag` or the same `-webkit-app-region: no-drag` so clicks work.
+
+**2. Header padding for traffic lights:** On macOS, leave ~70–80px left padding in the header (e.g. `pl-20` / 5rem) when running in Electron so content doesn’t sit under the close/minimize/maximize buttons. Detect Electron via your preload API (e.g. `window.electronAPI?.isElectron()`).
+
+**3. Optional:** Expose IPC handlers for minimize/maximize/close and custom window control buttons; see your project’s **macOS Window Height Fix implementation guide** (or equivalent) for full code.
+
+---
+
+Remainder of `desktop/main.ts` (IPC handlers and app lifecycle):
+
+```typescript
 // IPC handlers
 ipcMain.handle('minimize-window', () => {
   mainWindow?.minimize();
@@ -204,7 +279,7 @@ app.on('window-all-closed', () => {
 });
 ```
 
-### 1.3 Preload Script Template
+### 1.5 Preload Script Template
 
 Create `desktop/preload.ts`:
 
@@ -480,6 +555,13 @@ module.exports = {
 };
 ```
 
+**CRITICAL (Vite renderer only):** electron-builder **excludes `dist/` by default** (built-in pattern `!dist{,/**/*}`). If your renderer is built with Vite using the default `outDir: 'dist'`, the packaged app will **not** contain `dist/index.html` or `dist/assets/`, causing a **blank window**. Either:
+
+1. **Explicitly include the renderer output** in `files`, e.g. `'dist/index.html'`, `'dist/assets/**'` (or `'dist/**'` if you want the whole tree), or  
+2. **Change Vite’s output directory** (e.g. `build: { outDir: 'renderer' }`) and include `'renderer/**'` in `files`.
+
+See **01a-MACOS_ELECTRON_GUIDE** (“electron-builder configuration”, “CRITICAL: Loading the Renderer”) for the same rule and verification steps.
+
 ### 3.2 Create Build Script
 
 Create `scripts/mac-build.sh`:
@@ -611,6 +693,8 @@ if (app.isPackaged) {
 - [ ] Window loads and displays content
 - [ ] IPC communication works (if implemented)
 - [ ] `./scripts/mac-build.sh --no-build` preserves `dist/electron`
+- [ ] **macOS (Vite):** No blank screen (check `base: './'` in Vite config)
+- [ ] **macOS frameless:** Window uses full vertical space (work area), is draggable by title bar, traffic lights visible, header content does not overlap traffic lights
 
 ### 5.4 Path Verification
 
@@ -691,6 +775,30 @@ fi
 ```
 
 Must match electron-vite `outDir` + lib entry structure.
+
+### Issue: Blank screen in packaged app (Vite renderer)
+
+**Symptom:** Window opens but shows blank/empty content.  
+**Causes:** (1) Vite emits absolute asset paths (`/assets/...`); under Electron’s `file://` protocol those resolve from the filesystem root and fail. (2) **electron-builder excludes `dist/` by default** — renderer (`dist/index.html`, `dist/assets/`) may not be packaged.  
+**Fix:** (1) Set `base: './'` in `vite.config.ts` so script/link hrefs are relative (see §1.2). After `npm run build`, confirm `dist/index.html` uses `./assets/...`, not `/assets/...`. (2) Include the renderer output in electron-builder `files` (e.g. `'dist/index.html'`, `'dist/assets/**'`) or use a different Vite `outDir` (e.g. `renderer/`) and include `'renderer/**'` (see §3.1). See 01a-MACOS_ELECTRON_GUIDE “CRITICAL: Loading the Renderer”.
+
+### Issue: Window not draggable (macOS)
+
+**Symptom:** Cannot move the window by dragging the header.  
+**Causes:** (1) Using **both** `frame: false` and `titleBarStyle: 'hiddenInset'` on macOS — they conflict and break dragging. (2) No drag region or interactive elements capturing the drag.  
+**Fix:** (1) On macOS use **only** `titleBarStyle: 'hiddenInset'`; use `frame: false` only on Windows/Linux (see §1.3). (2) Add a top bar with `-webkit-app-region: drag` and give all buttons/links in that bar `-webkit-app-region: no-drag` (see §1.4). See 01a-MACOS_ELECTRON_GUIDE “CRITICAL: Window Dragging on macOS”.
+
+### Issue: Content overlaps macOS traffic lights
+
+**Symptom:** Header content sits under the close/minimize/maximize buttons.  
+**Cause:** No left padding for the traffic lights area.  
+**Fix:** Add ~70–80px left padding (e.g. `pl-20`) to the header when running in Electron (see §1.4).
+
+### Issue: Window too tall (under dock)
+
+**Symptom:** Bottom of window goes under the dock or off-screen.  
+**Cause:** Using full display `size` instead of usable area.  
+**Fix:** Use `screen.getPrimaryDisplay().workAreaSize` for height; `workAreaSize` excludes menu bar and dock (see §1.3).
 
 ---
 
@@ -774,11 +882,15 @@ export default defineConfig(({ mode }) => ({
 - [electron-vite Documentation](https://electron-vite.org/)
 - [electron-builder Configuration](https://www.electron.build/configuration.html)
 - [Electron Documentation](https://www.electronjs.org/docs/latest/)
+- **01a-MACOS_ELECTRON_GUIDE** (same `07-deployment/` folder): Authoritative guide for **UI not displaying** (blank window) and **windowing/dragging** on macOS. Covers: `loadFile()` vs custom protocols; electron-builder **excluding `dist/` by default** and using `renderer/` or explicit `files`; **never** using `frame: false` and `titleBarStyle: 'hiddenInset'` together on macOS (use only `titleBarStyle` on macOS); drag regions and traffic-light padding; verification and troubleshooting. Use 01a when debugging blank window or non-draggable window.
+- **Project-specific:** If your repo has a **macOS Window Height Fix** (or similar) implementation guide (e.g. `plans/macos-window-height-fix-implementation-guide.md`), use it for full steps on Vite `base` path, frameless window, `workAreaSize`, drag regions, traffic-light padding, and optional window-control IPC.
 
 ---
 
 ## Document History
 
+- **2026-02-02 (v1.2):** Aligned with 01a-MACOS_ELECTRON_GUIDE: macOS use only `titleBarStyle: 'hiddenInset'` (do not use `frame: false` with it — breaks dragging); added electron-builder `dist/` exclusion warning and Vite renderer `files` guidance (§3.1); added `mainWindow.center()`; expanded blank-screen and window-not-draggable common issues; cross-referenced 01a for UI not displaying and windowing.
+- **2026-02-02 (v1.1):** Added Vite base path (§1.2), macOS window sizing and frameless/drag/traffic-lights (§1.3–1.4), verification and common-issues from macOS Window Height Fix implementation guide; reference to project implementation guide.
 - **2026-02-01 (v1.0):** Initial generalized workflow based on completed migration
 
 ---
