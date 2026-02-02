@@ -313,7 +313,7 @@ declare global {
 }
 ```
 
-**CRITICAL: Structured Clone Limitations**
+**CRITICAL: Structured Clone Limitations & Streaming Patterns**
 
 Electron's `contextBridge` uses the [Structured Clone Algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) to pass values between the isolated preload world and the renderer. This has important limitations:
 
@@ -325,36 +325,125 @@ Electron's `contextBridge` uses the [Structured Clone Algorithm](https://develop
 | Arrays | Class instances with methods |
 | TypedArrays | Objects with circular references |
 
-**Pattern for Streaming APIs:**
+**⚠️ PITFALL: The "AsyncGenerator Return" Anti-Pattern**
 
-When implementing streaming (e.g., AI response streaming), use **callbacks passed IN** rather than generators returned:
+A common mistake when implementing streaming is to return an AsyncGenerator from the preload script. This appears to work in development but **will fail in production** with "An object could not be cloned":
 
 ```typescript
-// ❌ WRONG: Returns AsyncGenerator (not cloneable)
+// ❌ BROKEN: Returns AsyncGenerator from preload
+// This causes "An object could not be cloned" error!
 contextBridge.exposeInMainWorld('api', {
   generateStream: async function* (prompt) {
-    // ... yield chunks - THIS FAILS
-  }
-});
-
-// ✅ CORRECT: Callback-based streaming
-contextBridge.exposeInMainWorld('api', {
-  generateStream: (prompt, onChunk) => {
-    const listener = (_, chunk) => {
-      onChunk(chunk);
-      if (chunk.done) {
-        ipcRenderer.removeListener('stream-data', listener);
-      }
-    };
+    const chunks = [];
+    const listener = (_, chunk) => chunks.push(chunk);
     ipcRenderer.on('stream-data', listener);
     ipcRenderer.invoke('start-stream', prompt);
+    
+    // Yielding from preload - FAILS to serialize across contextBridge
+    for (const chunk of chunks) {
+      yield chunk;  // ❌ Throws: "An object could not be cloned"
+    }
   }
 });
 ```
 
+**The Real-World Impact:**
+When we attempted this pattern in production, it caused:
+1. All three artifact generations failing simultaneously with "An object could not be cloned"
+2. When partially fixed, HTML appeared as raw text with mixed content
+3. CSS from one artifact appearing in another's HTML
+4. Complete UI generation failure in the packaged macOS app
+
+**✅ CORRECT: Complete Working Pattern**
+
+The correct pattern requires **both** callback-based streaming **AND** request ID routing for parallel operations:
+
+```typescript
+// PRELOAD: Expose callback-based API (not generator)
+contextBridge.exposeInMainWorld('api', {
+  // Callback receives chunks, renderer constructs generator
+  generateStream: (prompt, onChunk, requestId) => {
+    return new Promise((resolve, reject) => {
+      const listener = (_, data) => {
+        // CRITICAL: Filter by requestId for parallel streams
+        if (data.requestId !== requestId) return;
+        
+        onChunk(data);
+        if (data.done) {
+          ipcRenderer.removeListener('stream-data', listener);
+          resolve();
+        }
+      };
+      
+      ipcRenderer.on('stream-data', listener);
+      ipcRenderer.invoke('start-stream', { prompt, requestId })
+        .catch(err => {
+          ipcRenderer.removeListener('stream-data', listener);
+          reject(err);
+        });
+    });
+  }
+});
+
+// MAIN: Include requestId in every message for routing
+ipcMain.handle('start-stream', async (_, { prompt, requestId }) => {
+  for await (const chunk of getStream(prompt)) {
+    mainWindow.webContents.send('stream-data', { 
+      requestId,  // ← Required for parallel stream isolation
+      text: chunk 
+    });
+  }
+  mainWindow.webContents.send('stream-data', { 
+    requestId, 
+    done: true 
+  });
+});
+
+// RENDERER: Create AsyncGenerator from callback API
+export async function generateContentStream(prompt) {
+  const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+  
+  return (async function* () {
+    const chunks = [];
+    let done = false;
+    let resolveWait = null;
+    
+    const onChunk = (data) => {
+      if (data.done) done = true;
+      else chunks.push({ text: data.text });
+      if (resolveWait) {
+        resolveWait();
+        resolveWait = null;
+      }
+    };
+    
+    const streamPromise = window.electronAPI.generateStream(prompt, onChunk, requestId)
+      .catch(err => { throw err; });
+    
+    let yieldedCount = 0;
+    while (!done || yieldedCount < chunks.length) {
+      while (yieldedCount < chunks.length) {
+        yield chunks[yieldedCount++];
+      }
+      if (!done) {
+        await new Promise(resolve => { resolveWait = resolve; });
+      }
+    }
+    
+    await streamPromise;
+  })();
+}
+```
+
+**Why This Matters:**
+1. **Callbacks pass IN to preload** (cloneable), **generators cannot return OUT** (not cloneable)
+2. **Parallel streams share IPC channels** - without `requestId`, all listeners receive all chunks
+3. **Generator construction happens in renderer** where it has access to the callback closure
+4. **Listener cleanup on done signal** (not invoke completion) ensures all chunks are received
+
 **Handling Parallel Concurrent Streams:**
 
-When multiple parallel operations use the same IPC channel, **all listeners receive ALL messages**, causing data corruption. Use a `requestId` to route messages:
+When multiple parallel operations use the same IPC channel, **all listeners receive ALL messages**, causing data corruption:
 
 ```typescript
 // Preload: Route chunks by requestId
@@ -897,6 +986,80 @@ Must match electron-vite `outDir` + lib entry structure.
 **Cause:** Using full display `size` instead of usable area.  
 **Fix:** Use `screen.getPrimaryDisplay().workAreaSize` for height; `workAreaSize` excludes menu bar and dock (see §1.3).
 
+### Issue: "An object could not be cloned" when streaming
+
+**Symptom:** When implementing streaming APIs (e.g., AI response generation), the app throws:
+```
+Uncaught Error: An object could not be cloned.
+    at structuredClone (native)
+    at contextBridge.exposeInMainWorld
+```
+This typically occurs when multiple parallel streams are active (e.g., generating 3 artifacts simultaneously).
+
+**Cause:** Attempting to return an `AsyncGenerator` or generator function from the preload script through `contextBridge`. Electron's structured clone algorithm cannot serialize generators because they contain function state and internal execution context.
+
+**The Broken Pattern:**
+```typescript
+// ❌ BROKEN: This will throw "An object could not be cloned"
+contextBridge.exposeInMainWorld('api', {
+  generateStream: async function* (prompt) {
+    // ... setup listener
+    yield chunk;  // ❌ Cannot serialize generator across bridge
+  }
+});
+```
+
+**The Fix:**
+Use **callback-based streaming** where the preload receives a callback function (passed IN, which is allowed) and calls it for each chunk. The renderer then constructs the AsyncGenerator from the callback:
+
+```typescript
+// ✅ CORRECT: Preload receives callback
+contextBridge.exposeInMainWorld('api', {
+  generateStream: (prompt, onChunk, requestId) => {
+    return new Promise((resolve, reject) => {
+      const listener = (_, data) => {
+        if (data.requestId !== requestId) return; // Filter for parallel streams
+        onChunk(data);
+        if (data.done) {
+          ipcRenderer.removeListener('stream-chunk', listener);
+          resolve();
+        }
+      };
+      ipcRenderer.on('stream-chunk', listener);
+      ipcRenderer.invoke('start-stream', { prompt, requestId })
+        .catch(reject);
+    });
+  }
+});
+
+// Renderer constructs generator from callback
+export async function generateStream(prompt) {
+  const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+  return (async function* () {
+    const chunks = [];
+    let done = false;
+    let resolveWait = null;
+    
+    const onChunk = (data) => {
+      if (data.done) done = true;
+      else chunks.push(data);
+      if (resolveWait) { resolveWait(); resolveWait = null; }
+    };
+    
+    const promise = window.electronAPI.generateStream(prompt, onChunk, requestId);
+    
+    let i = 0;
+    while (!done || i < chunks.length) {
+      while (i < chunks.length) yield chunks[i++];
+      if (!done) await new Promise(r => { resolveWait = r; });
+    }
+    await promise;
+  })();
+}
+```
+
+See §1.5 "CRITICAL: Structured Clone Limitations & Streaming Patterns" for the complete working implementation with parallel stream handling.
+
 ### Issue: IPC streaming data corruption (mixed chunks)
 
 **Symptom:** When generating multiple items in parallel (e.g., 3 AI-generated artifacts), content appears mixed - CSS from one stream appears in another, HTML is malformed.  
@@ -1017,6 +1180,13 @@ export default defineConfig(({ mode }) => ({
 
 ## Document History
 
+- **2026-02-02 (v1.5):** Major revision of §1.5 (Structured Clone Limitations) to document the complete streaming pattern discovered through real-world debugging:
+  - Documented the "AsyncGenerator Return" anti-pattern that caused "An object could not be cloned" errors
+  - Added complete working code examples showing the callback-based pattern with requestId routing
+  - Added new Common Issue: "An object could not be cloned" when streaming
+  - Explained why both callback pattern AND requestId are required together
+  - Documented the real-world impact: parallel stream corruption, HTML/CSS mixing, complete generation failures
+  - Cross-referenced actual troubleshooting entries from Flash-UI-Maker project
 - **2026-02-02 (v1.4):** Added CRITICAL section on Structured Clone Limitations (§1.5) covering: what can/cannot pass through contextBridge, callback-based streaming pattern vs returning AsyncGenerators, parallel concurrent stream handling with `requestId` routing, listener lifecycle management. Added Common Issue "IPC streaming data corruption (mixed chunks)" with fix pattern.
 - **2026-02-02 (v1.3):** §1.3 updated for fullest possible height: use `primaryDisplay.workArea` for position (x, y); set `x` and `y` on BrowserWindow so window is top-aligned and centered horizontally; omit `mainWindow.center()` when using explicit positioning; added Common Issue "Window not opening to fullest possible height" and clarified `workAreaSize` vs `workArea` in prose.
 - **2026-02-02 (v1.2):** Aligned with 01a-MACOS_ELECTRON_GUIDE: macOS use only `titleBarStyle: 'hiddenInset'` (do not use `frame: false` with it — breaks dragging); added electron-builder `dist/` exclusion warning and Vite renderer `files` guidance (§3.1); added `mainWindow.center()`; expanded blank-screen and window-not-draggable common issues; cross-referenced 01a for UI not displaying and windowing.
