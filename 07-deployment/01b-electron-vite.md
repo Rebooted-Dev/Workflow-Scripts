@@ -2,7 +2,7 @@
 
 A generalized workflow for migrating existing Electron apps or TypeScript apps to support **electron-vite** for macOS desktop builds, while maintaining support for web app builds.
 
-**Version:** 1.2 (2026-02-02)  
+**Version:** 1.3 (2026-02-02)  
 **Scope:** Build pipeline migration for dual web + desktop distribution  
 **Prerequisites:** Node.js 20.19+ or 22.12+, existing web app (Next.js/React/Vite)
 
@@ -155,15 +155,21 @@ function createWindow(): BrowserWindow {
 
   // Optional: macOS – use full vertical space (excludes menu bar and dock)
   const primaryDisplay = screen.getPrimaryDisplay();
-  const workArea = primaryDisplay.workAreaSize;
+  const workAreaSize = primaryDisplay.workAreaSize;
+  const workArea = primaryDisplay.workArea;  // { x, y, width, height } for positioning
   const windowWidth = 1400;
-  const windowHeight = process.platform === 'darwin' ? workArea.height : 900;
+  const windowHeight = process.platform === 'darwin' ? workAreaSize.height : 900;
+  // Position at top of work area, centered horizontally (fullest possible height)
+  const windowX = Math.round(workArea.x + (workArea.width - windowWidth) / 2);
+  const windowY = workArea.y;
 
   const isMac = process.platform === 'darwin';
 
   mainWindow = new BrowserWindow({
     width: windowWidth,
     height: windowHeight,
+    x: windowX,
+    y: windowY,
     minWidth: 800,
     minHeight: 600,
     // CRITICAL (macOS): Use ONLY titleBarStyle. Do NOT use frame:false + titleBarStyle together — they conflict and break dragging. See 01a-MACOS_ELECTRON_GUIDE.
@@ -193,13 +199,13 @@ function createWindow(): BrowserWindow {
     mainWindow?.show();
   });
 
-  mainWindow.center();  // Avoid window partially off-screen on multi-monitor or small displays
+  // Omit center() when using explicit x,y above; position already aligns with work area.
 
   return mainWindow;
 }
 ```
 
-**macOS window sizing:** `screen.getPrimaryDisplay().workAreaSize` gives usable height (excluding menu bar and dock). Use `workArea.height` for the window height so the app doesn’t sit under the dock. Use `size` only if you intend to overlap system UI.
+**macOS window sizing:** `screen.getPrimaryDisplay().workAreaSize` gives usable dimensions (excluding menu bar and dock). Use `workAreaSize.height` for the window height so the app doesn’t sit under the dock. For **fullest possible height**, also set position from `primaryDisplay.workArea` (x, y, width, height): pass `x` and `y` to `BrowserWindow` (e.g. `y: workArea.y`, `x: workArea.x + (workArea.width - windowWidth) / 2`) so the window is top-aligned in the work area and centered horizontally. Omit `mainWindow.center()` when using this explicit positioning. Use `size` only if you intend to overlap system UI.
 
 ---
 
@@ -794,6 +800,12 @@ Must match electron-vite `outDir` + lib entry structure.
 **Cause:** No left padding for the traffic lights area.  
 **Fix:** Add ~70–80px left padding (e.g. `pl-20`) to the header when running in Electron (see §1.4).
 
+### Issue: Window not opening to fullest possible height
+
+**Symptom:** Window comes close to full height but leaves a small gap (e.g. 98% of work area).  
+**Cause:** Using a percentage of work area height or using `mainWindow.center()` so the window doesn't align with the work area top.  
+**Fix:** Use 100% of `workAreaSize.height` for window height and set position from `primaryDisplay.workArea`: pass `x` and `y` to `BrowserWindow` (e.g. `y: workArea.y`, `x: workArea.x + (workArea.width - windowWidth) / 2`) so the window is top-aligned and centered horizontally. Omit `mainWindow.center()` when using explicit positioning (see §1.3).
+
 ### Issue: Window too tall (under dock)
 
 **Symptom:** Bottom of window goes under the dock or off-screen.  
@@ -889,6 +901,7 @@ export default defineConfig(({ mode }) => ({
 
 ## Document History
 
+- **2026-02-02 (v1.3):** §1.3 updated for fullest possible height: use `primaryDisplay.workArea` for position (x, y); set `x` and `y` on BrowserWindow so window is top-aligned and centered horizontally; omit `mainWindow.center()` when using explicit positioning; added Common Issue "Window not opening to fullest possible height" and clarified `workAreaSize` vs `workArea` in prose.
 - **2026-02-02 (v1.2):** Aligned with 01a-MACOS_ELECTRON_GUIDE: macOS use only `titleBarStyle: 'hiddenInset'` (do not use `frame: false` with it — breaks dragging); added electron-builder `dist/` exclusion warning and Vite renderer `files` guidance (§3.1); added `mainWindow.center()`; expanded blank-screen and window-not-draggable common issues; cross-referenced 01a for UI not displaying and windowing.
 - **2026-02-02 (v1.1):** Added Vite base path (§1.2), macOS window sizing and frameless/drag/traffic-lights (§1.3–1.4), verification and common-issues from macOS Window Height Fix implementation guide; reference to project implementation guide.
 - **2026-02-01 (v1.0):** Initial generalized workflow based on completed migration
