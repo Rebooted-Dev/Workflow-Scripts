@@ -313,6 +313,91 @@ declare global {
 }
 ```
 
+**CRITICAL: Structured Clone Limitations**
+
+Electron's `contextBridge` uses the [Structured Clone Algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) to pass values between the isolated preload world and the renderer. This has important limitations:
+
+| Can Pass Through | Cannot Pass Through |
+|------------------|---------------------|
+| Primitives (string, number, boolean) | Functions (including callbacks) |
+| Plain objects | AsyncGenerators/Generators |
+| Promises | DOM elements |
+| Arrays | Class instances with methods |
+| TypedArrays | Objects with circular references |
+
+**Pattern for Streaming APIs:**
+
+When implementing streaming (e.g., AI response streaming), use **callbacks passed IN** rather than generators returned:
+
+```typescript
+// ❌ WRONG: Returns AsyncGenerator (not cloneable)
+contextBridge.exposeInMainWorld('api', {
+  generateStream: async function* (prompt) {
+    // ... yield chunks - THIS FAILS
+  }
+});
+
+// ✅ CORRECT: Callback-based streaming
+contextBridge.exposeInMainWorld('api', {
+  generateStream: (prompt, onChunk) => {
+    const listener = (_, chunk) => {
+      onChunk(chunk);
+      if (chunk.done) {
+        ipcRenderer.removeListener('stream-data', listener);
+      }
+    };
+    ipcRenderer.on('stream-data', listener);
+    ipcRenderer.invoke('start-stream', prompt);
+  }
+});
+```
+
+**Handling Parallel Concurrent Streams:**
+
+When multiple parallel operations use the same IPC channel, **all listeners receive ALL messages**, causing data corruption. Use a `requestId` to route messages:
+
+```typescript
+// Preload: Route chunks by requestId
+streamData: (prompt, onChunk, requestId) => {
+  return new Promise((resolve, reject) => {
+    const listener = (_, data) => {
+      if (data.requestId !== requestId) return; // Filter others
+      onChunk(data);
+      if (data.done) {
+        ipcRenderer.removeListener('stream-data', listener);
+        resolve();
+      }
+    };
+    ipcRenderer.on('stream-data', listener);
+    ipcRenderer.invoke('start-stream', { prompt, requestId })
+      .catch(err => {
+        ipcRenderer.removeListener('stream-data', listener);
+        reject(err);
+      });
+  });
+}
+
+// Main: Include requestId in responses
+ipcMain.handle('start-stream', async (_, { prompt, requestId }) => {
+  for await (const chunk of getStream(prompt)) {
+    mainWindow.webContents.send('stream-data', { 
+      requestId,  // ← Route back to correct listener
+      text: chunk 
+    });
+  }
+  mainWindow.webContents.send('stream-data', { 
+    requestId, 
+    done: true 
+  });
+});
+```
+
+**Key Lessons:**
+1. Functions/generators cannot be returned from bridge APIs - use callbacks
+2. Parallel streams need request IDs to prevent cross-talk
+3. Remove listeners on completion signal (not just invoke resolution)
+4. Create generators/iterators in the renderer, not preload
+
 ---
 
 ## Phase 2: Configure electron-vite
@@ -812,6 +897,37 @@ Must match electron-vite `outDir` + lib entry structure.
 **Cause:** Using full display `size` instead of usable area.  
 **Fix:** Use `screen.getPrimaryDisplay().workAreaSize` for height; `workAreaSize` excludes menu bar and dock (see §1.3).
 
+### Issue: IPC streaming data corruption (mixed chunks)
+
+**Symptom:** When generating multiple items in parallel (e.g., 3 AI-generated artifacts), content appears mixed - CSS from one stream appears in another, HTML is malformed.  
+**Cause:** Multiple concurrent `ipcRenderer.invoke()` calls use the same IPC channel (e.g., `'content-chunk'`). ALL listeners receive ALL chunks from ALL streams, causing interleaved data.  
+**Fix:** Add a unique `requestId` to each stream request and filter incoming messages:
+
+```typescript
+// Preload: Generate unique ID, filter by it
+const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
+const listener = (_, chunk) => {
+  if (chunk.requestId !== requestId) return; // ← Critical filter
+  onChunk(chunk);
+  if (chunk.done) {
+    ipcRenderer.removeListener('content-chunk', listener);
+    resolve();
+  }
+};
+
+ipcRenderer.on('content-chunk', listener);
+ipcRenderer.invoke('generate-stream', { prompt, requestId });
+
+// Main: Include requestId in every message
+mainWindow.webContents.send('content-chunk', { 
+  requestId: args.requestId, 
+  text: chunk.text 
+});
+```
+
+See §1.5 "Handling Parallel Concurrent Streams" for complete pattern.
+
 ---
 
 ## Advanced Configuration
@@ -901,6 +1017,7 @@ export default defineConfig(({ mode }) => ({
 
 ## Document History
 
+- **2026-02-02 (v1.4):** Added CRITICAL section on Structured Clone Limitations (§1.5) covering: what can/cannot pass through contextBridge, callback-based streaming pattern vs returning AsyncGenerators, parallel concurrent stream handling with `requestId` routing, listener lifecycle management. Added Common Issue "IPC streaming data corruption (mixed chunks)" with fix pattern.
 - **2026-02-02 (v1.3):** §1.3 updated for fullest possible height: use `primaryDisplay.workArea` for position (x, y); set `x` and `y` on BrowserWindow so window is top-aligned and centered horizontally; omit `mainWindow.center()` when using explicit positioning; added Common Issue "Window not opening to fullest possible height" and clarified `workAreaSize` vs `workArea` in prose.
 - **2026-02-02 (v1.2):** Aligned with 01a-MACOS_ELECTRON_GUIDE: macOS use only `titleBarStyle: 'hiddenInset'` (do not use `frame: false` with it — breaks dragging); added electron-builder `dist/` exclusion warning and Vite renderer `files` guidance (§3.1); added `mainWindow.center()`; expanded blank-screen and window-not-draggable common issues; cross-referenced 01a for UI not displaying and windowing.
 - **2026-02-02 (v1.1):** Added Vite base path (§1.2), macOS window sizing and frameless/drag/traffic-lights (§1.3–1.4), verification and common-issues from macOS Window Height Fix implementation guide; reference to project implementation guide.
