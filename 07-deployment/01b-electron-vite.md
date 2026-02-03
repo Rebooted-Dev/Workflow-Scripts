@@ -2,7 +2,7 @@
 
 A generalized workflow for migrating existing Electron apps or TypeScript apps to support **electron-vite** for macOS desktop builds, while maintaining support for web app builds.
 
-**Version:** 1.3 (2026-02-02)  
+**Version:** 1.4 (2026-02-03)  
 **Scope:** Build pipeline migration for dual web + desktop distribution  
 **Prerequisites:** Node.js 20.19+ or 22.12+, existing web app (Next.js/React/Vite)
 
@@ -317,13 +317,15 @@ declare global {
 
 Electron's `contextBridge` uses the [Structured Clone Algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) to pass values between the isolated preload world and the renderer. This has important limitations:
 
-| Can Pass Through | Cannot Pass Through |
-|------------------|---------------------|
-| Primitives (string, number, boolean) | Functions (including callbacks) |
-| Plain objects | AsyncGenerators/Generators |
-| Promises | DOM elements |
+| Can Pass Through | Cannot Pass Through (as return values or stored on exposed API) |
+|------------------|------------------------------------------------------------------|
+| Primitives (string, number, boolean) | AsyncGenerators / Generators |
+| Plain objects | Functions as **return values** (callbacks **as arguments** renderer→preload are OK) |
+| Promises that resolve to cloneable data | DOM elements |
 | Arrays | Class instances with methods |
 | TypedArrays | Objects with circular references |
+
+**Note:** The renderer can pass callback functions *into* the preload (e.g. `generateStream(prompt, onChunk, requestId)`). The clone restriction applies to what the preload *returns* or exposes—e.g. returning an `AsyncGenerator` from the preload fails.
 
 **⚠️ PITFALL: The "AsyncGenerator Return" Anti-Pattern**
 
@@ -486,6 +488,21 @@ ipcMain.handle('start-stream', async (_, { prompt, requestId }) => {
 2. Parallel streams need request IDs to prevent cross-talk
 3. Remove listeners on completion signal (not just invoke resolution)
 4. Create generators/iterators in the renderer, not preload
+
+**Project implementation reference (Flash UI Idea Generator):**
+
+When applying this workflow to a real project, keep the following in sync so the clone error does not regress:
+
+| Layer | File | Rule |
+|-------|------|------|
+| Preload | `desktop/preload.ts` | `generateContentStream` must take `(prompt, config, onChunk, requestId)` and return `Promise<void>`. **Do not** use `async function*` or return an AsyncGenerator. |
+| Main | `desktop/main.ts` | IPC handler for `generate-content-stream` must accept `requestId` and send it in every `content-chunk` message. |
+| Renderer | `hooks/useGeminiClient.ts` | In Electron mode, build the `AsyncGenerator` from the callback (requestId + onChunk); do not use a generator returned from the preload. |
+
+**Verification checklist (before merging streaming/Electron changes):**
+- [ ] Preload does not expose `async function*` or return an AsyncGenerator for streaming.
+- [ ] Main process includes `requestId` in every chunk/done message for the stream channel.
+- [ ] Renderer creates the async generator locally and passes a callback + requestId to the preload.
 
 ---
 
@@ -1060,6 +1077,8 @@ export async function generateStream(prompt) {
 
 See §1.5 "CRITICAL: Structured Clone Limitations & Streaming Patterns" for the complete working implementation with parallel stream handling.
 
+**In this repo (Flash UI Idea Generator):** The streaming bridge lives in `desktop/preload.ts`, `desktop/main.ts`, and `hooks/useGeminiClient.ts`. Keep all three in sync with the callback + requestId pattern above; see the "Project implementation reference" table in §1.5.
+
 ### Issue: IPC streaming data corruption (mixed chunks)
 
 **Symptom:** When generating multiple items in parallel (e.g., 3 AI-generated artifacts), content appears mixed - CSS from one stream appears in another, HTML is malformed.  
@@ -1180,6 +1199,7 @@ export default defineConfig(({ mode }) => ({
 
 ## Document History
 
+- **2026-02-03 (v1.4):** Added project implementation reference and regression-prevention details: table of Flash UI files (desktop/preload.ts, main.ts, hooks/useGeminiClient.ts) with rules; verification checklist for streaming changes; clarified structured-clone table (callbacks as arguments OK, return values must be cloneable); cross-reference from Common Issue "An object could not be cloned" to repo implementation. Aligns with 2026-02-03 clone-error regression fix in Flash UI.
 - **2026-02-02 (v1.5):** Major revision of §1.5 (Structured Clone Limitations) to document the complete streaming pattern discovered through real-world debugging:
   - Documented the "AsyncGenerator Return" anti-pattern that caused "An object could not be cloned" errors
   - Added complete working code examples showing the callback-based pattern with requestId routing
