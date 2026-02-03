@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- 2026-02-03: Added 04-documentation/03-mark-completed.md — workflow to inspect code and verify that all reported completed tasks were actually implemented; mark verified completions with ✅; flag false reporting (incomplete / not done); reconcile changelog, troubleshooting, and docs; use parallel sub-agents; display flagged issues in descending order of importance/urgency. Updated 04-documentation/README.md with index entry and overview.
 - 2026-02-01: Clarified task marking and implementation plan update instructions across build, confirm-execution, bug-fix, and security-fix workflows; README "Document as You Go" and "Completion Status Conventions" now explicitly require updating the plan in `plans/` after each build phase or bug/security fix and using green check marks (`- [x]` and `**Status:** ✅ COMPLETED`)
 - 2026-01-26: Added agent flexibility review document (00-meta/agent-flexibility-review.md) - comprehensive analysis of fixed agent patterns and recommendations for flexible agent usage
 - 2026-01-21: Added directory README to 00-meta/ - index with active vs historical file status and quick reference
