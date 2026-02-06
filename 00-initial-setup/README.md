@@ -6,7 +6,7 @@ This directory contains workflows for setting up new projects and optimizing exi
 
 | File | Purpose | When to Use |
 |------|---------|-------------|
-| [`01-setup-project.md`](./01-setup-project.md) | Set up new project with dual repository management and troubleshooting system | New projects, migrating existing projects to use these workflows |
+| [`01-setup-project.md`](./01-setup-project.md) | Set up new project with **multiple repositories** (multi-repo) and troubleshooting system | New projects, migrating existing projects to use these workflows |
 | [`02-optimize-workflow-scripts.md`](./02-optimize-workflow-scripts.md) | Analyze, optimize, and verify workflow scripts | Periodic maintenance, after workflows accumulate, before sharing workflows |
 | [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md) | Automate syncing Workflow-Scripts across multiple projects | When managing multiple projects, want to update all at once, or need to track sync status |
 
@@ -26,13 +26,14 @@ This directory contains workflows for setting up new projects and optimizing exi
 ### 01-setup-project.md
 
 Sets up a project with:
-- **Dual Repository Management** - Main project repo + Workflow-Scripts as a nested repo
+- **Multiple Repositories (Multi-Repo)** - Project is not a single repo: main app repo + **local** Workflow-Scripts repo (cloned into project directory). AGENTS.md and other docs must state this clearly so agents do not assume one repo.
 - **Troubleshooting System** - Organized `troubleshooting/` directory structure
-- **AGENTS.md Configuration** - Instructions for AI agents to manage both repos
+- **AGENTS.md Configuration** - Instructions for AI agents to manage both repos and understand multi-repo setup
+- **.gitignore** - Main project must list the workflows directory (e.g. `Workflow-Scripts/`) so the main repo does not track it
 
 Key steps:
-1. Configure AGENTS.md with repository management instructions
-2. Set up `.gitignore` to exclude workflows directory
+1. Configure AGENTS.md with Repository Management (multi-repo; "this local project directory"; relative paths)
+2. Ensure `.gitignore` includes the workflows directory so the project correctly uses multiple repos
 3. Create troubleshooting directory structure
 4. Back up any existing troubleshooting files
 5. Verify setup

@@ -6,7 +6,7 @@
 
 This directory contains structured workflow instructions for common development tasks in the host project. These workflows provide consistent, repeatable processes for planning, reviewing, implementing, debugging, and documenting code changes.
 
-**Sharing Workflows Across Projects:** See [`SHARING_AND_SYNC.md`](./SHARING_AND_SYNC.md) for the supported sync models. The recommended approach is to keep `workflows/` as its own git repository cloned into each project (a nested repo), managed independently from the main project repo.
+**Sharing Workflows Across Projects:** See [`SHARING_AND_SYNC.md`](./SHARING_AND_SYNC.md) for the supported sync models. The recommended approach is a **multi-repo** setup: this directory is a **local** clone inside each host project (e.g. `Workflow-Scripts/` or `workflows/`), as its own git repository. The host project has **multiple repositories** (main app repo + this workflows repo); the main project's `.gitignore` must list this directory so the main repo does not track it.
 
 **Why Workflows?**  
 Workflows ensure that:
@@ -20,7 +20,7 @@ Workflows ensure that:
 
 The workflows are organized into seven categories:
 
-1. **Initial Setup** (`00-initial-setup/`) - Set up new projects with dual repository management and troubleshooting system
+1. **Initial Setup** (`00-initial-setup/`) - Set up new projects with **multiple repositories** (multi-repo: main repo + local Workflow-Scripts) and troubleshooting system
 2. **Planning** (`01-planning/`) - Create structured implementation plans
 3. **Build/Code** (`02-build-code/`) - Execute implementation with verification
 4. **Debug** (`03-debug/`) - Systematically identify and fix bugs
