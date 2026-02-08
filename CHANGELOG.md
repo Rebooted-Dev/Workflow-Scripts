@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2026-01-21: Added directory README to 06-security/ - review→fix workflow sequence and security focus areas
 
 ### Changed
+- 2026-02-08: Merged origin/beta into main — synced local main with origin/main (resolved conflict in 00-initial-setup/01-setup-project.md: Quick Start, Purpose, Step 4, checklist, AI agents). Merged origin/beta into main (resolved conflicts: combined slim Change Management 2.6.2 with migration steps 2.7/2.8, merged checklist and "For AI Agents" list). Pushed main to origin. Single main branch now contains all workflow content (mark-completed, electron-vite docs, multi-repo setup, slim AGENTS architecture).
 - 2026-01-26: Implemented flexible agent pattern across all workflows - replaced fixed agent counts ("Agent 1", "Agent 2", etc.) with "Suggested agent roles (spawn additional agents as needed)" pattern to enable dynamic agent spawning based on task complexity
 - 2026-01-26: Updated 14 workflow files with flexible agent guidance:
   - Planning: 01-plan-review.md, 02-finalise-plan.md
@@ -34,6 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2026-01-21: Updated main README.md file structure section - reflects new directory READMEs in all directories
 - 2026-01-21: Added historical status and timestamps to 00-meta/filename-review.md and parallel-agents-review.md
 - 2026-01-21: Enhanced 02-build-code/01-execution.md - added proper header (Purpose, Inputs, Output) to match 02-confirm-execution.md structure
+
+### Removed
+- 2026-02-08: Removed beta branch from remote (origin) after merging into main.
 
 ### Fixed
 - 2026-01-21: Resolved critical task marking contradiction in 02-build-code - changed emoji format (`✅`/`⏳`) to checkbox format (`- [x]`/`- [ ]`) to match 02-confirm-execution.md
