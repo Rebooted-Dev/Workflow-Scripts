@@ -2,7 +2,7 @@
 
 A generalized workflow for migrating existing Electron apps or TypeScript apps to support **electron-vite** for macOS desktop builds, while maintaining support for web app builds.
 
-**Version:** 1.0 (2026-02-01)  
+**Version:** 1.4 (2026-02-03)  
 **Scope:** Build pipeline migration for dual web + desktop distribution  
 **Prerequisites:** Node.js 20.19+ or 22.12+, existing web app (Next.js/React/Vite)
 
@@ -116,12 +116,31 @@ desktop/
 
 **Alternative:** Use `src/main/` and `src/preload/` if you prefer colocating with web source.
 
-### 1.2 Main Process Template
+### 1.2 Vite renderer: base path for Electron (Vite + React only)
+
+If your **renderer** is built with **Vite** (not Next.js), you must set a relative base path so the packaged app loads correctly. Electron loads the app via `file://`; absolute paths (Vite’s default `/assets/...`) resolve from the filesystem root and cause a **blank screen** in the packaged app.
+
+**In `vite.config.ts` (or `vite.config.mts`):**
+
+```typescript
+export default defineConfig({
+  base: './',  // CRITICAL for Electron file:// protocol
+  // ... rest of config
+});
+```
+
+**Verify:** After `npm run build`, open `dist/index.html`. Script and link hrefs must be relative (e.g. `./assets/index-xxx.js`), not absolute (`/assets/...`).
+
+**Production load (Vite only):** In `desktop/main.ts`, for production use `mainWindow.loadFile(path.join(__dirname, '..', '..', '..', 'dist', 'index.html'))` instead of `loadURL(PROD_APP_ORIGIN)`.
+
+---
+
+### 1.3 Main Process Template
 
 Create `desktop/main.ts`:
 
 ```typescript
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell, screen } from 'electron';
 import * as path from 'path';
 import { spawn } from 'child_process';
 
@@ -133,10 +152,31 @@ let serverProcess: ReturnType<typeof spawn> | null = null;
 
 function createWindow(): BrowserWindow {
   const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
-  
+
+  // Optional: macOS – use full vertical space (excludes menu bar and dock)
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const workAreaSize = primaryDisplay.workAreaSize;
+  const workArea = primaryDisplay.workArea;  // { x, y, width, height } for positioning
+  const windowWidth = 1400;
+  const windowHeight = process.platform === 'darwin' ? workAreaSize.height : 900;
+  // Position at top of work area, centered horizontally (fullest possible height)
+  const windowX = Math.round(workArea.x + (workArea.width - windowWidth) / 2);
+  const windowY = workArea.y;
+
+  const isMac = process.platform === 'darwin';
+
   mainWindow = new BrowserWindow({
-    width: 1400,
-    height: 900,
+    width: windowWidth,
+    height: windowHeight,
+    x: windowX,
+    y: windowY,
+    minWidth: 800,
+    minHeight: 600,
+    // CRITICAL (macOS): Use ONLY titleBarStyle. Do NOT use frame:false + titleBarStyle together — they conflict and break dragging. See 01a-MACOS_ELECTRON_GUIDE.
+    ...(isMac
+      ? { titleBarStyle: 'hiddenInset' }
+      : { frame: false }
+    ),
     webPreferences: {
       // Path relative to electron-vite output structure
       preload: path.join(__dirname, '..', 'preload', 'preload.js'),
@@ -151,7 +191,7 @@ function createWindow(): BrowserWindow {
     mainWindow.loadURL(DEV_APP_ORIGIN);
     mainWindow.webContents.openDevTools();
   } else {
-    // Production: load from embedded Next.js server
+    // Production: load from embedded Next.js server (or for Vite: loadFile from dist – see §1.2)
     mainWindow.loadURL(PROD_APP_ORIGIN);
   }
 
@@ -159,9 +199,50 @@ function createWindow(): BrowserWindow {
     mainWindow?.show();
   });
 
+  // Omit center() when using explicit x,y above; position already aligns with work area.
+
   return mainWindow;
 }
+```
 
+**macOS window sizing:** `screen.getPrimaryDisplay().workAreaSize` gives usable dimensions (excluding menu bar and dock). Use `workAreaSize.height` for the window height so the app doesn’t sit under the dock. For **fullest possible height**, also set position from `primaryDisplay.workArea` (x, y, width, height): pass `x` and `y` to `BrowserWindow` (e.g. `y: workArea.y`, `x: workArea.x + (workArea.width - windowWidth) / 2`) so the window is top-aligned in the work area and centered horizontally. Omit `mainWindow.center()` when using this explicit positioning. Use `size` only if you intend to overlap system UI.
+
+---
+
+### 1.4 macOS: Draggable window and traffic lights (optional)
+
+If you use `titleBarStyle: 'hiddenInset'` on macOS (recommended; do **not** add `frame: false` on macOS — the two conflict and break dragging; see 01a-MACOS_ELECTRON_GUIDE), add the following so the window is draggable and content doesn’t overlap the traffic lights.
+
+**1. Drag region (in `index.html` `<head>` or global CSS):**
+
+```css
+.window-drag-bar {
+  height: 38px;
+  -webkit-app-region: drag;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+}
+.window-drag-bar button,
+.window-drag-bar a,
+.window-drag-bar input,
+.window-drag-bar [role="button"],
+.window-drag-bar .no-drag {
+  -webkit-app-region: no-drag;
+}
+```
+
+Add a top bar element (e.g. `<div class="window-drag-bar" data-drag-region></div>`) so users can drag the window. Give all interactive elements in that bar `no-drag` or the same `-webkit-app-region: no-drag` so clicks work.
+
+**2. Header padding for traffic lights:** On macOS, leave ~70–80px left padding in the header (e.g. `pl-20` / 5rem) when running in Electron so content doesn’t sit under the close/minimize/maximize buttons. Detect Electron via your preload API (e.g. `window.electronAPI?.isElectron()`).
+
+**3. Optional:** Expose IPC handlers for minimize/maximize/close and custom window control buttons; see your project’s **macOS Window Height Fix implementation guide** (or equivalent) for full code.
+
+---
+
+Remainder of `desktop/main.ts` (IPC handlers and app lifecycle):
+
+```typescript
 // IPC handlers
 ipcMain.handle('minimize-window', () => {
   mainWindow?.minimize();
@@ -204,7 +285,7 @@ app.on('window-all-closed', () => {
 });
 ```
 
-### 1.3 Preload Script Template
+### 1.5 Preload Script Template
 
 Create `desktop/preload.ts`:
 
@@ -231,6 +312,197 @@ declare global {
   }
 }
 ```
+
+**CRITICAL: Structured Clone Limitations & Streaming Patterns**
+
+Electron's `contextBridge` uses the [Structured Clone Algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) to pass values between the isolated preload world and the renderer. This has important limitations:
+
+| Can Pass Through | Cannot Pass Through (as return values or stored on exposed API) |
+|------------------|------------------------------------------------------------------|
+| Primitives (string, number, boolean) | AsyncGenerators / Generators |
+| Plain objects | Functions as **return values** (callbacks **as arguments** renderer→preload are OK) |
+| Promises that resolve to cloneable data | DOM elements |
+| Arrays | Class instances with methods |
+| TypedArrays | Objects with circular references |
+
+**Note:** The renderer can pass callback functions *into* the preload (e.g. `generateStream(prompt, onChunk, requestId)`). The clone restriction applies to what the preload *returns* or exposes—e.g. returning an `AsyncGenerator` from the preload fails.
+
+**⚠️ PITFALL: The "AsyncGenerator Return" Anti-Pattern**
+
+A common mistake when implementing streaming is to return an AsyncGenerator from the preload script. This appears to work in development but **will fail in production** with "An object could not be cloned":
+
+```typescript
+// ❌ BROKEN: Returns AsyncGenerator from preload
+// This causes "An object could not be cloned" error!
+contextBridge.exposeInMainWorld('api', {
+  generateStream: async function* (prompt) {
+    const chunks = [];
+    const listener = (_, chunk) => chunks.push(chunk);
+    ipcRenderer.on('stream-data', listener);
+    ipcRenderer.invoke('start-stream', prompt);
+    
+    // Yielding from preload - FAILS to serialize across contextBridge
+    for (const chunk of chunks) {
+      yield chunk;  // ❌ Throws: "An object could not be cloned"
+    }
+  }
+});
+```
+
+**The Real-World Impact:**
+When we attempted this pattern in production, it caused:
+1. All three artifact generations failing simultaneously with "An object could not be cloned"
+2. When partially fixed, HTML appeared as raw text with mixed content
+3. CSS from one artifact appearing in another's HTML
+4. Complete UI generation failure in the packaged macOS app
+
+**✅ CORRECT: Complete Working Pattern**
+
+The correct pattern requires **both** callback-based streaming **AND** request ID routing for parallel operations:
+
+```typescript
+// PRELOAD: Expose callback-based API (not generator)
+contextBridge.exposeInMainWorld('api', {
+  // Callback receives chunks, renderer constructs generator
+  generateStream: (prompt, onChunk, requestId) => {
+    return new Promise((resolve, reject) => {
+      const listener = (_, data) => {
+        // CRITICAL: Filter by requestId for parallel streams
+        if (data.requestId !== requestId) return;
+        
+        onChunk(data);
+        if (data.done) {
+          ipcRenderer.removeListener('stream-data', listener);
+          resolve();
+        }
+      };
+      
+      ipcRenderer.on('stream-data', listener);
+      ipcRenderer.invoke('start-stream', { prompt, requestId })
+        .catch(err => {
+          ipcRenderer.removeListener('stream-data', listener);
+          reject(err);
+        });
+    });
+  }
+});
+
+// MAIN: Include requestId in every message for routing
+ipcMain.handle('start-stream', async (_, { prompt, requestId }) => {
+  for await (const chunk of getStream(prompt)) {
+    mainWindow.webContents.send('stream-data', { 
+      requestId,  // ← Required for parallel stream isolation
+      text: chunk 
+    });
+  }
+  mainWindow.webContents.send('stream-data', { 
+    requestId, 
+    done: true 
+  });
+});
+
+// RENDERER: Create AsyncGenerator from callback API
+export async function generateContentStream(prompt) {
+  const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+  
+  return (async function* () {
+    const chunks = [];
+    let done = false;
+    let resolveWait = null;
+    
+    const onChunk = (data) => {
+      if (data.done) done = true;
+      else chunks.push({ text: data.text });
+      if (resolveWait) {
+        resolveWait();
+        resolveWait = null;
+      }
+    };
+    
+    const streamPromise = window.electronAPI.generateStream(prompt, onChunk, requestId)
+      .catch(err => { throw err; });
+    
+    let yieldedCount = 0;
+    while (!done || yieldedCount < chunks.length) {
+      while (yieldedCount < chunks.length) {
+        yield chunks[yieldedCount++];
+      }
+      if (!done) {
+        await new Promise(resolve => { resolveWait = resolve; });
+      }
+    }
+    
+    await streamPromise;
+  })();
+}
+```
+
+**Why This Matters:**
+1. **Callbacks pass IN to preload** (cloneable), **generators cannot return OUT** (not cloneable)
+2. **Parallel streams share IPC channels** - without `requestId`, all listeners receive all chunks
+3. **Generator construction happens in renderer** where it has access to the callback closure
+4. **Listener cleanup on done signal** (not invoke completion) ensures all chunks are received
+
+**Handling Parallel Concurrent Streams:**
+
+When multiple parallel operations use the same IPC channel, **all listeners receive ALL messages**, causing data corruption:
+
+```typescript
+// Preload: Route chunks by requestId
+streamData: (prompt, onChunk, requestId) => {
+  return new Promise((resolve, reject) => {
+    const listener = (_, data) => {
+      if (data.requestId !== requestId) return; // Filter others
+      onChunk(data);
+      if (data.done) {
+        ipcRenderer.removeListener('stream-data', listener);
+        resolve();
+      }
+    };
+    ipcRenderer.on('stream-data', listener);
+    ipcRenderer.invoke('start-stream', { prompt, requestId })
+      .catch(err => {
+        ipcRenderer.removeListener('stream-data', listener);
+        reject(err);
+      });
+  });
+}
+
+// Main: Include requestId in responses
+ipcMain.handle('start-stream', async (_, { prompt, requestId }) => {
+  for await (const chunk of getStream(prompt)) {
+    mainWindow.webContents.send('stream-data', { 
+      requestId,  // ← Route back to correct listener
+      text: chunk 
+    });
+  }
+  mainWindow.webContents.send('stream-data', { 
+    requestId, 
+    done: true 
+  });
+});
+```
+
+**Key Lessons:**
+1. Functions/generators cannot be returned from bridge APIs - use callbacks
+2. Parallel streams need request IDs to prevent cross-talk
+3. Remove listeners on completion signal (not just invoke resolution)
+4. Create generators/iterators in the renderer, not preload
+
+**Project implementation reference (Flash UI Idea Generator):**
+
+When applying this workflow to a real project, keep the following in sync so the clone error does not regress:
+
+| Layer | File | Rule |
+|-------|------|------|
+| Preload | `desktop/preload.ts` | `generateContentStream` must take `(prompt, config, onChunk, requestId)` and return `Promise<void>`. **Do not** use `async function*` or return an AsyncGenerator. |
+| Main | `desktop/main.ts` | IPC handler for `generate-content-stream` must accept `requestId` and send it in every `content-chunk` message. |
+| Renderer | `hooks/useGeminiClient.ts` | In Electron mode, build the `AsyncGenerator` from the callback (requestId + onChunk); do not use a generator returned from the preload. |
+
+**Verification checklist (before merging streaming/Electron changes):**
+- [ ] Preload does not expose `async function*` or return an AsyncGenerator for streaming.
+- [ ] Main process includes `requestId` in every chunk/done message for the stream channel.
+- [ ] Renderer creates the async generator locally and passes a callback + requestId to the preload.
 
 ---
 
@@ -480,6 +752,13 @@ module.exports = {
 };
 ```
 
+**CRITICAL (Vite renderer only):** electron-builder **excludes `dist/` by default** (built-in pattern `!dist{,/**/*}`). If your renderer is built with Vite using the default `outDir: 'dist'`, the packaged app will **not** contain `dist/index.html` or `dist/assets/`, causing a **blank window**. Either:
+
+1. **Explicitly include the renderer output** in `files`, e.g. `'dist/index.html'`, `'dist/assets/**'` (or `'dist/**'` if you want the whole tree), or  
+2. **Change Vite’s output directory** (e.g. `build: { outDir: 'renderer' }`) and include `'renderer/**'` in `files`.
+
+See **01a-MACOS_ELECTRON_GUIDE** (“electron-builder configuration”, “CRITICAL: Loading the Renderer”) for the same rule and verification steps.
+
 ### 3.2 Create Build Script
 
 Create `scripts/mac-build.sh`:
@@ -611,6 +890,8 @@ if (app.isPackaged) {
 - [ ] Window loads and displays content
 - [ ] IPC communication works (if implemented)
 - [ ] `./scripts/mac-build.sh --no-build` preserves `dist/electron`
+- [ ] **macOS (Vite):** No blank screen (check `base: './'` in Vite config)
+- [ ] **macOS frameless:** Window uses full vertical space (work area), is draggable by title bar, traffic lights visible, header content does not overlap traffic lights
 
 ### 5.4 Path Verification
 
@@ -691,6 +972,143 @@ fi
 ```
 
 Must match electron-vite `outDir` + lib entry structure.
+
+### Issue: Blank screen in packaged app (Vite renderer)
+
+**Symptom:** Window opens but shows blank/empty content.  
+**Causes:** (1) Vite emits absolute asset paths (`/assets/...`); under Electron’s `file://` protocol those resolve from the filesystem root and fail. (2) **electron-builder excludes `dist/` by default** — renderer (`dist/index.html`, `dist/assets/`) may not be packaged.  
+**Fix:** (1) Set `base: './'` in `vite.config.ts` so script/link hrefs are relative (see §1.2). After `npm run build`, confirm `dist/index.html` uses `./assets/...`, not `/assets/...`. (2) Include the renderer output in electron-builder `files` (e.g. `'dist/index.html'`, `'dist/assets/**'`) or use a different Vite `outDir` (e.g. `renderer/`) and include `'renderer/**'` (see §3.1). See 01a-MACOS_ELECTRON_GUIDE “CRITICAL: Loading the Renderer”.
+
+### Issue: Window not draggable (macOS)
+
+**Symptom:** Cannot move the window by dragging the header.  
+**Causes:** (1) Using **both** `frame: false` and `titleBarStyle: 'hiddenInset'` on macOS — they conflict and break dragging. (2) No drag region or interactive elements capturing the drag.  
+**Fix:** (1) On macOS use **only** `titleBarStyle: 'hiddenInset'`; use `frame: false` only on Windows/Linux (see §1.3). (2) Add a top bar with `-webkit-app-region: drag` and give all buttons/links in that bar `-webkit-app-region: no-drag` (see §1.4). See 01a-MACOS_ELECTRON_GUIDE “CRITICAL: Window Dragging on macOS”.
+
+### Issue: Content overlaps macOS traffic lights
+
+**Symptom:** Header content sits under the close/minimize/maximize buttons.  
+**Cause:** No left padding for the traffic lights area.  
+**Fix:** Add ~70–80px left padding (e.g. `pl-20`) to the header when running in Electron (see §1.4).
+
+### Issue: Window not opening to fullest possible height
+
+**Symptom:** Window comes close to full height but leaves a small gap (e.g. 98% of work area).  
+**Cause:** Using a percentage of work area height or using `mainWindow.center()` so the window doesn't align with the work area top.  
+**Fix:** Use 100% of `workAreaSize.height` for window height and set position from `primaryDisplay.workArea`: pass `x` and `y` to `BrowserWindow` (e.g. `y: workArea.y`, `x: workArea.x + (workArea.width - windowWidth) / 2`) so the window is top-aligned and centered horizontally. Omit `mainWindow.center()` when using explicit positioning (see §1.3).
+
+### Issue: Window too tall (under dock)
+
+**Symptom:** Bottom of window goes under the dock or off-screen.  
+**Cause:** Using full display `size` instead of usable area.  
+**Fix:** Use `screen.getPrimaryDisplay().workAreaSize` for height; `workAreaSize` excludes menu bar and dock (see §1.3).
+
+### Issue: "An object could not be cloned" when streaming
+
+**Symptom:** When implementing streaming APIs (e.g., AI response generation), the app throws:
+```
+Uncaught Error: An object could not be cloned.
+    at structuredClone (native)
+    at contextBridge.exposeInMainWorld
+```
+This typically occurs when multiple parallel streams are active (e.g., generating 3 artifacts simultaneously).
+
+**Cause:** Attempting to return an `AsyncGenerator` or generator function from the preload script through `contextBridge`. Electron's structured clone algorithm cannot serialize generators because they contain function state and internal execution context.
+
+**The Broken Pattern:**
+```typescript
+// ❌ BROKEN: This will throw "An object could not be cloned"
+contextBridge.exposeInMainWorld('api', {
+  generateStream: async function* (prompt) {
+    // ... setup listener
+    yield chunk;  // ❌ Cannot serialize generator across bridge
+  }
+});
+```
+
+**The Fix:**
+Use **callback-based streaming** where the preload receives a callback function (passed IN, which is allowed) and calls it for each chunk. The renderer then constructs the AsyncGenerator from the callback:
+
+```typescript
+// ✅ CORRECT: Preload receives callback
+contextBridge.exposeInMainWorld('api', {
+  generateStream: (prompt, onChunk, requestId) => {
+    return new Promise((resolve, reject) => {
+      const listener = (_, data) => {
+        if (data.requestId !== requestId) return; // Filter for parallel streams
+        onChunk(data);
+        if (data.done) {
+          ipcRenderer.removeListener('stream-chunk', listener);
+          resolve();
+        }
+      };
+      ipcRenderer.on('stream-chunk', listener);
+      ipcRenderer.invoke('start-stream', { prompt, requestId })
+        .catch(reject);
+    });
+  }
+});
+
+// Renderer constructs generator from callback
+export async function generateStream(prompt) {
+  const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+  return (async function* () {
+    const chunks = [];
+    let done = false;
+    let resolveWait = null;
+    
+    const onChunk = (data) => {
+      if (data.done) done = true;
+      else chunks.push(data);
+      if (resolveWait) { resolveWait(); resolveWait = null; }
+    };
+    
+    const promise = window.electronAPI.generateStream(prompt, onChunk, requestId);
+    
+    let i = 0;
+    while (!done || i < chunks.length) {
+      while (i < chunks.length) yield chunks[i++];
+      if (!done) await new Promise(r => { resolveWait = r; });
+    }
+    await promise;
+  })();
+}
+```
+
+See §1.5 "CRITICAL: Structured Clone Limitations & Streaming Patterns" for the complete working implementation with parallel stream handling.
+
+**In this repo (Flash UI Idea Generator):** The streaming bridge lives in `desktop/preload.ts`, `desktop/main.ts`, and `hooks/useGeminiClient.ts`. Keep all three in sync with the callback + requestId pattern above; see the "Project implementation reference" table in §1.5.
+
+### Issue: IPC streaming data corruption (mixed chunks)
+
+**Symptom:** When generating multiple items in parallel (e.g., 3 AI-generated artifacts), content appears mixed - CSS from one stream appears in another, HTML is malformed.  
+**Cause:** Multiple concurrent `ipcRenderer.invoke()` calls use the same IPC channel (e.g., `'content-chunk'`). ALL listeners receive ALL chunks from ALL streams, causing interleaved data.  
+**Fix:** Add a unique `requestId` to each stream request and filter incoming messages:
+
+```typescript
+// Preload: Generate unique ID, filter by it
+const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
+const listener = (_, chunk) => {
+  if (chunk.requestId !== requestId) return; // ← Critical filter
+  onChunk(chunk);
+  if (chunk.done) {
+    ipcRenderer.removeListener('content-chunk', listener);
+    resolve();
+  }
+};
+
+ipcRenderer.on('content-chunk', listener);
+ipcRenderer.invoke('generate-stream', { prompt, requestId });
+
+// Main: Include requestId in every message
+mainWindow.webContents.send('content-chunk', { 
+  requestId: args.requestId, 
+  text: chunk.text 
+});
+```
+
+See §1.5 "Handling Parallel Concurrent Streams" for complete pattern.
 
 ---
 
@@ -774,11 +1192,25 @@ export default defineConfig(({ mode }) => ({
 - [electron-vite Documentation](https://electron-vite.org/)
 - [electron-builder Configuration](https://www.electron.build/configuration.html)
 - [Electron Documentation](https://www.electronjs.org/docs/latest/)
+- **01a-MACOS_ELECTRON_GUIDE** (same `07-deployment/` folder): Authoritative guide for **UI not displaying** (blank window) and **windowing/dragging** on macOS. Covers: `loadFile()` vs custom protocols; electron-builder **excluding `dist/` by default** and using `renderer/` or explicit `files`; **never** using `frame: false` and `titleBarStyle: 'hiddenInset'` together on macOS (use only `titleBarStyle` on macOS); drag regions and traffic-light padding; verification and troubleshooting. Use 01a when debugging blank window or non-draggable window.
+- **Project-specific:** If your repo has a **macOS Window Height Fix** (or similar) implementation guide (e.g. `plans/macos-window-height-fix-implementation-guide.md`), use it for full steps on Vite `base` path, frameless window, `workAreaSize`, drag regions, traffic-light padding, and optional window-control IPC.
 
 ---
 
 ## Document History
 
+- **2026-02-03 (v1.4):** Added project implementation reference and regression-prevention details: table of Flash UI files (desktop/preload.ts, main.ts, hooks/useGeminiClient.ts) with rules; verification checklist for streaming changes; clarified structured-clone table (callbacks as arguments OK, return values must be cloneable); cross-reference from Common Issue "An object could not be cloned" to repo implementation. Aligns with 2026-02-03 clone-error regression fix in Flash UI.
+- **2026-02-02 (v1.5):** Major revision of §1.5 (Structured Clone Limitations) to document the complete streaming pattern discovered through real-world debugging:
+  - Documented the "AsyncGenerator Return" anti-pattern that caused "An object could not be cloned" errors
+  - Added complete working code examples showing the callback-based pattern with requestId routing
+  - Added new Common Issue: "An object could not be cloned" when streaming
+  - Explained why both callback pattern AND requestId are required together
+  - Documented the real-world impact: parallel stream corruption, HTML/CSS mixing, complete generation failures
+  - Cross-referenced actual troubleshooting entries from Flash-UI-Maker project
+- **2026-02-02 (v1.4):** Added CRITICAL section on Structured Clone Limitations (§1.5) covering: what can/cannot pass through contextBridge, callback-based streaming pattern vs returning AsyncGenerators, parallel concurrent stream handling with `requestId` routing, listener lifecycle management. Added Common Issue "IPC streaming data corruption (mixed chunks)" with fix pattern.
+- **2026-02-02 (v1.3):** §1.3 updated for fullest possible height: use `primaryDisplay.workArea` for position (x, y); set `x` and `y` on BrowserWindow so window is top-aligned and centered horizontally; omit `mainWindow.center()` when using explicit positioning; added Common Issue "Window not opening to fullest possible height" and clarified `workAreaSize` vs `workArea` in prose.
+- **2026-02-02 (v1.2):** Aligned with 01a-MACOS_ELECTRON_GUIDE: macOS use only `titleBarStyle: 'hiddenInset'` (do not use `frame: false` with it — breaks dragging); added electron-builder `dist/` exclusion warning and Vite renderer `files` guidance (§3.1); added `mainWindow.center()`; expanded blank-screen and window-not-draggable common issues; cross-referenced 01a for UI not displaying and windowing.
+- **2026-02-02 (v1.1):** Added Vite base path (§1.2), macOS window sizing and frameless/drag/traffic-lights (§1.3–1.4), verification and common-issues from macOS Window Height Fix implementation guide; reference to project implementation guide.
 - **2026-02-01 (v1.0):** Initial generalized workflow based on completed migration
 
 ---
