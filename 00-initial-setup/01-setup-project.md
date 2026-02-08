@@ -1,7 +1,7 @@
 # Project Initial Setup Workflow
 
 This workflow sets up a new project (or migrates an existing project) with:
-1. **Dual Repository Management** - Instructions for managing the main project repository and Workflow-Scripts as separate repos
+1. **Multiple Repositories (Multi-Repo)** - The project is **not** a single repo: it has the main application repository and a **local** Workflow-Scripts repository (cloned into the project directory). `AGENTS.md`, `.gitignore`, and other project docs must make this explicit so agents and contributors do not assume one repo.
 2. **Troubleshooting System** - Organized troubleshooting directory structure with backup of existing logs
 3. **Changelog System** - Same pattern as troubleshooting: `changelog/` directory with type folders, one file per entry, index (newest first); backup of existing single-file CHANGELOG if present
 4. **Plans Directories** - `plans/` and `plans-completed/` at project root; completed items moved with `yyyy-mm-dd-` prefix and listed in `plans-completed/index.md` for easy navigation
@@ -18,13 +18,16 @@ For users who want a fast setup, here are the essential steps:
 # 1. Navigate to your project
 cd <PROJECT_PATH>
 
-# 2. Clone workflows (if not already done)
+# 2. Clone Workflow-Scripts into this local project dir (if not already done)
 git clone https://github.com/Rebooted-Dev/Workflow-Scripts <WORKFLOWS_DIR>
 
-# 3. Add workflows to .gitignore
+# 3. Add workflows dir to .gitignore (required for multi-repo: main repo must not track it)
+echo "" >> .gitignore
+echo "# Workflow-Scripts (separate repo)" >> .gitignore
 echo "<WORKFLOWS_DIR>/" >> .gitignore
 
-# 4. Create troubleshooting structure
+# 4. Create project directories (docs, plans, plans-completed) and troubleshooting structure
+mkdir -p docs plans plans-completed
 mkdir -p troubleshooting/{build,runtime,data,environment,security}
 
 # 5. Create changelog structure (same pattern: directory + index)
@@ -65,9 +68,11 @@ For a comprehensive setup with AGENTS.md configuration and backups, continue wit
 ## Purpose
 
 This setup ensures:
+- **Multi-repo is explicit** - Project documentation (especially `AGENTS.md`) clearly states that the project has **multiple repositories** (main repo + local Workflow-Scripts), not a single repository.
 - **Consistent date format** – All dated file and directory names use **YYYY-MM-DD** (ISO date with hyphens) in `changelog/`, `troubleshooting/`, and `plans-completed/`. Examples: `changelog/added/2026-01-18-added-feature-x.md`, `troubleshooting/build/2026-01-18-build-error.md`, `plans-completed/2026-01-18-implementation-plan.md`. This keeps naming consistent and sortable across the project.
-- Clear separation between main project repo and workflows repo
-- Proper git configuration to manage both independently
+- Clear separation between main project repo and the local workflows repo (e.g. `Workflow-Scripts/`)
+- Proper git configuration: main project's `.gitignore` must list the workflows directory so the main repo never tracks it
+- **Troubleshooting and changelog in folder/index system** - When migrating an existing project, existing troubleshooting content is **extracted into individual files** and the index (Step 2.7); optionally, changelog can be moved to a folder system (Step 2.8). Backup alone is not enough—migration into the new structure is a defined task.
 - Organized **troubleshooting** system (directory + index, same pattern as changelog) that preserves existing troubleshooting data
 - Organized **changelog** system (directory + index, same pattern as troubleshooting) so the changelog does not grow into a single large file
 - Consistent project structure across all projects using these workflows
@@ -160,53 +165,41 @@ Add or update the execution guidelines section in `AGENTS.md`:
 
 ### 1.3 Add Repository Management Section
 
-Add this section to `AGENTS.md` (or update existing section). **Replace placeholders with your project's actual values:**
+Add this section to `AGENTS.md` (or update existing section). **Critical:** This project has **multiple repositories**, not a single repo. Agents must not assume one repository. **Replace placeholders with your project's actual values.** Prefer "this local project directory" (project root) and relative paths so instructions stay valid on any machine.
 
 ```markdown
 ## Repository Management
 
-This project uses two separate repositories that should be managed independently:
+**This project has multiple repositories** (multi-repo setup), not a single repository. The main application repo and the local Workflow-Scripts repo are independent; both live under the same project directory on disk.
 
 ### 1. <PROJECT_NAME> Repository (This Repository)
-- **Location**: `<PROJECT_PATH>`
+- **Location**: This local project directory (the repository root where you are working)
 - **Purpose**: Main application code, components, services, documentation
 - **Git Remote**: `<GIT_REMOTE>`
 
 **Standard Git Operations:**
 ```bash
-# Navigate to project root
-cd <PROJECT_PATH>
-
-# Check status
+# From project root (this local directory)
 git status
-
-# Pull latest changes
 git pull
-
-# Commit and push changes
 git add .
 git commit -m "feat: description of changes"
 git push
 ```
 
-### 2. Workflow-Scripts Repository (Nested in <WORKFLOWS_DIR>/ directory)
-- **Location**: `<PROJECT_PATH>/<WORKFLOWS_DIR>/`
+### 2. Workflow-Scripts Repository (local, in <WORKFLOWS_DIR>/)
+- **Location**: `<WORKFLOWS_DIR>/` within this local project directory. To add: from project root run `git clone <WORKFLOWS_REMOTE> <WORKFLOWS_DIR>`.
 - **Purpose**: Reusable workflow instructions for development tasks (planning, review, development, debug, documentation)
 - **Git Remote**: `<WORKFLOWS_REMOTE>`
-- **Note**: The `<WORKFLOWS_DIR>/` directory is a separate git repository and is ignored by the main project repo (see `.gitignore`)
+- **Note**: `<WORKFLOWS_DIR>/` is a separate git repository. The main project must ignore it in `.gitignore` so the main repo never tracks workflow files.
 
 **Standard Git Operations:**
 ```bash
-# Navigate to workflows directory (nested in project root)
-cd <PROJECT_PATH>/<WORKFLOWS_DIR>
+# From project root, go into workflows directory
+cd <WORKFLOWS_DIR>
 
-# Check status
 git status
-
-# Pull latest changes
 git pull
-
-# Commit and push changes
 git add .
 git commit -m "docs: update workflow description"
 git push
@@ -220,15 +213,15 @@ git push
 - Each repository has its own git history and version control
 
 **When Working on Main Project (Main Repo):**
-- Work from the root directory: `<PROJECT_PATH>`
+- Work from the project root (this local directory).
 - Focus on application code, components, services
 - Update project-specific documentation in `docs/` (if it exists)
 - Always update the changelog for any code change (features, fixes, refactors): create an entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. See `changelog/README.md` for the template.
 - Update `troubleshooting/` only for bugs/issues or non-trivial problems encountered during development.
-- The `<WORKFLOWS_DIR>/` directory is **ignored** by git (in `.gitignore`), so it won't be included in commits
+- The `<WORKFLOWS_DIR>/` directory is **ignored** by the main repo (in `.gitignore`), so it won't be included in main-repo commits.
 - Standard operations: `git add .`, `git commit`, `git push` - workflows will NOT be included
 
-**When Working on Workflow-Scripts (Nested Repo):**
+**When Working on Workflow-Scripts (local repo):**
 - Navigate to the workflows directory: `cd <WORKFLOWS_DIR>/`
 - Focus on workflow instructions and templates
 - Update workflow documentation in `README.md` and `SHARING_AND_SYNC.md`
@@ -237,32 +230,51 @@ git push
 - Standard operations: `git add .`, `git commit`, `git push` - only workflows will be pushed
 
 **Important Git Behavior:**
-- The `<WORKFLOWS_DIR>/` directory is listed in `.gitignore`, so it's completely ignored by the main repo
-- When you run `git status`, `git add .`, or `git commit` from the project root, `<WORKFLOWS_DIR>/` will NOT be included
-- To push workflow changes, you MUST `cd <WORKFLOWS_DIR>/` first, then run git commands there
-- The workflows directory has its own `.git` folder and is a completely separate repository
+- The main project's `.gitignore` must list `<WORKFLOWS_DIR>/` so the workflows directory is never part of the main repo.
+- From project root, `git status` / `git add .` / `git commit` do not include `<WORKFLOWS_DIR>/`.
+- To push workflow changes, run git commands from inside `<WORKFLOWS_DIR>/` (it has its own `.git`).
 
 **Best Practices:**
-- Always commit main project changes from the root directory
+- Always commit main project changes from the project root
 - Always commit Workflow-Scripts changes from the `<WORKFLOWS_DIR>/` directory
 - Use clear commit messages indicating which repository you're working in
 - Pull latest changes from both repos before starting work
 - Keep workflow improvements in the workflows directory, not in the main repo
 ```
 
-### 1.4 Verify .gitignore
+### 1.4 Verify .gitignore (Required for Multi-Repo)
 
-Ensure `.gitignore` includes your workflows directory:
+The main project must **ignore** the workflows directory so the project correctly operates as **multiple repositories**. Ensure `.gitignore` includes the workflows directory:
 
 ```bash
-# Replace <WORKFLOWS_DIR> with your actual directory name (e.g., "workflows" or "Workflow-Scripts")
-# Check if workflows directory is in .gitignore
-grep -q "^<WORKFLOWS_DIR>/$" .gitignore || echo "<WORKFLOWS_DIR>/" >> .gitignore
+# Replace <WORKFLOWS_DIR> with your actual directory name (e.g., "Workflow-Scripts" or "workflows")
+# Check if workflows directory is in .gitignore; add with a comment if missing
+grep -q "^<WORKFLOWS_DIR>/$" .gitignore || {
+  echo "" >> .gitignore
+  echo "# Workflow-Scripts (separate repo, managed independently)" >> .gitignore
+  echo "<WORKFLOWS_DIR>/" >> .gitignore
+}
 ```
 
 ---
 
 ## Step 2: Set Up Troubleshooting System
+
+### 2.0 Ensure project directories exist (docs, plans, plans-completed)
+
+Create standard project directories at the project root if they do not already exist. Other workflows (e.g. planning, documentation) expect these.
+
+```bash
+mkdir -p docs plans plans-completed
+# Verify
+for d in docs plans plans-completed; do
+  test -d "$d" && echo "✓ $d exists" || echo "Created $d"
+done
+```
+
+- **docs/** – Long-lived documentation (user-facing or project docs).
+- **plans/** – Active planning artifacts, roadmaps, PRDs.
+- **plans-completed/** – Archived plans and completed planning docs (move from `plans/` when done).
 
 ### 2.1 Check for Existing Troubleshooting Files
 
@@ -489,6 +501,51 @@ When instructed to "update the logs" or "update the log files", this refers to:
 - **Plans**: `plans/` holds active plans, implementation plans, and review reports. Use dated filenames.
 - **Plans-completed**: `plans-completed/` holds completed or archived plans. When moving from `plans/` to `plans-completed/`, **rename** the file or directory with a `yyyy-mm-dd-` prefix (e.g. `2026-01-18-implementation-plan-2026-01-18-17-14.md`) and **update `plans-completed/index.md`** (add a row at the top with Date, Title/Description, File or Directory). Use `plans-completed/index.md` to find records of work done. See `plans-completed/README.md` for full conventions.
 ```
+
+### 2.7 Migrate Troubleshooting Backup to Folder System (When Migrating)
+
+**Purpose:** The backup created in 2.3 preserves the old monolithic file but does **not** by itself populate the new folder system. This step is the **defined task** to extract that content into individual files and the index so the folder system becomes the source of truth.
+
+**When to do this:** When an existing project has one or more troubleshooting backups (e.g. `troubleshooting/TROUBLESHOOTING-backup-root-*.md`) and you want the new structure to contain that content. If the project is brand new with no prior TROUBLESHOOTING.md, skip this step.
+
+**Procedure:**
+
+1. **Choose the backup to migrate** – Typically the most recent `troubleshooting/TROUBLESHOOTING-backup-*.md` (e.g. `TROUBLESHOOTING-backup-root-YYYY-MM-DD.md`). Open it and note the structure (e.g. entries under `### Title (YYYY-MM-DD)` or `## Title`, often separated by `---`).
+
+2. **Identify discrete entries** – Split the backup by clear boundaries. Common patterns:
+   - Each entry starts with a heading like `### Build Error: ... (2026-01-12)` or `## Issue Title`.
+   - Entries may be separated by horizontal rules `---`.
+   - Map each heading/title to a **category** (`build`, `runtime`, `data`, `environment`, `security`) from the content or title (e.g. "Build Error" → `build`, "Admin System Page" runtime error → `runtime`).
+
+3. **For each entry:**
+   - Derive a short **slug** from the title (e.g. `multiple-missing-dependencies`).
+   - Extract **date** from the heading or body (e.g. `2026-01-12`).
+   - Create file: `troubleshooting/<category>/<yyyy-mm-dd>-<category>-<slug>.md`.
+   - Fill the standard template (see `troubleshooting/README.md`): Title, Date, Category, Status, Symptom (Problem/Observed), Root Cause, Fix (Resolution/Steps), Verification, Notes/Lessons. Copy or adapt content from the backup entry into these sections.
+   - Add a row at the **top** of the table in `troubleshooting/index.md`: Date, Category, Title (short), File path (e.g. `troubleshooting/build/2026-01-12-build-multiple-missing-dependencies.md`), Status (e.g. RESOLVED).
+
+4. **Verify** – Ensure every meaningful entry from the backup has a corresponding file under `troubleshooting/<category>/` and a row in `troubleshooting/index.md`. Optionally remove or archive the backup only after verification.
+
+**For AI agents:** Treat this as a required migration task when the project has existing troubleshooting content. Parse the backup, create one file per entry, and update the index; do not leave migration as an unspecified “if needed” follow-up.
+
+### 2.8 Optional: Changelog Folder System and Migration
+
+**Purpose:** Many projects keep a single `CHANGELOG.md` (or `docs/CHANGELOG.md`). This step is **optional** and only needed if the project wants a **folder-based changelog** (e.g. one file per version or per release) with an index or a main changelog that links to them.
+
+**When to do this:** When the project explicitly wants changelog content in a folder structure (e.g. `changelog/` or `docs/changelog/`) instead of or in addition to a single `CHANGELOG.md`. If the project is fine with one file, skip this step.
+
+**Procedure (if using a changelog folder):**
+
+1. **Create structure** – e.g. `changelog/` at project root or `docs/changelog/`. Decide convention: one file per version (e.g. `changelog/0.3.17.md`) or per date (e.g. `changelog/2026-02-06.md`). Optionally add `changelog/README.md` describing the layout and link from the main `CHANGELOG.md` or docs.
+
+2. **Migrate existing CHANGELOG.md** – If `CHANGELOG.md` (or `docs/CHANGELOG.md`) exists:
+   - Parse it by version/section (e.g. `## [0.3.17] - 2026-02-06`).
+   - For each version/release, create one file in `changelog/` (e.g. `changelog/0.3.17.md` or `changelog/2026-02-06-v0.3.17.md`) containing that version’s content.
+   - Update the main `CHANGELOG.md` to either (a) list versions with links to the per-version files, or (b) remain the single source of truth and use the folder only for archival/extra detail—document the chosen convention in AGENTS.md or docs.
+
+3. **Document in AGENTS.md** – If you adopt a folder-based changelog, add or update the “Update the logs” / changelog instructions so agents know to add new entries to the folder (e.g. create `changelog/<version>.md`) and/or update the main CHANGELOG and index as agreed.
+
+**Why the default setup does not include this:** The workflow’s default is a single changelog file (`CHANGELOG.md` or `docs/CHANGELOG.md`) because that’s the most common pattern. Changelog folder system and migration are optional and only required when the project decides to use that structure.
 
 ---
 
@@ -927,17 +984,22 @@ cd <WORKFLOWS_DIR>
 git remote -v && echo "✓ workflows is separate repo"
 ```
 
-### 3.2 Verify Troubleshooting Structure
+### 3.2 Verify Project and Troubleshooting Structure
 
 ```bash
-# Check directory structure
-test -d troubleshooting/build && echo "✓ build/ exists"
-test -d troubleshooting/runtime && echo "✓ runtime/ exists"
-test -d troubleshooting/data && echo "✓ data/ exists"
-test -d troubleshooting/environment && echo "✓ environment/ exists"
-test -d troubleshooting/security && echo "✓ security/ exists"
-test -f troubleshooting/README.md && echo "✓ README.md exists"
-test -f troubleshooting/index.md && echo "✓ index.md exists"
+# Project directories (docs, plans, plans-completed)
+test -d docs && echo "✓ docs/ exists"
+test -d plans && echo "✓ plans/ exists"
+test -d plans-completed && echo "✓ plans-completed/ exists"
+
+# Troubleshooting directory structure
+test -d troubleshooting/build && echo "✓ troubleshooting/build/ exists"
+test -d troubleshooting/runtime && echo "✓ troubleshooting/runtime/ exists"
+test -d troubleshooting/data && echo "✓ troubleshooting/data/ exists"
+test -d troubleshooting/environment && echo "✓ troubleshooting/environment/ exists"
+test -d troubleshooting/security && echo "✓ troubleshooting/security/ exists"
+test -f troubleshooting/README.md && echo "✓ troubleshooting/README.md exists"
+test -f troubleshooting/index.md && echo "✓ troubleshooting/index.md exists"
 ```
 
 ### 3.3 Verify Changelog Structure
@@ -988,6 +1050,10 @@ test -f GEMINI.md && echo "✓ GEMINI.md exists"
 ls -la troubleshooting/*backup*.md 2>/dev/null && echo "✓ Troubleshooting backup files found"
 ls -la changelog/CHANGELOG-backup*.md 2>/dev/null && echo "✓ Changelog backup files found"
 ```
+
+### 3.4 Verify Migration (When Applicable)
+
+If troubleshooting backup(s) exist, confirm that **migration was performed** (Step 2.7): there should be individual entry files in `troubleshooting/<category>/` and corresponding rows in `troubleshooting/index.md`. If backups exist but no migration was done, complete Step 2.7 before considering setup complete.
 
 ---
 
@@ -1095,13 +1161,23 @@ grep -r "old-dir-name" --include="*.md" . --exclude-dir=.git --exclude-dir=node_
 
 **Important:** Only remove old files (e.g. single-file CHANGELOG or TROUBLESHOOTING) after verifying all important information has been migrated and links/references have been updated.
 
+## Step 4 (summary): Migration (Troubleshooting and Changelog)
+
+When you're **migrating an existing project**, the setup is not complete until existing content is moved into the new folder and index system. Execute these explicitly; do not defer as "if needed."
+
+- **Troubleshooting:** Extract backup(s) into **individual files** and the **index** (Step 2.7). Do not leave backup as the only copy.
+- **Changelog (optional):** If using a changelog folder system, set it up and migrate existing `CHANGELOG.md` (Step 2.8).
+- **Remove old files** only after migration is verified; keep `docs/TROUBLESHOOTING.md` if it is a user-facing guide.
+
 ---
 
 ## Complete Setup Checklist
 
+- [ ] AGENTS.md states clearly that the project has **multiple repositories** (not a single repo)
 - [ ] AGENTS.md updated with execution guidelines (parallel agents)
-- [ ] AGENTS.md updated with dual repository management section (with project-specific values)
-- [ ] `.gitignore` includes `workflows/`
+- [ ] AGENTS.md updated with Repository Management section (multi-repo; use "this local project directory" and relative paths; project-specific values for remotes and names)
+- [ ] `.gitignore` includes the workflows directory (e.g. `Workflow-Scripts/`) so the main repo does not track it
+- [ ] Project directories created if missing: `docs/`, `plans/`, `plans-completed/`
 - [ ] Troubleshooting directory structure created
 - [ ] Existing troubleshooting files backed up (root-level, docs/, and troubleshooting/ checked)
 - [ ] `troubleshooting/README.md` created
@@ -1116,13 +1192,15 @@ grep -r "old-dir-name" --include="*.md" . --exclude-dir=.git --exclude-dir=node_
 - [ ] `docs/` and `docs/agents/` created at project root (if they didn't exist)
 - [ ] AGENTS.md follows slim architecture (essentials + links to docs/agents/ + Execution, Repository Management, Changelog & Troubleshooting)
 - [ ] CLAUDE.md and GEMINI.md created at project root (slim template, if they didn't exist)
-- [ ] Git configuration verified (workflows ignored in main repo)
+- [ ] **Troubleshooting migration (when applicable):** Backup content extracted into **individual files** in `troubleshooting/<category>/` and rows added to `troubleshooting/index.md` (Step 2.7); do not leave migration as "if needed"
+- [ ] **Changelog (optional):** If using a changelog folder system, created structure and migrated existing CHANGELOG into it (Step 2.8)
+- [ ] Git configuration verified (workflows directory ignored in main repo)
 - [ ] Troubleshooting structure verified
 - [ ] Changelog structure verified
 - [ ] Plans directories verified
 - [ ] docs/ and docs/agents/ verified
 - [ ] CLAUDE.md and GEMINI.md verified (if created)
-- [ ] Backup files reviewed (if applicable)
+- [ ] Backup files reviewed; migration completed before removing old monolithic troubleshooting file (if applicable)
 - [ ] If migrated: index files updated with new paths; link/reference scan run and broken links fixed (Step 4.4)
 
 ---
@@ -1137,9 +1215,10 @@ When executing this setup workflow:
 4. **Verify after each step** - Check that changes were applied correctly
 5. **Document what was done** - Note any backups created or files modified
 6. **Replace placeholders** - Ensure all `<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>` placeholders are replaced with actual values
-7. **Check multiple file locations** - Look for existing single-file CHANGELOG (root or `docs/`) to back up; use `changelog/` directory for new entries. For troubleshooting, use `troubleshooting/` directory.
-8. **Plans-completed** - When moving items to `plans-completed/`, rename with `yyyy-mm-dd-` prefix and add a row at the top of `plans-completed/index.md`.
-9. **After reorganisation** - When renaming or moving files/directories in changelog, troubleshooting, or plans-completed, run the link/reference scan (Step 4.4) and update index files and any markdown links so nothing is broken.
+7. **Check multiple file locations** - Look for existing single-file CHANGELOG (root or `docs/`) to back up; use `changelog/` directory for new entries. For troubleshooting, use `troubleshooting/` directory. Look for changelog and troubleshooting files in both root and `docs/` directories.
+8. **Run migration when backups exist** - If troubleshooting backup(s) exist (e.g. `troubleshooting/TROUBLESHOOTING-backup-*.md`), execute **Step 2.7** to extract entries into individual files and the index; do not leave migration as an unspecified follow-up. If the project wants a changelog folder system, execute **Step 2.8**.
+9. **Plans-completed** - When moving items to `plans-completed/`, rename with `yyyy-mm-dd-` prefix and add a row at the top of `plans-completed/index.md`.
+10. **After reorganisation** - When renaming or moving files/directories in changelog, troubleshooting, or plans-completed, run the link/reference scan (Step 4.4) and update index files and any markdown links so nothing is broken.
 
 ### Bash Script Best Practices
 
@@ -1181,7 +1260,7 @@ trap 'echo "Error on line $LINENO. Exit code: $?"' ERR
 If something goes wrong during setup:
 
 1. **Check backups** - All original files should be backed up in `troubleshooting/`
-2. **Review git status** - Ensure workflows/ is still ignored
+2. **Review git status** - Ensure the workflows directory (e.g. `Workflow-Scripts/`) is listed in `.gitignore` and is still ignored by the main repo
 3. **Verify directory structure** - All category folders should exist
 4. **Check file permissions** - Ensure files are readable/writable
 5. **Verify file locations** - Check both root and `docs/` directories for existing files
