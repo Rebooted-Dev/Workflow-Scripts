@@ -9,6 +9,7 @@ This directory contains workflows for setting up new projects and optimizing exi
 | [`01-setup-project.md`](./01-setup-project.md) | Set up new project with dual repository management and troubleshooting system | New projects, migrating existing projects to use these workflows |
 | [`02-optimize-workflow-scripts.md`](./02-optimize-workflow-scripts.md) | Analyze, optimize, and verify workflow scripts | Periodic maintenance, after workflows accumulate, before sharing workflows |
 | [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md) | Automate syncing Workflow-Scripts across multiple projects | When managing multiple projects, want to update all at once, or need to track sync status |
+| [`04-track-repos-and-agent-map.md`](./04-track-repos-and-agent-map.md) | Discover repos in the project and set up agent files (AGENTS.md, CLAUDE.md, GEMINI.md) with a repo map and sync/push/pull instructions | New projects with multiple repos, onboarding agents, or when adding a new nested repo |
 
 ## Quick Decision Guide
 
@@ -21,21 +22,14 @@ This directory contains workflows for setting up new projects and optimizing exi
 **Do you have multiple projects and want to sync Workflow-Scripts across all of them?**
 - Yes → Use [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md)
 
+**Do you need to list all repos in this project and document them for agents (AGENTS.md, CLAUDE.md, GEMINI.md) with sync/push/pull instructions?**
+- Yes → Use [`04-track-repos-and-agent-map.md`](./04-track-repos-and-agent-map.md)
+
 ## Workflow Summaries
 
 ### 01-setup-project.md
 
-Sets up a project with:
-- **Dual Repository Management** - Main project repo + Workflow-Scripts as a nested repo
-- **Troubleshooting System** - Organized `troubleshooting/` directory structure
-- **AGENTS.md Configuration** - Instructions for AI agents to manage both repos
-
-Key steps:
-1. Configure AGENTS.md with repository management instructions
-2. Set up `.gitignore` to exclude workflows directory
-3. Create troubleshooting directory structure
-4. Back up any existing troubleshooting files
-5. Verify setup
+Sets up a project with dual repo management, `troubleshooting/` and `changelog/` directory systems, `plans/` and `plans-completed/`, slim AGENTS.md/CLAUDE.md/GEMINI.md (with `docs/agents/`), and a repo map in agent files. Includes backups of existing troubleshooting/changelog files and verification steps. Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) after setup to populate the repo map.
 
 ### 02-optimize-workflow-scripts.md
 
@@ -67,6 +61,19 @@ Key features:
 4. Auto-discovery of projects (optional)
 5. Integration with existing workflows
 
+### 04-track-repos-and-agent-map.md
+
+Discover and document all Git repositories in the project and configure agent files:
+- **Repo discovery** – Find all `.git` directories and list path, remote URL, branch
+- **Agent-file repo map** – Add a “Tracked Repositories” section to AGENTS.md, CLAUDE.md, and GEMINI.md with directory → URL, purpose, status
+- **Sync / push / pull** – Document when to sync and per-repo Git commands; reference project-specific sync scripts (e.g. `sync-repo.sh`) and multi-project Workflow-Scripts sync (03)
+
+Key steps:
+1. Run discovery commands to list all repos
+2. Add or update the repository map in agent files (or link to `docs/agents/repository-map.md`)
+3. Document sync, pull, and push procedures for each repo
+4. Optionally add a “Repository Management” section with clear per-repo instructions
+
 ## Related Workflows
 
 - [Sync Documentation](../04-documentation/02-sync-documentation.md) - Keep documentation in sync with code
@@ -74,7 +81,6 @@ Key features:
 
 ## Notes
 
-- All workflows emphasize **backup before changes** - always preserve existing data
-- The setup workflow uses placeholders (`<PROJECT_NAME>`, `<PROJECT_PATH>`, etc.) that should be replaced with actual values
-- The optimization workflow can be applied to any workflow directory, not just this one
-- The sync script requires bash and git, and should be customized with your actual project paths
+- **Backup before changes** – All workflows preserve existing data; setup backs up single-file CHANGELOG/TROUBLESHOOTING when present.
+- **Placeholders** – In 01 and 04, replace `<PROJECT_PATH>`, `<WORKFLOWS_DIR>`, etc. with your values (see Prerequisites in each file).
+- **02-optimize** – Applicable to any workflow directory. **03-sync** – Requires bash and git; customize the PROJECTS array with your paths.

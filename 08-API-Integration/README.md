@@ -110,7 +110,7 @@ Need to integrate an AI API?
 
 ## Related Workflows
 
-- [Project Setup](../00-initial-setup/) - Initial project configuration
+- [Project Setup](../00-project-setup/) - Initial project configuration
 - [Deployment](../07-deployment/) - Deployment workflows
 - [Code Review](../05-review-audit/) - Code quality review
 
