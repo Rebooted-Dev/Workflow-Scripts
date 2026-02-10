@@ -163,7 +163,20 @@ Add or update the execution guidelines section in `AGENTS.md`:
 - Always verify findings from parallel agents before acting on them
 ```
 
-### 1.3 Add Repository Management Section
+### 1.3 Add bugs/regression-test instruction to agent files
+
+So that coding agents (Codex, Cursor, Claude, etc.) add regression tests when fixing bugs, insert the following into the project's agent files:
+
+- **AGENTS.md** – Add this line (e.g. under Execution, Testing Guidelines, or a short "Bugs" section):  
+  `- **Bugs:** add regression test when it fits.`
+- **CLAUDE.md / GEMINI.md** (optional) – If the project uses these, add the same line so Claude/Cursor and Gemini follow it.
+
+**Exact line to insert:**  
+`- **Bugs:** add regression test when it fits.`
+
+When creating or updating AGENTS.md (Steps 1.2, 2.6.2, 2.9.3), include this instruction. When creating CLAUDE.md and GEMINI.md (Step 2.10), add it there as well if those files exist.
+
+### 1.4 Add Repository Management Section
 
 Add this section to `AGENTS.md` (or update existing section). **Replace placeholders with your project's actual values:**
 
@@ -255,7 +268,7 @@ git push
 - Keep workflow improvements in the workflows directory, not in the main repo
 ```
 
-### 1.4 Verify .gitignore
+### 1.5 Verify .gitignore
 
 Ensure `.gitignore` includes your workflows directory:
 
@@ -1183,6 +1196,7 @@ grep -r "old-dir-name" --include="*.md" . --exclude-dir=.git --exclude-dir=node_
 ## Complete Setup Checklist
 
 - [ ] AGENTS.md updated with execution guidelines (parallel agents)
+- [ ] AGENTS.md (and optionally CLAUDE.md, GEMINI.md) include: **Bugs: add regression test when it fits.**
 - [ ] AGENTS.md updated with dual repository management section (with project-specific values)
 - [ ] `.gitignore` includes the workflows directory (e.g. `Workflow-Scripts/` or `workflows/` — replace `<WORKFLOWS_DIR>` in Step 1.4)
 - [ ] Troubleshooting directory structure created
