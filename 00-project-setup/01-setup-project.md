@@ -436,8 +436,10 @@ When adding a new entry:
 
 When instructed to **"update the logs"** or **"update the log files"**, this refers to:
 1. **Update the changelog** - Create a new entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. See `changelog/README.md` for the template.
-2. **Create a troubleshooting entry** - Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems.
+2. **Create a troubleshooting entry** - For any bug or non-trivial issue that required investigation, create an entry under `troubleshooting/` describing the symptom, root cause, fix, and verification.
 3. **Update the relevant index** - When adding a changelog entry, update `changelog/index.md`; when adding a troubleshooting entry, update `troubleshooting/index.md` (new row at top).
+
+**For bug fixes:** Treat `update the logs` as **both**: always create a troubleshooting entry (for the investigation and root cause) **and** a matching changelog entry (for the code change). Only skip the troubleshooting entry for truly trivial mechanical fixes that did not require any debugging or investigation.
 
 **Note about `docs/TROUBLESHOOTING.md`**: If this file exists, it may serve as a user-facing troubleshooting guide with common error states and solutions. It is maintained separately from the `troubleshooting/` directory system. Individual troubleshooting entries should go in the `troubleshooting/` directory, not in `docs/TROUBLESHOOTING.md`.
 
@@ -486,7 +488,7 @@ Full conventions for the `changelog/` and `troubleshooting/` directory systems, 
 - **Template**: See `changelog/README.md` for the entry template and full conventions.
 
 ## Troubleshooting System (`troubleshooting/` directory)
-- **When to create troubleshooting entries**: Document bugs, issues, or non-trivial problems that required investigation and resolution.
+- **When to create troubleshooting entries**: Document bugs, issues, or non-trivial problems that required investigation and resolution. For bug fixes, this is **mandatory**: every bug that changes user-visible behavior or corrects an incorrect state must have a troubleshooting entry, even if the investigation felt quick.
   - **Bugs**: Any defect that causes incorrect behavior or crashes
   - **Issues**: Problems that required debugging, investigation, or workarounds
   - **Non-trivial problems**: Issues that took significant time to resolve, involved multiple steps, or have lessons worth preserving (e.g., complex configuration issues, unexpected framework behavior, tricky debugging scenarios)
@@ -504,8 +506,8 @@ Full conventions for the `changelog/` and `troubleshooting/` directory systems, 
 ## Interpreting "Update the Logs"
 When instructed to "update the logs" or "update the log files", this refers to:
 1. **Changelog** – Create a new entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. Use the appropriate type folder (added, changed, fixed, improved, docs, refactor, config). See `changelog/README.md` for the template.
-2. **Troubleshooting entries** – Add entries to `troubleshooting/` only for bugs/issues or non-trivial problems that required investigation.
-3. **Both** – When a bug fix requires both a troubleshooting entry (for the problem-solving process) AND a changelog entry (for the change itself).
+2. **Troubleshooting entries** – Add entries to `troubleshooting/` for bugs/issues or non-trivial problems that required investigation.
+3. **Both (default for bug fixes)** – For any bug fix, create both a troubleshooting entry (for the problem-solving process) **and** a changelog entry (for the change itself), unless the developer explicitly states that only one is needed.
 
 **Note**: This project does NOT use application logging files (`.log` files). The "logs" refer to the `changelog/` directory and the troubleshooting knowledge base in `troubleshooting/`.
 
@@ -526,7 +528,7 @@ In `AGENTS.md`, add or update the **Change Management** section so it stays **sl
 ```markdown
 ## Change Management
 - Unless instructed by the developer, do not make code changes to the user interface.
-- **MANDATORY**: After ANY code changes or when debugging issues, update the changelog and/or troubleshooting: use the `changelog/` and `troubleshooting/` directory systems (one file per entry, update the relevant index). For full conventions and "update the logs" behavior, see **[Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md)**.
+- **MANDATORY**: After ANY code changes or when debugging issues, update the changelog and/or troubleshooting: use the `changelog/` and `troubleshooting/` directory systems (one file per entry, update the relevant index). For bug fixes, this means **both** a troubleshooting entry (for the investigation/root cause) and a changelog entry (for the change itself), unless the developer explicitly says otherwise. For full conventions and `update the logs` behavior, see **[Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md)**.
 ```
 
 Ensure AGENTS.md has a **Detailed Documentation** section (or add it in Step 2.9.3) that includes a link to `docs/agents/changelog-and-troubleshooting.md`.
