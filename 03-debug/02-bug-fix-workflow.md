@@ -100,14 +100,16 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### 7. Documentation
-**Update logs (only for completed tasks that change or affect project code):**
-- Update the changelog with a dated entry: `- YYYY-MM-DD: Bug fix: [bug description]`.
-  - Preferred location: `docs/CHANGELOG.md`
-  - Fallback location: `CHANGELOG.md`
-- Add a troubleshooting entry:
-  - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`
-  - Update `troubleshooting/index.md` (add the new entry at the top)
-  - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
+**Update logs (only for completed tasks that change or affect project code). For every completed bug fix, update BOTH changelog and troubleshooting (skip troubleshooting only for truly trivial mechanical fixes with no investigation).**
+
+- **Changelog** (required for every bug fix):
+  - Create a new file in `changelog/fixed/` named `YYYY-MM-DD-fixed-<short-title>.md` (see project `changelog/README.md` for template).
+  - Add a row at the top of `changelog/index.md` with Date, Type, Title, File.
+  - If the project uses a single-file changelog instead of `changelog/`, use that: e.g. `docs/CHANGELOG.md` or `CHANGELOG.md` with a dated line `- YYYY-MM-DD: Bug fix: [bug description]`.
+- **Troubleshooting** (required for every bug fix unless truly trivial):
+  - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`.
+  - Update `troubleshooting/index.md` (add the new entry at the top).
+  - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons (see project `troubleshooting/README.md`).
 - **Update the implementation plan (if applicable):** If this bug fix was tracked as a task in an implementation plan in `plans/`, identify the relevant plan (check active plans in `plans/` for a task matching this fix), update that plan: mark the completed task with `- [x]` (green check in rendered view) and add a brief note if needed. When all tasks in the plan are complete, add a completion marker (e.g. `**Status:** ✅ COMPLETED`) per the Workflow-Scripts main README, "Completion Status Conventions."
 
 ### 8. Final Verification
