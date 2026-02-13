@@ -7,7 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- 2026-02-10: Fixed directory name inconsistency — changed all references from `00-initial-setup/` to `00-project-setup/` in README.md, 04-documentation/README.md, and 08-API-Integration/README.md
+- 2026-02-10: Fixed shell script strict mode — added `set -e` to sync-workflow-scripts.sh to match other scripts (now uses `set -euo pipefail`)
+- 2026-02-10: Fixed missing PROJECTS array validation — added check that exits with helpful message if PROJECTS is empty and --auto flag not used
+
+### Changed
+- 2026-02-10: Enhanced README.md Completion Status Conventions — added explicit Parent/Sub-task hierarchy guidelines for marking tasks complete
+- 2026-02-10: Improved sync-workflow-scripts.sh documentation — added prominent header comments explaining required configuration steps before first use
+
 ### Added
+- 2026-02-10: Added `00-orchestrator/` directory with orchestrator workflows — enables launching non-interactive OpenCode processes to delegate plan reviews (and other workflows) to different models. Includes:
+  - `orchestrator-plan-review.md` — complete workflow documentation for delegated reviews
+  - `orchestrator-review.sh` — production-ready shell script with configurable model, focus areas, timeouts, and output management
+  - `README.md` — comprehensive guide with use cases, architecture, and best practices
+  - Supports parallel multi-model reviews, CI/CD integration, and structured output capture
+- 2026-02-10: Added `01-planning/00-research-and-plan.md` — comprehensive workflow for deep research and creating initial implementation plans. This is the entry point for any significant work when you have a goal but no plan yet. Includes phases for codebase research, external research, plan development, and output generation.
+- 2026-02-10: Added SCRIPT-REVIEW-REPORT.md — review of Workflow-Scripts shell scripts and docs (sync script, pull/update helpers, doc vs script alignment, directory naming). Includes recommended action list.
+- 2026-02-10: sync-workflow-scripts.sh — NON_INTERACTIVE support (auto-clone when Workflow-Scripts missing, no prompt; skip with message when no TTY). BASE_DIR override via WORKFLOW_SYNC_BASE_DIR. Help text documents both env vars.
 - 2026-02-03: Added 04-documentation/03-mark-completed.md — workflow to inspect code and verify that all reported completed tasks were actually implemented; mark verified completions with ✅; flag false reporting (incomplete / not done); reconcile changelog, troubleshooting, and docs; use parallel sub-agents; display flagged issues in descending order of importance/urgency. Updated 04-documentation/README.md with index entry and overview.
 - 2026-02-01: Clarified task marking and implementation plan update instructions across build, confirm-execution, bug-fix, and security-fix workflows; README "Document as You Go" and "Completion Status Conventions" now explicitly require updating the plan in `plans/` after each build phase or bug/security fix and using green check marks (`- [x]` and `**Status:** ✅ COMPLETED`)
 - 2026-01-26: Added agent flexibility review document (00-meta/agent-flexibility-review.md) - comprehensive analysis of fixed agent patterns and recommendations for flexible agent usage
@@ -40,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2026-02-08: Removed beta branch from remote (origin) after merging into main.
 
 ### Fixed
+- 2026-02-10: sync-workflow-scripts.sh — Quoted git refs ('@{u}', 'HEAD..@{u}') to satisfy ShellCheck SC1083. Handle cd failure before clone (SC2164): report error and increment FAIL_COUNT instead of continuing; clone only runs after successful cd.
 - 2026-01-21: Resolved critical task marking contradiction in 02-build-code - changed emoji format (`✅`/`⏳`) to checkbox format (`- [x]`/`- [ ]`) to match 02-confirm-execution.md
 - 2026-01-21: Clarified workflow sequence in 03-debug/README.md - explains that files are numbered by documentation depth, not workflow order (start with 02-bug-fix-workflow.md)
 

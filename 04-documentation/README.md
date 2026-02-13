@@ -119,4 +119,4 @@ docs/
 
 - [Execution](../02-build-code/01-execution.md) - Often triggers doc updates
 - [Code Review](../05-review-audit/01-code-review.md) - May identify doc gaps
-- [Project Setup](../00-initial-setup/01-setup-project.md) - Initial documentation structure
+- [Project Setup](../00-project-setup/01-setup-project.md) - Initial documentation structure

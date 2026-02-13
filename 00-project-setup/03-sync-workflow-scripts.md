@@ -453,15 +453,10 @@ Add a reference to this sync script in `SHARING_AND_SYNC.md`:
 
 For managing multiple projects, use the sync script:
 
-```bash
-# Sync all projects at once
-./sync-workflow-scripts.sh
+- Sync all projects: `./sync-workflow-scripts.sh`
+- Check status: `./sync-workflow-scripts.sh --status`
 
-# Check status of all projects
-./sync-workflow-scripts.sh --status
-```
-
-See [`00-initial-setup/03-sync-workflow-scripts.md`](../00-initial-setup/03-sync-workflow-scripts.md) for setup instructions.
+See [00-project-setup/03-sync-workflow-scripts.md](../00-project-setup/03-sync-workflow-scripts.md) for setup instructions.
 ```
 
 ### 4.2 Add to Project Setup Workflow

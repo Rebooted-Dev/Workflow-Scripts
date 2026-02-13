@@ -6,26 +6,40 @@ This directory contains workflows for creating and reviewing implementation plan
 
 | File | Purpose | When to Use |
 |------|---------|-------------|
+| [`00-research-and-plan.md`](./00-research-and-plan.md) | **START HERE** - Deep research and create initial implementation plan | When you have a goal but no plan yet |
 | [`01-plan-review.md`](./01-plan-review.md) | Review and validate implementation plans | Before starting implementation |
 | [`02-finalise-plan.md`](./02-finalise-plan.md) | Convert approved scope into detailed implementation plan | After plan review feedback |
 
 ## Workflow Sequence
 
 ```
+START HERE
+    │
+    ▼
+┌──────────────────────────┐
+│  00-research-and-plan.md │
+│  (Research & create      │
+│   initial plan)          │
+└──────────┬───────────────┘
+           │
+           ▼
 ┌──────────────────────┐      ┌──────────────────────────┐
 │  01-plan-review.md   │ ───▶ │  02-finalise-plan.md     │
 │  (Review & validate) │      │  (Create detailed plan)  │
-└──────────────────────┘      └──────────────────────────┘
-                                        │
-                                        ▼
-                              ┌──────────────────────┐
-                              │  02-build-code/      │
-                              │  01-execution.md     │
-                              │  (Implement code)    │
-                              └──────────────────────┘
+└──────────────────────┘      └──────────┬───────────────┘
+                                         │
+                                         ▼
+                               ┌──────────────────────┐
+                               │  02-build-code/      │
+                               │  01-execution.md     │
+                               │  (Implement code)    │
+                               └──────────────────────┘
 ```
 
 ## Quick Decision Guide
+
+**Starting a new feature or have a goal but no plan yet?**
+- Yes → **Use [`00-research-and-plan.md`](./00-research-and-plan.md)** ← START HERE
 
 **Have a plan that needs review?**
 - Yes → Use [`01-plan-review.md`](./01-plan-review.md)

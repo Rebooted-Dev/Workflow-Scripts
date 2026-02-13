@@ -65,7 +65,7 @@ Create a detailed fix plan:
 ### 5. Implementation
 Use multiple parallel agents to implement the fix. Suggested agent roles (spawn additional agents as needed):
 - Implement the primary bug fix
-- Add or update tests to verify the fix and prevent regression
+- **Add a regression test when it fits** – Add or update tests to verify the fix and prevent regression
 - Review for unintended side effects or new bugs introduced
 - Check for similar issues in related code that should be fixed
 - Update related documentation if the fix changes behavior
@@ -126,9 +126,10 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 
 ### Testing
 - Write tests that reproduce the bug before fixing it
-- Add regression tests to prevent the bug from recurring
+- **Add a regression test when it fits** – Add regression tests to prevent the bug from recurring
 - Test edge cases and similar scenarios
 - Verify the fix doesn't break existing functionality
+- **Agent file instruction:** Ensure the project's agent files (AGENTS.md, and optionally CLAUDE.md, GEMINI.md) include the line **Bugs: add regression test when it fits.** so that all coding agents (Codex, Cursor, Claude, etc.) add regression tests when fixing bugs. If the line is missing, add it to AGENTS.md (and optionally to CLAUDE.md, GEMINI.md) as part of the fix or in a follow-up. See [00-project-setup/01-setup-project.md](../00-project-setup/01-setup-project.md) Step 1.3 for setup instructions.
 
 ### Code Quality
 - Make minimal, focused changes that address the root cause
