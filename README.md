@@ -18,16 +18,16 @@ Workflows ensure that:
 
 ## Workflow Categories
 
-The workflows are organized into seven categories:
+The workflows are organized into eight categories:
 
-1. **Initial Setup** (`00-initial-setup/`) - Set up new projects with **multiple repositories** (multi-repo: main repo + local Workflow-Scripts) and troubleshooting system
-2. **Planning** (`01-planning/`) - Create structured implementation plans
-3. **Build/Code** (`02-build-code/`) - Execute implementation with verification
-4. **Debug** (`03-debug/`) - Systematically identify and fix bugs
-5. **Documentation** (`04-documentation/`) - Keep documentation in sync with code
-6. **Review/Audit** (`05-review-audit/`) - Review code and plans for quality, correctness, and security
-
-7. **Meta** (`00-meta/`) - Templates, rubrics, and analysis documents about these workflows
+1. **Orchestrator** (`00-orchestrator/`) - **NEW** Launch non-interactive OpenCode processes to delegate workflows to different models
+2. **Initial Setup** (`00-project-setup/`) - Set up new projects with dual repository management and troubleshooting system
+3. **Planning** (`01-planning/`) - Create structured implementation plans
+4. **Build/Code** (`02-build-code/`) - Execute implementation with verification
+5. **Debug** (`03-debug/`) - Systematically identify and fix bugs
+6. **Documentation** (`04-documentation/`) - Keep documentation in sync with code
+7. **Review/Audit** (`05-review-audit/`) - Review code and plans for quality, correctness, and security
+8. **Meta** (`00-meta/`) - Templates, rubrics, and analysis documents about these workflows
 
 **Note:** The `00-meta/` directory contains templates, rubrics, and analysis/review documents about the workflows themselves (e.g., sync summary template, severity-priority rubric, parallel agent usage reviews, filename reviews). These are not workflow instructions but rather supporting documents for workflow design and execution.
 
@@ -37,7 +37,9 @@ The workflows are organized into seven categories:
 
 | Task | Workflow | Location |
 |------|----------|----------|
-| Setting up new project | Project Setup | `00-initial-setup/01-setup-project.md` |
+| **Automated plan review (different model)** | **Orchestrator Review** | **`00-orchestrator/orchestrator-review.sh`** ← DELEGATED |
+| Setting up new project | Project Setup | `00-project-setup/01-setup-project.md` |
+| **Researching & creating plan** | **Research & Plan** | **`01-planning/00-research-and-plan.md`** ← START HERE |
 | Starting a new feature | Implementation Plan | `01-planning/02-finalise-plan.md` |
 | Reviewing code quality | Code Review | `05-review-audit/01-code-review.md` |
 | Optimizing code performance | Code Optimization | `05-review-audit/02-code-optimization.md` |
@@ -62,7 +64,46 @@ The workflows are organized into seven categories:
 
 ## Detailed Workflow Descriptions
 
+### 0. Orchestrator Workflows
+
+#### Orchestrator Plan Review (`00-orchestrator/orchestrator-plan-review.md`)
+
+**Purpose:** Launch non-interactive OpenCode processes to perform plan reviews using a different model, capture output to files, and manage the workflow from an orchestrator.
+
+**When to use:**
+- You want to use a different model for plan review than your main orchestrator
+- Need to run reviews in batch or automated mode
+- Want to parallelize reviews across multiple models
+- Need CI/CD integration for automated plan validation
+
+**How to use:**
+1. Use the shell script: `./00-orchestrator/orchestrator-review.sh plans/my-plan.md -m openai/gpt-4o`
+2. The script launches OpenCode non-interactively with specified model
+3. Review output is captured to `plans/reviews/` directory
+4. Orchestrator manages the results and next steps
+
+**Key benefits:**
+- Use lightweight models for quick scans, powerful models for deep analysis
+- Run multiple reviews in parallel (security, architecture, general)
+- Integrate with CI/CD pipelines
+- Capture structured output for further processing
+
 ### 1. Planning Workflows
+
+#### Research and Plan (`01-planning/00-research-and-plan.md`) ← START HERE
+
+**Purpose:** Conduct deep research and create a comprehensive initial implementation plan from a goal or problem statement.
+
+**When to use:**
+- You have a goal but no detailed plan yet
+- Starting a new feature, refactor, or significant change
+- Need to research approaches before committing to a solution
+
+**How to use:**
+1. Provide the goal or problem statement
+2. The workflow will research the codebase and external options
+3. Creates an implementation plan in `plans/` directory
+4. Then proceed to plan review
 
 #### Implementation Plan (`01-planning/02-finalise-plan.md`)
 
@@ -719,6 +760,10 @@ Step 7: Code Review
 - **Task lists inside plans/docs:** Use Markdown checkboxes so completed items show as green check marks in rendered view:
   - `- [x]` for completed tasks (mark immediately after completion and verification)
   - `- [ ]` for pending or deferred tasks
+- **Parent/Sub-task hierarchy:** When tasks have sub-tasks:
+  - Mark individual sub-tasks with `- [x]` when they are complete
+  - Mark parent tasks with `- [x]` only when ALL sub-tasks are complete
+  - If any sub-task is incomplete, leave parent as `- [ ]`
 - **When to update the plan:** After each code build phase (Execution workflow) or after debugging a problem that was tracked in a plan (Bug Fix workflow), update the implementation plan in `plans/` with accurate `- [x]` / `- [ ]` status so the plan stays in sync with reality.
 
 ### 5. Use Parallel Agents
@@ -773,7 +818,11 @@ workflows/
 ├── SHARING_AND_SYNC.md (guide for sharing workflows across projects)
 ├── update-workflows.sh (helper for maintainers to commit/push workflow changes)
 ├── pull-workflows.sh (helper script for pulling workflow updates)
-├── 00-initial-setup/
+├── 00-orchestrator/
+│   ├── README.md (directory index)
+│   ├── orchestrator-plan-review.md (delegated plan review workflow)
+│   └── orchestrator-review.sh (shell script for non-interactive reviews)
+├── 00-project-setup/
 │   ├── README.md (directory index)
 │   ├── 01-setup-project.md
 │   └── 02-optimize-workflow-scripts.md
@@ -784,6 +833,7 @@ workflows/
 │   ├── parallel-agents-review.md (historical analysis)
 │   └── filename-review.md (historical analysis)
 ├── 01-planning/
+│   ├── 00-research-and-plan.md
 │   ├── 01-plan-review.md
 │   └── 02-finalise-plan.md
 ├── 02-build-code/

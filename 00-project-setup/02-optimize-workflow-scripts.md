@@ -701,7 +701,7 @@ Schedule periodic reviews:
 - [Code Review](../05-review-audit/01-code-review.md) - Code quality review
 - [Documentation Sync](../04-documentation/02-sync-documentation.md) - Keep documentation in sync with code
 
-**Note:** The paths above are relative to this file's location in `00-initial-setup/`. Verify paths are correct for your workflow directory structure.
+**Note:** The paths above are relative to this file's location in `00-project-setup/`. Verify paths are correct for your workflow directory structure.
 
 ---
 

@@ -68,6 +68,7 @@ After fixing bugs:
 - Update changelog (`docs/CHANGELOG.md` or `CHANGELOG.md`)
 - Create troubleshooting entry in `troubleshooting/` directory
 - Update `troubleshooting/index.md`
+- **Regression tests:** Add a regression test when it fits. Ensure project agent files (AGENTS.md, CLAUDE.md, GEMINI.md) include **Bugs: add regression test when it fits.** so all agents do this automatically (see [00-project-setup/01-setup-project.md](../00-project-setup/01-setup-project.md) Step 1.3).
 
 ## Related Workflows
 

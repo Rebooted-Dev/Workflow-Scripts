@@ -7,12 +7,13 @@ This workflow sets up a new project (or migrates an existing project) with:
 4. **Plans Directories** - `plans/` and `plans-completed/` at project root; completed items moved with `yyyy-mm-dd-` prefix and listed in `plans-completed/index.md` for easy navigation
 5. **Slim AGENTS Architecture (standard)** - Root `AGENTS.md` with essentials only and links to detailed docs in `docs/agents/`; `docs/` and `docs/agents/` created for every project
 6. **Slim CLAUDE.md and GEMINI.md** - Same slim pattern for Claude/Cursor and Gemini: essentials + "Detailed Documentation" linking to `docs/agents/` (standard: create at project root as part of setup; create if missing, do not overwrite existing)
+7. **Track Repos and Agent Map** - Discover all Git repos in the project and populate AGENTS.md, CLAUDE.md, and GEMINI.md with a repository map and sync/push/pull instructions (see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 
 ---
 
 ## Quick Start (Minimal Setup)
 
-For users who want a fast setup, here are the essential steps:
+For users who want a fast setup, here are the essential steps. Replace placeholders: `<PROJECT_PATH>`, `<WORKFLOWS_DIR>` (e.g. `Workflow-Scripts` or `workflows/`). See Prerequisites for the full list.
 
 ```bash
 # 1. Navigate to your project
@@ -59,6 +60,9 @@ ls troubleshooting/ && echo "✓ Troubleshooting structure created"
 ls changelog/ && echo "✓ Changelog structure created"
 ls -d plans plans-completed 2>/dev/null && test -f plans-completed/index.md && echo "✓ Plans directories and plans-completed index created"
 ls -d docs docs/agents 2>/dev/null && echo "✓ docs/ and docs/agents/ created"
+
+# 10. Run track-repos workflow (discover repos, update AGENTS.md/CLAUDE.md/GEMINI.md with repo map and sync instructions)
+# Follow: Workflow-Scripts/00-project-setup/04-track-repos-and-agent-map.md
 ```
 
 For a comprehensive setup with AGENTS.md configuration and backups, continue with the detailed steps below.
@@ -79,6 +83,7 @@ This setup ensures:
 - **docs/** directory at project root (created if missing) and **docs/agents/** for agent-facing detailed documentation
 - Slim root AGENTS.md: essentials only in the root file (Execution, Repository Management, slim Change Management), with a "Detailed Documentation" section linking to `docs/agents/`. Changelog & Troubleshooting conventions live in `docs/agents/changelog-and-troubleshooting.md`; other long sections (Project Structure, Build/Coding/Testing, etc.) are relocated to topical files in `docs/agents/` (Steps 2.6, 2.9.3)
 - Slim **CLAUDE.md** and **GEMINI.md** at project root (standard: create as part of setup; same pattern: essentials + links to `docs/agents/`), for Claude/Cursor and Gemini assistants; for repo management and changelog/troubleshooting they reference AGENTS.md
+- **Tracked Repositories map** in agent files (AGENTS.md, CLAUDE.md, GEMINI.md) listing each repo’s path, remote URL, purpose, and sync/push/pull instructions (Step 2.11; see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 
 ---
 
@@ -163,7 +168,20 @@ Add or update the execution guidelines section in `AGENTS.md`:
 - Always verify findings from parallel agents before acting on them
 ```
 
-### 1.3 Add Repository Management Section
+### 1.3 Add bugs/regression-test instruction to agent files
+
+So that coding agents (Codex, Cursor, Claude, etc.) add regression tests when fixing bugs, insert the following into the project's agent files:
+
+- **AGENTS.md** – Add this line (e.g. under Execution, Testing Guidelines, or a short "Bugs" section):  
+  `- **Bugs:** add regression test when it fits.`
+- **CLAUDE.md / GEMINI.md** (optional) – If the project uses these, add the same line so Claude/Cursor and Gemini follow it.
+
+**Exact line to insert:**  
+`- **Bugs:** add regression test when it fits.`
+
+When creating or updating AGENTS.md (Steps 1.2, 2.6.2, 2.9.3), include this instruction. When creating CLAUDE.md and GEMINI.md (Step 2.10), add it there as well if those files exist.
+
+### 1.4 Add Repository Management Section
 
 Add this section to `AGENTS.md` (or update existing section). **Critical:** This project has **multiple repositories**, not a single repo. Agents must not assume one repository. **Replace placeholders with your project's actual values.** Prefer "this local project directory" (project root) and relative paths so instructions stay valid on any machine.
 
@@ -242,7 +260,7 @@ git push
 - Keep workflow improvements in the workflows directory, not in the main repo
 ```
 
-### 1.4 Verify .gitignore (Required for Multi-Repo)
+### 1.5 Verify .gitignore (Required for Multi-Repo)
 
 The main project must **ignore** the workflows directory so the project correctly operates as **multiple repositories**. Ensure `.gitignore` includes the workflows directory:
 
@@ -731,9 +749,9 @@ Chronological index of changelog entries.
 
 **Note:** If migrating from a single-file CHANGELOG, preserve existing entries in the table (newest at top). Only add new entries at the top.
 
-### 2.7.6 Update AGENTS.md with Changelog System Instructions
+### 2.7.6 AGENTS.md and the Changelog System
 
-Add or update the changelog section in AGENTS.md so it describes the **directory** system (and update "Interpreting Update the Logs" to point to `changelog/`). See Step 2.6 below for the full AGENTS.md block that includes both Troubleshooting and Changelog.
+Do **not** add a long changelog section to AGENTS.md. Keep the root file slim: ensure AGENTS.md has only the **slim Change Management** section and a link to `docs/agents/changelog-and-troubleshooting.md` (see Step 2.6.2). The full "Interpreting Update the Logs" and changelog conventions live in that doc.
 
 ---
 
@@ -1016,6 +1034,25 @@ fi
 
 ---
 
+## Step 2.11: Execute Track Repos and Agent Map Workflow
+
+After setting up or updating the project (including AGENTS.md, CLAUDE.md, and GEMINI.md), **activate and execute** the Track Repos and Agent Map workflow so that:
+
+1. All Git repositories in the project are discovered and listed.
+2. AGENTS.md, CLAUDE.md, and GEMINI.md (and optionally `docs/agents/repository-map.md`) are updated with a **Tracked Repositories** section: directory path → remote URL, purpose, status.
+3. Sync, pull, and push instructions are documented for each repo and for the project as a whole.
+
+**Action:** Follow and complete every step in [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md):
+
+- **Step 1** – Run the discovery commands from the project root; record the repo map (path, remote, branch for each repo).
+- **Step 2** – Add or update the “Tracked Repositories” (and optional table) in AGENTS.md, CLAUDE.md, and GEMINI.md (or link to `docs/agents/repository-map.md`).
+- **Step 3** – Document when to sync and the per-repo pull/push commands (and any project-specific sync script).
+- **Step 4** – Optionally add or update the “Repository Management” section in the agent files with clear per-repo instructions.
+
+When **setting up a new project**, run this after Step 2.10 (so the slim agent files exist). When **updating an existing project** (e.g. adding a new nested repo or changing remotes), run this workflow again to refresh the repo map and sync instructions.
+
+---
+
 ## Step 3: Verification
 
 After setup, verify everything is correct:
@@ -1091,7 +1128,18 @@ test -f CLAUDE.md && echo "✓ CLAUDE.md exists"
 test -f GEMINI.md && echo "✓ GEMINI.md exists"
 ```
 
-### 3.7 Check for Backups
+### 3.7 Verify Tracked Repositories Map (Step 2.11)
+
+After executing [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md), confirm the repo map is present:
+
+```bash
+# Agent files should contain a "Tracked Repositories" (or "Repository Map") section
+grep -l "Tracked Repositories\|Repository Map" AGENTS.md CLAUDE.md GEMINI.md 2>/dev/null && echo "✓ Repo map present in agent files"
+# Or, if using docs/agents/repository-map.md:
+test -f docs/agents/repository-map.md && echo "✓ docs/agents/repository-map.md exists"
+```
+
+### 3.8 Check for Backups
 
 ```bash
 # List any backup files created
@@ -1107,16 +1155,16 @@ If troubleshooting backup(s) exist, confirm that **migration was performed** (St
 
 ## Slim AGENTS Architecture (Standard)
 
-The slim AGENTS architecture is **standard** for every project set up with this workflow.
+Summary of the standard slim setup. Details are in the referenced steps.
 
-- **Step 2.6** creates `docs/agents/changelog-and-troubleshooting.md` with the full Changelog/Troubleshooting/Plans conventions and updates AGENTS.md with a **slim** Change Management section only (link to that doc). It does **not** put the full block into AGENTS.md.
-- **Step 2.9** creates `docs/` and `docs/agents/` if they don't exist; **Step 2.9.3** instructs relocating long sections (Project Structure, Build/Test, Coding Style, Testing, Commit/PR, Configuration) from AGENTS.md into topical files under `docs/agents/` and replacing them in the root file with a "Detailed Documentation" section of links.
-- **Root AGENTS.md** should contain only: Execution (1.2), Repository Management (1.3), slim Change Management (2.6.2), and a "Detailed Documentation" section linking to `docs/agents/*`. No long Changelog/Troubleshooting or Project Structure/Build/Coding blocks in the root file.
-- **Step 2.7** creates the **changelog/** directory system (same pattern as troubleshooting: type folders, one file per entry, index newest first).
-- **Step 2.10** (standard) creates slim **CLAUDE.md** and **GEMINI.md** at project root (create if missing; do not overwrite). Same pattern: essentials + "Detailed Documentation" linking to `docs/agents/`; they reference AGENTS.md for repo management, changelog/troubleshooting, and plans.
-- **Plans-completed**: When moving a plan to `plans-completed/`, rename with a `yyyy-mm-dd-` prefix and update `plans-completed/index.md` (new row at top). See Step 2.8 and `plans-completed/README.md`.
+- **AGENTS.md (root)** – Only: Execution (1.2), Repository Management (1.3), slim Change Management (2.6.2), and "Detailed Documentation" links to `docs/agents/*`. No long Changelog/Troubleshooting/Project Structure blocks in root.
+- **Changelog & troubleshooting** – Full conventions in `docs/agents/changelog-and-troubleshooting.md` (2.6.1); AGENTS.md has a short Change Management section + link (2.6.2). Changelog directory: 2.7.
+- **docs/agents/** – Created in 2.9; long AGENTS.md sections relocated here via 2.9.3. At minimum: `changelog-and-troubleshooting.md`.
+- **CLAUDE.md / GEMINI.md** – Slim at root, create if missing (2.10); reference AGENTS.md for repo, changelog, troubleshooting, plans.
+- **Tracked Repositories** – Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) (Step 2.11) after setup and when adding/removing repos.
+- **Plans-completed** – Move with `yyyy-mm-dd-` prefix; update `plans-completed/index.md` (2.8, `plans-completed/README.md`).
 
-**Populating docs/agents/:** The setup workflow creates at least `changelog-and-troubleshooting.md`. Step 2.9.3 instructs creating other topical files (project-structure.md, development-workflow.md, coding-standards.md, etc.) by relocating content from AGENTS.md. Additional guides (e.g. testing-strategy.md, commit-workflow.md, documentation-workflow.md, security-guidelines.md) can be added incrementally or by following a plan like **AGENTS_PROPOSAL**. To adopt a full refactor plan:
+**Populating docs/agents/:** The workflow creates at least `changelog-and-troubleshooting.md`. Step 2.9.3 adds other topical files by relocating content from AGENTS.md. To adopt a full refactor plan:
 
 1. Put the proposal in `plans/` (e.g. `plans/AGENTS_PROPOSAL.md`).
 2. Run `05-review-audit/01-code-review.md` on the plan; address P0/P1 findings.
@@ -1224,7 +1272,8 @@ When you're **migrating an existing project**, the setup is not complete until e
 - [ ] AGENTS.md states clearly that the project has **multiple repositories** (not a single repo)
 - [ ] AGENTS.md updated with execution guidelines (parallel agents)
 - [ ] AGENTS.md updated with Repository Management section (multi-repo; use "this local project directory" and relative paths; project-specific values for remotes and names)
-- [ ] `.gitignore` includes the workflows directory (e.g. `Workflow-Scripts/`) so the main repo does not track it
+- [ ] AGENTS.md (and optionally CLAUDE.md, GEMINI.md) include: **Bugs: add regression test when it fits.**
+- [ ] `.gitignore` includes the workflows directory (e.g. `Workflow-Scripts/` or `workflows/` — replace `<WORKFLOWS_DIR>` in Step 1.5)
 - [ ] Project directories created if missing: `docs/`, `plans/`, `plans-completed/`
 - [ ] Troubleshooting directory structure created
 - [ ] Existing troubleshooting files backed up (root-level, docs/, and troubleshooting/ checked)
@@ -1256,7 +1305,7 @@ When you're **migrating an existing project**, the setup is not complete until e
 
 ## For AI Agents Executing This Setup
 
-When executing this setup workflow:
+**Execution:** Read existing files first; preserve data (back up before moving/editing); replace all placeholders (`<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>`); verify after each step. Use parallel agents when appropriate; verify findings before making changes.
 
 1. **Read existing files first** - Check what already exists before making changes
 2. **Preserve existing data** - Always back up before modifying or moving files
@@ -1269,6 +1318,10 @@ When executing this setup workflow:
 9. **Run migration when backups exist** - If troubleshooting backup(s) exist, execute **Step 2.7** to extract entries into individual files and the index; do not leave migration as an unspecified follow-up. If the project wants a changelog folder system, execute **Step 2.8**.
 10. **Plans-completed** - When moving items to `plans-completed/`, rename with `yyyy-mm-dd-` prefix and add a row at the top of `plans-completed/index.md`.
 11. **After reorganisation** - When renaming or moving files/directories in changelog, troubleshooting, or plans-completed, run the link/reference scan (Step 4.4) and update index files and any markdown links so nothing is broken.
+
+**Slim architecture (mandatory):** Changelog/Troubleshooting/Plans full text lives in `docs/agents/changelog-and-troubleshooting.md` (2.6.1). In AGENTS.md use only a slim Change Management section and a link to that doc (2.6.2). Move long sections (Project Structure, Build/Test, Coding, etc.) into `docs/agents/` and replace with a "Detailed Documentation" link list (2.9.3). Do not paste the full changelog/troubleshooting block or long prose into root AGENTS.md. Create CLAUDE.md and GEMINI.md if missing; do not overwrite existing.
+
+**Safety:** Back up before migrating (e.g. CHANGELOG.md, TROUBLESHOOTING.md in root or `docs/`). Preserve existing index entries when updating `changelog/index.md`, `troubleshooting/index.md`, and `plans-completed/index.md` (new row at top when adding). After any renames/moves in changelog, troubleshooting, or plans-completed, run the link/reference scan (Step 4.4).
 
 ### Bash Script Best Practices
 
@@ -1284,26 +1337,7 @@ set -o pipefail # Catch errors in pipelines
 trap 'echo "Error on line $LINENO. Exit code: $?"' ERR
 ```
 
-**Error handling tips:**
-- Always check if files/directories exist before operating on them
-- Use `|| true` after optional commands that may fail
-- Provide meaningful error messages with `echo "ERROR: description" >&2`
-- Exit with non-zero status on failures: `exit 1`
-
-**Key Safety Rules:**
-- Never delete existing troubleshooting or changelog entries
-- Always create backups before moving or migrating files (e.g. CHANGELOG.md → changelog/)
-- Preserve existing index.md entries when updating (both `troubleshooting/index.md` and `changelog/index.md`); when moving to `plans-completed/`, update `plans-completed/index.md` (new row at top)
-- Put Changelog/Troubleshooting/Plans conventions in `docs/agents/changelog-and-troubleshooting.md`; in AGENTS.md use only a slim Change Management section and link to that doc. Do not put the full block into root AGENTS.md (Steps 2.6.1, 2.6.2).
-- Relocate long AGENTS.md sections (Project Structure, Build/Test, Coding, Testing, Commit/PR, Config) into `docs/agents/` topical files and replace them with a "Detailed Documentation" link list (Step 2.9.3).
-- Check for existing sections in AGENTS.md before adding new ones; create CLAUDE.md and GEMINI.md as part of standard setup (create if missing, do not overwrite)
-- Check both root-level and `docs/` directory for existing CHANGELOG or TROUBLESHOOTING files to back up
-- After migrating or renaming files in changelog, troubleshooting, or plans-completed: update the relevant index.md and run the link/reference scan (Step 4.4) so links are not broken
-
-**Execution Guidelines:**
-- Use multiple parallel agents when appropriate to accelerate tasks
-- Verify all findings from parallel agents before making changes
-- Coordinate parallel work to avoid conflicts
+**Error handling tips:** Check files/directories exist before operating; use `|| true` after optional commands; use `echo "ERROR: description" >&2` and `exit 1` on failure.
 
 ---
 
