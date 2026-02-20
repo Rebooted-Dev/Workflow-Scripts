@@ -8,6 +8,7 @@ This directory contains workflows for implementing code changes with verificatio
 |------|---------|-------------|
 | [`01-execution.md`](./01-execution.md) | Execute implementation in phases with verification | Implementing features from a plan |
 | [`02-confirm-execution.md`](./02-confirm-execution.md) | Validate that implementation matches the plan | After completing implementation |
+| [`03-execute-and-confirm.md`](./03-execute-and-confirm.md) | Run 01 then 02 in one workflow | Execute plan and confirm completion in one go |
 
 ## Workflow Sequence
 
@@ -16,6 +17,10 @@ This directory contains workflows for implementing code changes with verificatio
 │  01-execution.md    │ ───▶ │  02-confirm-execution.md │
 │  (Implement code)   │      │  (Validate completion)   │
 └─────────────────────┘      └──────────────────────────┘
+         │                              ▲
+         │    ┌─────────────────────────┴─────────────────────────┐
+         └───▶│  03-execute-and-confirm.md (01 then 02 in one)    │
+              └───────────────────────────────────────────────────┘
 ```
 
 ## Quick Decision Guide
@@ -25,6 +30,9 @@ This directory contains workflows for implementing code changes with verificatio
 
 **Have you finished implementing and need to verify completeness?**
 - Yes → Use [`02-confirm-execution.md`](./02-confirm-execution.md)
+
+**Do you want to execute the plan and then confirm in a single workflow?**
+- Yes → Use [`03-execute-and-confirm.md`](./03-execute-and-confirm.md)
 
 ## Key Concepts
 
