@@ -1,7 +1,7 @@
 # Project Initial Setup Workflow
 
-This workflow sets up a new project (or migrates an existing project) with:
-1. **Multiple Repositories (Multi-Repo)** - The project is **not** a single repo: it has the main application repository and a **local** Workflow-Scripts repository (cloned into the project directory). `AGENTS.md`, `.gitignore`, and other project docs must make this explicit so agents and contributors do not assume one repo.
+This workflow sets up a new project, migrates a project from an older structure, or **updates an existing project that already uses this system** (see [Updating an existing project that already uses this system](#updating-an-existing-project-that-already-uses-this-system)). It provides:
+1. **Dual Repository Management (Multi-Repo)** - The project has the main application repository and a **local** Workflow-Scripts repository (cloned into the project directory). Instructions for managing both; `AGENTS.md`, `.gitignore`, and other project docs should make this explicit so agents and contributors do not assume one repo.
 2. **Troubleshooting System** - Organized troubleshooting directory structure with backup of existing logs
 3. **Changelog System** - Same pattern as troubleshooting: `changelog/` directory with type folders, one file per entry, index (newest first); backup of existing single-file CHANGELOG if present
 4. **Plans Directories** - `plans/` and `plans-completed/` at project root; completed items moved with `yyyy-mm-dd-` prefix and listed in `plans-completed/index.md` for easy navigation
@@ -100,6 +100,50 @@ This setup ensures:
 - `<GIT_REMOTE>` - Your project's git remote URL
 - `<WORKFLOWS_DIR>` - Directory name for workflows (commonly `workflows/` or `Workflow-Scripts/`)
 - `<WORKFLOWS_REMOTE>` - Git remote for Workflow-Scripts (default: `https://github.com/Rebooted-Dev/Workflow-Scripts`, or your fork)
+
+---
+
+## Updating an existing project that already uses this system
+
+**Use this when:** Your project already has `changelog/`, `troubleshooting/`, `plans/`, `plans-completed/`, `AGENTS.md`, and (optionally) `docs/agents/`, and you want to bring it in line with the **latest** workflow (e.g. after Workflow-Scripts or conventions were updated — new when-to-update-troubleshooting rules, Change Management wording, or structure).
+
+**Goal:** Refresh convention text and instructions in the right files **without** re-running full initial setup, overwriting existing index data, or re-backing up files unnecessarily.
+
+### What to update
+
+1. **Pull the latest Workflow-Scripts** (so you have the current version of this doc):
+   - `cd <WORKFLOWS_DIR> && git pull`
+
+2. **Refresh convention and instruction content** by re-applying only the relevant parts of this workflow:
+   - **AGENTS.md** – If the workflow’s Repository Management or Change Management (changelog/troubleshooting) text has changed, update those sections in your `AGENTS.md` to match the templates in **Step 1.4** (Repository Management) and **Step 2.6.2** (slim Change Management). Keep your project-specific values (paths, remotes, project name).
+   - **troubleshooting/README.md** – Replace the “For AI Agents / Coding Assistants” and “Maintaining the Index” parts with the current content from **Step 2.4** (Create Troubleshooting README.md) so “update the logs” and when-to-add-troubleshooting rules stay in sync.
+   - **docs/agents/changelog-and-troubleshooting.md** – If present, replace its content with the full conventions block from **Step 2.6.1** so Changelog, Troubleshooting, and “Interpreting Update the Logs” match the latest workflow.
+   - **CLAUDE.md / GEMINI.md** – Only if the workflow’s slim template (Step 2.10) changed; merge in any new wording (e.g. Docs/Changelog/troubleshooting references). Do not overwrite project-specific content.
+
+3. **Add any new structure only if missing** (do not replace existing):
+   - Missing category folders in `troubleshooting/` (e.g. `build/`, `runtime/`, `data/`, `environment/`, `security/`) → create with `mkdir -p troubleshooting/{build,runtime,data,environment,security}`.
+   - Missing type folders in `changelog/` → create with `mkdir -p changelog/{added,changed,fixed,improved,docs,refactor,config}`.
+   - Missing `docs/` or `docs/agents/` → create with `mkdir -p docs docs/agents`.
+
+4. **Optionally refresh repo map and sync instructions:** If you added/removed repos or changed remotes, run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) (see Step 2.11).
+
+5. **Verify:** Run the checks in **Step 3** (Verification) that apply to the files you changed (e.g. directory structure, agent files present). Do **not** re-run backup or migration steps (Step 2.3, 2.7.3, Step 4) unless you are actually migrating from an old structure.
+
+### What not to do
+
+- **Do not** overwrite `changelog/index.md`, `troubleshooting/index.md`, or `plans-completed/index.md` with empty or template tables — preserve existing rows.
+- **Do not** re-back up `CHANGELOG.md` or `TROUBLESHOOTING.md` unless you are doing a first-time migration from single-file logs.
+- **Do not** delete or rename existing changelog/troubleshooting/plans-completed files or directories as part of an “update”; only add or edit convention/instruction content.
+
+### Quick update checklist (existing project)
+
+- [ ] Pull latest Workflow-Scripts
+- [ ] AGENTS.md: Repository Management and Change Management sections match Step 1.4 and Step 2.6.2 (keep project-specific values)
+- [ ] troubleshooting/README.md: “For AI Agents” and when-to-update-troubleshooting match Step 2.4
+- [ ] docs/agents/changelog-and-troubleshooting.md: content matches Step 2.6.1 (if you use this file)
+- [ ] CLAUDE.md / GEMINI.md: updated only if template changed (Step 2.10)
+- [ ] Missing category/type folders created; repo map refreshed if needed (Step 2.11)
+- [ ] Verification (Step 3) run for changed areas; indexes and existing data preserved
 
 ---
 
@@ -235,7 +279,7 @@ git push
 - Focus on application code, components, services
 - Update project-specific documentation in `docs/` (if it exists)
 - Always update the changelog for any code change (features, fixes, refactors): create an entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. See `changelog/README.md` for the template.
-- Update `troubleshooting/` only for bugs/issues or non-trivial problems encountered during development.
+- Update `troubleshooting/` only when the work involved a bug, an issue that required debugging/workarounds, or a non-trivial problem worth documenting. Do not add troubleshooting entries for simple code changes, routine refactors, or straightforward feature additions — changelog only for those. See AGENTS.md "Changelog & Troubleshooting Updates."
 - The `<WORKFLOWS_DIR>/` directory is **ignored** by the main repo (in `.gitignore`), so it won't be included in main-repo commits.
 - Standard operations: `git add .`, `git commit`, `git push` - workflows will NOT be included
 
@@ -448,10 +492,8 @@ When adding a new entry:
 
 When instructed to **"update the logs"** or **"update the log files"**, this refers to:
 1. **Update the changelog** - Create a new entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. See `changelog/README.md` for the template.
-2. **Create a troubleshooting entry** - For any bug or non-trivial issue that required investigation, create an entry under `troubleshooting/` describing the symptom, root cause, fix, and verification.
-3. **Update the relevant index** - When adding a changelog entry, update `changelog/index.md`; when adding a troubleshooting entry, update `troubleshooting/index.md` (new row at top).
-
-**For bug fixes:** Treat `update the logs` as **both**: always create a troubleshooting entry (for the investigation and root cause) **and** a matching changelog entry (for the code change). Only skip the troubleshooting entry for truly trivial mechanical fixes that did not require any debugging or investigation.
+2. **Create a troubleshooting entry (only when applicable)** - Add an entry to `troubleshooting/` **only when** the work involved: a **bug** (incorrect behavior or crash), an **issue** that required debugging or a workaround, or a **non-trivial problem** (significant investigation, multiple steps, or lessons worth preserving). **Do not** add a troubleshooting entry for simple code changes, routine refactors, or straightforward feature additions — changelog alone is enough.
+3. **Update the relevant index** - When adding a changelog entry, update `changelog/index.md`; when adding a troubleshooting entry, update `troubleshooting/index.md` (new row at top; only when you created a troubleshooting entry in step 2).
 
 **Note about `docs/TROUBLESHOOTING.md`**: If this file exists, it may serve as a user-facing troubleshooting guide with common error states and solutions. It is maintained separately from the `troubleshooting/` directory system. Individual troubleshooting entries should go in the `troubleshooting/` directory, not in `docs/TROUBLESHOOTING.md`.
 
@@ -500,11 +542,11 @@ Full conventions for the `changelog/` and `troubleshooting/` directory systems, 
 - **Template**: See `changelog/README.md` for the entry template and full conventions.
 
 ## Troubleshooting System (`troubleshooting/` directory)
-- **When to create troubleshooting entries**: Document bugs, issues, or non-trivial problems that required investigation and resolution. For bug fixes, this is **mandatory**: every bug that changes user-visible behavior or corrects an incorrect state must have a troubleshooting entry, even if the investigation felt quick.
+- **When to create troubleshooting entries**: Document bugs, issues, or non-trivial problems that required investigation and resolution.
   - **Bugs**: Any defect that causes incorrect behavior or crashes
   - **Issues**: Problems that required debugging, investigation, or workarounds
   - **Non-trivial problems**: Issues that took significant time to resolve, involved multiple steps, or have lessons worth preserving (e.g., complex configuration issues, unexpected framework behavior, tricky debugging scenarios)
-- **When NOT to create troubleshooting entries**: Simple code changes, routine refactoring, or straightforward feature additions that don't involve problem-solving
+- **When NOT to create troubleshooting entries**: Simple code changes, routine refactoring, or straightforward feature additions that don't involve problem-solving. Changelog only for those.
 - **Location**: Use the `troubleshooting/` directory system. Do NOT create individual entries in `TROUBLESHOOTING.md` or `docs/TROUBLESHOOTING.md`.
 - **Structure**:
   - Create individual files in the appropriate category folder (`build/`, `runtime/`, `data/`, `environment/`, `security/`)
@@ -518,8 +560,8 @@ Full conventions for the `changelog/` and `troubleshooting/` directory systems, 
 ## Interpreting "Update the Logs"
 When instructed to "update the logs" or "update the log files", this refers to:
 1. **Changelog** – Create a new entry in `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `changelog/index.md`. Use the appropriate type folder (added, changed, fixed, improved, docs, refactor, config). See `changelog/README.md` for the template.
-2. **Troubleshooting entries** – Add entries to `troubleshooting/` for bugs/issues or non-trivial problems that required investigation.
-3. **Both (default for bug fixes)** – For any bug fix, create both a troubleshooting entry (for the problem-solving process) **and** a changelog entry (for the change itself), unless the developer explicitly states that only one is needed.
+2. **Troubleshooting entries** – Add entries to `troubleshooting/` **only when** the work involved fixing a bug, resolving an issue that required debugging/workarounds, or solving a non-trivial problem (investigation, multiple steps, or lessons worth preserving). **Do not** add troubleshooting entries for simple code changes, routine refactors, or straightforward feature additions — use the changelog only for those.
+3. **Both** – When a bug/issue/non-trivial fix requires both a troubleshooting entry (for the problem-solving process) **and** a changelog entry (for the change itself).
 
 **Note**: This project does NOT use application logging files (`.log` files). The "logs" refer to the `changelog/` directory and the troubleshooting knowledge base in `troubleshooting/`.
 
@@ -540,7 +582,7 @@ In `AGENTS.md`, add or update the **Change Management** section so it stays **sl
 ```markdown
 ## Change Management
 - Unless instructed by the developer, do not make code changes to the user interface.
-- **MANDATORY**: After ANY code changes or when debugging issues, update the changelog and/or troubleshooting: use the `changelog/` and `troubleshooting/` directory systems (one file per entry, update the relevant index). For bug fixes, this means **both** a troubleshooting entry (for the investigation/root cause) and a changelog entry (for the change itself), unless the developer explicitly says otherwise. For full conventions and `update the logs` behavior, see **[Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md)**.
+- **After code changes or when debugging:** Update the changelog and/or troubleshooting using the `changelog/` and `troubleshooting/` directory systems (one file per entry, update the relevant index). Add a **troubleshooting** entry only when the work involved a bug, an issue that required debugging/workarounds, or a non-trivial problem; do not add troubleshooting entries for simple code changes, routine refactors, or straightforward feature additions (changelog only for those). For bug/issue/non-trivial fixes, create **both** a troubleshooting entry and a changelog entry. For full conventions and "update the logs" behavior, see **[Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md)**.
 ```
 
 Ensure AGENTS.md has a **Detailed Documentation** section (or add it in Step 2.9.3) that includes a link to `docs/agents/changelog-and-troubleshooting.md`.
