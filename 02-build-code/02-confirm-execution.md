@@ -40,11 +40,11 @@ Validate that an implementation plan has actually been completed (in code and ve
 
 ## Marking Convention
 
-Use the same marking rules as in [`01-execution.md`](./01-execution.md) (phase report and finalization). In this workflow you are **auditing**: only mark or change tasks based on what you have verified.
+Use the same marking rules as in [`01-execution.md`](./01-execution.md) (phase report and finalization). In this workflow you are **auditing**: only mark or change tasks based on what you have verified. Use a **green check mark** for completed tasks so status is easy to see at a glance.
 
-- **Completed:** `- [x]` only if both the code change exists and verification/exit criteria were met. If the plan already has `- [x]` and that is correct, leave it.
+- **Completed:** `- [✅]` only if both the code change exists and verification/exit criteria were met. If the plan already has `- [✅]` and that is correct, leave it; otherwise normalize to `- [✅]`.
 - **Incomplete / open:** `- [ ]` for not started, in progress, missing code or verification, or deferred; add a note for partial or deferred tasks.
-- **Parent tasks:** `- [x]` only when all sub-tasks are complete (same as 01).
+- **Parent tasks:** `- [✅]` only when all sub-tasks are complete (same as 01).
 - **Systematic review:** Check every task in the plan; correct any misreporting.
 
 If the plan does not use task list syntax, add an addendum section instead of rewriting the whole plan.
@@ -64,7 +64,7 @@ If the plan does not use task list syntax, add an addendum section instead of re
      - Security validation
      - Documentation completeness]
 
-3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3). Apply the marking convention: correct any misreporting (e.g. task marked `- [x]` but code or verification is missing → change to `- [ ]` and add a note). Leave already-correct marking as-is. Add notes for incomplete or deferred tasks.
+3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3). Apply the marking convention: correct any misreporting (e.g. task marked `- [✅]` but code or verification is missing → change to `- [ ]` and add a note). Leave already-correct marking as-is, using `- [✅]` for completed. Add notes for incomplete or deferred tasks.
 
 4. Add a verification addendum to the plan containing:
    - Timestamp: `YYYY-MM-DD HH:MM`

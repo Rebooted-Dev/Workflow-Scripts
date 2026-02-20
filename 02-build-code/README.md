@@ -31,7 +31,7 @@ This directory contains workflows for implementing code changes with verificatio
 ### Task Marking Convention
 
 Use checkbox format for tracking task completion (renders as green check marks in Markdown viewers):
-- `- [x]` Completed task — mark immediately after completion and verification; update the implementation plan in `plans/` after each build phase
+- `- [✅]` Completed task — green check mark; mark immediately after completion and verification; update the implementation plan in `plans/` after each build phase
 - `- [ ]` Pending task
 
 When a plan is fully complete, add a visible completion marker (e.g. `**Status:** ✅ COMPLETED`) per the main README, "Completion Status Conventions."

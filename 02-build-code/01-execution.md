@@ -17,7 +17,7 @@ Execute implementation in phases with verification and documentation updates.
 - Implemented code changes
 - Updated changelog (`changelog/` per AGENTS.md, or `docs/CHANGELOG.md` / `CHANGELOG.md` if the project uses a single file)
 - Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
-- Implementation plan in `plans/` updated with task list and completion status (`- [x]` / `- [ ]`)
+- Implementation plan in `plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open)
 
 ---
 
@@ -73,9 +73,9 @@ Execute implementation in phases with verification and documentation updates.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** (the plan document in `plans/`, e.g. `plans/implementation-plan-*.md`) with completed tasks marked so the plan reflects reality:
-    - **Completed items:** `- [x] Task description` (green check in rendered view) — Mark IMMEDIATELY after task completion and verification
+    - **Completed items:** `- [✅] Task description` — Use a green check mark for at-a-glance status; mark IMMEDIATELY after task completion and verification
     - **Pending items:** `- [ ] Task description` — For tasks not yet started or still in progress
-    - **Parent tasks:** Mark parent tasks as `- [x]` only when ALL sub-tasks are complete
+    - **Parent tasks:** Mark parent tasks as `- [✅]` only when ALL sub-tasks are complete
     - **Deferred tasks:** Leave as `- [ ]` and add a note explaining deferral (e.g., "Deferred to P3")
     - **Systematic checking:** Review ALL tasks in the plan, not just the ones you worked on in this phase
   - **Update logs (only for completed tasks that change or affect project code):**
@@ -90,7 +90,7 @@ Execute implementation in phases with verification and documentation updates.
 
 - Run a final `npm run build` to confirm the repo is shippable.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
-- **Update the implementation plan:** Ensure every completed task in the plan is marked with `- [x]`. When the plan is fully complete, add a visible completion marker for quick scanning (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
+- **Update the implementation plan:** Ensure every completed task in the plan is marked with `- [✅]`. When the plan is fully complete, add a visible completion marker for quick scanning (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.
 
 ## Quick Checklist
@@ -98,7 +98,7 @@ Execute implementation in phases with verification and documentation updates.
 - [ ] Goal and acceptance criteria confirmed
 - [ ] Repo state checked (`git status`)
 - [ ] Plan identified in `plans/`
-- [ ] Each phase: implement → verify (build, lint, smoke) → update plan (`- [x]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
+- [ ] Each phase: implement → verify (build, lint, smoke) → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
 - [ ] Final build passes; no secrets in diff
 - [ ] Plan fully marked; completion marker added when done
 - [ ] (Optional) Confirm execution run for verification addendum

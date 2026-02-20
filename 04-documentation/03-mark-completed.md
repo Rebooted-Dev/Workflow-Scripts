@@ -34,7 +34,7 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 1. **Locate plan and report files** that declare completed tasks:
    - Scan `plans/` and `plans-completed/` for markdown files with checkboxes, "Complete", "✓", "✅", or "Implementation Verified"
    - Note file paths and section headings that list tasks and sub-tasks
-2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[x]`, `✓`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note)
+2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[✅]`, `✓`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note)
 
 ### Phase 2: Verify Implementation in Code (Parallel Agents)
 Use **multiple parallel agents** to verify implementation. Each agent should read the **actual source files** referenced in the task (file paths, line numbers) and confirm that the described fix or feature exists.
@@ -57,7 +57,7 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 
 ### Phase 3: Mark Completed vs Flag False Reporting
 1. **For each task/sub-task:**
-   - If verification shows the implementation **is present and correct**: mark with **✅** (green check mark) in the plan/report. Ensure checkboxes are `[x]` and any "Implementation Verified" or "Verification" section reflects reality.
+   - If verification shows the implementation **is present and correct**: mark with **✅** (green check mark) in the plan/report. Ensure checkboxes are `[✅]` and any "Implementation Verified" or "Verification" section reflects reality.
    - If verification shows the implementation **is missing, partial, or incorrect**: do **not** add a green check mark. Instead **flag** the item for the developer.
 2. **Flagging convention:**
    - **False completion:** Plan says complete but code/docs show no implementation
@@ -82,7 +82,7 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 ## Output Requirements
 
 ### In the plan/report file
-- **Completed tasks:** Mark with **✅** (green check mark). Use `[x]` for checkboxes. Keep "Implementation Verified" and "Verification" sections accurate.
+- **Completed tasks:** Mark with **✅** (green check mark). Use `[✅]` for checkboxes. Keep "Implementation Verified" and "Verification" sections accurate.
 - **Flagged tasks:** Do not mark with ✅. Add a short note (e.g. "⚠ False completion" or "⚠ Incomplete — see verification") and leave checkboxes as `[ ]` or update status to "NOT COMPLETE" where applicable.
 
 ### Flagged issues list (descending order)
@@ -104,7 +104,7 @@ Display **all** flagged issues in **descending order of importance or urgency**,
 
 ## Acceptance Criteria
 - Every task/sub-task in scope that is marked "complete" in the plan has been verified against the codebase (and docs where relevant).
-- Verified completions are marked with ✅ (and `[x]` where applicable); false or incomplete claims are flagged and not marked complete.
+- Verified completions are marked with ✅ (and `[✅]` where applicable); false or incomplete claims are flagged and not marked complete.
 - All flagged issues are listed in **descending order of importance or urgency** (P0→P3, S0→S3).
 - Changelog, troubleshooting, and related docs are reconciled with the verified state (no false claims in docs).
 - Parallel agents were used to verify implementation (multiple agents reading code in parallel batches).

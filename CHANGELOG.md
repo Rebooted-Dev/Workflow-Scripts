@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2026-02-10: Added SCRIPT-REVIEW-REPORT.md — review of Workflow-Scripts shell scripts and docs (sync script, pull/update helpers, doc vs script alignment, directory naming). Includes recommended action list.
 - 2026-02-10: sync-workflow-scripts.sh — NON_INTERACTIVE support (auto-clone when Workflow-Scripts missing, no prompt; skip with message when no TTY). BASE_DIR override via WORKFLOW_SYNC_BASE_DIR. Help text documents both env vars.
 - 2026-02-03: Added 04-documentation/03-mark-completed.md — workflow to inspect code and verify that all reported completed tasks were actually implemented; mark verified completions with ✅; flag false reporting (incomplete / not done); reconcile changelog, troubleshooting, and docs; use parallel sub-agents; display flagged issues in descending order of importance/urgency. Updated 04-documentation/README.md with index entry and overview.
-- 2026-02-01: Clarified task marking and implementation plan update instructions across build, confirm-execution, bug-fix, and security-fix workflows; README "Document as You Go" and "Completion Status Conventions" now explicitly require updating the plan in `plans/` after each build phase or bug/security fix and using green check marks (`- [x]` and `**Status:** ✅ COMPLETED`)
+- 2026-02-01: Clarified task marking and implementation plan update instructions across build, confirm-execution, bug-fix, and security-fix workflows; README "Document as You Go" and "Completion Status Conventions" now explicitly require updating the plan in `plans/` after each build phase or bug/security fix and using green check marks (`- [✅]` and `**Status:** ✅ COMPLETED`)
 - 2026-01-26: Added agent flexibility review document (00-meta/agent-flexibility-review.md) - comprehensive analysis of fixed agent patterns and recommendations for flexible agent usage
 - 2026-01-21: Added directory README to 00-meta/ - index with active vs historical file status and quick reference
 - 2026-01-21: Added directory README to 02-build-code/ - workflow sequence diagram and task marking convention
@@ -58,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - 2026-02-10: sync-workflow-scripts.sh — Quoted git refs ('@{u}', 'HEAD..@{u}') to satisfy ShellCheck SC1083. Handle cd failure before clone (SC2164): report error and increment FAIL_COUNT instead of continuing; clone only runs after successful cd.
-- 2026-01-21: Resolved critical task marking contradiction in 02-build-code - changed emoji format (`✅`/`⏳`) to checkbox format (`- [x]`/`- [ ]`) to match 02-confirm-execution.md
+- 2026-01-21: Resolved critical task marking contradiction in 02-build-code - changed emoji format (`✅`/`⏳`) to checkbox format (`- [✅]`/`- [ ]`) to match 02-confirm-execution.md
 - 2026-01-21: Clarified workflow sequence in 03-debug/README.md - explains that files are numbered by documentation depth, not workflow order (start with 02-bug-fix-workflow.md)
 
 ## [1.4.0] - 2026-01-20
@@ -125,7 +125,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2026-01-20: Added missing category listing in README.md to fix "seven categories" count
 
 ### Added
-- 2026-01-20: Added comprehensive confirm-execution workflow with verification criteria and marking convention (`- [x]` / `- [ ]`)
+- 2026-01-20: Added comprehensive confirm-execution workflow with verification criteria and marking convention (`- [✅]` / `- [ ]`)
 - 2026-01-20: Added "seven categories" enumeration including `00-meta/` in README.md
 - 2026-01-20: Added helper script documentation to README.md with corrected descriptions
 

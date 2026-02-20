@@ -135,6 +135,10 @@ This setup ensures:
 - **Do not** re-back up `CHANGELOG.md` or `TROUBLESHOOTING.md` unless you are doing a first-time migration from single-file logs.
 - **Do not** delete or rename existing changelog/troubleshooting/plans-completed files or directories as part of an “update”; only add or edit convention/instruction content.
 
+### Checklist marking convention
+
+When marking completed items in any checklist in this workflow, use **`- [✅]`** (green check mark) for at-a-glance status; leave incomplete items as **`- [ ]`**. This matches the 02-build-code execution and confirm-execution workflows.
+
 ### Quick update checklist (existing project)
 
 - [ ] Pull latest Workflow-Scripts
@@ -1312,6 +1316,8 @@ When you're **migrating an existing project**, the setup is not complete until e
 ---
 
 ## Complete Setup Checklist
+
+When checking off completed items below, use **`- [✅]`** (green check mark); leave incomplete as **`- [ ]`** (see [Checklist marking convention](#checklist-marking-convention) above).
 
 - [ ] AGENTS.md states clearly that the project has **multiple repositories** (not a single repo)
 - [ ] AGENTS.md updated with execution guidelines (parallel agents)
