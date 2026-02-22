@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- 2026-02-15: Implemented 10 improvements to code-review workflow based on verified analysis plan:
+  - Added Pre-Flight Validation section with abort conditions
+  - Added explicit file scope definitions (primary/secondary targets, exclusions)
+  - Added Agent Spawning Thresholds with quantifiable triggers
+  - Added Finding Template with table format and examples
+  - Integrated rubric evidence requirements (S0/S1, S2, S3)
+  - Added Deduplication process with conflict resolution
+  - Added Cross-File Finding guidance for multi-file issues
+  - Added structured executive summary requirements
+  - Added Verification Step Quality Criteria with examples
+  - Added Refactor Recommendation Criteria (valid vs laundry list)
 - 2026-02-10: Fixed directory name inconsistency — changed all references from `00-initial-setup/` to `00-project-setup/` in README.md, 04-documentation/README.md, and 08-API-Integration/README.md
 - 2026-02-10: Fixed shell script strict mode — added `set -e` to sync-workflow-scripts.sh to match other scripts (now uses `set -euo pipefail`)
 - 2026-02-10: Fixed missing PROJECTS array validation — added check that exits with helpful message if PROJECTS is empty and --auto flag not used
