@@ -344,7 +344,7 @@ Workflow will:
 - Run npm run build
 - Test in dev server
 - Update the changelog (`docs/CHANGELOG.md` preferred)
-- Update task list with checkboxes (`- [x]` for completed, `- [ ]` for pending)
+- Update task list with checkboxes (`- [✅]` for completed, `- [ ]` for pending)
 - Proceed to next phase
 ```
 
@@ -355,7 +355,7 @@ Workflow will:
 - **Report:** Update changelog, troubleshooting log, task list
 
 **Task List Format:**
-- `- [x]` Completed items (mark immediately after completion)
+- `- [✅]` Completed items (green check mark; mark immediately after completion)
 - `- [ ]` Pending items (not yet started or in progress)
 
 **Documentation Updates:**
@@ -750,7 +750,7 @@ Step 7: Code Review
 ### 3. Document as You Go
 - Update the changelog after each phase (`docs/CHANGELOG.md` preferred)
 - Add a `troubleshooting/` entry for bug fixes and update `troubleshooting/index.md`
-- **Update the implementation plan after each code build or bug fix:** If you are working from a plan in `plans/`, mark completed tasks with `- [x]` (green check in rendered view) immediately after completion and verification. After a build phase or after resolving a bug that was a plan task, update the plan document so it reflects reality. When the plan is fully complete, add a green check mark (e.g. `**Status:** ✅ COMPLETED`) per "Completion Status Conventions" below.
+- **Update the implementation plan after each code build or bug fix:** If you are working from a plan in `plans/`, mark completed tasks with `- [✅]` (green check mark) immediately after completion and verification. After a build phase or after resolving a bug that was a plan task, update the plan document so it reflects reality. When the plan is fully complete, add a green check mark (e.g. `**Status:** ✅ COMPLETED`) per "Completion Status Conventions" below.
 - Keep documentation in sync with code
 
 ### 4. Completion Status Conventions
@@ -758,13 +758,13 @@ Step 7: Code Review
   - `**Status:** ✅ COMPLETED`
   - A section or heading suffix like `## Implementation Status ✅` or `# Genkit Migration Implementation - COMPLETED ✅`
 - **Task lists inside plans/docs:** Use Markdown checkboxes so completed items show as green check marks in rendered view:
-  - `- [x]` for completed tasks (mark immediately after completion and verification)
+  - `- [✅]` for completed tasks (mark immediately after completion and verification)
   - `- [ ]` for pending or deferred tasks
 - **Parent/Sub-task hierarchy:** When tasks have sub-tasks:
-  - Mark individual sub-tasks with `- [x]` when they are complete
-  - Mark parent tasks with `- [x]` only when ALL sub-tasks are complete
+  - Mark individual sub-tasks with `- [✅]` when they are complete
+  - Mark parent tasks with `- [✅]` only when ALL sub-tasks are complete
   - If any sub-task is incomplete, leave parent as `- [ ]`
-- **When to update the plan:** After each code build phase (Execution workflow) or after debugging a problem that was tracked in a plan (Bug Fix workflow), update the implementation plan in `plans/` with accurate `- [x]` / `- [ ]` status so the plan stays in sync with reality.
+- **When to update the plan:** After each code build phase (Execution workflow) or after debugging a problem that was tracked in a plan (Bug Fix workflow), update the implementation plan in `plans/` with accurate `- [✅]` / `- [ ]` status so the plan stays in sync with reality.
 
 ### 5. Use Parallel Agents
 - Many workflows support parallel agents with a flexible pattern

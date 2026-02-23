@@ -4,18 +4,20 @@
 
 Execute implementation in phases with verification and documentation updates.
 
+**When to use:** When the user says "execute the plan" or "proceed with this plan."
+
 ## Inputs
 
 - Goal and acceptance criteria (user-facing behavior, performance targets, "done" definition)
 - Repository root
-- Implementation plan (optional, but recommended)
+- Implementation plan (optional, but recommended) — locate in `plans/` (e.g. `plans/implementation-plan-*.md` or `plans/YYYY-MM-DD-*-implementation-plan.md`)
 
 ## Output
 
 - Implemented code changes
-- Updated changelog (`docs/CHANGELOG.md` or `CHANGELOG.md`)
-- Troubleshooting entries (if bugs were fixed)
-- Implementation plan in `plans/` updated with task list and completion status (`- [x]` / `- [ ]`)
+- Updated changelog (`changelog/` per AGENTS.md, or `docs/CHANGELOG.md` / `CHANGELOG.md` if the project uses a single file)
+- Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
+- Implementation plan in `plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open)
 
 ---
 
@@ -23,6 +25,7 @@ Execute implementation in phases with verification and documentation updates.
 
 - Confirm goal + acceptance criteria (user-facing behavior, performance targets, "done" definition).
 - Check repo state (avoid clobbering unrelated work): `git status`.
+- Identify the plan: implementation plan in `plans/` (e.g. `plans/implementation-plan-*.md` or `plans/YYYY-MM-DD-*-implementation-plan.md`).
 - Break work into phases; for each phase define scope, out-of-scope, and exit criteria.
 - Plan parallel agents for each phase. Suggested agent roles (adapt as needed):
   - Implement core functionality
@@ -70,27 +73,35 @@ Execute implementation in phases with verification and documentation updates.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** (the plan document in `plans/`, e.g. `plans/implementation-plan-*.md`) with completed tasks marked so the plan reflects reality:
-    - **Completed items:** `- [x] Task description` (green check in rendered view) — Mark IMMEDIATELY after task completion and verification
+    - **Completed items:** `- [✅] Task description` — Use a green check mark for at-a-glance status; mark IMMEDIATELY after task completion and verification
     - **Pending items:** `- [ ] Task description` — For tasks not yet started or still in progress
-    - **Parent tasks:** Mark parent tasks as `- [x]` only when ALL sub-tasks are complete
+    - **Parent tasks:** Mark parent tasks as `- [✅]` only when ALL sub-tasks are complete
     - **Deferred tasks:** Leave as `- [ ]` and add a note explaining deferral (e.g., "Deferred to P3")
     - **Systematic checking:** Review ALL tasks in the plan, not just the ones you worked on in this phase
   - **Update logs (only for completed tasks that change or affect project code):**
-    - Update the changelog with a dated entry: `- YYYY-MM-DD: ...`.
-      - Preferred location: `docs/CHANGELOG.md`
-      - Fallback location: `CHANGELOG.md`
-    - If a bug was fixed, add a troubleshooting entry:
-      - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`
-      - Update `troubleshooting/index.md` (add the new entry at the top)
-      - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
+    - **Changelog:** Add a dated entry for this phase's work. Prefer `changelog/` directory per AGENTS.md when the project uses it; otherwise use `docs/CHANGELOG.md` or `CHANGELOG.md`.
+    - **Troubleshooting (only when applicable):** Add a troubleshooting entry **only** when this phase involved one of the following (see AGENTS.md and `troubleshooting/README.md` for full conventions):
+      - **Add an entry when:** You fixed a **bug** (incorrect behavior or crash), resolved an **issue** that required debugging or a workaround, or solved a **non-trivial problem** (significant investigation, multiple steps, or lessons worth preserving — e.g. complex config, unexpected framework behavior, tricky debugging).
+      - **Do not add an entry when:** The work was a simple code change, routine refactor, or straightforward feature addition with no real problem-solving. Changelog is enough.
+      - When you do add an entry: create a file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`, update `troubleshooting/index.md` (new row at top), and include Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons.
   - Provide a concise summary (1-3 bullets) describing what changed and why.
 
 ## Finalization (After All Phases)
 
 - Run a final `npm run build` to confirm the repo is shippable.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
-- **Update the implementation plan:** Ensure every completed task in the plan is marked with `- [x]`. When the plan is fully complete, add a visible completion marker for quick scanning (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
+- **Update the implementation plan:** Ensure every completed task in the plan is marked with `- [✅]`. When the plan is fully complete, add a visible completion marker for quick scanning (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.
+
+## Quick Checklist
+
+- [ ] Goal and acceptance criteria confirmed
+- [ ] Repo state checked (`git status`)
+- [ ] Plan identified in `plans/`
+- [ ] Each phase: implement → verify (build, lint, smoke) → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
+- [ ] Final build passes; no secrets in diff
+- [ ] Plan fully marked; completion marker added when done
+- [ ] (Optional) Confirm execution run for verification addendum
 
 ## Related Workflows
 
