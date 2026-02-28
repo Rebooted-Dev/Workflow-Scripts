@@ -10,6 +10,7 @@ This directory contains workflows for setting up new projects and optimizing exi
 | [`02-optimize-workflow-scripts.md`](./02-optimize-workflow-scripts.md) | Analyze, optimize, and verify workflow scripts | Periodic maintenance, after workflows accumulate, before sharing workflows |
 | [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md) | Automate syncing Workflow-Scripts across multiple projects | When managing multiple projects, want to update all at once, or need to track sync status |
 | [`04-track-repos-and-agent-map.md`](./04-track-repos-and-agent-map.md) | Discover repos in the project and set up agent files (AGENTS.md, CLAUDE.md, GEMINI.md) with a repo map and sync/push/pull instructions | New projects with multiple repos, onboarding agents, or when adding a new nested repo |
+| [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md) | MCP and config setup: Google Developer Knowledge MCP (Cursor + OpenCode), fix Cursor stdio PATH, OpenCode default model, oh-my-opencode overrides | Setting up or fixing MCP servers, adding Gemini docs MCP, or setting default model (e.g. GLM 5) |
 
 ## Quick Decision Guide
 
@@ -24,6 +25,9 @@ This directory contains workflows for setting up new projects and optimizing exi
 
 **Do you need to list all repos in this project and document them for agents (AGENTS.md, CLAUDE.md, GEMINI.md) with sync/push/pull instructions?**
 - Yes → Use [`04-track-repos-and-agent-map.md`](./04-track-repos-and-agent-map.md)
+
+**Are you setting up MCP servers (e.g. Google Developer Knowledge), fixing Cursor MCP errors, or setting OpenCode/oh-my-opencode default model?**
+- Yes → Use [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md)
 
 ## Workflow Summaries
 
@@ -73,6 +77,16 @@ Key steps:
 2. Add or update the repository map in agent files (or link to `docs/agents/repository-map.md`)
 3. Document sync, pull, and push procedures for each repo
 4. Optionally add a “Repository Management” section with clear per-repo instructions
+
+### 05-mcp-and-config-setup.md
+
+Task list for MCP and configuration setup:
+- **Workflow-Scripts sync** – Pull latest workflows (e.g. `pull-workflows.sh` or `git pull` in Workflow-Scripts)
+- **Google Developer Knowledge MCP** – Enable API, enable MCP, create key; add to Cursor and OpenCode
+- **Cursor MCP** – Add remote MCP; fix stdio server errors with full paths to npx/uvx
+- **OpenCode** – Add MCP, set default `model` (e.g. `zai-coding-plan/glm-5`), ensure Z.AI auth
+- **oh-my-opencode** – Override Sisyphus and unspecified categories to desired model when plugin overrides OpenCode default
+- **Verification** – Confirm tools enabled, UI shows correct model, Developer Knowledge tools respond
 
 ## Related Workflows
 
