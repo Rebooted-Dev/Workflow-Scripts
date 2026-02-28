@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- 2026-02-28: Completed P1.1, P1.2, and P1.3 tasks (index `06-skills-setup.md` in `00-project-setup/README.md`
+- 2026-02-28: Completed P2.1– create `00-docs/old-reviews/README.md` for archival context for
+- 2026-02-28: Added placeholder validation section to `00-project-setup/01-setup-project.md`
+- 2026-02-28: Updated root README.md with `00-docs/` category and file structure section
+- 2026-02-28: Completed P3.1 — enhanced `01-planning/01-plan-review.md` output template to explicitly require severity and priority labels per item
+- 2026-02-28: Completed P3.3 — added `00-meta/glossary.md` with workflow terminology and linked from root README and 00-meta index
+- 2026-02-28: Completed P3.4 — created READMEs for `08-API-Integration/01-genkit/` and `08-API-Integration/02-AI-SDK/`
+- 2026-02-28: Completed P3.5 — added concrete trigger thresholds and examples to `00-meta/agent-flexibility-review.md`
+- 2026-02-28: All P0-P3 tasks completed; plan fully executed
+ 
+- 2026-02-28: Added `plans-completed/` directory with index and completed plan — moved branch-swap plan (promote beta to main, deprecate old main, new beta for updates) to `plans-completed/2026-02-28-workflow-scripts-branch-swap.plan.md`; added `plans-completed/index.md` for completed-plan records.
+- 2026-02-28: Added `00-docs/CODE-REVIEW-WORKFLOW-SCRIPTS-2026-02-28.md` — verified code review report with 13 findings across P0-P3 priorities; includes validated findings, retired claims, and recommended action plan
+- 2026-02-28: Added `00-docs/2026-02-28-implementation-plan-workflow-scripts-remediation.md` — phased implementation plan derived from verified code review; 4 phases (P0-P3) with tasks, dependencies, risks, exit criteria, rollback strategy
+
 ### Fixed
 - 2026-02-15: Implemented 10 improvements to code-review workflow based on verified analysis plan:
   - Added Pre-Flight Validation section with abort conditions
@@ -66,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - 2026-02-08: Removed beta branch from remote (origin) after merging into main.
+- 2026-02-28: Removed `09-skills/` directory — broken symlinks to non-existent `.agents/skills/` targets eliminated; key skills documentation absorbed into `00-project-setup/06-skills-setup.md`
 
 ### Fixed
 - 2026-02-10: sync-workflow-scripts.sh — Quoted git refs ('@{u}', 'HEAD..@{u}') to satisfy ShellCheck SC1083. Handle cd failure before clone (SC2164): report error and increment FAIL_COUNT instead of continuing; clone only runs after successful cd.

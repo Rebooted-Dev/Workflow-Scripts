@@ -52,6 +52,15 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 ## Output Format (append to plan)
 - Header: `YYYY-MM-DD HH:MM - Plan Review (Model: <model-name>)`
 - Sections (priority-ordered): P0, P1, P2, P3
+- Each item must include:
+  - **Severity** (S0–S3): Impact level if the issue ships
+  - **Priority** (P0–P3): Urgency to fix based on severity × likelihood
+  - **Rationale**: Evidence or reasoning for the score
+  - **Actionable fix**: Concrete, measurable correction
+- Cite file/line references when applicable.
+- Include both severity AND priority labels for every finding (e.g., "S2/P1")
+- Header: `YYYY-MM-DD HH:MM - Plan Review (Model: <model-name>)`
+- Sections (priority-ordered): P0, P1, P2, P3
 - Each item includes: severity, rationale, and an actionable fix.
 - Cite file/line references when applicable.
 

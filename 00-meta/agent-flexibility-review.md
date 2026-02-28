@@ -103,6 +103,49 @@ Use parallel agents to validate each item. Suggested agent roles (adapt as neede
 
 ---
 
+### Concrete Trigger Thresholds
+
+**When to spawn additional agents:**
+
+| Trigger | Threshold | Action |
+|---------|-----------|--------|
+| **File count** | >10 files to analyze | Spawn 1 agent per 10 files |
+| **Complexity** | >3 distinct domains (e.g., API, UI, DB) | Spawn domain-specific agents |
+| **Codebase size** | >500 lines in target files | Use 3+ agents |
+| **Discovery** | New concern found during execution | Spawn specialized agent immediately |
+| **Sequential operations** | >5 sequential reads/operations | Consider parallel agents |
+| **Cross-cutting concerns** | Security + performance + UX all involved | Spawn agent per concern |
+
+**Agent role assignment examples:**
+
+```markdown
+**Simple task (1-2 agents):**
+- Primary implementation
+- Concurrent review for risks
+
+**Medium complexity (3-4 agents):**
+- Core implementation
+- Test coverage check
+- Security review
+- Documentation update
+
+**High complexity (5+ agents):**
+- Frontend implementation
+- Backend/API changes
+- Database migrations
+- Security audit
+- Performance analysis
+- Test coverage
+- Documentation
+```
+
+**Batch reading guidance:**
+- Simple tasks: 3-5 files per batch
+- Medium tasks: 5-10 files per batch  
+- Large tasks: 10-20 files per batch
+- Always read files in parallel within each batch
+
+
 ## Specific Recommendations by Workflow
 
 ### 1. Plan Review (`01-planning/01-plan-review.md`)

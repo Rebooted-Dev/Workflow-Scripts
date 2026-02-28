@@ -191,6 +191,31 @@ fi
 
 If any checks fail, resolve them before continuing.
 
+### Placeholder Validation
+
+Before executing any commands with placeholders, verify all placeholders have been replaced with actual values:
+
+```bash
+# Check for unreplaced placeholders in this workflow file
+grep -n '<PROJECT_NAME>\|<PROJECT_PATH>\|<WORKFLOWS_DIR>\|<GIT_REMOTE>\|<WORKFLOWS_REMOTE>' "<WORKFLOWS_DIR>/00-project-setup/01-setup-project.md" 2>/dev/null
+
+# If the grep returns results, you have unreplaced placeholders
+if [ $? -eq 0 ]; then
+  echo "⚠ WARNING: Unreplaced placeholders detected above."
+  echo "  Replace all <...> placeholders with your actual values before continuing."
+  echo "  Common placeholders:"
+  echo "    <PROJECT_NAME>  → Your project name (e.g., 'my-app')"
+  echo "    <PROJECT_PATH>  → Full path to project (e.g., '/Users/name/projects/my-app')"
+  echo "    <WORKFLOWS_DIR> → Workflows directory name (e.g., 'Workflow-Scripts')"
+  echo "    <GIT_REMOTE>    → Your project's git remote URL"
+  echo "    <WORKFLOWS_REMOTE> → Workflows repo URL (e.g., 'https://github.com/Rebooted-Dev/Workflow-Scripts')"
+else
+  echo "✓ No unreplaced placeholders found"
+fi
+```
+
+**Do not proceed** until all placeholders are replaced. Running commands with unreplaced placeholders will cause errors.
+
 ---
 
 ## Step 1: Set Up Dual Repository Management in AGENTS.md
