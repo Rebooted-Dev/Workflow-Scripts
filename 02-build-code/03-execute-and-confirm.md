@@ -8,7 +8,7 @@ Run implementation (Execution) followed by validation (Confirm Execution) in one
 
 ## Inputs
 
-- Same as **[`01-execution.md`](./01-execution.md):** goal and acceptance criteria, repository root, implementation plan in `plans/`.
+- Same as **[`01-execution.md`](./01-execution.md):** goal and acceptance criteria, repository root, implementation plan (typically in `project/build/` or per `plans/README.md`).
 
 ## Output
 
@@ -25,10 +25,11 @@ Run implementation (Execution) followed by validation (Confirm Execution) in one
    - Read the plan; verify completion against the repo (parallel agents as in 02).
    - Systematically review every task; correct misreporting; add the verification addendum.
    - Add completion marker if the plan is fully complete and not already present.
+   - **When the plan is confirmed complete:** File the plan in **`project/changelog/plans/`** with date prefix and add a row at the top of **`project/changelog/index.md`** (Type=plan). See step 6 in 02-confirm-execution.
 
 ## Quick Checklist
 
-- [ ] Goal and acceptance criteria confirmed; plan identified in `plans/`
+- [ ] Goal and acceptance criteria confirmed; plan identified (e.g. in `project/build/` or per `plans/README.md`)
 - [ ] **01** run in full: phases implemented, verified, plan and logs updated, final build passes
 - [ ] **02** run in full: plan audited, addendum added, marking corrected if needed, completion marker if done
 

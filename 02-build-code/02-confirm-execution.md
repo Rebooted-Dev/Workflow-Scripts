@@ -75,6 +75,8 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 5. **When the plan is fully verified complete:** If a completion marker is not already present, add one (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
 
+6. **File the completed plan in the changelog:** Once all tasks are marked with green check marks and the plan is confirmed complete, archive it in the project changelog: move (or copy) the plan document to **`project/changelog/plans/`** with a date prefix (e.g. `yyyy-mm-dd-<plan-name>.md`), then add a new row at the **top** of **`project/changelog/index.md`** with Date, Type=`plan`, Title, File path (e.g. `project/changelog/plans/2026-03-01-my-plan.md`), and optional Notes. This keeps completed plans in the single changelog system and the index up to date.
+
 ## Related Workflows
 
 - **[`01-execution.md`](./01-execution.md)** - Execute implementation plans (run this first, then confirm)

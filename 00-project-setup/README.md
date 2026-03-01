@@ -38,7 +38,7 @@ This directory contains workflows for setting up new projects and optimizing exi
 
 ### 01-setup-project.md
 
-Sets up a project with dual repo management, `troubleshooting/` and `changelog/` directory systems, `plans/` and `plans-completed/`, slim AGENTS.md/CLAUDE.md/GEMINI.md (with `docs/agents/`), and a repo map in agent files. Includes backups of existing troubleshooting/changelog files and verification steps. Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) after setup to populate the repo map.
+Sets up a project with dual repo management, a **`project/`** container (KIV, research, build, **changelog**, troubleshooting), and **`plans/`** (README map + TODO). Changelog is merged: `project/changelog/` holds type folders plus a `plans/` subdir for completed plan docs, with a single index (Type includes `plan`). Troubleshooting lives under `project/troubleshooting/`. Slim AGENTS.md/CLAUDE.md/GEMINI.md (with `docs/agents/`) and repo map in agent files. Includes backups and verification. Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) after setup to populate the repo map.
 
 ### 02-optimize-workflow-scripts.md
 

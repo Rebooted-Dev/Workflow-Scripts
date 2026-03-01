@@ -1,7 +1,7 @@
 # Workflow: Code Review
 
 ## Purpose
-Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `plans/` (project root).
+Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `project/build/` (or per the project's `plans/README.md`) and/or add a task to `plans/TODO.md` as needed.
 
 ## Inputs
 - Repository root (determine using one of):
@@ -19,7 +19,7 @@ If ambiguous:
 Before scanning, verify:
 - [ ] Repository root is identified and accessible
 - [ ] Rubric file exists at `../00-meta/severity-priority-rubric.md`
-- [ ] `plans/` directory exists (create if needed) and is writable
+- [ ] `project/build/` or `plans/` directory exists (create if needed) and is writable
 - [ ] At least one implementation file exists in scope
 
 **Abort conditions:**

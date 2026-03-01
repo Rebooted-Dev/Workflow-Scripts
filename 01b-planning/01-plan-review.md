@@ -4,7 +4,7 @@
 Review a user-supplied plan for correctness, risk, feasibility, and completeness. Provide concrete, actionable feedback and append it to the plan document.
 
 ## Inputs
-- Plan document path (user-supplied).
+- Plan document path (user-supplied). Plan paths are typically under `project/build/` or as specified in the project's `plans/README.md`.
 - Any prior feedback or context referenced by the plan.
 
 ## Prioritization Rule
