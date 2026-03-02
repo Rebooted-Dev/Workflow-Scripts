@@ -4,7 +4,7 @@ This workflow sets up a new project, migrates a project from an older structure,
 1. **Dual Repository Management (Multi-Repo)** - The project has the main application repository and a **local** Workflow-Scripts repository (cloned into the project directory). Instructions for managing both; `AGENTS.md`, `.gitignore`, and other project docs should make this explicit so agents and contributors do not assume one repo.
 2. **Troubleshooting System** - `project/troubleshooting/` with category folders and index; backup of existing logs
 3. **Changelog System** - Single `project/changelog/` directory: type folders (added, changed, fixed, etc.) plus `plans/` subdir for completed plan docs; one index for all (change entries and Type=plan); backup of existing single-file CHANGELOG if present
-4. **Project & Plans** - `project/` container (KIV, research, build, changelog, troubleshooting); `plans/` at root with README (map to project dir) and TODO.md (current tasks). Completed plans go into `project/changelog/plans/` with date prefix and a row in the changelog index
+4. **Project & Plans** - `project/` container for the working areas and logs: `project/KIV/`, `project/research/`, `project/build/`, `project/plans/`, `project/changelog/`, and `project/troubleshooting/`. **Active plans** (and the plans map/TODO) live in `project/plans/`; **completed plans** live in `project/changelog/plans/` (date-prefixed and indexed in `project/changelog/index.md` with Type=plan). This matches the standard structure used by Info-Visualizer and should be treated as canonical for new projects.
 5. **Slim AGENTS Architecture (standard)** - Root `AGENTS.md` with essentials only and links to detailed docs in `docs/agents/`; `docs/` and `docs/agents/` created for every project
 6. **Slim CLAUDE.md and GEMINI.md** - Same slim pattern for Claude/Cursor and Gemini: essentials + "Detailed Documentation" linking to `docs/agents/` (standard: create at project root as part of setup; create if missing, do not overwrite existing)
 7. **Track Repos and Agent Map** - Discover all Git repos in the project and populate AGENTS.md, CLAUDE.md, and GEMINI.md with a repository map and sync/push/pull instructions (see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
@@ -40,8 +40,8 @@ echo "" >> project/troubleshooting/index.md
 echo "| Date | Category | Title | File | Status |" >> project/troubleshooting/index.md
 echo "|------|----------|-------|------|--------|" >> project/troubleshooting/index.md
 
-# 5. Create plans/ with README (map to project dir) and TODO (current tasks)
-mkdir -p plans
+# 5. Create project/plans/ with README (map to project dir) and TODO (current tasks)
+mkdir -p project/plans
 # Create minimal plans/README.md and plans/TODO.md (see full content in Step 2.8)
 
 # 6. Create docs and docs/agents (if they don't exist)
@@ -52,7 +52,7 @@ git status | grep <WORKFLOWS_DIR> || echo "✓ Workflows ignored"
 ls project/ && echo "✓ project/ structure created"
 ls project/changelog/ && echo "✓ project/changelog/ (type folders + plans) and index created"
 ls project/troubleshooting/ && echo "✓ project/troubleshooting/ created"
-test -d plans && echo "✓ plans/ exists (add README.md and TODO.md per Step 2.8)"
+test -d project/plans && echo "✓ project/plans/ exists (add README.md and TODO.md per Step 2.8)"
 ls -d docs docs/agents 2>/dev/null && echo "✓ docs/ and docs/agents/ created"
 
 # 8. Run track-repos workflow (discover repos, update AGENTS.md/CLAUDE.md/GEMINI.md with repo map and sync instructions)
@@ -345,7 +345,7 @@ grep -q "^<WORKFLOWS_DIR>/$" .gitignore || {
 
 ## Step 2: Set Up Troubleshooting System
 
-### 2.0 Ensure project directories exist (project/, plans/)
+### 2.0 Ensure project directories exist (project/, project/plans/)
 
 Create standard project directories at the project root if they do not already exist. Other workflows (e.g. planning, documentation) expect these.
 
@@ -353,17 +353,17 @@ Create standard project directories at the project root if they do not already e
 mkdir -p project/{KIV,research,build}
 mkdir -p project/changelog/{added,changed,fixed,improved,docs,refactor,config,plans}
 mkdir -p project/troubleshooting/{build,runtime,data,environment,security}
-mkdir -p docs plans
+mkdir -p docs project/plans
 # Verify
 test -d project && echo "✓ project/ exists"
 test -d project/changelog && test -d project/changelog/plans && echo "✓ project/changelog/ (with plans subdir) exists"
 test -d project/troubleshooting && echo "✓ project/troubleshooting/ exists"
 test -d docs && echo "✓ docs/ exists"
-test -d plans && echo "✓ plans/ exists"
+test -d project/plans && echo "✓ project/plans/ exists"
 ```
 
 - **project/** – Container for KIV, research, build, changelog (type folders + plans subdir, one index), and troubleshooting (category folders + index).
-- **plans/** – README (map to project dir) and TODO.md (current tasks). Active plan documents live in `project/build/`; completed plans go to `project/changelog/plans/` with a row in `project/changelog/index.md`.
+- **project/plans/** – README (map to project dir) and TODO.md (current tasks). Active plan documents live in `project/build/`; completed plans go to `project/changelog/plans/` with a row in `project/changelog/index.md`.
 - **docs/** – Long-lived documentation (user-facing or project docs).
 
 ### 2.1 Check for Existing Troubleshooting Files
@@ -598,7 +598,7 @@ When instructed to "update the logs" or "update the log files", this refers to:
 - **Changelog**: `project/changelog/` — one index for change entries and completed plans (type folders + `plans/` subdir). Always update `project/changelog/index.md` (new row at top).
 - **Troubleshooting**: `project/troubleshooting/` — one file per issue in category folders; always update `project/troubleshooting/index.md` (new row at top).
 - **Docs**: `docs/` holds project documentation; `docs/agents/` holds agent-facing detailed guides. Root AGENTS.md stays slim and links to `docs/agents/`.
-- **Plans**: `plans/README.md` is a map to the project dir (KIV, research, build, changelog, troubleshooting). `plans/TODO.md` holds current tasks and is kept up to date. Active plan documents live in `project/build/`. Completed plans go to `project/changelog/plans/` with date prefix and a row in `project/changelog/index.md` (Type=plan).
+- **Plans**: `project/plans/README.md` is a map to the project dir (KIV, research, build, changelog, troubleshooting). `plans/TODO.md` holds current tasks and is kept up to date. Active plan documents live in `project/build/`. Completed plans go to `project/changelog/plans/` with date prefix and a row in `project/changelog/index.md` (Type=plan).
 ```
 
 #### 2.6.2 Update AGENTS.md with a slim Change Management section only
@@ -832,17 +832,17 @@ Do **not** add a long changelog section to AGENTS.md. Keep the root file slim: e
 
 ---
 
-## Step 2.8: Set Up plans/ (README and TODO) and Project Dirs
+## Step 2.8: Set Up project/plans/ (README and TODO) and Project Dirs
 
-Ensure `project/` and its subdirs exist (Step 2.0, 2.7); then create **`plans/README.md`** (map to project dir) and **`plans/TODO.md`** (current tasks). Active plan documents live in `project/build/`. Completed plans are archived to **`project/changelog/plans/`** with a date prefix and a row in **`project/changelog/index.md`** (Type=plan).
+Ensure `project/` and its subdirs exist (Step 2.0, 2.7); then create **`project/plans/README.md`** (map to project dir) and **`project/plans/TODO.md`** (current tasks). Active plan documents live in `project/build/`. Completed plans are archived to **`project/changelog/plans/`** with a date prefix and a row in **`project/changelog/index.md`** (Type=plan).
 
 ### 2.8.1 Ensure project/ and changelog structure exist
 
 From Step 2.0 and 2.7, `project/` should have KIV, research, build, changelog (type folders + plans subdir + single index), and troubleshooting. If not already done, run those steps.
 
-### 2.8.2 Create plans/README.md
+### 2.8.2 Create project/plans/README.md
 
-Create `plans/README.md` (if it doesn't exist) with a short map of the project directory:
+Create `project/plans/README.md` (if it doesn't exist) with a short map of the project directory:
 
 ```markdown
 # Plans – Map to Project Directory
@@ -859,19 +859,19 @@ This directory holds the **map** to the project structure. Active and completed 
 
 ## Where to put things
 
-- **Active plan or report** → `project/build/` (or add task to `plans/TODO.md`)
+- **Active plan or report** → `project/build/` (or add task to `project/plans/TODO.md`)
 - **Change entry** → `project/changelog/<type>/` + row in `project/changelog/index.md`
 - **Completed plan** → Move to `project/changelog/plans/` with date prefix (e.g. `yyyy-mm-dd-<name>.md`), add row at top of `project/changelog/index.md` with Type=plan
 - **Troubleshooting entry** → `project/troubleshooting/<category>/` + row in `project/troubleshooting/index.md`
 
 ## Current tasks
 
-See **plans/TODO.md** for the current task list. Keep it updated as tasks involving the project dir are completed.
+See **project/plans/TODO.md** for the current task list. Keep it updated as tasks involving the project dir are completed.
 ```
 
-### 2.8.3 Create plans/TODO.md
+### 2.8.3 Create project/plans/TODO.md
 
-Create `plans/TODO.md` (if it doesn't exist) with a template for current tasks:
+Create `project/plans/TODO.md` (if it doesn't exist) with a template for current tasks:
 
 ```markdown
 # Current Tasks
@@ -972,7 +972,7 @@ Create `CLAUDE.md` as part of standard setup. If the file does not exist, create
 - **Coding**: 2 spaces, single quotes, semicolons; PascalCase components, camelCase functions/variables; types in `types.ts`, constants in `constants.ts`.
 - **Commits**: Conventional Commits (`feat:`, `fix:`, `docs:`, etc.).
 - **Docs**: Update changelog (`project/changelog/` directory) and troubleshooting (`project/troubleshooting/`) when applicable (see AGENTS.md).
-- **Plans**: See `plans/README.md` (map to project dir) and `plans/TODO.md` (current tasks). Active plans in `project/build/`; completed plans in `project/changelog/plans/` with row in changelog index. See AGENTS.md.
+- **Plans**: See `project/plans/README.md` (map to project dir) and `project/plans/TODO.md` (current tasks). Active plans in `project/build/`; completed plans in `project/changelog/plans/` with row in changelog index. See AGENTS.md.
 
 ## Quick Reference
 
@@ -1014,7 +1014,7 @@ Create `GEMINI.md` as part of standard setup. If the file does not exist, create
 - **Coding**: 2 spaces, single quotes, semicolons; PascalCase components, camelCase functions/variables; types in `types.ts`, constants in `constants.ts`.
 - **Commits**: Conventional Commits (`feat:`, `fix:`, `docs:`, etc.).
 - **Docs**: Update changelog (`project/changelog/` directory) and troubleshooting (`project/troubleshooting/`) when applicable (see AGENTS.md).
-- **Plans**: See `plans/README.md` (map to project dir) and `plans/TODO.md` (current tasks). Active plans in `project/build/`; completed plans in `project/changelog/plans/` with row in changelog index. See AGENTS.md.
+- **Plans**: See `project/plans/README.md` (map to project dir) and `project/plans/TODO.md` (current tasks). Active plans in `project/build/`; completed plans in `project/changelog/plans/` with row in changelog index. See AGENTS.md.
 
 ## Quick Reference
 
@@ -1138,13 +1138,13 @@ test -f project/changelog/README.md && echo "✓ project/changelog/README.md exi
 test -f project/changelog/index.md && echo "✓ project/changelog/index.md exists"
 ```
 
-### 3.4 Verify plans/ (README and TODO)
+### 3.4 Verify project/plans/ (README and TODO)
 
 ```bash
-# Check plans/ with README (map) and TODO (current tasks)
-test -d plans && echo "✓ plans/ exists"
-test -f plans/README.md && echo "✓ plans/README.md exists"
-test -f plans/TODO.md && echo "✓ plans/TODO.md exists"
+# Check project/plans/ with README (map) and TODO (current tasks)
+test -d project/plans && echo "✓ project/plans/ exists"
+test -f project/plans/README.md && echo "✓ project/plans/README.md exists"
+test -f project/plans/TODO.md && echo "✓ project/plans/TODO.md exists"
 ```
 
 ### 3.5 Verify docs and docs/agents
@@ -1320,7 +1320,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] project/changelog directory structure created (type folders + plans subdir; single index)
 - [ ] Existing CHANGELOG.md backed up to project/changelog/ (root and docs/ checked) if present
 - [ ] `project/changelog/README.md` and `project/changelog/index.md` created
-- [ ] `plans/` created with `plans/README.md` (map to project dir) and `plans/TODO.md` (current tasks)
+- [ ] `project/plans/` created with `project/plans/README.md` (map to project dir) and `project/plans/TODO.md` (current tasks)
 - [ ] AGENTS.md includes "Detailed Documentation" section linking to docs/agents/ (changelog-and-troubleshooting and any other topical files)
 - [ ] `docs/` and `docs/agents/` created at project root (if they didn't exist)
 - [ ] AGENTS.md follows slim architecture (essentials + links to docs/agents/ + Execution, Repository Management, Changelog & Troubleshooting); no long Changelog/Troubleshooting/Project Structure/Build/Coding blocks in root (Steps 2.6.2, 2.9.3)
@@ -1330,7 +1330,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] Git configuration verified (workflows directory ignored in main repo)
 - [ ] project/ and project/troubleshooting structure verified
 - [ ] project/changelog structure verified (type folders + plans/ + single index)
-- [ ] plans/README.md and plans/TODO.md verified
+- [ ] project/plans/README.md and project/plans/TODO.md verified
 - [ ] docs/ and docs/agents/ verified
 - [ ] CLAUDE.md and GEMINI.md verified (if created)
 - [ ] Backup files reviewed; migration completed before removing old monolithic troubleshooting file (if applicable)
