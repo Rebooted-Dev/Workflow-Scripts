@@ -40,7 +40,7 @@ Validate that an implementation plan has actually been completed (in code and ve
 
 ## Marking Convention
 
-Use the same marking rules as in [`01-execution.md`](./01-execution.md) (phase report and finalization). In this workflow you are **auditing**: only mark or change tasks based on what you have verified. Use a **green check mark** for completed tasks so status is easy to see at a glance.
+Use the same marking rules as in [`01-execution.md`](./01-execution.md) (phase report and finalization). In this workflow you are **auditing**: only mark or change tasks based on what you have verified. Use **✅ (green check mark) only** for completed tasks—not "x", ✓, or other symbols—so status is consistent and easy to see at a glance.
 
 - **Completed:** `- [✅]` only if both the code change exists and verification/exit criteria were met. If the plan already has `- [✅]` and that is correct, leave it; otherwise normalize to `- [✅]`.
 - **Incomplete / open:** `- [ ]` for not started, in progress, missing code or verification, or deferred; add a note for partial or deferred tasks.

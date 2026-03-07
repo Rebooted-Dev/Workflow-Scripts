@@ -774,7 +774,8 @@ Step 7: Code Review
 - Keep documentation in sync with code
 
 ### 4. Completion Status Conventions
-- **Plans and reports:** When a plan, optimization report, migration guide, or other long-form document is fully completed, clearly mark this with a **green check mark** for quick visual scanning. Recommended patterns:
+- **Use ✅ (green check mark) only** when marking completed items. Do not use "x", ✓, or other symbols—use ✅ consistently across all workflow outputs.
+- **Plans and reports:** When a plan, optimization report, migration guide, or other long-form document is fully completed, clearly mark this with a **green check mark (✅)** for quick visual scanning. Recommended patterns:
   - `**Status:** ✅ COMPLETED`
   - A section or heading suffix like `## Implementation Status ✅` or `# Genkit Migration Implementation - COMPLETED ✅`
 - **Task lists inside plans/docs:** Use Markdown checkboxes so completed items show as green check marks in rendered view:

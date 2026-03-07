@@ -32,9 +32,9 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 
 ### Phase 1: Identify Sources of "Completed" Claims
 1. **Locate plan and report files** that declare completed tasks:
-   - Scan `project/build/` and `project/changelog/plans/` for markdown files with checkboxes, "Complete", "✓", "✅", or "Implementation Verified"
+   - Scan `project/build/` and `project/changelog/plans/` for markdown files with checkboxes, "Complete", "✅" (green check mark), or "Implementation Verified"
    - Note file paths and section headings that list tasks and sub-tasks
-2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[✅]`, `✓`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note)
+2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[✅]`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note). **Use only ✅ (green check mark) for marking completed items—not "x", ✓, or other symbols—for consistency.**
 
 ### Phase 2: Verify Implementation in Code (Parallel Agents)
 Use **multiple parallel agents** to verify implementation. Each agent should read the **actual source files** referenced in the task (file paths, line numbers) and confirm that the described fix or feature exists.
@@ -73,7 +73,7 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 4. **plans/TODO.md:** When tasks are completed, update `plans/TODO.md` (check off items or add follow-ups as needed).
 5. **Plan/report file:** Write back into the plan/report file:
    - **✅** on tasks and sub-tasks that were verified complete
-   - **Remove** or **replace** check marks / "Complete" labels from tasks that were flagged (leave them as actionable, or add a "⚠ False completion" / "⚠ Incomplete" note so the developer can decide)
+   - **Remove** or **replace** completion markers from tasks that were flagged (leave as unchecked `[ ]` or add a "⚠ False completion" / "⚠ Incomplete" note). Do not use "x" or ✓ for completed; use **✅ (green check mark)** only for consistency.
 
 ### Phase 5: Produce Flagged Issues Report
 1. **Single ordered list:** "Flagged issues" in **descending order of importance or urgency.**
@@ -83,7 +83,7 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 ## Output Requirements
 
 ### In the plan/report file
-- **Completed tasks:** Mark with **✅** (green check mark). Use `[✅]` for checkboxes. Keep "Implementation Verified" and "Verification" sections accurate.
+- **Completed tasks:** Mark with **✅** (green check mark) only. Use `[✅]` for checkboxes. Do not use "x", ✓, or other symbols for completed items—use ✅ consistently. Keep "Implementation Verified" and "Verification" sections accurate.
 - **Flagged tasks:** Do not mark with ✅. Add a short note (e.g. "⚠ False completion" or "⚠ Incomplete — see verification") and leave checkboxes as `[ ]` or update status to "NOT COMPLETE" where applicable.
 
 ### Flagged issues list (descending order)

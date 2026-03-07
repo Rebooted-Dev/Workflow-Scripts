@@ -73,7 +73,7 @@ Execute implementation in phases with verification and documentation updates.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** (the plan document in `plans/`, e.g. `plans/implementation-plan-*.md`) with completed tasks marked so the plan reflects reality:
-    - **Completed items:** `- [✅] Task description` — Use a green check mark for at-a-glance status; mark IMMEDIATELY after task completion and verification
+    - **Completed items:** `- [✅] Task description` — Use ✅ (green check mark) only for at-a-glance status—not "x" or ✓; mark IMMEDIATELY after task completion and verification
     - **Pending items:** `- [ ] Task description` — For tasks not yet started or still in progress
     - **Parent tasks:** Mark parent tasks as `- [✅]` only when ALL sub-tasks are complete
     - **Deferred tasks:** Leave as `- [ ]` and add a note explaining deferral (e.g., "Deferred to P3")
