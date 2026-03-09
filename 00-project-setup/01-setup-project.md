@@ -364,7 +364,7 @@ test -d project/plans && echo "✓ project/plans/ exists"
 ```
 
 - **project/** – Container for KIV, research, build, changelog (type folders + plans subdir, one index), and troubleshooting (category folders + index).
-- **project/plans/** – README (map to project dir) and TODO.md (current tasks). Active plan documents live in `project/build/`; completed plans go to `project/changelog/plans/` with a row in `project/changelog/index.md`.
+- **project/plans/** – README (map to project dir) and TODO.md (current tasks). **Active plan documents live here** (e.g. `project/plans/yyyy-mm-dd-plan-name.md`). Completed plans are **moved** from `project/plans/` to `project/changelog/plans/` with a row in `project/changelog/index.md` (Type=plan).
 - **docs/** – Long-lived documentation (user-facing or project docs).
 
 ### 2.1 Check for Existing Troubleshooting Files
@@ -866,21 +866,22 @@ Create `project/plans/README.md` (if it doesn't exist) with a short map of the p
 ```markdown
 # Plans – Map to Project Directory
 
-This directory holds the **map** to the project structure. Active and completed work live under `project/`.
+This directory holds the **map** to the project structure and is the place for **active plan documents**. Completed plans are archived under `project/changelog/plans/`, not here.
 
 ## Project directory map
 
 - **project/KIV/** – Keep in view / backlog
 - **project/research/** – Research and discovery artifacts
-- **project/build/** – Active plans and build artifacts
-- **project/changelog/** – Change entries (type folders) and completed plans (`changelog/plans/`). One index: `project/changelog/index.md` (Type includes `plan` for archived plans)
+- **project/build/** – Build artifacts (optional; active plans can live here or in this directory)
+- **project/plans/** – **Active plan documents** (this directory). Put implementation plans, proposals, and in-progress plan docs here (e.g. `project/plans/yyyy-mm-dd-plan-name.md`). Also holds `README.md` (this file) and `TODO.md` (current task list).
+- **project/changelog/** – Change entries (type folders) and **completed plans only** (`changelog/plans/`). One index: `project/changelog/index.md` (Type includes `plan` for archived plans)
 - **project/troubleshooting/** – Troubleshooting entries by category and index
 
 ## Where to put things
 
-- **Active plan or report** → `project/build/` (or add task to `project/plans/TODO.md`)
+- **Active plan or report** → **`project/plans/`** (this directory), e.g. `project/plans/2026-03-07-my-implementation-plan.md`. Or add a task to `project/plans/TODO.md`. Do **not** put active plans in `project/changelog/plans/` — that is only for completed/archived plans.
 - **Change entry** → `project/changelog/<type>/` + row in `project/changelog/index.md`
-- **Completed plan** → Move to `project/changelog/plans/` with date prefix (e.g. `yyyy-mm-dd-<name>.md`), add row at top of `project/changelog/index.md` with Type=plan
+- **Completed plan** → When a plan is done, **move** it from `project/plans/` to `project/changelog/plans/` with date prefix (e.g. `yyyy-mm-dd-<name>.md`), and add a row at the top of `project/changelog/index.md` with Type=plan.
 - **Troubleshooting entry** → `project/troubleshooting/<category>/` + row in `project/troubleshooting/index.md`
 
 ## Current tasks
@@ -1222,7 +1223,7 @@ Summary of the standard slim setup. Details are in the referenced steps.
 
 **Populating docs/agents/:** The workflow creates at least `changelog-and-troubleshooting.md`. Step 2.9.3 adds other topical files by relocating content from AGENTS.md. To adopt a full refactor plan:
 
-1. Put the proposal in `project/build/` or add to `plans/TODO.md`.
+1. Put the proposal in `project/plans/` (as an active plan document) or add to `project/plans/TODO.md`.
 2. Run `05-review-audit/01-code-review.md` on the plan; address P0/P1 findings.
 3. Run `01-planning/01-plan-review.md` and `02-finalise-plan.md`; implement, retaining only a slim AGENTS.md (Execution, Repository Management, slim Change Management, and "Detailed Documentation" links to `docs/agents/`) and using the project's troubleshooting system (`project/troubleshooting/` directory and index).
 4. When the plan is confirmed completed, file it in `project/changelog/plans/` with date prefix and add a row to `project/changelog/index.md` (Type=plan).
