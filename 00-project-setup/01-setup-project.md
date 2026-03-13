@@ -85,6 +85,24 @@ This setup ensures:
 - Slim **CLAUDE.md** and **GEMINI.md** at project root (standard: create as part of setup; same pattern: essentials + links to `docs/agents/`), for Claude/Cursor and Gemini assistants; for repo management and changelog/troubleshooting they reference AGENTS.md
 - **Tracked Repositories map** in agent files (AGENTS.md, CLAUDE.md, GEMINI.md) listing each repo’s path, remote URL, purpose, and sync/push/pull instructions (Step 2.11; see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 
+### Variant: Centralized `project/` meta directory
+
+Some projects prefer to keep all project meta directories under a single `project/` folder at the repository root (example: **The Sermonator**). In that layout:
+
+- `docs/` → `project/docs/`
+- `docs/agents/` → `project/docs/agents/`
+- `changelog/` → `project/changelog/`
+- `troubleshooting/` → `project/troubleshooting/`
+- `plans/` → `project/plans/`
+- `plans-completed/` → `project/plans-completed/`
+
+When you see paths like `docs/`, `changelog/`, `troubleshooting/`, `plans/`, or `plans-completed/` in this workflow, apply them **either** at the repository root **or** under `project/` depending on your chosen structure.  
+If you use the `project/` pattern, make sure:
+
+- `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` refer to `project/docs/agents/…`, `project/changelog/…`, `project/troubleshooting/…`, `project/plans/`, and `project/plans-completed/`.
+- Index files (`changelog/index.md`, `troubleshooting/index.md`, `plans-completed/index.md`) store paths that include the `project/` prefix (e.g. `project/changelog/docs/2026-03-13-docs-legacy-changelog-migration.md`).
+- `project/plans-completed/` is treated as an **index of completed plans and reports**, while `project/changelog/` remains the **canonical record of code and configuration changes**; when archiving a plan that resulted in changes, ensure there is at least one corresponding changelog entry.
+
 ---
 
 ## Prerequisites
@@ -1262,6 +1280,9 @@ If you're migrating an existing project that already has files or directories in
 - **Directories**: Rename to `yyyy-mm-dd-<current-dir-name>` (e.g. `macos v.2.7` → `2026-01-18-macos v.2.7`).
 - **Index**: Create or update `plans-completed/index.md` with one row per file or directory (Date, Title/Description, File or Directory). Newest first. Ensure the "File or Directory" column uses the **new** path.
 - Then run the reference scan (Step 4.4) and fix any references to the old names.
+- **Changelog linkage**: For completed plans that represent implemented work, ensure there is at least one matching entry in `changelog/` describing the change. `plans-completed/` is an index of planning artifacts; `changelog/` remains the canonical record of what changed. When migrating an existing project, it is acceptable to:
+  - Keep `plans-completed/` as the historical archive of plans and reports (do not delete them), and
+  - Add new `changelog/<type>/...` entries that summarize the work represented by those plans so future agents rely on `changelog/` for change history.
 
 **Existing `plans/` when moving to `plans-completed/`:**
 
@@ -1305,13 +1326,16 @@ grep -r "old-dir-name" --include="*.md" . --exclude-dir=.git --exclude-dir=node_
 
 **Important:** Only remove old files (e.g. single-file CHANGELOG or TROUBLESHOOTING) after verifying all important information has been migrated and links/references have been updated.
 
-## Step 4 (summary): Migration (Troubleshooting and Changelog)
+## Step 4 (summary): Migration (Troubleshooting, Changelog, and Plans)
 
 When you're **migrating an existing project**, the setup is not complete until existing content is moved into the new folder and index system. Execute these explicitly; do not defer as "if needed."
 
 - **Troubleshooting:** Extract backup(s) into **individual files** and the **index** (Step 2.7). Do not leave backup as the only copy.
-- **Changelog (optional):** If using a changelog folder system, set it up and migrate existing `CHANGELOG.md` (Step 2.8).
+- **Changelog (optional but recommended):** If using a changelog folder system, set it up and migrate existing `CHANGELOG.md` (Step 2.8).
+- **Plans / Plans-completed:** Normalize filenames in `plans-completed/` to the `yyyy-mm-dd-` prefix convention, ensure `plans-completed/index.md` lists each completed plan or directory (newest first), and confirm there are matching changelog entries for implemented work.
 - **Remove old files** only after migration is verified; keep `docs/TROUBLESHOOTING.md` if it is a user-facing guide.
+
+If you also adopt the centralized `project/` meta directory, follow the additional steps in [Step 4.5](#45-migrating-to-a-centralized-project-meta-directory) to move `docs/`, `changelog/`, `troubleshooting/`, `plans/`, and `plans-completed/` under `project/` and update all paths accordingly.
 
 ---
 
