@@ -181,3 +181,18 @@ Before scanning, verify:
 - Use parallel agents to accelerate scanning, but verify findings directly.
 - When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.
 - Do not modify source code in this workflow.
+
+## Related Workflows
+
+- **[`02-code-optimization.md`](./02-code-optimization.md)** - Performance-focused analysis for bottlenecks and resource issues
+- **[`03-code-refactoring.md`](./03-code-refactoring.md)** - Code quality and technical debt analysis
+- **[`../06-security/01-security-review.md`](../06-security/01-security-review.md)** - Dedicated security audit
+
+**When to use which workflow:**
+- **Use Code Review** for routine pre-merge checks, general code quality, defects, and risks. This workflow includes basic security scanning but is not exhaustive for security.
+- **Use Security Review** for dedicated security audits, quarterly security assessments, or when validating security-critical changes (authentication, authorization, data handling).
+
+**Timing guidance:** Run Code Review before every merge. For security-critical changes (auth, data handling, API endpoints), follow this review with Security Review for comprehensive security validation.
+
+- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for review findings
+- **[`../00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring

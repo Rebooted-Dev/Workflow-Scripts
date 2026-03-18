@@ -8,6 +8,17 @@ Perform a structured security review that identifies vulnerabilities, security r
 - Any user-specified focus areas (optional).
 - Security requirements or compliance standards (optional).
 
+## Pre-Flight Validation
+Before scanning, verify:
+- [ ] Repository root is identified and accessible
+- [ ] Rubric file exists at `../00-meta/severity-priority-rubric.md`
+- [ ] `plans/` directory exists (create if needed) and is writable
+- [ ] At least one implementation file exists in scope
+
+**Abort conditions:**
+- Rubric file missing → Abort with error: "Rubric not found at {path}. Cannot proceed with severity/priority scoring."
+- No files in scope → Abort with: "No files found to scan in {scope}."
+
 ## Prioritization Rule
 - Score each finding with severity (S0–S3) and priority (P0–P3).
 - Present the report ordered by priority (P0 to P3), then severity within each priority.
@@ -101,6 +112,13 @@ Perform a structured security review that identifies vulnerabilities, security r
 
 - **[`02-security-fix.md`](./02-security-fix.md)** - Fix security vulnerabilities identified in reviews
 - **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - General code review (includes security checks)
+
+**When to use which workflow:**
+- **Use Code Review** for routine pre-merge checks, general code quality, and broad defect detection. Code Review includes basic security scanning but is not exhaustive.
+- **Use Security Review** for dedicated security audits, quarterly security assessments, after security-critical changes (authentication, authorization, data handling), or when security is a primary concern.
+
+**Timing guidance:** Run Code Review before every merge. Run Security Review quarterly, after security-critical changes, or before releases handling sensitive data.
+
 - **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for security fixes
 - **[`../00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring
 

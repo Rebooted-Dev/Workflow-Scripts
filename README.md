@@ -53,6 +53,11 @@ The workflows are organized into eight categories:
 | Fixing security issues | Security Fix | `06-security/02-security-fix.md` |
 | Updating docs | Sync Documentation | `04-documentation/02-sync-documentation.md` |
 
+**Code Review vs Security Review:**
+- **Use Code Review** for routine pre-merge checks and general code quality. Includes basic security scanning.
+- **Use Security Review** for dedicated security audits, quarterly assessments, or security-critical changes.
+- **Timing:** Run Code Review before every merge. Run Security Review quarterly, after auth/data changes, or before releases handling sensitive data.
+
 ### Typical Workflow Sequence
 
 ```
