@@ -40,7 +40,9 @@ Validate that an implementation plan has actually been completed (in code and ve
 
 ## Marking Convention
 
-Use the same marking rules as in [`01-execution.md`](./01-execution.md) (phase report and finalization). In this workflow you are **auditing**: only mark or change tasks based on what you have verified. Use **✅ (green check mark) only** for completed tasks—not "x", ✓, or other symbols—so status is consistent and easy to see at a glance.
+Use the single source of truth for marking and completion conventions: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
+
+In this workflow you are **auditing**: only mark or change tasks based on what you have verified. Use **✅ (green check mark) only** for completed tasks—not "x", ✓, or other symbols—so status is consistent and easy to see at a glance.
 
 - **Completed:** `- [✅]` only if both the code change exists and verification/exit criteria were met. If the plan already has `- [✅]` and that is correct, leave it; otherwise normalize to `- [✅]`.
 - **Incomplete / open:** `- [ ]` for not started, in progress, missing code or verification, or deferred; add a note for partial or deferred tasks.
@@ -75,7 +77,10 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 5. **When the plan is fully verified complete:** If a completion marker is not already present, add one (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
 
-6. **File the completed plan in the changelog:** Once all tasks are marked with green check marks and the plan is confirmed complete, archive it in the project changelog: move (or copy) the plan document to **`project/changelog/plans/`** with a date prefix (e.g. `yyyy-mm-dd-<plan-name>.md`), then add a new row at the **top** of **`project/changelog/index.md`** with Date, Type=`plan`, Title, File path (e.g. `project/changelog/plans/2026-03-01-my-plan.md`), and optional Notes. This keeps completed plans in the single changelog system and the index up to date.
+6. **Mark completed + archive consistently:** Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** to:
+   - ensure tasks are marked with ✅ consistently,
+   - add a visible completion marker, and
+   - archive the plan into `project/changelog/plans/` + update `project/changelog/index.md` (Type=`plan`).
 
 ## Related Workflows
 

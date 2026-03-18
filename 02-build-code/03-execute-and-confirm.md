@@ -25,7 +25,10 @@ Run implementation (Execution) followed by validation (Confirm Execution) in one
    - Read the plan; verify completion against the repo (parallel agents as in 02).
    - Systematically review every task; correct misreporting; add the verification addendum.
    - Add completion marker if the plan is fully complete and not already present.
-   - **When the plan is confirmed complete:** File the plan in **`project/changelog/plans/`** with date prefix and add a row at the top of **`project/changelog/index.md`** (Type=plan). See step 6 in 02-confirm-execution.
+   - **When the plan is confirmed complete:** Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the single source of truth on:
+     - marking tasks with ✅,
+     - adding a completion marker, and
+     - archiving the plan into `project/changelog/plans/` + updating `project/changelog/index.md`.
 
 ## Quick Checklist
 

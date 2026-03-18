@@ -72,12 +72,7 @@ Execute implementation in phases with verification and documentation updates.
   - If relevant, run: `npm run dev` and perform a quick smoke test of the affected flow.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
-  - **CRITICAL: Update the implementation plan** (the plan document in `plans/`, e.g. `plans/implementation-plan-*.md`) with completed tasks marked so the plan reflects reality:
-    - **Completed items:** `- [✅] Task description` — Use ✅ (green check mark) only for at-a-glance status—not "x" or ✓; mark IMMEDIATELY after task completion and verification
-    - **Pending items:** `- [ ] Task description` — For tasks not yet started or still in progress
-    - **Parent tasks:** Mark parent tasks as `- [✅]` only when ALL sub-tasks are complete
-    - **Deferred tasks:** Leave as `- [ ]` and add a note explaining deferral (e.g., "Deferred to P3")
-    - **Systematic checking:** Review ALL tasks in the plan, not just the ones you worked on in this phase
+  - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
   - **Update logs (only for completed tasks that change or affect project code):**
     - **Changelog:** Add a dated entry for this phase's work. Prefer `changelog/` directory per AGENTS.md when the project uses it; otherwise use `docs/CHANGELOG.md` or `CHANGELOG.md`.
     - **Troubleshooting (only when applicable):** Add a troubleshooting entry **only** when this phase involved one of the following (see AGENTS.md and `troubleshooting/README.md` for full conventions):
@@ -90,7 +85,10 @@ Execute implementation in phases with verification and documentation updates.
 
 - Run a final `npm run build` to confirm the repo is shippable.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
-- **Update the implementation plan:** Ensure every completed task in the plan is marked with `- [✅]`. When the plan is fully complete, add a visible completion marker for quick scanning (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
+- **Update the implementation plan:** Ensure task status and completion markers are consistent. Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the single source of truth on:
+  - task checkboxes (✅ vs `[ ]`),
+  - completion markers, and
+  - archiving completed plans into the project changelog system.
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.
 
 ## Quick Checklist
