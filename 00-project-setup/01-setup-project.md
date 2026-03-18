@@ -131,7 +131,9 @@ This setup ensures:
 
 ### Checklist marking convention
 
-When marking completed items in any checklist in this workflow, use **`- [✅]`** (green check mark) for at-a-glance status; leave incomplete items as **`- [ ]`**. This matches the 02-build-code execution and confirm-execution workflows.
+For consistent checklist marking (✅ vs `[ ]`), completion markers, and archiving completed plans, follow the single source of truth:
+
+- **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**
 
 ### Quick update checklist (existing project)
 

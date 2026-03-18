@@ -110,7 +110,7 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
   - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`.
   - Update `troubleshooting/index.md` (add the new entry at the top).
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons (see project `troubleshooting/README.md`).
-- **Update the implementation plan (if applicable):** If this bug fix was tracked as a task in an implementation plan in `plans/`, identify the relevant plan (check active plans in `plans/` for a task matching this fix), update that plan: mark the completed task with `- [✅]` (green check mark only—not "x" or ✓) and add a brief note if needed. When all tasks in the plan are complete, add a completion marker (e.g. `**Status:** ✅ COMPLETED`) per the Workflow-Scripts main README, "Completion Status Conventions."
+- **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
 
 ### 8. Final Verification
 - Run final `npm run build` to confirm the repo is shippable.

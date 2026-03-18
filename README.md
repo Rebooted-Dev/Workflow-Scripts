@@ -775,22 +775,13 @@ Step 7: Code Review
 ### 3. Document as You Go
 - Update the changelog after each phase (`docs/CHANGELOG.md` preferred)
 - Add a `troubleshooting/` entry for bug fixes and update `troubleshooting/index.md`
-- **Update the implementation plan after each code build or bug fix:** If you are working from a plan in `plans/`, mark completed tasks with `- [✅]` (green check mark) immediately after completion and verification. After a build phase or after resolving a bug that was a plan task, update the plan document so it reflects reality. When the plan is fully complete, add a green check mark (e.g. `**Status:** ✅ COMPLETED`) per "Completion Status Conventions" below.
+- **Update the implementation plan after each code build or bug fix:** Use the single source of truth for marking, completion markers, and archiving completed plans: **[`04-documentation/03-mark-completed.md`](./04-documentation/03-mark-completed.md)**.
 - Keep documentation in sync with code
 
 ### 4. Completion Status Conventions
-- **Use ✅ (green check mark) only** when marking completed items. Do not use "x", ✓, or other symbols—use ✅ consistently across all workflow outputs.
-- **Plans and reports:** When a plan, optimization report, migration guide, or other long-form document is fully completed, clearly mark this with a **green check mark (✅)** for quick visual scanning. Recommended patterns:
-  - `**Status:** ✅ COMPLETED`
-  - A section or heading suffix like `## Implementation Status ✅` or `# Genkit Migration Implementation - COMPLETED ✅`
-- **Task lists inside plans/docs:** Use Markdown checkboxes so completed items show as green check marks in rendered view:
-  - `- [✅]` for completed tasks (mark immediately after completion and verification)
-  - `- [ ]` for pending or deferred tasks
-- **Parent/Sub-task hierarchy:** When tasks have sub-tasks:
-  - Mark individual sub-tasks with `- [✅]` when they are complete
-  - Mark parent tasks with `- [✅]` only when ALL sub-tasks are complete
-  - If any sub-task is incomplete, leave parent as `- [ ]`
-- **When to update the plan:** After each code build phase (Execution workflow) or after debugging a problem that was tracked in a plan (Bug Fix workflow), update the implementation plan in `plans/` with accurate `- [✅]` / `- [ ]` status so the plan stays in sync with reality.
+All completion marking rules are centralized in:
+
+- **[`04-documentation/03-mark-completed.md`](./04-documentation/03-mark-completed.md)** — ✅ checkboxes, completion markers, and archiving completed plans into the project changelog system.
 
 ### 5. Use Parallel Agents
 - Many workflows support parallel agents with a flexible pattern
