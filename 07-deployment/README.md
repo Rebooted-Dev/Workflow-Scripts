@@ -20,11 +20,40 @@ Are you deploying to a cloud platform?
 Are you migrating from AI Studio?
 └─ Yes → [AI Studio to Desktop Migration](./02-ai-studio-to-desktop.md)
 
+Do you need a comprehensive pre-deployment checklist?
+├─ Yes, full deployment/security/SEO → [Comprehensive Checklist](./12-comprehensive-deployment-security-seo-geo-checklist.md)
+└─ Yes, quick security check → [Pre-deployment Security Check](./08a-pre-deployment-security-check.md)
+
 Do you need to manage development server ports?
 └─ Yes → [Port Management Guide](./08-port-relocation/port-management-guide.md)
 
 Do you need to apply security patches?
 └─ Yes → [Security Patches Guide](./09-react-bug.md)
+```
+Is your app a desktop application?
+├─ Yes → [Electron Desktop App Guide](./01-MACOS_ELECTRON_GUIDE.md)
+│   (For new electron-vite migrations: [Electron-Vite Migration](./01b-electron-vite.md))
+└─ No → Continue...
+
+Are you deploying to a cloud platform?
+├─ Firebase Hosting → [Firebase Setup Guide](./10-firebase-setup.md)
+├─ Nginx (local/server) → [Nginx Deployment Guide](./11-nginx.md)
+└─ Other → Continue...
+
+Are you migrating from AI Studio?
+└─ Yes → [AI Studio to Desktop Migration](./02-ai-studio-to-desktop.md)
+
+Do you need a comprehensive pre-deployment checklist?
+└─ Yes → [Comprehensive Deployment, Security, SEO & GEO Checklist](./12-comprehensive-deployment-security-seo-geo-checklist.md)
+
+Do you need to manage development server ports?
+└─ Yes → [Port Management Guide](./08-port-relocation/port-management-guide.md)
+
+Do you need to apply security patches?
+└─ Yes → [Security Patches Guide](./09-react-bug.md)
+
+Do you need a quick security check before deploy?
+└─ Yes → [Pre-deployment Security Check](./08a-pre-deployment-security-check.md)
 ```
 
 ## Deployment Guides
@@ -157,6 +186,41 @@ server: {
 
 ---
 
+### Pre-Deployment Checklists
+
+#### [Comprehensive Deployment, Security, SEO & GEO Checklist](./12-comprehensive-deployment-security-seo-geo-checklist.md)
+**When to use:** Before first production deployment, major releases, or quarterly audits for any web application.
+
+**Covers:**
+- Part 1: Deployment - Build validation, environment variables, platform configuration, CI/CD
+- Part 2: Security - OWASP Top 10, security headers, authentication, input validation, cookie security
+- Part 3: SEO - Meta tags, structured data, crawlability, Core Web Vitals, local SEO, E-E-A-T signals
+- Part 4: GEO - Location data, map integration, AI search optimization, monitoring
+
+**Quick start:**
+```
+1. Fill in project placeholders ({{DOMAIN}}, {{PROJECT_NAME}}, etc.)
+2. Work through Phase 1-4 checklists
+3. Use the implementation roadmap for phased rollout
+```
+
+#### [Pre-deployment Security Check](./08a-pre-deployment-security-check.md)
+**When to use:** Quick security validation before any deployment.
+
+**Covers:**
+- Dependency vulnerability scanning
+- Outdated package identification
+- Environment and secrets validation
+- Build and lint verification
+- Optional static/runtime security checks
+
+**Quick start:**
+```bash
+npm audit && npm outdated && npm run build && npm run lint
+```
+
+---
+
 ### Security
 
 #### [Security Patches Guide](./09-react-bug.md)
@@ -202,31 +266,30 @@ npm i react@latest react-dom@latest next@latest
 3. Configure dual dev workflow (web + desktop)
 4. Build with: `./scripts/mac-build.sh`
 
-### Scenario 5: Local Server Demo
+### Scenario 6: Comprehensive Production Readyness
 
-1. Follow [Nginx Deployment Guide](./11-nginx.md)
-2. Configure nginx for your app type
-3. Use ngrok for remote access (optional)
+1. Follow [Comprehensive Deployment, Security, SEO & GEO Checklist](./12-comprehensive-deployment-security-seo-geo-checklist.md)
+2. Complete Phase 1 (Pre-Deployment) security and build checks
+3. Deploy to production
+4. Complete Phase 2 (SEO Setup) search engine submissions
+5. Set up Phase 3 (CI/CD) automation
+
+---
+
+### Scenario 6: Comprehensive Deployment Planning
+
+Use [Comprehensive Checklist](./12-comprehensive-deployment-security-seo-geo-checklist.md):
+
+1. **Production deployment** - Complete Phase 1 tasks (Security & Build)
+2. **Deploy to production** - Complete Phase 2 tasks (SEO setup)
+3. **Set up CI/CD and monitoring** - Complete Phase 3 tasks
+4. **Ongoing maintenance** - Follow monthly checklist
 
 ---
 
 ## File Structure
-
-```
-07-deployment/
-├── README.md                          # This file - deployment index
-├── DEPLOYMENT_OPTIMIZATION_REPORT.md  # Optimization history and results
-├── 01-MACOS_ELECTRON_GUIDE.md        # Electron desktop app guide
-├── 01b-electron-vite.md              # Electron-vite migration workflow
-├── 02-ai-studio-to-desktop.md        # AI Studio migration (reference)
-├── 09-react-bug.md                   # Security patches guide
-├── 10-firebase-setup.md              # Firebase Hosting setup
-├── 11-nginx.md                       # Nginx deployment guide
+├── 12-comprehensive-deployment-security-seo-geo-checklist.md  # Master checklist
 └── 08-port-relocation/
-    ├── README.md                     # Port management overview
-    ├── port-management-guide.md      # Unified port management
-    └── browser-auto-open.md          # Browser auto-open guide
-```
 
 ---
 
@@ -300,4 +363,4 @@ When adding new deployment guides:
 
 ---
 
-*Last updated: 2026-02-01*
+*Last updated: 2026-03-24*
