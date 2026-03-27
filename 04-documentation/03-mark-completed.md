@@ -9,7 +9,7 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 - A plan or implementation report claims tasks are "complete" and you need to confirm they were actually done
 - Before closing a milestone or marking a plan as finished
 - After a code review or refactor to ensure checklist items match reality
-- When reconciling plans (e.g. `plans/*.md`) with `changelog/`, `troubleshooting/`, and `docs/`
+- When reconciling plans (e.g. `project/build/*.md`) with `project/changelog/`, `project/troubleshooting/`, and `docs/`
 
 **Use [`02-sync-documentation.md`](./02-sync-documentation.md) instead when:**
 - Documentation is outdated but there is no "completed task" verification focus
@@ -17,9 +17,9 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 
 ## Inputs
 - Repository root
-- Plan or report files that declare completed tasks (e.g. `plans/*.md`, `plans-completed/*.md`)
-- Changelog index and entries (`changelog/index.md`, `changelog/<type>/*.md`)
-- Troubleshooting index and entries (`troubleshooting/index.md`, `troubleshooting/<category>/*.md`)
+- Plan or report files that declare completed tasks (e.g. `project/build/*.md`, `project/changelog/plans/*.md`)
+- Changelog index and entries (`project/changelog/index.md`, `project/changelog/<type>/*.md`, `project/changelog/plans/` for completed plans)
+- Troubleshooting index and entries (`project/troubleshooting/index.md`, `project/troubleshooting/<category>/*.md`)
 - Relevant source files referenced in each task
 
 ## Prioritization and Ordering
@@ -32,9 +32,9 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 
 ### Phase 1: Identify Sources of "Completed" Claims
 1. **Locate plan and report files** that declare completed tasks:
-   - Scan `plans/` and `plans-completed/` for markdown files with checkboxes, "Complete", "✓", "✅", or "Implementation Verified"
+   - Scan `project/build/` and `project/changelog/plans/` for markdown files with checkboxes, "Complete", "✅" (green check mark), or "Implementation Verified"
    - Note file paths and section headings that list tasks and sub-tasks
-2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[✅]`, `✓`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note)
+2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[✅]`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note). **Use only ✅ (green check mark) for marking completed items—not "x", ✓, or other symbols—for consistency.**
 
 ### Phase 2: Verify Implementation in Code (Parallel Agents)
 Use **multiple parallel agents** to verify implementation. Each agent should read the **actual source files** referenced in the task (file paths, line numbers) and confirm that the described fix or feature exists.
@@ -46,7 +46,7 @@ Use **multiple parallel agents** to verify implementation. Each agent should rea
 - **Agent C (P1 bugs / hooks):** Verify hook and concurrency fixes — read `hooks/useSessions.ts`, `hooks/useHistory.ts`, `hooks/usePersistence.ts`, `hooks/useGeminiClient.ts` at cited lines; confirm functional updates, batched reads, clone behavior
 - **Agent D (P1 UX / components):** Verify component-level fixes — read `components/ErrorBoundary.tsx`, `ArtifactCard.tsx`, `SideDrawer.tsx`, `SessionHistory.tsx`, `CodeEditor.tsx` at cited lines; confirm scroll logic, keyboard handlers, error boundaries
 - **Agent E (P2 / refactors):** Verify P2 and P3 items — read any files cited for "extract logic", "schema validation", "useMemo", regex consolidation; confirm implementation or document absence
-- **Agent F (Docs / logs):** Verify documentation and log claims — check `changelog/`, `troubleshooting/`, `docs/` for entries that the plan says were updated; confirm they exist and match the described changes
+- **Agent F (Docs / logs):** Verify documentation and log claims — check `project/changelog/`, `project/troubleshooting/`, `docs/` for entries that the plan says were updated; confirm they exist and match the described changes
 
 Agents should **batch-read files concurrently** (e.g. read all files for their task subset in parallel) to maximize speed. Output per agent:
 - **Task ID / heading** and **Claim** (what the plan says is done)
@@ -67,12 +67,13 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 3. **Collect all flagged issues** and list them in **descending order of importance/urgency** (see Output Requirements).
 
 ### Phase 4: Reconcile and Update Documentation and Logs
-1. **Changelog:** For each verified completion that is not yet reflected in `changelog/`, add or update an entry per project conventions (e.g. `changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and a row in `changelog/index.md`). For false completions, do not add a changelog entry claiming the fix; optionally add an entry only when the developer actually implements the fix.
-2. **Troubleshooting:** If a task was about a bug or incident, ensure `troubleshooting/` has an entry that matches the fix (or a note that it is still open). Update or add entries only for **verified** fixes.
+1. **Changelog:** For each verified completion that is not yet reflected in `project/changelog/`, add or update an entry per project conventions (e.g. `project/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and a row in `project/changelog/index.md`). For false completions, do not add a changelog entry claiming the fix; optionally add an entry only when the developer actually implements the fix.
+2. **Troubleshooting:** If a task was about a bug or incident, ensure `project/troubleshooting/` has an entry that matches the fix (or a note that it is still open). Update or add entries only for **verified** fixes.
 3. **Related docs:** Update `docs/` (e.g. ARCHITECTURE, USER_MANUAL, OVERVIEW, TROUBLESHOOTING) so they do not contradict the verified state. Remove or correct any doc text that claims something is done when it is flagged as not done.
-4. **Plan/report file:** Write back into the plan/report file:
+4. **plans/TODO.md:** When tasks are completed, update `plans/TODO.md` (check off items or add follow-ups as needed).
+5. **Plan/report file:** Write back into the plan/report file:
    - **✅** on tasks and sub-tasks that were verified complete
-   - **Remove** or **replace** check marks / "Complete" labels from tasks that were flagged (leave them as actionable, or add a "⚠ False completion" / "⚠ Incomplete" note so the developer can decide)
+   - **Remove** or **replace** completion markers from tasks that were flagged (leave as unchecked `[ ]` or add a "⚠ False completion" / "⚠ Incomplete" note). Do not use "x" or ✓ for completed; use **✅ (green check mark)** only for consistency.
 
 ### Phase 5: Produce Flagged Issues Report
 1. **Single ordered list:** "Flagged issues" in **descending order of importance or urgency.**
@@ -82,7 +83,7 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 ## Output Requirements
 
 ### In the plan/report file
-- **Completed tasks:** Mark with **✅** (green check mark). Use `[✅]` for checkboxes. Keep "Implementation Verified" and "Verification" sections accurate.
+- **Completed tasks:** Mark with **✅** (green check mark) only. Use `[✅]` for checkboxes. Do not use "x", ✓, or other symbols for completed items—use ✅ consistently. Keep "Implementation Verified" and "Verification" sections accurate.
 - **Flagged tasks:** Do not mark with ✅. Add a short note (e.g. "⚠ False completion" or "⚠ Incomplete — see verification") and leave checkboxes as `[ ]` or update status to "NOT COMPLETE" where applicable.
 
 ### Flagged issues list (descending order)
