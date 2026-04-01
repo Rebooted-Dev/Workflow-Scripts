@@ -11,6 +11,7 @@ This directory contains workflows for setting up new projects and optimizing exi
 | [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md) | Automate syncing Workflow-Scripts across multiple projects | When managing multiple projects, want to update all at once, or need to track sync status |
 | [`04-track-repos-and-agent-map.md`](./04-track-repos-and-agent-map.md) | Discover repos in the project and set up agent files (AGENTS.md, CLAUDE.md, GEMINI.md) with a repo map and sync/push/pull instructions | New projects with multiple repos, onboarding agents, or when adding a new nested repo |
 | [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md) | MCP and config setup: Google Developer Knowledge MCP (Cursor + OpenCode), fix Cursor stdio PATH, OpenCode default model, oh-my-opencode overrides | Setting up or fixing MCP servers, adding Gemini docs MCP, or setting default model (e.g. GLM 5) |
+| [`06-skills-setup.md`](./06-skills-setup.md) | Skills setup: install and configure agent skills in Cursor/Codex (personal vs project skills, storage locations, top recommended skills) | Setting up agent skills, onboarding to skills-based workflows, troubleshooting skill loading |
 
 ## Quick Decision Guide
 
@@ -29,11 +30,15 @@ This directory contains workflows for setting up new projects and optimizing exi
 **Are you setting up MCP servers (e.g. Google Developer Knowledge), fixing Cursor MCP errors, or setting OpenCode/oh-my-opencode default model?**
 - Yes → Use [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md)
 
+**Are you setting up agent skills in Cursor or Codex, or troubleshooting "the agent didn't use my skill"?**
+- Yes → Use [`06-skills-setup.md`](./06-skills-setup.md)
+- Yes → Use [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md)
+
 ## Workflow Summaries
 
 ### 01-setup-project.md
 
-Sets up a project with dual repo management, `troubleshooting/` and `changelog/` directory systems, `plans/` and `plans-completed/`, slim AGENTS.md/CLAUDE.md/GEMINI.md (with `docs/agents/`), and a repo map in agent files. Includes backups of existing troubleshooting/changelog files and verification steps. Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) after setup to populate the repo map.
+Sets up a project with dual repo management, a **`project/`** container (KIV, research, build, **changelog**, troubleshooting), and **`plans/`** (README map + TODO). Changelog is merged: `project/changelog/` holds type folders plus a `plans/` subdir for completed plan docs, with a single index (Type includes `plan`). Troubleshooting lives under `project/troubleshooting/`. Slim AGENTS.md/CLAUDE.md/GEMINI.md (with `docs/agents/`) and repo map in agent files. Includes backups and verification. Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) after setup to populate the repo map.
 
 ### 02-optimize-workflow-scripts.md
 

@@ -28,7 +28,7 @@ Conduct deep research and analysis to create a comprehensive initial implementat
 ## Output
 
 - **Research findings document** - Analysis of current state, external options, trade-offs
-- **Initial implementation plan** in `plans/` directory with dated filename
+- **Initial implementation plan** in `project/build/` (or as specified in the project's `plans/README.md`) with dated filename; optionally add a task to `plans/TODO.md`
 - The plan includes: research summary, recommended approach, phases, tasks, risks
 
 ## Prioritization Rule

@@ -1,8 +1,31 @@
-# MCP and Configuration Setup Task List
+  # MCP and Configuration Setup Task List
 
 Checklist for configuring MCP (Model Context Protocol) servers and default model/provider in **Cursor** and **OpenCode**, including the Google Developer Knowledge (Gemini docs) MCP and GLM 5 default.
 
 **When to use:** Setting up or fixing MCP servers in Cursor, adding OpenCode MCP/config, or switching default model to GLM 5 (or another provider) when oh-my-opencode overrides apply.
+
+---
+
+## Prerequisites (do this first)
+
+Cursor and OpenCode run MCP servers with a **minimal PATH**, so stdio servers must use **full paths** to binaries. Resolve these once and use them everywhere in this doc (replace `{NPX_PATH}`, `{UVX_PATH}`, `{DART_PATH}` in the config snippets below).
+
+| Variable      | How to get it | Example |
+|---------------|----------------|---------|
+| **NPX_PATH**  | `which npx` (in a terminal where Node works) | `/Users/you/.nvm/versions/node/v22.22.0/bin/npx` or `/opt/homebrew/bin/npx` |
+| **UVX_PATH**  | `which uvx` | `/Users/you/.local/bin/uvx` or `/opt/homebrew/bin/uvx` |
+| **DART_PATH** | Install Dart first (see below), then `which dart` | `/opt/homebrew/bin/dart` |
+
+**PATH for env:** Use the directory that contains the binary, e.g. for npx use `{NPX_PATH}`’s directory + `:/usr/bin:/bin:/usr/sbin:/sbin`. Example: `"/Users/you/.nvm/versions/node/v22.22.0/bin:/usr/bin:/bin:/usr/sbin:/sbin"`.
+
+**Install Dart (required for Dart MCP):**
+
+```bash
+brew install dart-sdk
+which dart   # → e.g. /opt/homebrew/bin/dart
+```
+
+Use that full path as `{DART_PATH}` in the Dart MCP config. If you skip installing Dart, omit the Dart MCP from your config (or disable it) until Dart is installed.
 
 ---
 
@@ -75,9 +98,9 @@ Vercel’s official remote MCP server gives AI tools access to your Vercel proje
 
 ---
 
-## 2c. Nano Banana, Gmail, and YouTube MCPs (optional)
+## 2c. Nano Banana, Gmail, and YouTube MCPs (required / default)
 
-These are community/third-party MCPs. Use full path to `npx` and `PATH` in env (Cursor) or `command`/`environment` (OpenCode) if you hit `spawn npx ENOENT`.
+**Install by default** for Cursor and OpenCode. Use **{NPX_PATH}** and **{UVX_PATH}** from Prerequisites; set **PATH** in each server's `env` / `environment` to the binary's directory plus `:/usr/bin:/bin:/usr/sbin:/sbin`.
 
 ### Nano Banana (image generation via nanana.app)
 
@@ -85,29 +108,29 @@ These are community/third-party MCPs. Use full path to `npx` and `PATH` in env (
 
 - **NPM:** `@nanana-ai/mcp-server-nano-banana`  
 - **Auth:** API token from [nanana.app](https://nanana.app) → API Access.
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"nano-banana": { "command": "/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "args": ["-y", "@nanana-ai/mcp-server-nano-banana"], "env": { "NANANA_API_TOKEN": "YOUR_TOKEN", "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
-- [ ] **OpenCode** `opencode.json` under `mcp`: `"nano-banana": { "type": "local", "command": ["/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "-y", "@nanana-ai/mcp-server-nano-banana"], "enabled": true, "environment": { "NANANA_API_TOKEN": "YOUR_TOKEN", "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"nano-banana": { "command": "{NPX_PATH}", "args": ["-y", "@nanana-ai/mcp-server-nano-banana"], "env": { "NANANA_API_TOKEN": "YOUR_TOKEN", "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }` (replace placeholders from Prerequisites).
+- [ ] **OpenCode** under `mcp`: `"nano-banana": { "type": "local", "command": ["{NPX_PATH}", "-y", "@nanana-ai/mcp-server-nano-banana"], "enabled": true, "environment": { "NANANA_API_TOKEN": "YOUR_TOKEN", "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Tools:** `text_to_image`, `image_to_image`.
 
 ### Gmail
 
-- **Options:** [jasonsum/gmail-mcp-server](https://github.com/jasonsum/gmail-mcp-server) (Node), [redazzo/gmail-mcp](https://github.com/redazzo/gmail-mcp) (Python). Need Google Cloud project, Gmail API enabled, OAuth 2.0 credentials (Desktop app).
-- [ ] **Cursor:** Add server per repo’s README (e.g. `npx -y gmail-mcp-server` with full npx path + PATH; set `GMAIL_CREDENTIALS` or OAuth env vars).
-- [ ] **OpenCode:** Same as Cursor: `type: "local"`, `command` with full path to node/npx, `environment` for credentials and PATH.
+- **Options:** [google-workspace-mcp-advanced](https://pypi.org/project/google-workspace-mcp-advanced/) (PyPI, uvx — includes Gmail + Drive, Calendar, etc.); [jasonsum/gmail-mcp-server](https://github.com/jasonsum/gmail-mcp-server) (clone + `uv run`). Set `USER_GOOGLE_EMAIL`, `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`; run with `uvx google-workspace-mcp-advanced --transport stdio`.
+- [ ] **Cursor:** `"gmail": { "command": "<full-path>/uvx", "args": ["google-workspace-mcp-advanced", "--transport", "stdio"], "env": { "USER_GOOGLE_EMAIL": "...", "GOOGLE_OAUTH_CLIENT_ID": "...", "GOOGLE_OAUTH_CLIENT_SECRET": "...", "PATH": "..." } }`.
+- [ ] **OpenCode:** Same: `type: "local"`, `command`: full path to uvx + args, `environment` for OAuth env vars and PATH.
 - **Tools:** read/send/search email, drafts, labels, archive (varies by implementation).
 
 ### YouTube
 
-- **NPM:** `zubeid-youtube-mcp-server` ([ZubeidHendricks/youtube-mcp-server](https://github.com/ZubeidHendricks/youtube-mcp-server)). **Auth:** YouTube Data API v3 key from [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"youtube": { "command": "/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "args": ["-y", "zubeid-youtube-mcp-server"], "env": { "YOUTUBE_API_KEY": "YOUR_KEY", "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
-- [ ] **OpenCode** under `mcp`: `"youtube": { "type": "local", "command": ["/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "-y", "zubeid-youtube-mcp-server"], "enabled": true, "environment": { "YOUTUBE_API_KEY": "YOUR_KEY", "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- **Use this package (avoids known SDK bug):** `@iflow-mcp/youtube-mcp-server`. Do **not** use `zubeid-youtube-mcp-server` — it has a [known bug](https://github.com/ZubeidHendricks/youtube-mcp-server/issues/20) until fixed on npm. **Auth:** YouTube Data API v3 key from [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"youtube": { "command": "{NPX_PATH}", "args": ["-y", "@iflow-mcp/youtube-mcp-server"], "env": { "YOUTUBE_API_KEY": "YOUR_KEY", "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }` (replace `{NPX_PATH}` and `<NPX_DIR>` from Prerequisites).
+- [ ] **OpenCode** under `mcp`: `"youtube": { "type": "local", "command": ["{NPX_PATH}", "-y", "@iflow-mcp/youtube-mcp-server"], "enabled": true, "environment": { "YOUTUBE_API_KEY": "YOUR_KEY", "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Tools:** video/channel/playlist details, search, transcripts (with timestamped captions).
 
 ---
 
-## 2d. Stitch, Dart, and Google Security MCPs (optional)
+## 2d. Stitch (optional), Dart, and Google Security MCPs (required)
 
-Same MCPs you may have in Gemini CLI; add to Cursor and OpenCode as below. Use full paths for `npx`/`dart`/`uvx` and `PATH` (or OpenCode `environment`) if you see spawn ENOENT.
+**Dart** and **Google Security (SecOps)** are required / default. **Stitch** remains optional. Add to Cursor and OpenCode as below. Use full paths for `npx`/`dart`/`uvx` and `PATH` (or OpenCode `environment`) if you see spawn ENOENT.
 
 ### Stitch (Stitch AI – memory / knowledge hub)
 
@@ -119,10 +142,12 @@ Same MCPs you may have in Gemini CLI; add to Cursor and OpenCode as below. Use f
 
 ### Dart (Dart & Flutter MCP server)
 
-**Source:** [Dart MCP server](https://dart.dev/tools/mcp-server) (official). Format, test, pub, pub.dev search, symbol/docs, analyze/fix. **Requires:** Dart SDK (e.g. `dart mcp-server` on PATH).
+**Source:** [Dart MCP server](https://dart.dev/tools/mcp-server) (official). Format, test, pub, pub.dev search, symbol/docs, analyze/fix.
 
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"dart": { "command": "dart", "args": ["mcp-server"] }`. If Cursor can’t find `dart`, use full path to `dart` (e.g. from `which dart` or Flutter SDK `bin/dart`).
-- [ ] **OpenCode** under `mcp`: `"dart-mcp-server": { "type": "local", "command": ["dart", "mcp-server"], "enabled": true, "environment": {} }`. Use full path to `dart` in `command` if OpenCode doesn’t see it (e.g. `["/path/to/dart-sdk/bin/dart", "mcp-server"]`).
+**Requires:** Dart SDK installed first (see Prerequisites: `brew install dart-sdk` then `which dart`). **Always use the full path** to `dart` in config — Cursor/OpenCode do not see your shell PATH. Use **{DART_PATH}** from Prerequisites (e.g. `/opt/homebrew/bin/dart`).
+
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"dart": { "command": "{DART_PATH}", "args": ["mcp-server"], "env": { "PATH": "<DART_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }` (replace with your dart path and its directory).
+- [ ] **OpenCode** under `mcp`: `"dart": { "type": "local", "command": ["{DART_PATH}", "mcp-server"], "enabled": true, "environment": { "PATH": "<DART_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Tools:** format, test, pub get/add, pub_dev_search, runtime introspection, resolve symbol/docs, analyze/fix.
 
 ### Security / Google SecOps (securityServer)
@@ -135,26 +160,26 @@ Same MCPs you may have in Gemini CLI; add to Cursor and OpenCode as below. Use f
 
 ---
 
-## 2e. Apple MCPs (optional)
+## 2e. Apple MCPs (required / default)
 
-Apple-related MCPs for documentation (Swift, SwiftUI, UIKit, etc.) and Xcode tooling. Use full path to `npx` and `PATH` in env (Cursor) or `environment` (OpenCode) if you hit spawn ENOENT.
+Apple-related MCPs for documentation (Swift, SwiftUI, UIKit, etc.) and Xcode tooling. **Install by default** for Cursor and OpenCode. Use **{NPX_PATH}** and `<NPX_DIR>` from Prerequisites.
 
 ### Apple Doc MCP (Apple Developer Documentation)
 
 **Source:** [MightyDillah/apple-doc-mcp](https://github.com/MightyDillah/apple-doc-mcp). Smart search over Apple Developer Documentation with wildcard support (SwiftUI, UIKit, Foundation, Metal, etc.). **Auth:** None. **NPM:** `apple-doc-mcp-server@latest`.
 
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"apple-docs": { "command": "/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "args": ["-y", "apple-doc-mcp-server@latest"], "env": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
-- [ ] **OpenCode** under `mcp`: `"apple-docs": { "type": "local", "command": ["/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "-y", "apple-doc-mcp-server@latest"], "enabled": true, "environment": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"apple-docs": { "command": "{NPX_PATH}", "args": ["-y", "apple-doc-mcp-server@latest"], "env": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **OpenCode** under `mcp`: `"apple-docs": { "type": "local", "command": ["{NPX_PATH}", "-y", "apple-doc-mcp-server@latest"], "enabled": true, "environment": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Tools:** `discover_technologies`, `choose_technology`, `current_technology`, `search_symbols`, `get_documentation`, `get_version`.
 
 ### XcodeBuild MCP (Xcode / Swift / Simulator / Device)
 
-**Source:** [fastmcp-me/xcodebuildmcp](https://github.com/fastmcp-me/xcodebuildmcp). Xcode project discovery, builds, Swift Package Manager, simulators, physical devices, app install/launch, logs, UI automation. **Requires:** macOS 14.5+, Xcode 16+. **NPM:** `xcodebuildmcp@latest`. Optional env: `INCREMENTAL_BUILDS_ENABLED`, `XCODEBUILDMCP_SENTRY_DISABLED`, `XCODEBUILDMCP_ENABLED_WORKFLOWS` (e.g. `simulator,device,project-discovery`).
+**Source:** [XcodeBuildMCP](https://github.com/getsentry/XcodeBuildMCP). Xcode project discovery, builds, Swift Package Manager, simulators, physical devices, app install/launch, logs, UI automation. **Requires:** macOS 14.5+, Xcode 16+.
 
-**Important:** The CLI requires the **`mcp`** subcommand to start the MCP server. Without it, the process prints usage and exits; Cursor will show "No server info found". Always include `"mcp"` in `args` / `command`.
+**Use pinned version to avoid Sentry dependency errors:** `xcodebuildmcp@1.15.1` (do **not** use `@latest` — v2.x has a [known @sentry/core resolution bug](https://github.com/getsentry/XcodeBuildMCP/issues)). Include `XCODEBUILDMCP_SENTRY_DISABLED`: `"true"` if you later switch to `@latest`. The CLI requires the **`mcp`** subcommand in `args` / `command`.
 
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"XcodeBuildMCP": { "command": "/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "args": ["-y", "xcodebuildmcp@latest", "mcp"], "env": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
-- [ ] **OpenCode** under `mcp`: `"XcodeBuildMCP": { "type": "local", "command": ["/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "-y", "xcodebuildmcp@latest", "mcp"], "enabled": true, "environment": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"XcodeBuildMCP": { "command": "{NPX_PATH}", "args": ["-y", "xcodebuildmcp@1.15.1", "mcp"], "env": { "XCODEBUILDMCP_SENTRY_DISABLED": "true", "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **OpenCode** under `mcp`: `"XcodeBuildMCP": { "type": "local", "command": ["{NPX_PATH}", "-y", "xcodebuildmcp@1.15.1", "mcp"], "enabled": true, "environment": { "XCODEBUILDMCP_SENTRY_DISABLED": "true", "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Tools:** Project discovery, build/clean, schemes/settings, SPM build/test/run, simulator/device list and app lifecycle, logs, screenshots, project scaffolding, doctor.
 
 ### Other Apple-related MCPs (reference)
@@ -164,24 +189,24 @@ Apple-related MCPs for documentation (Swift, SwiftUI, UIKit, etc.) and Xcode too
 
 ---
 
-## 2f. Remotion MCP (optional)
+## 2f. Remotion MCP (default)
 
-**Source:** [Remotion MCP docs](https://www.remotion.dev/docs/ai/mcp) | npm: `@remotion/mcp`. Gives AI access to Remotion (React-based programmatic video) documentation so it can answer Remotion questions and suggest correct APIs. **Auth:** None (test phase). Remotion also offers **Agent Skills** (`npx remotion skills add`) for Cursor/Claude Code/Codex — install those in-project for workflow guidance.
+**Source:** [Remotion MCP docs](https://www.remotion.dev/docs/ai/mcp) | npm: `@remotion/mcp`. **Installed by default.** Gives AI access to Remotion (React-based programmatic video) documentation so it can answer Remotion questions and suggest correct APIs. **Auth:** None (test phase). Remotion also offers **Agent Skills** (`npx remotion skills add`) for Cursor/Claude Code/Codex — install those in-project for workflow guidance.
 
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"remotion": { "command": "/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "args": ["-y", "@remotion/mcp@latest"], "env": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
-- [ ] **OpenCode** under `mcp`: `"remotion": { "type": "local", "command": ["/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "-y", "@remotion/mcp@latest"], "enabled": true, "environment": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"remotion": { "command": "{NPX_PATH}", "args": ["-y", "@remotion/mcp@latest"], "env": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **OpenCode** under `mcp`: `"remotion": { "type": "local", "command": ["{NPX_PATH}", "-y", "@remotion/mcp@latest"], "enabled": true, "environment": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Skills (optional):** In a Remotion project run `npx remotion skills add` to add Agent Skills to `.claude/skills` for Cursor/Claude Code/Codex.
 
 ---
 
-## 2g. Mermaid (image rendering) MCP (optional)
+## 2g. Mermaid (image rendering) MCP (default)
 
-Renders images (PNG or SVG) from Mermaid diagram definitions. Use when you want the AI to generate diagram images from Mermaid syntax.
+**Installed by default.** Renders images (PNG or SVG) from Mermaid diagram definitions. Use when you want the AI to generate diagram images from Mermaid syntax.
 
 **Source:** [peng-shawn/mermaid-mcp-server](https://github.com/peng-shawn/mermaid-mcp-server) | **NPM:** `@peng-shawn/mermaid-mcp-server`. Uses Puppeteer for headless rendering. **Auth:** None. Supports themes (default, forest, dark, neutral) and optional save to disk.
 
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"mermaid": { "command": "/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "args": ["-y", "@peng-shawn/mermaid-mcp-server"], "env": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`. Replace `<you>` with your username (or use full path from `which npx`).
-- [ ] **OpenCode** under `mcp`: `"mermaid": { "type": "local", "command": ["/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "-y", "@peng-shawn/mermaid-mcp-server"], "enabled": true, "environment": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"mermaid": { "command": "{NPX_PATH}", "args": ["-y", "@peng-shawn/mermaid-mcp-server"], "env": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **OpenCode** under `mcp`: `"mermaid": { "type": "local", "command": ["{NPX_PATH}", "-y", "@peng-shawn/mermaid-mcp-server"], "enabled": true, "environment": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Tools:** Renders Mermaid diagram definitions to PNG or SVG (returned or saved to file).
 
 ---
@@ -190,18 +215,17 @@ Renders images (PNG or SVG) from Mermaid diagram definitions. Use when you want 
 
 **File:** `~/.cursor/mcp.json`
 
+**Rule:** Use full paths from Prerequisites for all stdio servers; set PATH in each server's `env` to the binary's directory + `:/usr/bin:/bin:/usr/sbin:/sbin`.
+
 - [ ] Add Google Developer Knowledge: `url`: `https://developerknowledge.googleapis.com/mcp`, `headers`: `{ "X-Goog-Api-Key": "YOUR_API_KEY" }`. Replace with real API key.
 - [ ] **Vercel** (optional): `"vercel": { "url": "https://mcp.vercel.com" }`. After restart, click “Needs login” to complete OAuth.
-- [ ] If stdio servers **Error**: use **full paths** for `command` (e.g. `/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx`, same for uvx).
-- [ ] If **npx-based** servers still error: add **PATH** to each `env`: `"/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin"`.
-- [ ] **github-mcp-server:** if Go not installed, set `"disabled": true` (or add full path to `go` when installed).
-- [ ] **Plugin workaround (Context7, Firebase):** Add custom servers with full npx path + PATH in env; disable plugin MCP in UI.
-  - Context7: `context7-stdio`, args `["-y", "@upstash/context7-mcp"]`.
-  - Firebase: `firebase-stdio`, args `["-y", "firebase-tools@latest", "mcp"]`; run `firebase login` if needed.
-- [ ] **Stitch / Dart / Security (optional):** See §2d for Stitch (memory), Dart (Flutter tooling), and Google SecOps (securityServer) — use full paths for command and PATH in env.
-- [ ] **Apple (optional):** See §2e for Apple Doc MCP (docs) and XcodeBuild MCP (Xcode/Swift/simulator/device) — use full npx path + PATH.
-- [ ] **Remotion (optional):** See §2f for Remotion MCP (React/video docs); use full npx path + PATH.
-- [ ] **Mermaid (optional):** See §2g for Mermaid MCP (render diagram images from Mermaid definitions); use full npx path + PATH.
+- [ ] **Context7, Firebase:** Use `{NPX_PATH}` and PATH in env; disable the built-in plugin MCP in UI. Firebase: args `["-y", "firebase-tools@latest", "mcp"]`; run `firebase login` if needed.
+- [ ] **Nano Banana / Gmail / YouTube:** See §2c. **YouTube:** use `@iflow-mcp/youtube-mcp-server` (not `zubeid-youtube-mcp-server`).
+- [ ] **Dart:** See §2d. Install Dart first (Prerequisites); use `{DART_PATH}` (full path), never `"command": "dart"`.
+- [ ] **Security:** See §2d; use `{UVX_PATH}` and PATH.
+- [ ] **Apple / XcodeBuild:** See §2e. **XcodeBuild:** use `xcodebuildmcp@1.15.1` (not `@latest`) and `XCODEBUILDMCP_SENTRY_DISABLED`: `"true"`.
+- [ ] **Remotion / Mermaid:** See §2f and §2g; use `{NPX_PATH}` and PATH.
+- [ ] **github-mcp-server:** if Go not installed, set `"disabled": true`.
 - [ ] Restart Cursor after changes.
 
 ---
@@ -215,11 +239,12 @@ Apply the same MCPs as Cursor where applicable:
 - [ ] **Google Developer Knowledge** under `mcp`: `"google-developer-knowledge": { "type": "remote", "url": "https://developerknowledge.googleapis.com/mcp", "enabled": true, "headers": { "X-Goog-Api-Key": "YOUR_API_KEY" } }`. Replace with real API key.
 - [ ] **Vercel** (optional): `"vercel": { "type": "remote", "url": "https://mcp.vercel.com", "enabled": true }`. Run `opencode mcp auth vercel` when prompted.
 - [ ] **Context7** (remote): `"context7": { "type": "remote", "url": "https://mcp.context7.com/mcp", "enabled": true }`. Optional: add `"headers": { "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}" }` for higher limits.
-- [ ] **Firebase** (local, same PATH fix as Cursor): `"firebase-stdio": { "type": "local", "command": ["/Users/<you>/.nvm/versions/node/v22.12.0/bin/npx", "-y", "firebase-tools@latest", "mcp"], "enabled": true, "environment": { "PATH": "/Users/<you>/.nvm/versions/node/v22.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin" } }`. Run `firebase login` in terminal if needed.
-- [ ] **Stitch / Dart / Security (optional):** See §2d for Stitch (clone + ts-node), Dart (`dart mcp-server`), and Google SecOps (uvx + google-secops-mcp etc.); use full paths and `environment` for PATH/credentials.
-- [ ] **Apple (optional):** See §2e for Apple Doc MCP and XcodeBuild MCP; use full npx path and `environment` PATH.
-- [ ] **Remotion (optional):** See §2f for Remotion MCP; use full npx path and `environment` PATH.
-- [ ] **Mermaid (optional):** See §2g for Mermaid MCP (render diagram images); use full npx path and `environment` PATH.
+- [ ] **Firebase** (local): Use `{NPX_PATH}` and PATH in `environment`; run `firebase login` if needed.
+- [ ] **Nano Banana / Gmail / YouTube:** See §2c; use `{NPX_PATH}` or `{UVX_PATH}` and PATH. **YouTube:** `@iflow-mcp/youtube-mcp-server`.
+- [ ] **Dart:** See §2d; use `{DART_PATH}` (full path) and PATH. Install Dart first (Prerequisites).
+- [ ] **Security:** See §2d; use `{UVX_PATH}` and `environment` for credentials and PATH.
+- [ ] **Apple / XcodeBuild:** See §2e; use `{NPX_PATH}` and PATH. **XcodeBuild:** `xcodebuildmcp@1.15.1` and `XCODEBUILDMCP_SENTRY_DISABLED`: `"true"`.
+- [ ] **Remotion / Mermaid:** See §2f and §2g; use `{NPX_PATH}` and PATH.
 - [ ] Set default model: top-level `"model": "zai-coding-plan/glm-5"` (or `google/antigravity-gemini-3-flash`). Ensure Z.AI auth: `opencode auth login`. If GLM 5 missing: `opencode models --refresh`.
 
 ---
@@ -248,6 +273,17 @@ If the OpenCode UI still shows a different model (e.g. Claude) after setting `mo
 
 ---
 
+## Troubleshooting
+
+If you followed Prerequisites and the package versions in this doc (YouTube: `@iflow-mcp/youtube-mcp-server`, XcodeBuild: `xcodebuildmcp@1.15.1`, Dart: full path after `brew install dart-sdk`), most errors are avoided. If you still see issues:
+
+- **spawn ENOENT / command not found:** You did not use full paths. Resolve `{NPX_PATH}`, `{UVX_PATH}`, `{DART_PATH}` (see Prerequisites) and use them in `command`; add PATH in `env`/`environment` with the binary's directory.
+- **YouTube:** `Cannot find module ... @modelcontextprotocol/sdk/dist/cjs` → switch to `@iflow-mcp/youtube-mcp-server` (see §2c). Clear npx cache (`rm -rf ~/.npm-cache/_npx`) if needed.
+- **XcodeBuild:** `Cannot find package ... @sentry/core` → use `xcodebuildmcp@1.15.1` (not `@latest`) and set `XCODEBUILDMCP_SENTRY_DISABLED`: `"true"`. Clear npx cache if needed.
+- **Dart:** `spawn dart ENOENT` → install Dart (`brew install dart-sdk`), then use the full path from `which dart` as `command` (e.g. `/opt/homebrew/bin/dart`). Omit or disable the Dart MCP until Dart is installed.
+
+---
+
 ## Reference: Config locations
 
 | Tool / plugin | Config file | Purpose |
@@ -265,9 +301,10 @@ If the OpenCode UI still shows a different model (e.g. Claude) after setting `mo
 - **Plugin MCPs (Context7, Firebase):** Plugins that run `npx -y <package>` often hit `spawn npx ENOENT`. Add custom servers (`context7-stdio`, `firebase-stdio`) in `mcp.json` with full npx path and `PATH` in env, then disable the plugin MCP in the UI.
 - **Vercel MCP:** Official remote at `https://mcp.vercel.com`; OAuth only. Cursor: `url` in mcp.json; OpenCode: `type: "remote"`, then `opencode mcp auth vercel`. Project-specific: `https://mcp.vercel.com/<team-slug>/<project-slug>`.
 - **Context7 / Firebase:** Cursor: custom stdio servers (full npx path + PATH); disable plugin MCPs. OpenCode: Context7 remote `https://mcp.context7.com/mcp`; Firebase local with full npx path and PATH in `environment`.
-- **Nano Banana / Gmail / YouTube:** See §2c. Nano Banana MCP = nanana.app (third-party image gen); Gmail/YouTube need Google Cloud + API keys/OAuth. Use full npx path + PATH in both Cursor and OpenCode.
-- **Stitch / Dart / Security (securityServer):** See §2d. Stitch = StitchAI memory (clone + ts-node); Dart = official `dart mcp-server`; Security = Google MCP Security (secops/gti/scc/soar via uvx).
-- **Apple MCPs:** See §2e. Apple Doc MCP = Apple Developer Documentation (Swift/SwiftUI/UIKit); XcodeBuild MCP = Xcode projects, SPM, simulators, devices. Both via npx; use full path + PATH.
-- **Remotion:** See §2f. MCP = Remotion docs for AI; optional Agent Skills via `npx remotion skills add` in Remotion projects.
-- **Mermaid (image rendering):** See §2g. Renders Mermaid diagram definitions to PNG or SVG via `@peng-shawn/mermaid-mcp-server`; use full npx path + PATH.
+- **Prerequisites:** Resolve `{NPX_PATH}`, `{UVX_PATH}`, `{DART_PATH}` (see Prerequisites) and use them in all stdio server configs; set PATH in `env`/`environment` to the binary's directory + `:/usr/bin:/bin:/usr/sbin:/sbin`.
+- **Nano Banana / Gmail / YouTube:** See §2c. Use `{NPX_PATH}` or `{UVX_PATH}` and PATH. **YouTube:** use `@iflow-mcp/youtube-mcp-server` (not `zubeid-youtube-mcp-server`).
+- **Dart:** See §2d. Install Dart first (`brew install dart-sdk`); always use full path `{DART_PATH}` in config. **Security:** use `{UVX_PATH}` and PATH.
+- **Apple MCPs:** See §2e. **XcodeBuild:** use `xcodebuildmcp@1.15.1` (not `@latest`) and `XCODEBUILDMCP_SENTRY_DISABLED`: `"true"` to avoid Sentry errors.
+- **Remotion (default):** See §2f. MCP = Remotion docs for AI; optional Agent Skills via `npx remotion skills add` in Remotion projects.
+- **Mermaid (default):** See §2g. Renders Mermaid diagram definitions to PNG or SVG via `@peng-shawn/mermaid-mcp-server`; use full npx path + PATH.
 - **Cursor PATH:** GUI apps often get a minimal PATH; using full paths to `npx`/`uvx` in `mcp.json` avoids “command not found” for stdio MCPs.
