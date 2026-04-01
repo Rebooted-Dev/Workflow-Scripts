@@ -2,6 +2,10 @@
 
 **Repository:** [https://github.com/Rebooted-Dev/Workflow-Scripts](https://github.com/Rebooted-Dev/Workflow-Scripts)
 
+<div align="center">
+  <img src="./media/dragfree-hero-banner.png" alt="Drag Free hero banner" width="100%">
+</div>
+
 ## Overview
 
 This directory contains structured workflow instructions for common development tasks in the host project. These workflows provide consistent, repeatable processes for planning, reviewing, implementing, debugging, and documenting code changes.
