@@ -24,9 +24,9 @@ Workflows ensure that:
 
 The workflows are organized into eight categories:
 
-1. **Orchestrator** (`00-orchestrator/`) - **NEW** Launch non-interactive OpenCode processes to delegate workflows to different models
+1. **Orchestrator** (`01a-orchestrator/`) - **NEW** Launch non-interactive OpenCode processes to delegate workflows to different models
 2. **Initial Setup** (`00-project-setup/`) - Set up new projects with dual repository management and troubleshooting system
-3. **Planning** (`01-planning/`) - Create structured implementation plans
+3. **Planning** (`01b-planning/`) - Create structured implementation plans
 4. **Build/Code** (`02-build-code/`) - Execute implementation with verification
 5. **Debug** (`03-debug/`) - Systematically identify and fix bugs
 6. **Documentation** (`04-documentation/`) - Keep documentation in sync with code
@@ -43,14 +43,14 @@ The workflows are organized into eight categories:
 
 | Task | Workflow | Location |
 |------|----------|----------|
-| **Automated plan review (different model)** | **Orchestrator Review** | **`00-orchestrator/orchestrator-review.sh`** ← DELEGATED |
+| **Automated plan review (different model)** | **Orchestrator Review** | **`01a-orchestrator/orchestrator-review.sh`** ← DELEGATED |
 | Setting up new project | Project Setup | `00-project-setup/01-setup-project.md` |
-| **Researching & creating plan** | **Research & Plan** | **`01-planning/00-research-and-plan.md`** ← START HERE |
-| Starting a new feature | Implementation Plan | `01-planning/02-finalise-plan.md` |
+| **Researching & creating plan** | **Research & Plan** | **`01b-planning/00-research-and-plan.md`** ← START HERE |
+| Starting a new feature | Implementation Plan | `01b-planning/02-finalise-plan.md` |
 | Reviewing code quality | Code Review | `05-review-audit/01-code-review.md` |
 | Optimizing code performance | Code Optimization | `05-review-audit/02-code-optimization.md` |
 | Refactoring code | Code Refactoring | `05-review-audit/03-code-refactoring.md` |
-| Reviewing a plan | Plan Review | `01-planning/01-plan-review.md` |
+| Reviewing a plan | Plan Review | `01b-planning/01-plan-review.md` |
 | Security audit | Security Review | `06-security/01-security-review.md` |
 | Implementing changes | Execution | `02-build-code/01-execution.md` |
 | Fixing a bug | Bug Fix | `03-debug/02-bug-fix-workflow.md` |
@@ -77,7 +77,7 @@ The workflows are organized into eight categories:
 
 ### 0. Orchestrator Workflows
 
-#### Orchestrator Plan Review (`00-orchestrator/orchestrator-plan-review.md`)
+#### Orchestrator Plan Review (`01a-orchestrator/orchestrator-plan-review.md`)
 
 **Purpose:** Launch non-interactive OpenCode processes to perform plan reviews using a different model, capture output to files, and manage the workflow from an orchestrator.
 
@@ -88,7 +88,7 @@ The workflows are organized into eight categories:
 - Need CI/CD integration for automated plan validation
 
 **How to use:**
-1. Use the shell script: `./00-orchestrator/orchestrator-review.sh plans/my-plan.md -m openai/gpt-4o`
+1. Use the shell script: `./01a-orchestrator/orchestrator-review.sh plans/my-plan.md -m openai/gpt-4o`
 2. The script launches OpenCode non-interactively with specified model
 3. Review output is captured to `plans/reviews/` directory
 4. Orchestrator manages the results and next steps
@@ -101,7 +101,7 @@ The workflows are organized into eight categories:
 
 ### 1. Planning Workflows
 
-#### Research and Plan (`01-planning/00-research-and-plan.md`) ← START HERE
+#### Research and Plan (`01b-planning/00-research-and-plan.md`) ← START HERE
 
 **Purpose:** Conduct deep research and create a comprehensive initial implementation plan from a goal or problem statement.
 
@@ -116,7 +116,7 @@ The workflows are organized into eight categories:
 3. Creates an implementation plan in `plans/` directory
 4. Then proceed to plan review
 
-#### Implementation Plan (`01-planning/02-finalise-plan.md`)
+#### Implementation Plan (`01b-planning/02-finalise-plan.md`)
 
 **Purpose:** Generate a consolidated, priority-ordered implementation plan from requirements and feedback.
 
@@ -286,7 +286,7 @@ Workflow will:
 - Inconsistent code style
 - Dead code and unused dependencies
 
-#### Plan Review (`01-planning/01-plan-review.md`)
+#### Plan Review (`01b-planning/01-plan-review.md`)
 
 **Purpose:** Review implementation plans for correctness, risk, feasibility, and completeness.
 
@@ -839,7 +839,7 @@ workflows/
 ├── SHARING_AND_SYNC.md (guide for sharing workflows across projects)
 ├── update-workflows.sh (helper for maintainers to commit/push workflow changes)
 ├── pull-workflows.sh (helper script for pulling workflow updates)
-├── 00-orchestrator/
+├── 01a-orchestrator/
 │   ├── README.md (directory index)
 │   ├── orchestrator-plan-review.md (delegated plan review workflow)
 │   └── orchestrator-review.sh (shell script for non-interactive reviews)
@@ -853,7 +853,7 @@ workflows/
 │   ├── sync-summary-template.md (template)
 │   ├── parallel-agents-review.md (historical analysis)
 │   └── filename-review.md (historical analysis)
-├── 01-planning/
+├── 01b-planning/
 │   ├── 00-research-and-plan.md
 │   ├── 01-plan-review.md
 │   └── 02-finalise-plan.md
