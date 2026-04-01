@@ -6,6 +6,9 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 ## Inputs
 - Primary plan document path (user-supplied).
 - Any feedback or review addenda attached to the plan.
+- Optional per-agent review reports stored in a sibling review subdirectory:
+  - For a plan at `path/to/PLAN.md`, per-agent reports live in `path/to/PLAN.reviews/`
+  - Expected file naming pattern: `PLAN.review.<short-model-name>.YYYY-MM-DD-HH-MM.md`
 
 ## Prioritization Rule
 - Organize the implementation plan by priority, descending urgency/importance: P0, P1, P2, P3.
@@ -14,6 +17,9 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 
 ## Steps
 1. Read the plan and all feedback sections; extract goals, constraints, and unresolved issues.
+   - If a `PLAN.reviews/` subdirectory exists for the supplied plan:
+     - Read all `PLAN.review.*.md` files under that directory.
+     - Treat these as additional, parallel review inputs from different agents/models.
 2. Use parallel agents to scan the codebase for context. Suggested agent roles (spawn additional agents as needed):
    - Identify existing implementations or similar patterns (read relevant files in parallel batches)
    - Map dependencies and constraints in the codebase (read dependency files in parallel batches)
@@ -57,11 +63,28 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
    - validation/verification steps and exit criteria
 6. Add effort level labels per task (Small/Medium/Large).
 7. Write the new plan to the `plans/` directory (project root) with a dated filename.
+   - Clearly indicate in the new plan’s header that it was consolidated from:
+     - The original plan
+     - Any inline addenda in the original file
+     - Any reports in `PLAN.reviews/` (if present)
+8. Perform post-finalisation cleanup of temporary review artifacts:
+   - If a `PLAN.reviews/` subdirectory exists:
+     - Decide whether the raw per-agent reports are still needed as an audit trail.
+     - If they are **not** needed:
+       - Delete the `PLAN.reviews/` directory after confirming the new plan has been saved and, if applicable, logged in `project/changelog/`.
+     - If they **are** needed:
+       - Optionally archive them (for example, compress or move to an archive directory) and record that location in the new plan or changelog entry.
 
 ## Output Requirements
 - The new plan must begin with a timestamp header: `YYYY-MM-DD HH:MM`.
 - Title should describe the plan scope.
 - Include a concise summary and a priority-ordered roadmap.
+- If per-agent review reports were found under `PLAN.reviews/`, briefly list:
+  - Which models/agents contributed (derived from filenames and/or contents)
+  - The review directory path used for consolidation.
+- If `PLAN.reviews/` is deleted or archived as part of cleanup, that decision and (if archived) destination should be mentioned in either:
+  - The new plan’s header/notes, or
+  - The corresponding changelog entry in `project/changelog/`.
 
 ## Related Workflows
 
@@ -79,6 +102,10 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
   - Larger redesigns are explicitly deferred to P3 unless required for a P0/P1 fix.
   - Avoid branching architecture decisions without selecting a default path for the current phase.
 - No unresolved ambiguity remains about scope or execution order.
+- When a `PLAN.reviews/` subdirectory exists, its contents have been considered in the consolidation, and this is mentioned in the new plan’s header or summary.
+- A clear decision has been made about the fate of `PLAN.reviews/`:
+  - Either it is removed after consolidation, or
+  - It is archived and the archive location is recorded for future reference.
 
 ## Notes
 - Prefer the smallest viable change that satisfies the objective and verification step.

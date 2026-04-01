@@ -7,6 +7,8 @@ This directory contains templates, rubrics, and analysis documents about the wor
 | File | Type | Status | Purpose |
 |------|------|--------|---------|
 | [`severity-priority-rubric.md`](./severity-priority-rubric.md) | Reference | **Active** | Shared rubric for S0-S3 severity and P0-P3 priority scoring |
+| [`glossary.md`](./glossary.md) | Reference | **Active** | Common terminology and conventions used across workflows |
+| [`sync-summary-template.md`](./sync-summary-template.md) | Template | **Active** | Template for documentation sync summary reports |
 | [`sync-summary-template.md`](./sync-summary-template.md) | Template | **Active** | Template for documentation sync summary reports |
 | [`agent-flexibility-review.md`](./agent-flexibility-review.md) | Analysis | **Active** | Guidelines for flexible agent spawning patterns |
 | [`filename-review.md`](./filename-review.md) | Analysis | Historical | Review of filename conventions (completed 2026-01) |
@@ -17,6 +19,15 @@ This directory contains templates, rubrics, and analysis documents about the wor
 ### Active Files (Use These)
 
 - **`severity-priority-rubric.md`** - Reference this when scoring issues in any workflow. Defines:
+  - Severity levels: S0 (Critical) → S3 (Low)
+  - Priority levels: P0 (Blocker) → P3 (Backlog)
+  - Mapping rules and evidence requirements
+
+- **`glossary.md`** - Quick reference for workflow terminology. Covers:
+  - Priority and severity level definitions
+  - Workflow category purposes
+  - Task marking conventions
+  - Common placeholders and their meanings
   - Severity levels: S0 (Critical) → S3 (Low)
   - Priority levels: P0 (Blocker) → P3 (Backlog)
   - Mapping rules and evidence requirements

@@ -16,3 +16,15 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Python cache / build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Node / JS build artifacts
+node_modules/
+dist/
+build/
