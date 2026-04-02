@@ -42,20 +42,20 @@ The orchestrator (you or a script) launches OpenCode in non-interactive mode wit
 
 ```bash
 # Review a plan using default model
-./00-orchestrator/orchestrator-review.sh plans/my-plan.md
+./01a-orchestrator/orchestrator-review.sh plans/my-plan.md
 
 # Review using specific model
-./00-orchestrator/orchestrator-review.sh plans/my-plan.md -m openai/gpt-4o
+./01a-orchestrator/orchestrator-review.sh plans/my-plan.md -m openai/gpt-4o
 
 # Security-focused review with lightweight model
-./00-orchestrator/orchestrator-review.sh plans/my-plan.md -f security -m openai/gpt-4o-mini
+./01a-orchestrator/orchestrator-review.sh plans/my-plan.md -f security -m openai/gpt-4o-mini
 ```
 
 ### From Another Workflow
 
 ```bash
 # Launch review as background task
-./00-orchestrator/orchestrator-review.sh \
+./01a-orchestrator/orchestrator-review.sh \
   plans/implementation-plan.md \
   -m openai/gpt-4o \
   -o plans/reviews/review-output.md &
@@ -98,7 +98,7 @@ Automate plan reviews in your pipeline:
 # .github/workflows/plan-review.yml
 - name: Review Implementation Plan
   run: |
-    ./Workflow-Scripts/00-orchestrator/orchestrator-review.sh \
+    ./Workflow-Scripts/01a-orchestrator/orchestrator-review.sh \
       plans/implementation-plan.md \
       -m openai/gpt-4o
     

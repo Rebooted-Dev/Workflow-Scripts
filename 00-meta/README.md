@@ -9,7 +9,6 @@ This directory contains templates, rubrics, and analysis documents about the wor
 | [`severity-priority-rubric.md`](./severity-priority-rubric.md) | Reference | **Active** | Shared rubric for S0-S3 severity and P0-P3 priority scoring |
 | [`glossary.md`](./glossary.md) | Reference | **Active** | Common terminology and conventions used across workflows |
 | [`sync-summary-template.md`](./sync-summary-template.md) | Template | **Active** | Template for documentation sync summary reports |
-| [`sync-summary-template.md`](./sync-summary-template.md) | Template | **Active** | Template for documentation sync summary reports |
 | [`agent-flexibility-review.md`](./agent-flexibility-review.md) | Analysis | **Active** | Guidelines for flexible agent spawning patterns |
 | [`filename-review.md`](./filename-review.md) | Analysis | Historical | Review of filename conventions (completed 2026-01) |
 | [`parallel-agents-review.md`](./parallel-agents-review.md) | Analysis | Historical | Analysis of parallel agent usage across workflows |
@@ -43,6 +42,15 @@ This directory contains templates, rubrics, and analysis documents about the wor
 
 - **`filename-review.md`** - Documents past filename standardization decisions. Some checklist items may be outdated.
 - **`parallel-agents-review.md`** - Documents analysis of parallel agent patterns. Recommendations may have already been implemented.
+
+## Boundary: `00-meta/` vs `00-docs/`
+
+| Directory | Content | Examples |
+|-----------|---------|----------|
+| **`00-meta/`** (this directory) | Reusable templates, rubrics, and **design documents about the workflow system** | Severity rubric, glossary, sync template, agent flexibility guidelines |
+| **`00-docs/`** | **Generated reports and archived reviews** produced by running workflows | Code review reports, mapping reports, conflict logs |
+
+**Rule of thumb:** If it's a reusable template or a design reference → `00-meta/`. If it's a one-time generated report or archived review → `00-docs/`.
 
 ## Related Workflows
 

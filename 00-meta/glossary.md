@@ -24,7 +24,7 @@ Common terms and conventions used across Workflow-Scripts documentation.
 
 | Directory | Purpose |
 |-----------|---------|
-| **00-orchestrator/** | Launch non-interactive OpenCode processes to delegate workflows |
+| **01a-orchestrator/** | Launch non-interactive OpenCode processes to delegate workflows |
 | **00-project-setup/** | Set up new projects with dual repo management |
 | **00-meta/** | Templates, rubrics, analysis documents about workflows |
 | **00-docs/** | Generated reports, archived reviews, analysis documents |

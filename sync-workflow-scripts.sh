@@ -34,6 +34,11 @@ WORKFLOWS_REMOTE="https://github.com/Rebooted-Dev/Workflow-Scripts"
 WORKFLOWS_BRANCH="main"
 # BASE_DIR: default below; override with WORKFLOW_SYNC_BASE_DIR for your machine or use --auto
 BASE_DIR="${WORKFLOW_SYNC_BASE_DIR:-/Volumes/Skynet/Software Development Projects/RBC Projects/New}"
+# Resolve to absolute path and validate
+BASE_DIR="$(cd "${BASE_DIR}" 2>/dev/null && pwd)" || {
+  echo -e "${RED}Error: WORKFLOW_SYNC_BASE_DIR is not a valid directory${NC}" >&2
+  exit 1
+}
 # When "true", auto-clone when Workflow-Scripts missing (no prompt); for CI/non-interactive use
 NON_INTERACTIVE="${NON_INTERACTIVE:-false}"
 

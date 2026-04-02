@@ -32,7 +32,7 @@ if [ -z "$CURRENT_BRANCH" ]; then
     echo "Note: Workflow-Scripts repo is in detached HEAD; fetching without switching branches."
     git fetch --all --prune
     echo "To get updates, switch to a branch first (e.g., 'git switch main')."
-    exit 0
+    exit 1
 fi
 
 git pull --ff-only

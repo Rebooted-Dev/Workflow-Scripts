@@ -189,6 +189,8 @@ In `electron-builder.config.cjs`, ensure these are true:
 - `files` includes `index.cjs`, `desktop/main.cjs`, `desktop/preload.cjs`, and the renderer build directory.
 - Local builds should succeed without Apple credentials (ad-hoc signing + notarization disabled).
 
+> **⚠️ SECURITY WARNING**: Ad-hoc signing (`identity: '-'`) and disabled notarization are for **local development only**. Production builds MUST use a valid Apple Developer identity and enable notarization. See [Code signing and notarization (macOS)](#code-signing-and-notarization-macos) for proper production signing configuration.
+
 **CRITICAL: electron-builder excludes `dist/` by default.** The default file patterns include `!dist{,/**/*}` which excludes any directory named `dist`. If you use Vite's default output directory (`dist/`), your renderer will NOT be packaged.
 
 **Solution:** Configure Vite to output to a different directory (e.g., `renderer/`):

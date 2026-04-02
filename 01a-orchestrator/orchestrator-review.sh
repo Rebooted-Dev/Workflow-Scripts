@@ -275,22 +275,53 @@ else
   log_error "Review failed with exit code $EXIT_CODE"
 fi
 
-# Create status file
-cat > "$STATUS_FILE" << EOF
+# Create status file (use jq for safe JSON generation — prevents injection from paths with special chars)
+if command -v jq &> /dev/null; then
+  jq -n \
+    --arg plan_path "$PLAN_PATH" \
+    --arg output_file "$OUTPUT_FILE" \
+    --arg model "${MODEL:-default}" \
+    --arg focus "$FOCUS" \
+    --arg start_time "$START_TIME" \
+    --arg end_time "$END_TIME" \
+    --argjson duration "$DURATION" \
+    --arg duration_fmt "${DURATION_MIN}m ${DURATION_SEC}s" \
+    --argjson exit_code "$EXIT_CODE" \
+    --arg status "$STATUS" \
+    --arg workflow "$WORKFLOW_FILE" \
+    '{
+      plan_path: $plan_path,
+      output_file: $output_file,
+      model: $model,
+      focus: $focus,
+      start_time: $start_time,
+      end_time: $end_time,
+      duration_seconds: $duration,
+      duration_formatted: $duration_fmt,
+      exit_code: $exit_code,
+      status: $status,
+      workflow_file: $workflow
+    }' > "$STATUS_FILE"
+else
+  # Fallback: sanitize variables for heredoc (basic escaping)
+  _sanitize() { echo "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'; }
+  cat > "$STATUS_FILE" << EOF
 {
-  "plan_path": "$PLAN_PATH",
-  "output_file": "$OUTPUT_FILE",
-  "model": "${MODEL:-default}",
-  "focus": "$FOCUS",
-  "start_time": "$START_TIME",
-  "end_time": "$END_TIME",
+  "plan_path": "$(_sanitize "$PLAN_PATH")",
+  "output_file": "$(_sanitize "$OUTPUT_FILE")",
+  "model": "$(_sanitize "${MODEL:-default}")",
+  "focus": "$(_sanitize "$FOCUS")",
+  "start_time": "$(_sanitize "$START_TIME")",
+  "end_time": "$(_sanitize "$END_TIME")",
   "duration_seconds": $DURATION,
-  "duration_formatted": "${DURATION_MIN}m ${DURATION_SEC}s",
+  "duration_formatted": "$(_sanitize "${DURATION_MIN}m ${DURATION_SEC}s")",
   "exit_code": $EXIT_CODE,
-  "status": "$STATUS",
-  "workflow_file": "$WORKFLOW_FILE"
+  "status": "$(_sanitize "$STATUS")",
+  "workflow_file": "$(_sanitize "$WORKFLOW_FILE")"
 }
 EOF
+  log_warning "jq not found — status JSON uses basic escaping. Install jq for robust JSON generation."
+fi
 
 # Print summary
 echo ""
