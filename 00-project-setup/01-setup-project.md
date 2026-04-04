@@ -392,7 +392,7 @@ test -d project/plans && echo "✓ project/plans/ exists"
 ```
 
 - **project/** – Container for KIV, research, build, changelog (type folders + plans subdir, one index), and troubleshooting (category folders + index).
-- **project/plans/** – README (map to project dir) and TODO.md (current tasks). **Active plan documents live here** (e.g. `project/plans/yyyy-mm-dd-plan-name.md`). Completed plans are **moved** from `project/plans/` to `project/changelog/plans/` with a row in `project/changelog/index.md` (Type=plan).
+- **project/plans/** – README (map to project dir) and **TODO.md** (current tasks + **Reference — filing completed plans** per Step 2.8.3). **Active plan documents live here** (e.g. `project/plans/yyyy-mm-dd-plan-name.md`). Default: completed plans go to **`project/plans-completed/<category>/`** plus both indexes; see Step 2.8.4.
 - **docs/** – Long-lived documentation (user-facing or project docs).
 
 ### 2.1 Check for Existing Troubleshooting Files
@@ -922,12 +922,24 @@ See **project/plans/TODO.md** for the current task list. Keep it updated as task
 
 ### 2.8.3 Create project/plans/TODO.md
 
-Create `project/plans/TODO.md` (if it doesn't exist) with a template for current tasks:
+Create `project/plans/TODO.md` (if it doesn't exist) with a template for current tasks. **Always include** the **Reference — filing completed plans** section below so agents and contributors see the filing steps next to the task list.
+
+**If the file already exists** (e.g. migrating an older project), **append** the Reference section when it is missing; do not delete existing **Active** / **Completed** tasks.
 
 ```markdown
 # Current Tasks
 
 Keep this file up to date as tasks involving the project directory are completed (check off items, add changelog row or troubleshooting entry as needed).
+
+## Reference — filing completed plans
+
+When a plan is finished and should be archived, follow **`project/plans-completed/README.md`**:
+
+1. Move the plan file from `project/plans/` or `project/build/` to **`project/plans-completed/<category>/`** (pick category: `implementation`, `investigation`, `migration`, `review`, or `tooling`).
+2. Add a row at the top of **`project/plans-completed/index.md`** (Date, Category, Title, File, Notes).
+3. Add a row at the top of **`project/changelog/index.md`** with Type=`plan` and File **`../plans-completed/<category>/<filename>`**.
+
+**Alternate:** If you explicitly want the plan under **`project/changelog/plans/`** only, file there and use File `plans/...` in the changelog index.
 
 ## Active
 
@@ -946,6 +958,8 @@ When a plan is confirmed completed, or the user asks to **"file … as completed
 **Alternate:** If the user explicitly asks to file under **`project/changelog/plans/`**, move there instead and use File=`plans/...` in the changelog index.
 
 Agent files (AGENTS.md, docs/agents/changelog-and-troubleshooting.md, CLAUDE.md, GEMINI.md) must instruct agents to follow this rule; see Step 1.4, Step 2.6.1, and Step 2.10.
+
+**Human/agent shortcut:** The same filing steps are duplicated under **Reference — filing completed plans** in **`project/plans/TODO.md`** (Step 2.8.3) so they appear next to the active task list.
 
 ---
 
