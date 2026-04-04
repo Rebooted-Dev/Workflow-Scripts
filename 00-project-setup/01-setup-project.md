@@ -159,7 +159,7 @@ If you use the `project/` pattern, make sure:
 
 For consistent checklist marking (✅ vs `[ ]`), completion markers, and archiving completed plans, follow the single source of truth:
 
-- **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**
+- **[`../../04-documentation/03-mark-completed.md`](../../04-documentation/03-mark-completed.md)**
 
 ### Quick update checklist (existing project)
 

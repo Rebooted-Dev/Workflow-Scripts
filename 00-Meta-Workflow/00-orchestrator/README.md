@@ -42,20 +42,20 @@ The orchestrator (you or a script) launches OpenCode in non-interactive mode wit
 
 ```bash
 # Review a plan using default model
-./01a-orchestrator/orchestrator-review.sh plans/my-plan.md
+./00-Meta-Workflow/00-orchestrator/orchestrator-review.sh plans/my-plan.md
 
 # Review using specific model
-./01a-orchestrator/orchestrator-review.sh plans/my-plan.md -m openai/gpt-4o
+./00-Meta-Workflow/00-orchestrator/orchestrator-review.sh plans/my-plan.md -m openai/gpt-4o
 
 # Security-focused review with lightweight model
-./01a-orchestrator/orchestrator-review.sh plans/my-plan.md -f security -m openai/gpt-4o-mini
+./00-Meta-Workflow/00-orchestrator/orchestrator-review.sh plans/my-plan.md -f security -m openai/gpt-4o-mini
 ```
 
 ### From Another Workflow
 
 ```bash
 # Launch review as background task
-./01a-orchestrator/orchestrator-review.sh \
+./00-Meta-Workflow/00-orchestrator/orchestrator-review.sh \
   plans/implementation-plan.md \
   -m openai/gpt-4o \
   -o plans/reviews/review-output.md &
@@ -98,7 +98,7 @@ Automate plan reviews in your pipeline:
 # .github/workflows/plan-review.yml
 - name: Review Implementation Plan
   run: |
-    ./Workflow-Scripts/01a-orchestrator/orchestrator-review.sh \
+    ./Workflow-Scripts/00-Meta-Workflow/00-orchestrator/orchestrator-review.sh \
       plans/implementation-plan.md \
       -m openai/gpt-4o
     
@@ -203,9 +203,9 @@ Potential additions to the orchestrator:
 
 ## Related Workflows
 
-- **[`01-planning/01-plan-review.md`](../01-planning/01-plan-review.md)** - The actual review workflow being executed
-- **[`01-planning/00-research-and-plan.md`](../01-planning/00-research-and-plan.md)** - Create plans that can be reviewed
-- **[`01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Process review feedback
+- **[`01-Planning & Organizing/01-plan-review.md`](../01-Planning & Organizing/01-plan-review.md)** - The actual review workflow being executed
+- **[`01-Planning & Organizing/00-research-and-plan.md`](../01-Planning & Organizing/00-research-and-plan.md)** - Create plans that can be reviewed
+- **[`01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Process review feedback
 
 ## Getting Help
 

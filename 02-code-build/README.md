@@ -1,4 +1,4 @@
-# Build/Code Workflows
+# Code Build Workflows
 
 This directory contains workflows for implementing code changes with verification.
 
@@ -40,7 +40,7 @@ This directory contains workflows for implementing code changes with verificatio
 
 To keep completion rules consistent across workflows, use the single source of truth:
 
-- **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** — task checkbox conventions (✅ vs `[ ]`), completion markers, and how to archive completed plans into the project changelog system.
+- **[`../04-documentation/02-sync-documentation.md`](../04-documentation/02-sync-documentation.md)** — task checkbox conventions (✅ vs `[ ]`), completion markers, and how to archive completed plans into the project changelog system.
 
 ### Phase-Based Implementation
 
@@ -58,6 +58,7 @@ Both workflows emphasize breaking work into phases:
 
 ## Related Workflows
 
-- [Implementation Plan](../01-planning/02-finalise-plan.md) - Create the plan to execute
-- [Code Review](../05-review-audit/01-code-review.md) - Review after implementation
-- [Bug Fix](../03-debug/02-bug-fix-workflow.md) - If issues arise during implementation
+- [Implementation Plan](../01-Planning & Organizing/02-finalise-plan.md) - Create the plan to execute
+- [Code Review](../05-code-review-audit/01-code-review.md) - Review after implementation
+- [Bug Description](../03-debugging/01-bug-description.md) - Structure bug reports before fixing
+- [Bug Fix](../03-debugging/02-bug-fix-workflow.md) - Systematic debugging workflow

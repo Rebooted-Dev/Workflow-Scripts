@@ -24,6 +24,6 @@ Generated reports, archived reviews, and analysis documents produced by workflow
 
 ## Related Directories
 
-- **[`../00-meta/`](../00-meta/)** — Templates, rubrics, and workflow design documents
-- **[`../00-plans/`](../00-plans/)** — Active plans for Workflow-Scripts repo work
-- **[`../00-plans-completed/`](../00-plans-completed/)** — Archived completed plans
+- **[`../00-meta/README.md`](../00-meta/)** — Templates, rubrics, and workflow design documents
+- **[`../00-plans/index.md`](../00-plans/)** — Active plans for Workflow-Scripts repo work
+- **[`../00-plans-completed/index.md`](../00-plans-completed/)** — Archived completed plans

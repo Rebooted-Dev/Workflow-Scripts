@@ -30,7 +30,7 @@ START HERE
                                          │
                                          ▼
                                ┌──────────────────────┐
-                               │  02-build-code/      │
+                               │  02-code-build/        │
                                │  01-execution.md     │
                                │  (Implement code)    │
                                └──────────────────────┘
@@ -48,7 +48,7 @@ START HERE
 - Yes → Use [`02-finalise-plan.md`](./02-finalise-plan.md)
 
 **Ready to start implementing?**
-- Yes → Use [`02-build-code/01-execution.md`](../02-build-code/01-execution.md)
+- Yes → Use [`02-code-build/01-execution.md`](../02-code-build/01-execution.md)
 
 ## Key Concepts
 
@@ -62,7 +62,7 @@ All plans use consistent priority ordering (P0 → P3):
 
 ### Severity Scoring
 
-Plans reference the shared rubric in [`00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md) for consistent severity assessment:
+Plans reference the shared rubric in [`../../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../../00-Meta-Workflow/00-meta/severity-priority-rubric.md) for consistent severity assessment:
 - **S0 Critical:** Security breach, data loss, total outage
 - **S1 High:** Major functionality broken, wide user impact
 - **S2 Medium:** Partial failure, workaround exists
@@ -86,7 +86,7 @@ Review feedback is appended to the plan document with:
 
 ## Related Workflows
 
-- [Execution](../02-build-code/01-execution.md) - Implement the plan
-- [Confirm Execution](../02-build-code/02-confirm-execution.md) - Verify implementation matches plan
-- [Code Review](../05-review-audit/01-code-review.md) - Review code after implementation
-- [Severity & Priority Rubric](../00-meta/severity-priority-rubric.md) - Shared scoring standard
+- [Execution](../02-code-build/01-execution.md) - Implement the plan
+- [Confirm Execution](../02-code-build/02-confirm-execution.md) - Verify implementation matches plan
+- [Code Review](../05-review/01-code-review.md) - Review code after implementation
+- [Severity & Priority Rubric](../../00-Meta-Workflow/00-meta/severity-priority-rubric.md) - Shared scoring standard

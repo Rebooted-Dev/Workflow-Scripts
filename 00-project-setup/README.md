@@ -95,8 +95,8 @@ Task list for MCP and configuration setup:
 
 ## Related Workflows
 
-- [Sync Documentation](../04-documentation/02-sync-documentation.md) - Keep documentation in sync with code
-- [Code Review](../05-review-audit/01-code-review.md) - Code quality review
+- [Sync Documentation](../../04-documentation/02-sync-documentation.md) - Keep documentation in sync with code
+- [Code Review](../../05-review-audit/01-code-review.md) - Code quality review
 
 ## Notes
 
