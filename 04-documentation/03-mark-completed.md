@@ -67,11 +67,17 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 3. **Collect all flagged issues** and list them in **descending order of importance/urgency** (see Output Requirements).
 
 ### Phase 4: Reconcile and Update Documentation and Logs
+
 1. **Changelog:** For each verified completion that is not yet reflected in `project/changelog/`, add or update an entry per project conventions (e.g. `project/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and a row in `project/changelog/index.md`). For false completions, do not add a changelog entry claiming the fix; optionally add an entry only when the developer actually implements the fix.
-2. **Troubleshooting:** If a task was about a bug or incident, ensure `project/troubleshooting/` has an entry that matches the fix (or a note that it is still open). Update or add entries only for **verified** fixes.
-3. **Related docs:** Update `docs/` (e.g. ARCHITECTURE, USER_MANUAL, OVERVIEW, TROUBLESHOOTING) so they do not contradict the verified state. Remove or correct any doc text that claims something is done when it is flagged as not done.
-4. **plans/TODO.md:** When tasks are completed, update `plans/TODO.md` (check off items or add follow-ups as needed).
-5. **Plan/report file:** Write back into the plan/report file:
+2. **Troubleshooting:** If a task was about a bug or incident, ensure `project/troubleshooting/` has an entry that matches the fix (or a note that it is still open). Update or add entries only for **verified** fixes. File into the appropriate category subfolder (`build/`, `runtime/`, `data/`, `environment/`, `security/`) and add a row at the **top** of `project/troubleshooting/index.md`.
+3. **Plans-Completed:** If a plan or implementation document is fully completed and should be archived:
+   - Move the plan from `project/plans/` or `project/build/` to the appropriate category subfolder in `project/plans-completed/` (`implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`)
+   - If no appropriate subfolder exists, create one with a descriptive name (kebab-case)
+   - Add a row at the **top** of `project/plans-completed/index.md` with: Date, Category, Title, File path, Notes
+   - Add a Type=`plan` row at the **top** of `project/changelog/index.md` referencing the completed plan file
+4. **Related docs:** Update `docs/` (e.g. ARCHITECTURE, USER_MANUAL, OVERVIEW, TROUBLESHOOTING) so they do not contradict the verified state. Remove or correct any doc text that claims something is done when it is flagged as not done.
+5. **plans/TODO.md:** When tasks are completed, update `plans/TODO.md` (check off items or add follow-ups as needed).
+6. **Plan/report file:** Write back into the plan/report file:
    - **✅** on tasks and sub-tasks that were verified complete
    - **Remove** or **replace** completion markers from tasks that were flagged (leave as unchecked `[ ]` or add a "⚠ False completion" / "⚠ Incomplete" note). Do not use "x" or ✓ for completed; use **✅ (green check mark)** only for consistency.
 
@@ -100,7 +106,8 @@ Display **all** flagged issues in **descending order of importance or urgency**,
 
 ### Reconciled artifacts
 - **Changelog:** New or updated entries only for **verified** completions; index updated.
-- **Troubleshooting:** Entries match verified fixes; open issues clearly marked.
+- **Troubleshooting:** Entries match verified fixes; open issues clearly marked; filed in appropriate subdirectories.
+- **Plans-Completed:** Completed plans filed in appropriate category subdirectories (`implementation/`, `investigation/`, `migration/`, `review/`, `tooling/` or custom); index updated with entries at top.
 - **Docs:** No claims that contradict verification (e.g. remove "API key is never sent to renderer" if P1-1 is still incomplete).
 
 ## Acceptance Criteria

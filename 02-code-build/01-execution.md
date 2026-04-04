@@ -18,6 +18,7 @@ Execute implementation in phases with verification and documentation updates.
 - Updated changelog (`changelog/` per AGENTS.md, or `docs/CHANGELOG.md` / `CHANGELOG.md` if the project uses a single file)
 - Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
 - Implementation plan in `plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open)
+- **If plan is fully completed:** File the completed plan in `project/plans-completed/<category>/` and update both `project/plans-completed/index.md` and `project/changelog/index.md` (see Filing Completed Plans below)
 
 ---
 
@@ -74,7 +75,7 @@ Execute implementation in phases with verification and documentation updates.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
   - **Update logs (only for completed tasks that change or affect project code):**
-    - **Changelog:** Add a dated entry for this phase's work. Prefer `changelog/` directory per AGENTS.md when the project uses it; otherwise use `docs/CHANGELOG.md` or `CHANGELOG.md`.
+    - **Changelog:** Add a dated entry for this phase's work. Prefer `changelog/` directory per AGENTS.md when the project uses it; otherwise use `docs/CHANGELOG.md` or `CHANGELOG.md`. File into appropriate type subfolder (`added/`, `changed/`, `fixed/`, `improved/`, `docs/`, `refactor/`, `config/`) and add a row at the **top** of `changelog/index.md`.
     - **Troubleshooting (only when applicable):** Add a troubleshooting entry **only** when this phase involved one of the following (see AGENTS.md and `troubleshooting/README.md` for full conventions):
       - **Add an entry when:** You fixed a **bug** (incorrect behavior or crash), resolved an **issue** that required debugging or a workaround, or solved a **non-trivial problem** (significant investigation, multiple steps, or lessons worth preserving — e.g. complex config, unexpected framework behavior, tricky debugging).
       - **Do not add an entry when:** The work was a simple code change, routine refactor, or straightforward feature addition with no real problem-solving. Changelog is enough.
@@ -88,7 +89,12 @@ Execute implementation in phases with verification and documentation updates.
 - **Update the implementation plan:** Ensure task status and completion markers are consistent. Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the single source of truth on:
   - task checkboxes (✅ vs `[ ]`),
   - completion markers, and
-  - archiving completed plans into the project changelog system.
+  - archiving completed plans into the appropriate systems.
+- **If plan is fully completed, file it in `project/plans-completed/`:**
+  1. Determine the appropriate category subfolder (`implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`). If none fit, create a descriptive kebab-case folder (e.g., `performance-optimization/`).
+  2. Move the plan from `project/plans/` or `project/build/` to `project/plans-completed/<category>/`
+  3. Add a row at the **top** of `project/plans-completed/index.md` with columns: Date, Category, Title, File path, Notes
+  4. Add a Type=`plan` entry at the **top** of `project/changelog/index.md` referencing the completed plan
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.
 
 ## Quick Checklist
