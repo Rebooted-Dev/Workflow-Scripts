@@ -83,6 +83,20 @@ When you see these in workflow files, replace with actual values:
 | `<GIT_REMOTE>` | Your project's git remote URL |
 | `<WORKFLOWS_REMOTE>` | Workflows repo URL |
 
+## Report & Document Naming Conventions
+
+When workflows generate reports or analysis documents, follow the convention defined in [`naming-conventions.md`](./naming-conventions.md).
+
+**Quick Reference:**
+- **Format:** `{report-type}-YYMMDD-HHMM-{model}.md`
+- **YYMMDD**: 2-digit year, month, day
+- **HHMM**: 24-hour format time
+- **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
+
+**Examples:**
+- `code-review-260404-1430-claude.md`
+- `security-audit-260403-0920-gpt4.md`
+
 ---
 
 **See also:**

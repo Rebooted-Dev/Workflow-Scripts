@@ -98,6 +98,34 @@ Template rules:
 
 ## Steps
 
+### Workflow Overview
+
+```
+Phase 1: Discovery          Phase 2: Core Docs (P0-P1)
+┌─────────────────┐         ┌─────────────────┐
+│ Scan codebase   │         │ README.md       │
+│ with parallel   │────────▶│ User manual     │
+│ agents          │         │ Core docs       │
+└─────────────────┘         └────────┬────────┘
+                                     │
+Phase 3: Technical (P2-P3)           │
+┌─────────────────┐                  │
+│ Architecture    │◀─────────────────┘
+│ API reference   │
+│ Data models     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Cross-link &    │
+│ Add diagrams    │
+│ Verify          │
+└────────┬────────┘
+         │
+         ▼
+    [COMPLETE]
+```
+
 ### Phase 1: Discovery and Analysis
 1. **Scan the codebase using parallel agents.** Suggested agent roles (spawn additional agents as needed). Each agent should read code files in parallel batches (read multiple files concurrently) and produce a short, source-backed outline (include file paths for key claims):
    - Scan project structure and identify entry points (read package.json, main files, config files in parallel batches)
@@ -332,16 +360,16 @@ If you have fewer agents available, merge adjacent responsibilities (e.g., Agent
        - Network and integration diagrams (API relationships, microservices)
        - UI/UX flow diagrams (user journeys, state machines)
        - Documentation-specific diagrams (hub structure, learning paths)
-     - **Mermaid diagrams**: Use Mermaid syntax for more complex diagrams that benefit from automatic rendering (sequence diagrams, complex flowcharts).
      - Architecture diagrams.
      - Data flow diagrams.
      - Sequence diagrams for key workflows.
      - Component interaction diagrams.
      - Class diagrams.
-     - When choosing between ASCII art and Mermaid:
-       - Use ASCII art for simple, static diagrams that render well in plain text (terminals, plain markdown viewers)
-       - Use Mermaid for complex diagrams that benefit from automatic layout and rendering in markdown viewers that support it
-       - Reference `./ascii-art-prompts.md` for standardized prompt templates and character reference
+     - **Reference**: See `./ascii-art-prompts.md` for:
+       - Standardized prompt templates for different diagram types
+       - Character reference for box-drawing and arrows
+       - Best practices and formatting guidelines
+       - Quality checklist for diagram generation
 
 23. **Verification pass (required; Agent M):**
     - Spot-check every doc for non-speculative claims.
@@ -411,9 +439,16 @@ docs/
 - Each document should have a clear purpose and audience.
 
 ### File Naming Conventions
+
+#### Documentation Files
 - Use kebab-case for file names (e.g., `user-manual.md`, `data-models.md`).
 - Use descriptive names that indicate content.
 - For split documents, use numbered prefixes or descriptive suffixes (e.g., `api-01-authentication.md`, `api-02-endpoints.md`).
+
+#### Generated Reports
+When workflows generate reports or analysis documents, follow the naming convention defined in [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md).
+
+**Format:** `{report-type}-YYMMDD-HHMM-{model}.md`
 
 ## Acceptance Criteria
 - All P0 documentation is complete and accurate.

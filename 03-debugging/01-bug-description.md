@@ -50,6 +50,7 @@ Use multiple parallel agents to gather comprehensive information about the bug. 
 
 - **Agent 2: Analyze Changelog and Recent Changes**
   - Read `docs/CHANGELOG.md` if present; otherwise read `CHANGELOG.md`
+  - Check `plans-completed/` directory for similar past issues and resolution patterns
   - Identify recent changes that might have introduced or affected the bug
   - Map timeline of changes to bug occurrence
   - Extract context about related features or fixes
@@ -90,6 +91,7 @@ Synthesize information from all agents to create a comprehensive understanding:
 
 - **Attempted Solutions**
   - List all fixes, workarounds, or mitigations that were tried
+  - Check `plans-completed/` for similar past issues and their resolutions
   - Document why each attempt failed or was insufficient
   - Reference troubleshooting entries and changelog entries
   - Note any partial successes or temporary fixes
@@ -143,6 +145,7 @@ Create a structured bug description report with the following sections:
 - **Investigation History**
   - Timeline of when bug was discovered
   - Related troubleshooting entries (with links/references)
+  - Related completed plans in `plans-completed/` that may provide context
   - Recent changes from changelog that might be relevant
   - Investigation steps taken
 

@@ -29,7 +29,7 @@ Before scanning, verify:
 ## Prioritization Rule
 - Score each finding with severity (S0–S3) and priority (P0–P3).
 - Present the report ordered by priority (P0 to P3), then severity within each priority.
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 **Evidence Requirements (from rubric):**
 - **S0/S1 findings MUST include:**
@@ -148,7 +148,10 @@ Before scanning, verify:
      - Short-term actions (next 2 sprints)
      - Tracking items (backlog)
 
-5. **Save the report to `plans/` (project root) with a dated filename.**
+5. **Save the report to `plans/` (project root) with a dated filename following the format: `code-review-YYMMDD-HHMM-{model}.md`**
+   - **YYMMDD**: Date stamp (2-digit year, month, day)
+   - **HHMM**: Time stamp (24-hour format)
+   - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
 
 ## Output Requirements
 - Report title, date/time, scope, and summary.

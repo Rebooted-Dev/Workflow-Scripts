@@ -10,7 +10,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 ## Prioritization Rule
 - Order all findings and recommendations by priority, descending urgency/importance: P0, P1, P2, P3.
 - Within the same priority, order by severity: S0, S1, S2, S3.
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 ## Steps
 1. Read the plan end-to-end and list its explicit goals, scope, and assumptions.

@@ -23,7 +23,7 @@ Before scanning, verify:
 - Score each finding with severity (S0–S3) and priority (P0–P3).
 - Present the report ordered by priority (P0 to P3), then severity within each priority.
 - Security issues typically map to S0/S1 severity and P0/P1 priority.
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 ## Steps
 1. Scan the codebase using parallel agents focused on security. Suggested agent roles (spawn additional agents as needed):
@@ -70,7 +70,10 @@ Before scanning, verify:
    - Recommended security hardening measures
    - Timeline for addressing critical issues
 
-5. Save the report to `plans/` (project root) with a dated filename (e.g., `YYYY-MM-DD-security-review.md`).
+5. Save the report to `plans/` (project root) with a dated filename following the format: `security-review-YYMMDD-HHMM-{model}.md`
+   - **YYMMDD**: Date stamp (2-digit year, month, day)
+   - **HHMM**: Time stamp (24-hour format)
+   - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
 
 ## Output Requirements
 - Report title, date/time, scope, and summary.

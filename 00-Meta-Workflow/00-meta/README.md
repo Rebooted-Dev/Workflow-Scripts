@@ -8,6 +8,7 @@ This directory contains templates, rubrics, and analysis documents about the wor
 |------|------|--------|---------|
 | [`severity-priority-rubric.md`](./severity-priority-rubric.md) | Reference | **Active** | Shared rubric for S0-S3 severity and P0-P3 priority scoring |
 | [`glossary.md`](./glossary.md) | Reference | **Active** | Common terminology and conventions used across workflows |
+| [`naming-conventions.md`](./naming-conventions.md) | Reference | **Active** | Standardized naming for generated reports and documents |
 | [`sync-summary-template.md`](./sync-summary-template.md) | Template | **Active** | Template for documentation sync summary reports |
 | [`agent-flexibility-review.md`](./agent-flexibility-review.md) | Analysis | **Active** | Guidelines for flexible agent spawning patterns |
 | [`filename-review.md`](./filename-review.md) | Analysis | Historical | Review of filename conventions (completed 2026-01) |
@@ -27,9 +28,14 @@ This directory contains templates, rubrics, and analysis documents about the wor
   - Workflow category purposes
   - Task marking conventions
   - Common placeholders and their meanings
-  - Severity levels: S0 (Critical) → S3 (Low)
-  - Priority levels: P0 (Blocker) → P3 (Backlog)
-  - Mapping rules and evidence requirements
+  - Report naming conventions (references `naming-conventions.md`)
+
+- **`naming-conventions.md`** - Standardized naming for all generated reports and documents:
+  - Report filename format: `{type}-YYMMDD-HHMM-{model}.md`
+  - Date/time format specifications
+  - AI model naming
+  - Report header templates
+  - Workflow file naming patterns
 
 - **`sync-summary-template.md`** - Use when creating documentation sync reports
 

@@ -499,20 +499,62 @@ These are common "missing" docs that materially improve maintainability and onbo
 
 When adding diagrams to documentation:
 
-- **ASCII art diagrams**: Use standardized prompts from `./ascii-art-prompts.md` to generate consistent ASCII art diagrams. These work well for:
-  - Architecture overviews and component relationships
-  - Simple flowcharts and process flows
-  - File system hierarchies and directory structures
-  - Class inheritance diagrams
-  - Network and API integration diagrams
-  - User journey flows and state machines
+### ASCII Art Diagram Selection Flow
 
-- **Mermaid diagrams**: Use Mermaid syntax for more complex diagrams that benefit from automatic layout and rendering in markdown viewers that support it (sequence diagrams, complex flowcharts, entity-relationship diagrams).
+```
+Need a diagram?
+       │
+       ▼
+┌───────────────┐
+│ Will it be    │
+│ viewed in     │
+│ plain text?   │
+└───────┬───────┘
+       │
+   ┌───┴───┐
+   │       │
+   ▼       ▼
+  YES      NO
+   │       │
+   ▼       ▼
+┌────────┐ ┌────────┐
+│ ASCII  │ │ ASCII  │
+│ Art ✓  │ │ Art ✓  │
+│ (best  │ │ (still │
+│ choice)│ │ works) │
+└────────┘ └────────┘
+```
 
-- **When to use each**:
-  - ASCII art: Simple, static diagrams that render well in plain text (terminals, plain markdown viewers, code reviews)
-  - Mermaid: Complex diagrams requiring automatic layout, or when markdown viewer support is guaranteed
+### When to Use ASCII Art Diagrams
 
+- **Architecture diagrams**: System overview, component relationships
+- **Flowcharts and process flows**: Workflows, data flows
+- **Hierarchy diagrams**: File structure, class inheritance
+- **Network diagrams**: API relationships, microservices
+- **UI/UX flow diagrams**: User journeys, state machines
+
+### Character Reference
+
+```
+Boxes and Lines:
+┌─────┐   ───   │    ┬    ┴   ├   ┤   └   ┘
+│ Box │   →    ↑    ↓    ↔   ═   ║   ╗   ╝
+└─────┘   ◄    ↔    ◐    ◑   └─┘  ╓   ╖
+
+Arrows:
+→ ← ↑ ↓ ↔ ↕ ↖ ↗ ↘ ↙ 
+===> <=== =>> <<= ► ◄
+
+Special:
+★ * • ○ ● ◇ ◆ □ ■ △ ▽
+```
+
+### Best Practices
+
+- **Use monospaced characters**: ─ │ ┌ ┐ └ ┘ ┬ ┴ ├ ┤
+- **Keep diagrams compact**: max 20-25 lines
+- **Use consistent spacing** and alignment
+- **Label all components** clearly
 - **Reference**: See `./ascii-art-prompts.md` for:
   - Standardized prompt templates for different diagram types
   - Character reference for box-drawing and arrows

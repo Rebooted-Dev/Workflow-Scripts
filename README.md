@@ -141,7 +141,7 @@ Workflow will:
 - Read plans/auth-plan.md
 - Analyze codebase for feasibility
 - Generate priority-ordered phases
-- Save to plans/implementation-plan-auth-YYYY-MM-DD-HH-MM.md
+- Save to plans/implementation-plan-auth-YYMMDD-HHMM-{model}.md
 ```
 
 **Key Features:**
@@ -179,7 +179,7 @@ Workflow will:
 - Scan services/ directory
 - Identify security issues, bugs, and risks
 - Score each finding (S0-S3, P0-P3)
-- Generate report: plans/code-review-YYYY-MM-DD-HH-MM.md
+- Generate report: plans/code-review-YYMMDD-HHMM-{model}.md
 ```
 
 **Output Format:**
@@ -216,7 +216,7 @@ Workflow will:
 - Scan data processing code
 - Identify performance issues, resource inefficiencies
 - Score each finding (S0-S3, P0-P3)
-- Generate report: plans/code-optimization-YYYY-MM-DD-HH-MM.md
+- Generate report: plans/code-optimization-YYMMDD-HHMM-{model}.md
 ```
 
 **Output Format:**
@@ -263,7 +263,7 @@ Workflow will:
 - Scan authentication code
 - Identify code duplication, complexity, maintainability issues
 - Score each finding (S0-S3, P0-P3)
-- Generate report: plans/code-refactoring-YYYY-MM-DD-HH-MM.md
+- Generate report: plans/code-refactoring-YYMMDD-HHMM-{model}.md
 ```
 
 **Output Format:**
@@ -303,7 +303,7 @@ Workflow will:
 
 **Example:**
 ```
-User: "Review the plan at plans/feature-x-2026-01-18.md"
+User: "Review the plan at plans/feature-x-260118-1430-claude.md"
        
 Workflow will:
 - Read and analyze the plan
@@ -325,7 +325,7 @@ Workflow will:
 
 ### 3. Development Workflow
 
-#### Execution (`02-coding-debugging/01-execution.md`)
+#### Execution (`02-code-build/01-execution.md`)
 
 **Purpose:** Execute implementation in phases with verification and documentation.
 
@@ -377,7 +377,7 @@ Workflow will:
 
 ### 4. Debug Workflow
 
-#### Bug Fix (`02-coding-debugging/05-bug-fix-workflow.md`)
+#### Bug Fix (`03-debugging/02-bug-fix-workflow.md`)
 
 **Purpose:** Systematically identify and fix bugs using hypothesis-driven investigation.
 
@@ -451,7 +451,7 @@ Workflow will:
 - Scan auth files, API endpoints, and related code
 - Identify vulnerabilities (injection, XSS, auth bypass, etc.)
 - Score each finding (S0-S3, P0-P3)
-- Generate report: plans/security-review-YYYY-MM-DD-HH-MM.md
+- Generate report: plans/security-review-YYMMDD-HHMM-{model}.md
 ```
 
 **Security Focus Areas:**
@@ -494,7 +494,7 @@ Workflow will:
 **Example:**
 ```
 User: "Fix the SQL injection vulnerability identified in the security review 
-       at plans/security-review-2026-01-18-14-00.md, issue #3."
+       at plans/security-review-260118-1400-claude.md, issue #3."
        
 Workflow will:
 - Read security review report
@@ -628,11 +628,11 @@ Workflow will:
 Step 1: Planning
 → Use "Implementation Plan" workflow
 → Input: Feature requirements
-→ Output: plans/feature-auth-2026-01-18-14-30.md
+→ Output: plans/feature-auth-260118-1430-claude.md
 
 Step 2: Review
 → Use "Plan Review" workflow  
-→ Input: plans/feature-auth-2026-01-18-14-30.md
+→ Input: plans/feature-auth-260118-1430-claude.md
 → Output: Feedback appended to plan
 
 Step 3: Refine Plan
@@ -648,7 +648,7 @@ Step 4: Development
 Step 5: Code Review
 → Use "Code Review" workflow
 → Input: Repository root
-→ Output: plans/code-review-2026-01-18-16-00.md
+→ Output: plans/code-review-260118-1600-claude.md
 
 Step 6: Documentation
 → Use "Sync Documentation" workflow
@@ -681,12 +681,12 @@ Step 3: Documentation (if needed)
 Step 1: Code Review
 → Use "Code Review" workflow
 → Input: Repository root
-→ Output: plans/code-review-2026-01-18-10-00.md
+→ Output: plans/code-review-260118-1000-claude.md
 
 Step 2: Planning
 → Use "Implementation Plan" workflow
 → Input: Code review findings
-→ Output: plans/tech-debt-2026-01-18-11-00.md
+→ Output: plans/tech-debt-260118-1100-claude.md
 
 Step 3: Development
 → Use "Execution" workflow
@@ -705,7 +705,7 @@ Step 4: Documentation
 Step 1: Security Review
 → Use "Security Review" workflow
 → Input: Repository root
-→ Output: plans/security-review-2026-01-18-14-00.md
+→ Output: plans/security-review-260118-1400-claude.md
 
 Step 2: Security Fix (for critical issues)
 → Use "Security Fix" workflow
@@ -729,12 +729,12 @@ Step 4: Documentation (if needed)
 Step 1: Code Optimization Review
 → Use "Code Optimization" workflow
 → Input: Repository root (or specific focus area)
-→ Output: plans/code-optimization-2026-01-18-15-00.md
+→ Output: plans/code-optimization-260118-1500-claude.md
 
 Step 2: Planning
 → Use "Implementation Plan" workflow
 → Input: Optimization report findings
-→ Output: plans/optimization-plan-2026-01-18-15-30.md
+→ Output: plans/optimization-plan-260118-1530-claude.md
 
 Step 3: Implementation
 → Use "Execution" workflow
@@ -744,12 +744,12 @@ Step 3: Implementation
 Step 4: Code Refactoring Review
 → Use "Code Refactoring" workflow
 → Input: Repository root (or specific focus area)
-→ Output: plans/code-refactoring-2026-01-18-16-00.md
+→ Output: plans/code-refactoring-260118-1600-claude.md
 
 Step 5: Planning
 → Use "Implementation Plan" workflow
 → Input: Refactoring report findings
-→ Output: plans/refactoring-plan-2026-01-18-16-30.md
+→ Output: plans/refactoring-plan-260118-1630-claude.md
 
 Step 6: Implementation
 → Use "Execution" workflow
@@ -779,13 +779,13 @@ Step 7: Code Review
 ### 3. Document as You Go
 - Update the changelog after each phase (`docs/CHANGELOG.md` preferred)
 - Add a `troubleshooting/` entry for bug fixes and update `troubleshooting/index.md`
-- **Update the implementation plan after each code build or bug fix:** Use the single source of truth for marking, completion markers, and archiving completed plans: **[`03-documentation/03-mark-completed.md`](./03-documentation/03-mark-completed.md)**.
+- **Update the implementation plan after each code build or bug fix:** Use the single source of truth for marking, completion markers, and archiving completed plans: **[`04-documentation/03-mark-completed.md`](./04-documentation/03-mark-completed.md)**.
 - Keep documentation in sync with code
 
 ### 4. Completion Status Conventions
 All completion marking rules are centralized in:
 
-- **[`03-documentation/03-mark-completed.md`](./03-documentation/03-mark-completed.md)** — ✅ checkboxes, completion markers, and archiving completed plans into the project changelog system.
+- **[`04-documentation/03-mark-completed.md`](./04-documentation/03-mark-completed.md)** — ✅ checkboxes, completion markers, and archiving completed plans into the project changelog system.
 
 ### 5. Use Parallel Agents
 - Many workflows support parallel agents with a flexible pattern
@@ -830,6 +830,20 @@ Workflow files use a mixed naming convention that balances clarity and organizat
 - Check the directory's README.md for workflow sequence guidance
 - Look for "When to Use" sections in workflow files
 - Use the main README's decision trees and quick start guides
+
+### Generated Reports Naming Convention
+
+When workflows generate reports or analysis documents, follow the convention defined in [`00-Meta-Workflow/00-meta/naming-conventions.md`](./00-Meta-Workflow/00-meta/naming-conventions.md).
+
+**Quick Reference:**
+- **Format:** `{report-type}-YYMMDD-HHMM-{model}.md`
+- **YYMMDD**: 2-digit year, month, day
+- **HHMM**: 24-hour format time
+- **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
+
+**Examples:**
+- `plans/code-review-260404-1430-claude.md`
+- `plans/security-audit-260403-0920-gpt4.md`
 
 ## Workflow File Structure
 

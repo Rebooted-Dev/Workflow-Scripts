@@ -33,7 +33,23 @@ Template rules:
 If you discover missing "supporting" documentation (contributing/changelog/config/security/errors/migrations/etc.), use `./09-optional.md` as a checklist to recommend a small, high-leverage set (usually 1-3 items).
 
 ## Steps
-1. Scan the codebase using parallel agents. Suggested agent roles (spawn additional agents as needed):
+
+### Sync Process Flow
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│ 1. Scan     │───▶│ 2. Inventory│───▶│ 3. Fix P0→P3│
+│  codebase   │    │  docs       │    │  in order   │
+└─────────────┘    └─────────────┘    └──────┬──────┘
+                                            │
+                                            ▼
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│ 6. Normalize│◀───│ 5. Cross-link│◀───│ 4. Reorganize│
+│  structure  │    │  related docs│    │  into dirs   │
+└─────────────┘    └─────────────┘    └─────────────┘
+```
+
+1. **Scan the codebase using parallel agents.** Suggested agent roles (spawn additional agents as needed):
    - Scan codebase for current behavior (read implementation files in parallel batches)
    - Understand architecture and structure (read architecture files in parallel batches)
    - Identify documentation gaps (read code and compare with docs in parallel batches)
@@ -52,10 +68,9 @@ If you discover missing "supporting" documentation (contributing/changelog/confi
    - then reorganize and consolidate
    - then add diagrams/polish
 4. Reorganize `docs/` into clear subdirectories by audience and purpose.
-5. Add diagrams and file maps where they clarify complex systems:
+5. **Add diagrams and file maps where they clarify complex systems:**
    - **ASCII art diagrams**: Use prompts from `./ascii-art-prompts.md` to generate ASCII art diagrams for architecture, flows, hierarchies, and other visual aids that benefit from plain text rendering.
-   - **Mermaid diagrams**: Use Mermaid syntax for complex diagrams that benefit from automatic rendering.
-   - Reference `./ascii-art-prompts.md` for standardized prompt templates, character reference, and best practices.
+   - **Reference**: See `./ascii-art-prompts.md` for standardized prompt templates, character reference, and best practices.
    - When adding diagrams, ensure they accurately reflect the current codebase structure and relationships.
 6. Remove redundancy and cross-link related docs.
 7. Normalize document structure:

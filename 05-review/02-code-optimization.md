@@ -12,7 +12,7 @@ Perform a structured analysis to identify performance bottlenecks, resource inef
 - Score each finding with severity (S0–S3) and priority (P0–P3).
 - Present the report ordered by priority (P0 to P3), then severity within each priority.
 - Performance issues typically map to S1/S2 severity and P1/P2 priority unless they cause outages or critical user impact.
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 ## Steps
 1. Scan the codebase using parallel agents. Suggested agent roles (spawn additional agents as needed):
@@ -54,7 +54,10 @@ Perform a structured analysis to identify performance bottlenecks, resource inef
    - Recommended optimization roadmap
    - Expected impact of addressing high-priority items
 
-5. Save the report to `plans/` (project root) with a dated filename (e.g., `code-optimization-YYYY-MM-DD-HH-MM.md`).
+5. Save the report to `plans/` (project root) with a dated filename following the format: `code-optimization-YYMMDD-HHMM-{model}.md`
+   - **YYMMDD**: Date stamp (2-digit year, month, day)
+   - **HHMM**: Time stamp (24-hour format)
+   - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
 
 ## Output Requirements
 - Report title, date/time, scope, and summary.

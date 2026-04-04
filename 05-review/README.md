@@ -46,7 +46,7 @@ All workflows use:
 - **Parallel agents**: 3-5 agents scanning different aspects
 - **Output format**: Report saved to `plans/` with findings ordered by priority
 
-See [`../00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md) for the full scoring rubric.
+See [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md) for the full scoring rubric.
 
 ## Running Multiple Reviews
 
@@ -64,11 +64,12 @@ When running multiple reviews:
 
 ## Output Location
 
-All workflows save reports to `plans/` (project root):
-- `plans/code-review-YYYY-MM-DD-HH-MM.md`
-- `plans/code-optimization-YYYY-MM-DD-HH-MM.md`
-- `plans/code-refactoring-YYYY-MM-DD-HH-MM.md`
-- `plans/website-data-refactoring-YYYY-MM-DD-HH-MM.md`
+All workflows save reports to `plans/` (project root) using the standard naming convention defined in [`../00-meta/naming-conventions.md`](../00-meta/naming-conventions.md):
+
+- `plans/code-review-YYMMDD-HHMM-{model}.md`
+- `plans/code-optimization-YYMMDD-HHMM-{model}.md`
+- `plans/code-refactoring-YYMMDD-HHMM-{model}.md`
+- `plans/website-data-refactoring-YYMMDD-HHMM-{model}.md`
 
 ## Related Workflows
 

@@ -11,7 +11,7 @@ Systematically identify, diagnose, and fix bugs using a structured debugging pro
 ## Prioritization Rule
 - Address bugs in priority order: P0 → P1 → P2 → P3.
 - Critical bugs (P0/S0) that cause data loss, security issues, or service outages must be fixed immediately.
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 ## Steps
 
@@ -33,6 +33,7 @@ Use multiple parallel agents to investigate the bug. Suggested agent roles (spaw
 - Analyze error logs and stack traces (read logging files, error handlers, and exception handling code in parallel batches)
 - Check for similar bugs or related issues in the codebase (read similar patterns/files in parallel batches)
 - Review recent changes that might have introduced the bug (read git history, recent commits, and related files in parallel batches)
+  - Review `plans-completed/` directory for similar past issues and their resolutions
 - Examine data flow and state management around the bug (read data processing, state files, and API handlers in parallel batches)
 
 
@@ -106,10 +107,12 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
   - Create a new file in `changelog/fixed/` named `YYYY-MM-DD-fixed-<short-title>.md` (see project `changelog/README.md` for template).
   - Add a row at the top of `changelog/index.md` with Date, Type, Title, File.
   - If the project uses a single-file changelog instead of `changelog/`, use that: e.g. `docs/CHANGELOG.md` or `CHANGELOG.md` with a dated line `- YYYY-MM-DD: Bug fix: [bug description]`.
+  - Cross-reference relevant entries in `plans-completed/` if the bug relates to a completed plan.
 - **Troubleshooting** (required for every bug fix unless truly trivial):
   - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`.
   - Update `troubleshooting/index.md` (add the new entry at the top).
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons (see project `troubleshooting/README.md`).
+  - Reference related entries in `plans-completed/` for historical context if applicable.
 - **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
 
 ### 8. Final Verification

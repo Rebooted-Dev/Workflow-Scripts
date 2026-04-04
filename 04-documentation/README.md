@@ -43,6 +43,34 @@ Use the **mark completed and verify** workflow when:
 
 ## Workflow Overview
 
+### Documentation Hub Structure
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  DOCUMENTATION WORKFLOWS                    │
+├─────────────────────────────────────────────────────────────┤
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
+│  │ 00-templates │  │ 01-create    │  │ 02-sync      │       │
+│  │              │  │              │  │              │       │
+│  │   [P0-P3]    │  │  from scratch │  │  existing    │     │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘      │
+│         │                 │                 │              │
+│         └─────────────────┼─────────────────┘              │
+│                           ▼                                │
+│              ┌──────────────────────┐                     │
+│              │  03-mark-completed   │                     │
+│              │   (verify tasks)     │                     │
+│              └──────────┬───────────┘                     │
+│                         │                                │
+│              ┌──────────┴───────────┐                    │
+│              ▼                      ▼                    │
+│    ┌─────────────────┐  ┌─────────────────┐           │
+│    │ 09-optional      │  │ ascii-art-prompts│           │
+│    │ (add-ons checklist)│  │ (diagram guide) │           │
+│    └─────────────────┘  └─────────────────┘           │
+└─────────────────────────────────────────────────────────────┘
+```
+
 ### Generate Comprehensive Documentation (`01-create-docs.md`)
 
 This workflow generates complete documentation from scratch (in priority order), covering:
@@ -62,7 +90,7 @@ This workflow updates existing documentation to match code:
 2. **Inventory docs** - Catalog existing documentation, tag issues P0-P3
 3. **Fix in priority order** - P0 first, then P1, P2, P3
 4. **Reorganize** - Create meaningful subdirectories in `docs/`
-5. **Add diagrams** - Text-based diagrams (ASCII art using `./ascii-art-prompts.md`, or Mermaid for complex diagrams)
+5. **Add diagrams** - Text-based ASCII art diagrams using `./ascii-art-prompts.md`
 6. **Cross-link** - Remove redundancy, add references between related docs
 
 ### Mark Completed and Verify (`03-mark-completed.md`)

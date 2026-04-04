@@ -12,7 +12,7 @@ Perform a structured analysis to identify code quality issues, technical debt, a
 - Score each finding with severity (S0–S3) and priority (P0–P3).
 - Present the report ordered by priority (P0 to P3), then severity within each priority.
 - Refactoring opportunities typically map to S2/S3 severity and P2/P3 priority unless they block features or cause defects.
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 ## Steps
 1. Scan the codebase using parallel agents. Suggested agent roles (spawn additional agents as needed):
@@ -55,7 +55,10 @@ Perform a structured analysis to identify code quality issues, technical debt, a
    - Recommended refactoring roadmap
    - Dependencies between refactoring items (if any)
 
-5. Save the report to `plans/` (project root) with a dated filename (e.g., `code-refactoring-YYYY-MM-DD-HH-MM.md`).
+5. Save the report to `plans/` (project root) with a dated filename following the format: `code-refactoring-YYMMDD-HHMM-{model}.md`
+   - **YYMMDD**: Date stamp (2-digit year, month, day)
+   - **HHMM**: Time stamp (24-hour format)
+   - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
 
 ## Output Requirements
 - Report title, date/time, scope, and summary.

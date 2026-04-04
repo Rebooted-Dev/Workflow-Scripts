@@ -423,12 +423,13 @@ npm run build
 
 ### Refactoring Report
 
-Save to `plans/website-data-refactoring-YYYY-MM-DD-HH-MM.md`:
+Save to `plans/website-data-refactoring-YYMMDD-HHMM-{model}.md`:
 
 ```markdown
 # Website Data Refactoring Report
 
-**Date:** YYYY-MM-DD HH:MM
+**Date:** YYMMDD HHMM (24-hour format)
+**Model:** {AI model name}
 **Scope:** [directories/files analyzed]
 **Status:** [Planning/In Progress/Complete]
 

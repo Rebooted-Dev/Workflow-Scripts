@@ -92,6 +92,110 @@ BaseClass
 Use ─── for inheritance relationships
 ```
 
+### Class Definition with Members
+```
+Create an ASCII class diagram showing class definitions with:
+- Class name in header
+- Attributes/properties section (+ public, - private)
+- Methods/functions section (+ public, - private)
+- Inheritance arrows between classes
+Use UML-style notation: + for public, - for private
+```
+
+#### Example: Simple Class with Members
+```
+┌─────────────────────┐
+│     Person          │
+├─────────────────────┤
+│ - name: string      │
+│ - age: number       │
+│ + email: string     │
+├─────────────────────┤
+│ + getName(): string │
+│ + setName(n): void  │
+│ - validate(): bool  │
+└─────────────────────┘
+```
+
+#### Example: Class Inheritance with Members
+```
+┌─────────────────────┐         ┌─────────────────────┐
+│     Person          │         │     Company         │
+├─────────────────────┤         ├─────────────────────┤
+│ - name: string      │         │ - name: string      │
+│ - age: number       │         │ - employees: []     │
+│ + email: string     │         │ + revenue: number   │
+├─────────────────────┤         ├─────────────────────┤
+│ + getName(): string │         │ + hire(p): void     │
+│ + setName(n): void  │         │ + fire(p): void     │
+│ - validate(): bool  │         │ - audit(): void     │
+└────────┬────────────┘         └─────────────────────┘
+         │
+         │ extends
+         ▼
+┌─────────────────────┐
+│     Employee        │
+├─────────────────────┤
+│ - id: number        │
+│ - department: str   │
+│ + salary: number    │
+├─────────────────────┤
+│ + work(): void      │
+│ + getId(): number   │
+│ - logHours(): void  │
+└─────────────────────┘
+```
+
+#### Example: Multiple Inheritance Tree
+```
+                ┌─────────────────┐
+                │   BaseEntity    │
+                ├─────────────────┤
+                │ - id: uuid      │
+                │ - created: date │
+                ├─────────────────┤
+                │ + save(): void  │
+                │ + delete(): void│
+                └────────┬────────┘
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+        ▼                ▼                ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│    User      │ │   Product    │ │    Order     │
+├──────────────┤ ├──────────────┤ ├──────────────┤
+│ - username   │ │ - sku: str   │ │ - items: []  │
+│ - password   │ │ - price: dec │ │ - total: dec │
+│ + isActive   │ │ + inStock    │ │ + status     │
+├──────────────┤ ├──────────────┤ ├──────────────┤
+│ + login()    │ │ + sell()     │ │ + place()    │
+│ + logout()   │ │ + restock()  │ │ + cancel()   │
+│ - hashPwd()  │ │ - calcTax()  │ │ - notify()   │
+└──────────────┘ └──────────────┘ └──────────────┘
+```
+
+### Notation Guide for Class Members
+```
+Visibility symbols:
++  public (accessible from anywhere)
+-  private (accessible only within class)
+#  protected (accessible within class and subclasses)
+~  package/default (accessible within package/module)
+
+Member syntax:
+┌──────────────────────────┐
+│        ClassName         │
+├──────────────────────────┤
+│ + publicAttr: type       │
+│ - _privateAttr: type     │
+│ # _protectedAttr: type   │
+├──────────────────────────┤
+│ + publicMethod(): ret    │
+│ - _privateMethod(): ret  │
+│ # _protectedMethod()     │
+└──────────────────────────┘
+```
+
 ## Network & Integration Diagrams
 
 ### API Integration Diagram
@@ -126,12 +230,29 @@ Include decision points where relevant
 ### State Machine Diagram
 ```
 Generate an ASCII state diagram:
-[Idle] ──start──► [Running] ──pause──► [Paused]
-    ▲                │                     │
-    └────resume──────┘                     │
-                     └─────stop────────────┘
-                                           ▼
-                                        [Stopped]
+                    ┌─────────┐
+         ┌─────────│ [Idle]  │
+         │         └────┬────┘
+         │              │ start
+         │              ▼
+         │         ┌───────────┐
+         │         │ [Running] │
+         │         └─────┬─────┘
+         │               │
+         │         ┌─────┴─────┐
+         │         │           │
+   pause │         ▼           ▼ stop
+         │    ┌────────┐   ┌─────────┐
+         └────│[Paused]│   │[Stopped]│
+              └───┬────┘   └─────────┘
+                  │
+                  │ resume
+                  └───────────┐
+                              │
+                              ▼
+                         ┌───────────┐
+                         │ [Running] │
+                         └───────────┘
 Use [ ] for states and labeled arrows for transitions
 ```
 
@@ -143,9 +264,9 @@ Create an ASCII art showing documentation organization:
 ┌─────────────────────────────────────────┐
 │           DOCUMENTATION HUB            │
 ├─────────────────────────────────────────┤
-│  ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐   │
-│  │TUT  │  │API  │  │CODE │  │DEP  │   │
-│  └─────┘  └─────┘  └─────┘  └─────┘   │
+│ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐       │
+│ │ TUT │ │ API │ │CODE │ │ DEP │       │
+│ └─────┘ └─────┘ └─────┘ └─────┘       │
 └─────────────────────────────────────────┘
 Use boxes for categories and include connections
 ```
@@ -167,11 +288,19 @@ Use vertical progression and connecting arrows
 ### Git Workflow
 ```
 Create an ASCII Git workflow diagram:
-Working ──git add──► Staging ──git commit──► Repository
-   │                                  │
-   └──────git checkout───────┬──────┘
-                            ▼
-                       Working Directory
+┌─────────┐  git add   ┌─────────┐ git commit ┌───────────┐
+│ Working │──────────▶│ Staging │───────────▶│Repository │
+└────┬────┘            └────┬────┘            └─────┬─────┘
+     │                      │                      │
+     │                      │ git checkout         │
+     │                      ▼                      │
+     │                 ┌───────────┐               │
+     │                 │  Working  │               │
+     │                 │ Directory │               │
+     │                 └───────────┘               │
+     │                      │                      │
+     └──────────────────────┴──────────────────────┘
+                    git checkout
 ```
 
 ### CI/CD Pipeline
@@ -191,6 +320,17 @@ Use X marks for failure points and logs
 - Keep diagrams compact (max 20-25 lines)
 - Use consistent spacing and alignment
 - Label all components clearly
+
+### Alignment Review Checklist
+Review diagrams for these common alignment quirks before committing:
+
+- [ ] **Label positioning** - Ensure transition labels (e.g., `pause`, `resume`) align with their connecting lines and don't overlap with boxes
+- [ ] **Line connections** - Verify lines meet box corners cleanly (no gaps or overlaps)
+- [ ] **Branch alignment** - Check that split branches (e.g., from `Running` to `Paused`/`Stopped`) are evenly spaced
+- [ ] **Arrow consistency** - Confirm all arrowheads point in the correct direction and are consistent (use `▶` or `►`, not mixed)
+- [ ] **Vertical spacing** - Ensure consistent line height between diagram rows
+- [ ] **Horizontal centering** - Box contents should appear centered; adjust padding with spaces
+- [ ] **Loop-back lines** - Curved return paths (e.g., `Paused` → `Running`) should connect cleanly without crossing other elements
 
 ### Character Reference
 ```
@@ -254,6 +394,150 @@ Keep it to 3-4 lines maximum
 - [ ] Diagram fits within reasonable line limits
 - [ ] ASCII characters display consistently across platforms
 - [ ] Diagram serves clear purpose for the documentation section
+
+## Example Diagrams
+
+### System Architecture Example
+
+```
+┌─────────────┐      HTTP       ┌─────────────┐      SQL      ┌─────────────┐
+│   Client    │ ───────────────▶│  API Server │──────────────▶│  Database   │
+│  (Browser)  │                 │             │               │             │
+└─────────────┘                 └──────┬──────┘               └─────────────┘
+                                       │
+                                       │ Cache
+                                       ▼
+                                ┌─────────────┐
+                                │    Redis    │
+                                │    Cache    │
+                                └─────────────┘
+```
+
+### Component Relationship Example
+
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│   Auth      │────────▶│   API       │────────▶│   Database  │
+│   Service   │         │   Gateway   │         │             │
+└─────────────┘         └──────┬──────┘         └─────────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+              ▼                ▼                ▼
+        ┌─────────┐      ┌─────────┐      ┌─────────┐
+        │Service A│      │Service B│      │Service C│
+        └─────────┘      └─────────┘      └─────────┘
+```
+
+### Workflow Process Example
+
+```
+    ┌──────┐
+    │ Start│
+    └──┬───┘
+       │
+       ▼
+┌──────────────┐    No    ┌────────┐
+│  Validate    │─────────▶│ Error  │
+│   Input?     │          │  Exit  │
+└──────┬───────┘          └────────┘
+       │ Yes
+       │
+       ▼
+┌──────────────┐
+│   Process    │
+│    Data      │
+└──────┬───────┘
+       │
+       ▼
+┌────────────┐
+│   Output   │
+│   Result   │
+└─────┬──────┘
+      │
+      ▼
+┌────────┐
+│  End   │
+└────────┘
+```
+
+### Data Flow Example
+
+```
+┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+│  Input   │───▶│ Validate │───▶│Transform │───▶│  Store   │
+│  (JSON)  │    │   Data   │    │  Data    │    │ (DB)     │
+└──────────┘    └──────────┘    └──────────┘    └──────────┘
+     │                                              │
+     │                                              │
+     └──────────────────┐   ┌───────────────────────┘
+                        │   │
+                        ▼   ▼
+                   ┌──────────┐
+                   │  Logs    │
+                   │ (Audit)  │
+                   └──────────┘
+```
+
+### File System Hierarchy Example
+
+```
+project/
+├── docs/
+│   ├── README.md
+│   └── architecture/
+│       ├── systems.md
+│       └── code.md
+├── src/
+│   ├── components/
+│   │   ├── Header.tsx
+│   │   └── Footer.tsx
+│   ├── utils/
+│   │   └── helpers.ts
+│   └── main.ts
+├── tests/
+│   ├── unit/
+│   └── integration/
+└── package.json
+```
+
+### State Machine Example
+
+```
+              ┌─────────┐
+         ┌────│  Idle   │
+         │    └────┬────┘
+         │         │ start
+         │         ▼
+         │    ┌─────────┐
+         │    │ Running │
+         │    └────┬────┘
+         │         │
+   pause │    ┌────┴────┐     stop
+         │    │         │
+         │    ▼         ▼
+         └───│ Paused │  │Stopped│
+              └───┬────┘  └────────┘
+                  │
+                  │ resume
+                  │
+                  ▼
+             ┌─────────┐
+             │ Running │
+             └─────────┘
+```
+
+### User Journey Example
+
+```
+[Home] ──► [Login] ──► [Dashboard] ──► [Feature] ──► [Success]
+                              │
+                              ▼
+                         [Settings]
+                              │
+                              ▼
+                         [Profile]
+```
 
 ---
 
