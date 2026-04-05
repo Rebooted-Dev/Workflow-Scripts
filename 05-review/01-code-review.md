@@ -1,7 +1,7 @@
 # Workflow: Code Review
 
 ## Purpose
-Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `project/build/` (or per the project's `plans/README.md`) and/or add a task to `plans/TODO.md` as needed.
+Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `project/plans/`.
 
 ## Inputs
 - Repository root (determine using one of):
@@ -18,8 +18,8 @@ If ambiguous:
 ## Pre-Flight Validation
 Before scanning, verify:
 - [ ] Repository root is identified and accessible
-- [ ] Rubric file exists at `../00-meta/severity-priority-rubric.md`
-- [ ] `project/build/` or `plans/` directory exists (create if needed) and is writable
+- [ ] Rubric file exists at `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`
+- [ ] `project/plans/` directory exists (create if needed) and is writable
 - [ ] At least one implementation file exists in scope
 
 **Abort conditions:**
@@ -148,7 +148,7 @@ Before scanning, verify:
      - Short-term actions (next 2 sprints)
      - Tracking items (backlog)
 
-5. **Save the report to `plans/` (project root) with a dated filename following the format: `code-review-YYMMDD-HHMM-{model}.md`**
+5. **Save the report to `project/plans/` with a dated filename following the format: `code-review-YYMMDD-HHMM-{model}.md`**
    - **YYMMDD**: Date stamp (2-digit year, month, day)
    - **HHMM**: Time stamp (24-hour format)
    - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
@@ -198,4 +198,4 @@ Before scanning, verify:
 **Timing guidance:** Run Code Review before every merge. For security-critical changes (auth, data handling, API endpoints), follow this review with Security Review for comprehensive security validation.
 
 - **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for review findings
-- **[`../00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring
+- **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring

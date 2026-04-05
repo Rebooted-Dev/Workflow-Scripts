@@ -91,7 +91,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 - **[`01-plan-review.md`](./01-plan-review.md)** - Review plans for correctness before finalizing
 - **[`../02-build-code/01-execution.md`](../../02-build-code/01-execution.md)** - Execute the finalized plan
 - **[`../02-build-code/02-confirm-execution.md`](../../02-build-code/02-confirm-execution.md)** - Verify plan completion after execution
-- **[`../00-meta/severity-priority-rubric.md`](../../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for priority ordering
+- **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for priority ordering
 
 ## Acceptance Criteria
 - Plan is ordered by priority (P0 to P3) with explicit rationale.

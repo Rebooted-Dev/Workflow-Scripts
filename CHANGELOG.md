@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2026-02-28: Added `00-docs/2026-02-28-implementation-plan-workflow-scripts-remediation.md` — phased implementation plan derived from verified code review; 4 phases (P0-P3) with tasks, dependencies, risks, exit criteria, rollback strategy
 
 ### Fixed
+- 2026-04-05: Fixed rubric path references across 14 files (17 occurrences) — changed `../00-meta/severity-priority-rubric.md` to `../00-Meta-Workflow/00-meta/severity-priority-rubric.md` in documentation, planning, security, debugging, and review workflows
+- 2026-04-05: Standardized review workflow output directory — all 05-review workflows now use `project/plans/` consistently; removed legacy `project/build/` references from code-review workflow
 - 2026-02-15: Implemented 10 improvements to code-review workflow based on verified analysis plan:
   - Added Pre-Flight Validation section with abort conditions
   - Added explicit file scope definitions (primary/secondary targets, exclusions)

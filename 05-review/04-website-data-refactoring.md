@@ -27,7 +27,7 @@ Perform a structured analysis to identify data organization issues, design a cle
 - Score each finding with severity (S0–S3) and priority (P0–P3)
 - Present findings ordered by priority (P0 to P3), then severity within each priority
 - Data refactoring typically maps to S2/S3 severity and P2/P3 priority
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`
 
 ---
 
@@ -423,7 +423,7 @@ npm run build
 
 ### Refactoring Report
 
-Save to `plans/website-data-refactoring-YYMMDD-HHMM-{model}.md`:
+Save to `project/plans/website-data-refactoring-YYMMDD-HHMM-{model}.md`:
 
 ```markdown
 # Website Data Refactoring Report
@@ -606,7 +606,7 @@ import { IDENTITY, CONTACT } from '@/data';
 - [ ] TypeScript interfaces created for all data structures
 - [ ] Migration plan with phases and exit criteria
 - [ ] Backwards compatibility strategy defined
-- [ ] Report saved to `plans/` with dated filename
+- [ ] Report saved to `project/plans/` with dated filename
 - [ ] Findings ordered by priority (P0-P3)
 - [ ] Each finding includes evidence and rationale
 - [ ] Implementation checklist provided

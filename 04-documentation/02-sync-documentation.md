@@ -21,7 +21,7 @@ Template rules:
 
 ## Prioritization Rule
 - Organize doc work by priority, descending urgency/importance: P0, P1, P2, P3.
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 ## Suggested Priority Buckets (docs)
 - P0: incorrect docs that could cause wrong usage, broken setup, or unsafe behavior.

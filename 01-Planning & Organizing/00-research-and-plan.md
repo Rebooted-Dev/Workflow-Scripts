@@ -35,7 +35,7 @@ Conduct deep research and analysis to create a comprehensive initial implementat
 
 - Organize the implementation plan by priority: P0, P1, P2, P3
 - Research findings should identify which items are P0 vs P3
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`
 
 ---
 
@@ -328,7 +328,7 @@ Or if you want to indicate research is complete but plan is still being written:
 - **[`01-plan-review.md`](./01-plan-review.md)** - Review this plan for correctness and risks
 - **[`02-finalise-plan.md`](./02-finalise-plan.md)** - Refine the plan after review feedback
 - **[`../02-build-code/01-execution.md`](../../02-build-code/01-execution.md)** - Execute the finalized plan
-- **[`../00-meta/severity-priority-rubric.md`](../../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for priority scoring
+- **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for priority scoring
 
 ## Notes
 

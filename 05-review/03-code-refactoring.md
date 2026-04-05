@@ -1,7 +1,7 @@
 # Workflow: Code Refactoring
 
 ## Purpose
-Perform a structured analysis to identify code quality issues, technical debt, and refactoring opportunities that improve maintainability, readability, and extensibility, then file a report in `plans/` (project root).
+Perform a structured analysis to identify code quality issues, technical debt, and refactoring opportunities that improve maintainability, readability, and extensibility, then file a report in `project/plans/`.
 
 ## Inputs
 - Repository root.
@@ -55,7 +55,7 @@ Perform a structured analysis to identify code quality issues, technical debt, a
    - Recommended refactoring roadmap
    - Dependencies between refactoring items (if any)
 
-5. Save the report to `plans/` (project root) with a dated filename following the format: `code-refactoring-YYMMDD-HHMM-{model}.md`
+5. Save the report to `project/plans/` with a dated filename following the format: `code-refactoring-YYMMDD-HHMM-{model}.md`
    - **YYMMDD**: Date stamp (2-digit year, month, day)
    - **HHMM**: Time stamp (24-hour format)
    - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)

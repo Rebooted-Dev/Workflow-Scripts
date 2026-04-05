@@ -44,7 +44,7 @@ All workflows use:
 - **Severity scoring**: S0 (Critical) → S3 (Low)
 - **Priority scoring**: P0 (Blocker) → P3 (Backlog)
 - **Parallel agents**: 3-5 agents scanning different aspects
-- **Output format**: Report saved to `plans/` with findings ordered by priority
+- **Output format**: Report saved to `project/plans/` with findings ordered by priority
 
 See [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md) for the full scoring rubric.
 
@@ -64,12 +64,12 @@ When running multiple reviews:
 
 ## Output Location
 
-All workflows save reports to `plans/` (project root) using the standard naming convention defined in [`../00-meta/naming-conventions.md`](../00-meta/naming-conventions.md):
+All workflows save reports to `project/plans/` using the standard naming convention defined in [`../00-meta/naming-conventions.md`](../00-meta/naming-conventions.md):
 
-- `plans/code-review-YYMMDD-HHMM-{model}.md`
-- `plans/code-optimization-YYMMDD-HHMM-{model}.md`
-- `plans/code-refactoring-YYMMDD-HHMM-{model}.md`
-- `plans/website-data-refactoring-YYMMDD-HHMM-{model}.md`
+- `project/plans/code-review-YYMMDD-HHMM-{model}.md`
+- `project/plans/code-optimization-YYMMDD-HHMM-{model}.md`
+- `project/plans/code-refactoring-YYMMDD-HHMM-{model}.md`
+- `project/plans/website-data-refactoring-YYMMDD-HHMM-{model}.md`
 
 ## Related Workflows
 

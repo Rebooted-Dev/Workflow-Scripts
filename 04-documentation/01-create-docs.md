@@ -46,7 +46,7 @@ When this comprehensive documentation effort is fully finished, clearly mark the
 
 ## Prioritization Rule
 - Organize doc generation by priority, descending urgency/importance: P0, P1, P2, P3.
-- Use the shared rubric: `../00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 ## Suggested Priority Buckets (docs)
 - P0: Critical user-facing docs (README.md, setup instructions, quick start guide).

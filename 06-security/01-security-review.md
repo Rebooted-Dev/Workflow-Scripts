@@ -11,7 +11,7 @@ Perform a structured security review that identifies vulnerabilities, security r
 ## Pre-Flight Validation
 Before scanning, verify:
 - [ ] Repository root is identified and accessible
-- [ ] Rubric file exists at `../00-meta/severity-priority-rubric.md`
+- [ ] Rubric file exists at `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`
 - [ ] `plans/` directory exists (create if needed) and is writable
 - [ ] At least one implementation file exists in scope
 
@@ -123,7 +123,7 @@ Before scanning, verify:
 **Timing guidance:** Run Code Review before every merge. Run Security Review quarterly, after security-critical changes, or before releases handling sensitive data.
 
 - **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for security fixes
-- **[`../00-meta/severity-priority-rubric.md`](../00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring
+- **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring
 
 ## Notes
 - Use parallel agents to accelerate scanning, but verify findings directly.
