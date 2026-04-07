@@ -77,10 +77,12 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 5. **When the plan is fully verified complete:** If a completion marker is not already present, add one (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
 
-6. **Mark completed + archive consistently:** Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** to:
-   - ensure tasks are marked with ✅ consistently,
-   - add a visible completion marker, and
-   - archive the plan into `project/changelog/plans/` + update `project/changelog/index.md` (Type=`plan`).
+6. **Mark completed + archive consistently:** **Then execute the full `03-mark-completed.md` workflow** to:
+  - Verify implementation with parallel agents
+  - Reconcile changelog, troubleshooting, and documentation
+  - Mark tasks with ✅ consistently
+  - Archive the plan into `project/changelog/plans/` and update `project/changelog/index.md` (Type=`plan`).
+  Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the complete process.
 
 ## Related Workflows
 

@@ -86,10 +86,7 @@ Execute implementation in phases with verification and documentation updates.
 
 - Run a final `npm run build` to confirm the repo is shippable.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
-- **Update the implementation plan:** Ensure task status and completion markers are consistent. Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the single source of truth on:
-  - task checkboxes (✅ vs `[ ]`),
-  - completion markers, and
-  - archiving completed plans into the appropriate systems.
+- **Update the implementation plan:** Ensure task status and completion markers are consistent. **Then execute the full `03-mark-completed.md` workflow** to verify implementation, reconcile logs, and archive the plan properly. Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the complete process.
 - **If plan is fully completed, file it in `project/plans-completed/`:**
   1. Determine the appropriate category subfolder (`implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`). If none fit, create a descriptive kebab-case folder (e.g., `performance-optimization/`).
   2. Move the plan from `project/plans/` or `project/build/` to `project/plans-completed/<category>/`

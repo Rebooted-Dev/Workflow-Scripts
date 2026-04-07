@@ -21,14 +21,12 @@ Run implementation (Execution) followed by validation (Confirm Execution) in one
    - Preparation, phase definition, implementation loop (implement → verify → phase report), finalization.
    - Do **not** treat the optional "run 02-confirm-execution" at the end of 01 as optional in this workflow; step 2 replaces it.
 
-2. **Confirm execution** – Follow **[`02-confirm-execution.md`](./02-confirm-execution.md)** in full:
-   - Read the plan; verify completion against the repo (parallel agents as in 02).
-   - Systematically review every task; correct misreporting; add the verification addendum.
-   - Add completion marker if the plan is fully complete and not already present.
-   - **When the plan is confirmed complete:** Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the single source of truth on:
-     - marking tasks with ✅,
-     - adding a completion marker, and
-     - archiving the plan into `project/changelog/plans/` + updating `project/changelog/index.md`.
+2. **Confirm execution** – Follow **[`02-confirm-execution.md`](./02-confirm-execution.md)** in full to audit the plan and add the verification addendum.
+  - **Then, when the plan is fully verified complete:** Execute the full **`03-mark-completed.md` workflow** to:
+    - Verify implementation with parallel agents
+    - Reconcile changelog, troubleshooting, and documentation
+    - Mark tasks with ✅ consistently
+    - Archive the plan into `project/changelog/plans/` and update `project/changelog/index.md`
 
 ## Quick Checklist
 
