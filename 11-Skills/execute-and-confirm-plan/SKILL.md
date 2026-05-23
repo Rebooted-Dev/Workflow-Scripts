@@ -7,6 +7,12 @@ description: Execute an approved implementation plan end to end. Use when the us
 
 Use this skill after the user has explicitly moved from planning into implementation.
 
+## Overlap Boundary
+
+- If there is no approved plan yet, use `workflow-plan-review-finalize` or `workflow-bug-fix-plan-and-logs` first.
+- If the work is only final changelog/troubleshooting/docs cleanup, use `repo-logs-and-docs-sync`.
+- If publishing is requested from a mixed worktree, finish with `dirty-worktree-safe-publish`.
+
 ## Workflow
 
 1. Establish execution scope.
@@ -24,6 +30,7 @@ Use this skill after the user has explicitly moved from planning into implementa
    - Run the plan's specified tests/builds first.
    - Add targeted verification when the plan depends on runtime behavior not covered by tests.
    - Treat skipped or blocked verification as unresolved evidence, not success.
+   - For frontend, export, provider, or live webhook behavior, verify the real rendered/runtime path when feasible, not only unit tests.
 
 4. Reconcile plan status.
    - If complete, mark completion according to the repo workflow and move/archive the plan when appropriate.

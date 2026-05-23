@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bug Fix Plan And Logs"
+  short_description: "Diagnose bugs from evidence, fix, verify, and update logs."
+  default_prompt: "Use this skill to follow a bug-fix workflow from saved evidence through implementation, verification, changelog, troubleshooting, and completed-plan filing."

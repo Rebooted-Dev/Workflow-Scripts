@@ -1,0 +1,4 @@
+interface:
+  display_name: "Live Bot Launch Verification"
+  short_description: "Launch bots and verify real webhook delivery."
+  default_prompt: "Use this skill to start or restart a local bot, verify health, auth, tunnel routing, and real inbound/outbound delivery."

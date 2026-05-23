@@ -1,0 +1,4 @@
+interface:
+  display_name: "Provider Capability Verification"
+  short_description: "Verify current AI provider models, capabilities, and contracts."
+  default_prompt: "Use this skill to check live or official provider truth, then reconcile local constants, docs, plans, and routing semantics."

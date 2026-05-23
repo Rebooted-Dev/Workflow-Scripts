@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- 2026-05-24: Expanded `11-Skills/` with eight high-ROI recurring workflow skills: bug-fix plan/log workflow, provider capability verification, provider plumbing audit, execution artifact triage, export/render parity debugging, webhook bot hardening, live bot launch verification, and multi-agent plan orchestration. Reconciled overlaps by sharpening boundaries in existing plan, execute, repo-log, and dirty-worktree skills.
 - 2026-05-24: Added `11-Skills/` with six reusable Codex skills for high-ROI recurring workflows: plan review/finalization, execute-and-confirm, repo logs/docs sync, filed code review to remediation, dirty worktree publishing, and prompt quality auditing.
 - 2026-02-28: Completed P1.1, P1.2, and P1.3 tasks (index `06-skills-setup.md` in `00-project-setup/README.md`
 - 2026-02-28: Completed P2.1– create `00-docs/old-reviews/README.md` for archival context for

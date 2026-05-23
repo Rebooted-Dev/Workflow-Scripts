@@ -18,6 +18,7 @@ Use this skill to publish only the intended work without disturbing unrelated ch
    - Run `git status --short`.
    - Classify changes as intended, unrelated user work, generated artifacts, ignored runtime output, or nested-repo changes.
    - If a touched file contains unrelated edits, inspect the diff carefully before staging.
+   - If the task is in `Workflow-Scripts/`, run git commands from that nested repository, not the host project repository.
 
 3. Verify publish scope.
    - Run the relevant tests/builds for the intended change when feasible.

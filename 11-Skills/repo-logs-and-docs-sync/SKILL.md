@@ -7,12 +7,19 @@ description: Synchronize repository changelog, troubleshooting, docs, and indexe
 
 Use this skill to make durable repo records match the actual work.
 
+## Overlap Boundary
+
+- Use this as a finisher after code or docs changes, not as the primary debugging or implementation workflow.
+- For completed-plan archival, reconcile the plan against live code before moving it.
+- For mixed-worktree commits after records are updated, use `dirty-worktree-safe-publish`.
+
 ## Decision Rules
 
 - Add a changelog entry for code changes, feature additions, fixes, refactors, config changes, and completed plan work.
 - Add a troubleshooting entry only for bugs, incidents, non-trivial debugging, environment blockers, workarounds, or recurring operational issues.
 - Add or update docs when the user asks for a technical note, behavior changed, setup changed, or future maintainers need durable context.
 - Update indexes every time an indexed directory receives a new, moved, or removed artifact.
+- Archive completed plans only when the plan is actually complete or the user explicitly asks to file it as completed after verification.
 
 ## Workflow
 
@@ -29,6 +36,7 @@ Use this skill to make durable repo records match the actual work.
    - Add new rows near the top when indexes are newest-first.
    - Repair stale links caused by file moves.
    - Search for old paths or feature strings after large policy or archive changes.
+   - For plan completion, update the completed-plan index and any changelog `Type=plan` row to the archived path.
 
 4. Verify record integrity.
    - Reopen touched Markdown to catch malformed tables or bad headings.

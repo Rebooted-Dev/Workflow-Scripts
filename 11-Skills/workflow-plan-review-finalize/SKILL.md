@@ -1,11 +1,18 @@
 ---
 name: workflow-plan-review-finalize
-description: Review, correct, and finalize repository implementation plans. Use when the user asks to use plan-review/finalise-plan workflows, verify a plan against the live codebase, decide whether a plan is still relevant, append findings to a plan, or create a separate dated final plan under project/plans with tracker updates.
+description: Review, correct, and finalize repository implementation plans. Use when the user asks to use plan-review/finalise-plan/research-and-plan workflows, verify a plan against the live codebase, decide whether a plan is still relevant, append findings to a plan, create or update a dated active plan under project/plans, or update plan trackers.
 ---
 
 # Workflow Plan Review Finalize
 
-Use this skill to turn a draft, stale, or review-stage plan into an evidence-backed final plan.
+Use this skill to turn research, a draft, a stale plan, or a review-stage plan into an evidence-backed active or final plan.
+
+## Overlap Boundary
+
+- For bug reports that must proceed through diagnosis, fix, verification, and both logs, use `workflow-bug-fix-plan-and-logs`.
+- For implementing an already approved plan, use `execute-and-confirm-plan`.
+- For bookkeeping after implementation, use `repo-logs-and-docs-sync`.
+- For broad code-review findings that need a remediation plan, use `filed-code-review-to-remediation`.
 
 ## Workflow
 
@@ -24,8 +31,9 @@ Use this skill to turn a draft, stale, or review-stage plan into an evidence-bac
    - Separate confirmed facts from risks, stale assumptions, and open questions.
    - Include an explicit relevance assessment: still needed, partially obsolete, obsolete, or ready to execute.
 
-4. Create the final plan artifact when finalising.
+4. Create or update the plan artifact.
    - Create a separate dated plan in `project/plans/` unless the user or workflow says otherwise.
+   - If the user asks to update a named plan in place, edit that plan and add dated findings or a revision section.
    - Keep the source plan as audit trail.
    - Prioritize phases by severity and dependency order.
    - Include success criteria, verification commands, rollback or mitigation notes, and docs/logging requirements.
