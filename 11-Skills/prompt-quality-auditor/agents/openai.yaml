@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prompt Quality Auditor"
+  short_description: "Audit prompt systems for enforceable UI quality."
+  default_prompt: "Use this skill to review app prompt files for enforceable visual, interaction, accessibility, and consistency requirements."

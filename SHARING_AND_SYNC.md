@@ -12,6 +12,7 @@ Key properties:
 - **Multi-repo**: Main project repo and the workflows repo are independent; both exist under the same project directory on disk.
 - The main project **must** ignore the workflows directory in `.gitignore` so `git add .` from the project root never stages workflow changes.
 - Updating workflows in a project is `git pull` inside the workflows directory (e.g. `Workflow-Scripts/` or `workflows/`).
+- Reusable Codex skills under `11-Skills/` are part of this workflows repo and sync with it; copy or install them into an agent's active skills directory only when that agent runtime requires a separate discovery location.
 - Project docs (e.g. `AGENTS.md`) should state clearly that the project has multiple repositories so agents and contributors do not assume one repo.
 
 ### Initial Setup (Per Project)

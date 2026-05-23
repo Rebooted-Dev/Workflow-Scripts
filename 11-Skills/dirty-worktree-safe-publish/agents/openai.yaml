@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dirty Worktree Safe Publish"
+  short_description: "Commit and push intended changes from mixed worktrees."
+  default_prompt: "Use this skill to inspect a dirty worktree, stage only intended files, commit, and push without bundling unrelated changes."
