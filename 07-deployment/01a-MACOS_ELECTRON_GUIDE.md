@@ -1,10 +1,15 @@
-# macOS Electron Desktop App Guide v4.4
+# macOS Electron Desktop App Guide v4.5
 
 How to build and package a macOS Electron desktop app for any project.
 
-This guide assumes your project uses a Vite + React renderer that is bundled to `renderer/` (NOT `dist/` - see critical note below) and loaded in production via `loadFile()`.
+This guide covers two common packaged architectures:
 
-Document version: 4.4 (2026-01-24)
+- A static renderer bundle, such as Vite + React output loaded with `loadFile()`.
+- A local production web server, such as a Next.js standalone server spawned by Electron and loaded with `loadURL('http://127.0.0.1:<port>')`.
+
+For static Vite apps, this guide assumes the renderer is bundled to `renderer/` (NOT `dist/` - see critical note below) and loaded in production via `loadFile()`. For server-backed apps, adapt the packaging and verification steps to the actual server bundle and unpacked runtime payload.
+
+Document version: 4.5 (2026-05-23)
 
 > **Note:** Throughout this guide, you'll see placeholders like `<YOUR_APP_NAME>` and `<YOUR_BUNDLE_ID>`. Replace these with your actual project values before running any commands.
 
@@ -14,6 +19,8 @@ Document version: 4.4 (2026-01-24)
 - Debugging production-only renderer issues (blank window, missing assets)
 - Fixing frameless-window dragging (macOS title bar)
 - Understanding what must be included in `electron-builder` `files`
+- Packaging server-backed desktop apps that spawn a local production server
+- Debugging packaged-only runtime failures across Electron main, renderer, and child server layers
 
 ## Project configuration
 
@@ -127,28 +134,48 @@ npm run mac:build
 open "release/mac-arm64/<YOUR_APP_NAME>.app"
 
 # Watch main process logs (replace <YOUR_APP_NAME> with your actual app name)
-tail -f "~/Library/Logs/<YOUR_APP_NAME>/main.log"
+tail -f "$HOME/Library/Logs/<YOUR_APP_NAME>/main.log"
 ```
 
-## The Two Critical Decisions
+## Choose the production architecture first
 
-These two choices determine whether your app works correctly:
+Do this before copying commands from the guide. The most common implementation mistakes come from applying a static-renderer checklist to a server-backed app, or the reverse.
+
+| Architecture | Production loading | Packaging focus | Best fit |
+|---|---|---|---|
+| Static renderer | `BrowserWindow.loadFile()` points at packaged HTML | Include renderer files in `app.asar`; use relative asset paths | Vite/React apps with no server routes at runtime |
+| Local server | Spawn a local server from real files on disk, then `loadURL()` to `127.0.0.1` | Unpack the server bundle and all runtime assets/dependencies | Next.js standalone apps or apps that require API routes in the desktop build |
+
+Architecture rules:
+
+- For static renderers, prefer `loadFile()` and avoid custom protocols unless local packaged `fetch()` requires one.
+- For local server apps, do not force `loadFile()` if the app needs API routes, server components, or provider code at runtime. Instead, make the server startup path first-class and test it from the packaged `.app`.
+- Child processes cannot use virtual `app.asar` paths as `cwd`. Any spawned server, CLI, worker, model bridge, or helper binary must run from real files, usually under `app.asar.unpacked`.
+- Treat packaged architecture as a runtime contract. Source tree success does not prove packaged success.
+
+## The Three Critical Decisions
+
+These choices determine whether your app works correctly:
 
 | Decision | Correct Choice | Why |
 |----------|----------------|-----|
-| **How to load the UI** | `loadFile()` | Works out of the box. `loadURL('app://...')` requires a custom protocol handler that commonly fails silently. |
+| **How to load the UI** | Static app: `loadFile()`. Server-backed app: spawn the packaged local server and load `127.0.0.1`. | The correct loader depends on whether the app needs runtime server behavior. |
 | **Window frame on macOS** | `titleBarStyle: 'hiddenInset'` (alone) | Use ONLY this. `frame: false` conflicts with it and breaks dragging. Use `frame: false` only on Windows/Linux. |
+| **Where runtime files live** | Spawned runtimes and server bundles live outside `app.asar` in unpacked real paths. | `app.asar` is virtual; child processes and some package resolution flows need real files. |
+| **How diagnostics are captured** | Add a modular packaged-runtime logger from the first implementation pass. | The initial port moves much faster when every packaged-only failure leaves durable evidence, and a module can be disabled or reduced later. |
 
 **Never:**
-- Use `loadURL('app://...')` in production
+- Use `loadURL('app://...')` in production for a basic static renderer
+- Spawn a child process with an `app.asar` path as its working directory
 - Combine `frame: false` AND `titleBarStyle: 'hiddenInset'` on macOS
 
 Non-negotiables (these prevent most production-only failures):
 
 1. Build with a wrapper script (e.g., `./scripts/mac-build.sh` or `npm run mac:build`) so the pipeline runs in the correct order.
 2. Use `npm` (scripts in this guide assume npm; adapt for yarn/pnpm as needed).
-3. Vite must output relative asset paths for packaged apps (`vite.config.ts: base: './'`).
-4. `electron-builder` must include `index.cjs`, `desktop/*.cjs`, and `renderer/**` in `files`.
+3. Static Vite apps must output relative asset paths for packaged apps (`vite.config.ts: base: './'`).
+4. `electron-builder` must include the Electron entrypoint, main/preload bundles, and the chosen renderer/server payload.
+5. Every implementation must include a modular packaged-runtime logging mechanism for the Electron main process, renderer, child server, and crash/unhandled-error paths.
 
 ## What the build script is responsible for
 
@@ -156,8 +183,55 @@ The build script should be the single source of truth for packaging. At minimum 
 
 - Clean build artifacts that commonly cause stale packaging (`desktop/*.cjs`, `renderer/`, `release/`).
 - Build Electron main/preload (typically via esbuild into `desktop/*.cjs`).
-- Build the web UI (`vite build` into `renderer/`).
+- Build the web UI (`vite build` into `renderer/`) or the production server bundle.
+- Prepare any standalone/server runtime payload after the web build and before `electron-builder`.
 - Run `electron-builder` in a way that does not produce noisy dependency scan warnings (optional quality-of-life).
+- Handle stubborn generated artifacts defensively. If cleanup fails because files are locked or read-only, fix permissions and remove the generated output before rebuilding instead of packaging stale files.
+
+## Required modular runtime logging
+
+Add packaged-runtime logging during the initial port, not after the first packaged failure. The goal is to make the first `.app` launch debuggable from Finder without attaching a terminal or guessing which layer failed.
+
+Design this as a small module, not as scattered `console.log()` calls. The module should be easy to remove, disable, or reduce once the app is stable.
+
+Minimum behavior:
+
+- Write to the platform app logs directory, with a safe fallback if the app log path cannot be resolved.
+- Split logs by runtime layer:
+  - `main.log` for Electron main-process startup, window creation, navigation, and lifecycle.
+  - `renderer.log` for renderer console messages, load failures, unresponsive/responsive transitions, and renderer process exits.
+  - `server.log` for local server or child-process stdout/stderr when the app is server-backed.
+  - `crash.log` for uncaught exceptions, unhandled rejections, and fatal startup failures.
+  - `session-context.json` or equivalent for non-secret startup metadata.
+- Capture the packaged app version, Electron/Node versions, platform, architecture, packaged flag, resource paths, resolved server path, selected port, and active renderer URL.
+- Redact likely secrets and cap oversized values before writing to disk.
+- Keep logging calls behind a narrow API so production code can call `logger.info(scope, message, data)` without knowing file paths.
+- Add a clear control surface for later reduction:
+  - environment variable, build flag, config value, or app setting for log level;
+  - option to disable renderer console capture;
+  - option to disable child-process stdout/stderr capture after launch stabilization;
+  - retention or truncation policy so logs cannot grow without bound.
+
+Suggested module boundaries:
+
+```text
+desktop/logging
+  resolveLogDir(productName)
+  createLogger({ enabled, level, logDir, redact })
+  writeSessionContext(metadata)
+  sanitizeLogValue(value)
+```
+
+Do not make the initial implementation depend on the renderer being healthy. The main process must be able to log startup and server failures before the UI loads.
+
+Verification for the logging module:
+
+- Launch the packaged `.app` from Finder or `open`.
+- Confirm the expected log files are created.
+- Confirm a renderer console message reaches `renderer.log`.
+- Confirm child server stdout/stderr reaches `server.log` for server-backed apps.
+- Confirm an intentional fake secret value is redacted in logs.
+- Confirm the disable/reduce switch works without code changes.
 
 ## Architecture (what ends up inside the .app)
 
@@ -182,11 +256,106 @@ Typical structure:
 
 Rule of thumb: when resolving sibling paths from `desktop/main.cjs`, start with `path.join(__dirname, '..', ...)`.
 
+### Server-backed packaged apps
+
+If the desktop app starts a local production server, the packaged structure is different. The Electron main bundle can still live in `app.asar`, but the spawned server and its runtime files must be unpacked:
+
+```
+<YOUR_APP_NAME>.app/
+  Contents/
+    Resources/
+      app.asar/
+        index.cjs
+        desktop/
+          main.cjs
+          preload.cjs
+        package.json
+      app.asar.unpacked/
+        <server-build>/
+          server entrypoint
+          static assets
+          public assets
+          node_modules needed at runtime
+```
+
+Rules for server-backed apps:
+
+- Resolve packaged server paths from `process.resourcesPath` or another packaged-runtime anchor, not from source-tree assumptions.
+- Put the server bundle and assets in `asarUnpack` so child processes can use them as a real `cwd`.
+- Start the server on `127.0.0.1`, choose an available port, wait for readiness, then load the renderer URL.
+- Log the chosen server path, working directory, port, readiness attempts, and startup failures.
+- Inspect the built `.app` payload directly. Do not assume framework tracing included every runtime file.
+
+### Runtime dependencies and standalone tracing
+
+Framework standalone outputs can under-copy packages that behave like CLIs, proxies, bridges, or generated bundles. This is especially likely when a package entrypoint imports sibling chunks, reads files by path, spawns another process, or depends on packages hoisted outside its own package directory.
+
+For these packages:
+
+- Keep an explicit list of runtime escape-hatch packages that must exist in the packaged standalone payload.
+- Copy the complete dependency closure from the lockfile, not just the top-level package directory.
+- Preserve Node's resolution shape: nested dependencies stay nested, hoisted dependencies go where Node would look for them.
+- Add regression tests with a fixture that proves a copied package can require both nested and hoisted dependencies.
+- After packaging, run a smoke command against the packaged copy, not only against source `node_modules`.
+
+### Provider and credential initialization
+
+Packaged apps often reveal import-order bugs that development hides. Provider factories and server modules should not read credentials, create SDK clients, or validate unrelated providers at module import time.
+
+Guidelines:
+
+- Load required environment or credential sources before initializing providers.
+- Initialize provider clients lazily when that provider is selected or called.
+- Make provider-selection tests prove that an unrelated missing credential does not break a different provider.
+- Treat OAuth/cache state as separate from packaging correctness. Tool discovery may work with stale credentials while the first real generation or write action still fails.
+- For OAuth-backed local bridges, provide a probe or reauth flow with enough callback timeout for first-run packaged use.
+
+### Environment variables in packaged apps
+
+Do not assume a packaged macOS app inherits the same environment as a terminal-launched development server. Finder-launched GUI apps commonly miss shell-initialized variables, and server-backed Electron apps can have more than one runtime that needs configuration.
+
+Recommended pattern:
+
+- Decide which process owns each secret or setting: Electron main, preload, renderer, local server, child CLI, or bridge.
+- Load environment files or credential stores before importing modules that initialize providers.
+- Pass only the variables a child process needs through its `env` option. Do not blindly forward secrets to unrelated children.
+- Keep renderer access explicit and minimal. Prefer server/main-process calls over exposing provider keys to browser code.
+- Log which sources were checked and which required keys were present, but never log secret values.
+- Add a packaged-mode smoke test or launch check that proves the relevant runtime sees the required variables.
+
+Good logging shape:
+
+```text
+env.load checked=["$HOME/.env","app/.env.local"] present=["PROVIDER_API_KEY"] missing=[]
+```
+
+Bad logging shape:
+
+```text
+PROVIDER_API_KEY=sk-...
+```
+
+### MCP and external tool bridges
+
+MCP-backed features add two extra packaged-app risks: the bridge package must be complete in the packaged payload, and the user's auth/cache state must be valid at action time.
+
+Checklist:
+
+- Treat MCP bridge packages as runtime escape-hatch packages. Verify the packaged app contains the bridge entrypoint, sibling generated chunks, and transitive dependencies.
+- If framework tracing creates a standalone server bundle, copy MCP bridge dependencies from the lockfile dependency graph rather than a hardcoded package folder.
+- Preserve hoisted dependency layout so Node resolution in the packaged server matches development.
+- Start MCP bridges from the same working directory they will use in the packaged app.
+- Give first-run OAuth flows enough callback time for a browser authorization round trip.
+- Provide a no-spend probe when the upstream service supports it. Tool discovery alone is not a complete readiness check.
+- Distinguish packaging failures from auth failures: missing modules, missing files, and spawn errors are packaging issues; expired tokens and denied scopes are auth/cache issues.
+- Log bridge command, cwd, endpoint, exit code, stderr summary, tool-list success, action request IDs, and auth/cache remediation hints. Redact tokens and authorization headers.
+
 ## electron-builder configuration (must-have)
 
 In `electron-builder.config.cjs`, ensure these are true:
 
 - `files` includes `index.cjs`, `desktop/main.cjs`, `desktop/preload.cjs`, and the renderer build directory.
+- Server-backed apps include or unpack the server bundle, static assets, public assets, and runtime dependency directories needed by the child server.
 - Local builds should succeed without Apple credentials (ad-hoc signing + notarization disabled).
 
 > **⚠️ SECURITY WARNING**: Ad-hoc signing (`identity: '-'`) and disabled notarization are for **local development only**. Production builds MUST use a valid Apple Developer identity and enable notarization. See [Code signing and notarization (macOS)](#code-signing-and-notarization-macos) for proper production signing configuration.
@@ -221,6 +390,10 @@ module.exports = {
 
     'package.json'
   ],
+  asarUnpack: [
+    // Add server/runtime payloads here when the app spawns local child processes.
+    // Examples: standalone server output, static assets, public assets, helper binaries.
+  ],
   mac: {
     icon: 'build-resources/icon.icns',
     hardenedRuntime: true,
@@ -237,9 +410,9 @@ module.exports = {
 
 This section explains how to load the renderer UI in packaged Electron apps. **This is the #1 cause of "blank window" bugs.**
 
-### Use `loadFile()` (Recommended)
+### Static apps: use `loadFile()` (Recommended)
 
-**Always use `loadFile()` for production builds.** It is simpler and more reliable than custom protocols.
+**Use `loadFile()` for production static-renderer builds.** It is simpler and more reliable than custom protocols.
 
 ```ts
 // desktop/main.ts
@@ -306,6 +479,25 @@ export default defineConfig(() => ({
 Only use custom protocols if your app needs to `fetch()` packaged local files (e.g., JSON data files). For most apps, `loadFile()` is sufficient.
 
 If you do need custom protocols, see the "Loading packaged local files" section below.
+
+### Server-backed apps: use a local server URL
+
+If the packaged app requires server routes at runtime, do not rewrite it into a static `loadFile()` app just to match this guide. Start the packaged server from an unpacked real directory, wait for readiness, then load the local URL:
+
+```ts
+// Pseudocode only: adapt paths and commands to your framework.
+const appUrl = await startPackagedServerFromUnpackedPayload();
+await mainWindow.loadURL(appUrl);
+```
+
+Server-backed rules:
+
+- Bind to `127.0.0.1`, not a public interface.
+- Pick an available port; if the preferred port is busy, fall back to an ephemeral port and log it.
+- Wait for a health check before loading the BrowserWindow.
+- Pipe child-process stdout/stderr into persistent logs.
+- Kill the child process during app quit.
+- Verify packaged server startup through the final `.app`, not only through `npm run build`.
 
 ---
 
@@ -549,7 +741,7 @@ A fixed window height (e.g., `height: 900`) may appear cropped on displays where
 
 ### Recommended Approach
 
-1. **Set reasonable default dimensions** that fit most displays:
+1. **Set reasonable fallback dimensions** that fit most displays:
 
 ```ts
 const mainWindow = new BrowserWindow({
@@ -561,13 +753,13 @@ const mainWindow = new BrowserWindow({
 });
 ```
 
-2. **Center the window** after creation to ensure it's positioned correctly:
+2. **Center non-maximized windows** after creation to ensure they're positioned correctly:
 
 ```ts
 mainWindow.center();
 ```
 
-3. **Consider using screen dimensions** for dynamic sizing:
+3. **Use screen dimensions** for dynamic fallback sizing:
 
 ```ts
 import { screen } from 'electron';
@@ -591,13 +783,33 @@ function createWindow() {
 }
 ```
 
+4. **Use native maximize when that is the intended startup state.**
+
+On macOS, if the desired behavior is "open maximized but not fullscreen," prefer Electron's native maximize flow over a larger fixed height:
+
+```ts
+mainWindow.once('ready-to-show', () => {
+  if (process.platform === 'darwin') {
+    mainWindow.maximize();
+  } else {
+    mainWindow.center();
+  }
+
+  mainWindow.show();
+});
+```
+
+This keeps the window in the available work area and preserves native traffic lights. Do not call `center()` in the same presentation path after maximizing.
+
 ### Common Sizing Mistakes
 
 | Mistake | Result | Fix |
 |---------|--------|-----|
 | Fixed height too tall for display | Window extends below screen, content cut off | Use `screen.getPrimaryDisplay().workAreaSize` or reduce default height |
+| Fixed max height too short for large displays | App opens with unused vertical space | Use native maximize for macOS when maximized startup is desired |
 | No `minWidth`/`minHeight` | Window can be resized to unusable dimensions | Set minimum constraints |
 | Not calling `center()` | Window positioned at (0,0), may be partially off-screen | Call `mainWindow.center()` after creation |
+| Centering after maximize | Native maximized state can be disturbed or made ambiguous | Choose either maximize or center for a given startup path |
 | Ignoring `workAreaSize` vs `size` | Window overlaps dock/taskbar | Use `workAreaSize` (excludes system UI) not `size` |
 
 ### Testing Window Sizing
@@ -607,6 +819,9 @@ Test your app on displays with different characteristics:
 - High-resolution external monitors
 - Displays with large dock/taskbar configurations
 - Multiple monitor setups
+- Native maximize startup, if supported by the app
+
+Log the presentation path (`center` vs `maximize`) and final bounds during packaged startup. This makes it clear whether a screenshot or user report reflects the intended native state.
 
 ---
 
@@ -834,27 +1049,51 @@ Credentials (choose one approach; keep it consistent in CI):
 When in doubt, start by tailing the main log (replace `<AppName>` with your actual app name):
 
 ```bash
-tail -f "~/Library/Logs/<AppName>/main.log"
+tail -f "$HOME/Library/Logs/<AppName>/main.log"
 ```
+
+For server-backed apps, tail all runtime layers:
+
+```bash
+tail -f "$HOME/Library/Logs/<AppName>/main.log"
+tail -f "$HOME/Library/Logs/<AppName>/renderer.log"
+tail -f "$HOME/Library/Logs/<AppName>/server.log"
+tail -f "$HOME/Library/Logs/<AppName>/crash.log"
+```
+
+If the app does not create these files yet, add logging before continuing deep debugging. Packaged Electron failures need durable evidence from the main process, renderer process, child server, and crash/unhandled-error paths. Console-only output is not enough once the app is launched from Finder.
+
+The logger should be modular and controllable. If a stable production release does not need full verbose capture, reduce log level or disable noisy streams through the logging module's switch rather than deleting diagnostics from unrelated runtime code.
 
 Common failures and the single fix that matters:
 
 | Symptom | Usually means | Fix |
 |---|---|---|
-| App opens but is blank | renderer assets not loading | Use `loadFile()` (not `loadURL`), confirm `vite.config.ts: base: './'`, check path is `path.join(__dirname, '..', 'renderer', 'index.html')` |
+| No log files after packaged launch | Logging was skipped or tied to a healthy renderer | Add the required main-process logging module before deeper debugging |
+| Logs contain secrets | Redaction is missing or values are logged too broadly | Redact likely secret keys/headers and log presence/shape instead of raw values |
+| Logs grow too large | No retention, truncation, or log-level control | Add size caps, rotation/truncation, and a disable/reduce switch |
+| Static app opens but is blank | renderer assets not loading | Use `loadFile()` (not `loadURL`), confirm `vite.config.ts: base: './'`, check path is `path.join(__dirname, '..', 'renderer', 'index.html')` |
+| Server-backed app quits before showing UI | Child server path or `cwd` points inside `app.asar` | Unpack the server payload and spawn it from a real path under `app.asar.unpacked` |
+| Server-backed app opens but routes/API fail | Packaged server did not start or is on a different port | Log port selection, readiness attempts, server stdout/stderr, and load the resolved `127.0.0.1` URL |
 | App throws on launch | `renderer/index.html` missing in packaged app | Confirm Vite outputs to `renderer/` (NOT `dist/`), and `electron-builder` includes `renderer/**` |
 | `dist/` not in asar | electron-builder excludes `dist/` by default | **Change Vite output to `renderer/`** - the default patterns exclude `!dist{,/**/*}` |
 | "Cannot find module index.cjs" | not packaged | Add `index.cjs` to `electron-builder` `files` |
+| `ERR_MODULE_NOT_FOUND` from a packaged bridge/CLI/helper package | Standalone tracing copied only part of a runtime package | Copy the full lockfile dependency closure for explicit runtime packages into the standalone payload |
+| Missing module only in packaged app, not dev | Dependency was hoisted in source `node_modules` but absent from packaged runtime tree | Preserve Node's package resolution layout when copying runtime dependencies; verify with a packaged require/import smoke |
 | **ERR_MODULE_NOT_FOUND: Cannot find module desktop/main.js** | Entry point is ESM but importing CommonJS | Use CommonJS entry point (`index.cjs` with `require()`) - see "Build Script Configuration" section |
 | **SyntaxError: Identifier '__dirname' has already been declared** | esbuild banner redeclaring CommonJS global | Remove `banner` from esbuild config when using `format: 'cjs'` - CommonJS provides `__dirname` automatically |
 | Stuck on "Loading..." (packaged) | `fetch()` blocked by `file://` | Use `app://` custom protocol (only if using fetch for local files) |
 | "Provider gemini is not available" (packaged) | API key not present at runtime in Electron main process | Load `.env` in the **main process** before provider initialization (GUI apps often don't inherit shell env); verify main logs show providers registered |
+| Unselected provider breaks selected provider | Provider module reads credentials or creates clients at import time | Initialize providers lazily and test provider selection with unrelated credentials absent |
+| MCP/OAuth tool list works but generation fails | Stale local OAuth cache or action-specific auth failure | Run a no-spend action preflight when available, support reauth/cache reset, and log upstream request IDs |
 | Window not draggable (macOS) | Wrong frame config or conflicting settings | Use ONLY `titleBarStyle: 'hiddenInset'` on macOS (NOT `frame: false`) |
 | Window not draggable (Windows) | Missing drag CSS | Add `.window-drag-bar` with `-webkit-app-region: drag` |
 | Buttons don't work in header | Missing no-drag | Add `.no-drag` class to buttons or use CSS selector |
 | Content hidden behind drag bar | Missing padding | Add `padding-top: 38px` to app container |
 | Header overlaps traffic lights | Missing left padding on macOS | Add `padding-left: 80px` to header when `electron-macos` class is present |
 | UI appears vertically cropped | Window height exceeds available display space | Reduce default height (e.g., 1100 instead of 900), use `screen.getPrimaryDisplay().workAreaSize`, call `mainWindow.center()` |
+| macOS app opens with unused vertical space | Fixed fallback height is being used where native maximize was intended | Call `maximize()` before `show()` for the macOS startup path and skip `center()` there |
+| Rebuild keeps old behavior | Stale generated output survived cleanup | Remove stale `release/`, Electron bundles, framework build output, and standalone payloads before packaging |
 | `electron-builder` dependency scan noise | npm optional deps confusion | Build via the repo wrapper (or pin toolchain) |
 
 ### Provider/API key errors in packaged apps
@@ -869,9 +1108,25 @@ Fix pattern:
 
 - In Electron **main process startup**, load `.env` from one or more known locations (for example: `~/.env`, app working dir `.env`, `.env.local`, `/etc/<app>/.env`) and copy values into `process.env`.
 - Initialize providers only *after* this env load.
-- Verify via `~/Library/Logs/<AppName>/main.log` that the env loader ran and the provider(s) registered.
+- If the app spawns a local server or bridge, explicitly pass the required env keys into that child process.
+- Keep renderer exposure minimal; do not bridge raw API keys into browser globals.
+- Verify via `$HOME/Library/Logs/<AppName>/main.log` that the env loader ran and the provider(s) registered.
 
 **Debugging tip:** Use `npx asar list "<app>.app/Contents/Resources/app.asar"` to verify what's actually packaged.
+
+### MCP failures in packaged apps
+
+When an MCP-backed feature fails only in the packaged app, separate the investigation into three layers:
+
+1. **Packaging:** Is the MCP bridge entrypoint and full dependency closure present in `app.asar.unpacked` or the standalone server payload?
+2. **Process startup:** Does the packaged bridge launch from the same `cwd`, endpoint, and environment the app will use?
+3. **Auth/action readiness:** Does a real or no-spend action work, not just `tools/list`?
+
+Use logs to classify the failure:
+
+- `Cannot find module`, missing sibling chunks, `ENOENT`, `ENOTDIR`, or immediate bridge exit usually means packaging/runtime layout.
+- `401`, expired token, denied scope, or browser login timeout usually means OAuth/cache state.
+- Tool discovery success with action failure means the bridge is reachable, but auth, payload shape, quota, or upstream action behavior still needs verification.
 
 ---
 
@@ -888,31 +1143,64 @@ npx asar list "release/mac-arm64/<AppName>.app/Contents/Resources/app.asar"
 npx asar list "release/mac-arm64/<AppName>.app/Contents/Resources/app.asar" | grep renderer
 ```
 
+For server-backed apps, also inspect the unpacked payload:
+
+```bash
+find "release/mac-arm64/<AppName>.app/Contents/Resources/app.asar.unpacked" -maxdepth 4 -type f | head -100
+
+# Verify the server entrypoint and runtime escape-hatch packages exist in the packaged payload.
+# Replace the paths with your actual server output and package names.
+test -f "release/mac-arm64/<AppName>.app/Contents/Resources/app.asar.unpacked/<server-build>/<server-entrypoint>"
+test -d "release/mac-arm64/<AppName>.app/Contents/Resources/app.asar.unpacked/<server-build>/node_modules/<runtime-package>"
+```
+
 Run and watch logs:
 
 ```bash
 open "release/mac-arm64/<AppName>.app"
-tail -f "~/Library/Logs/<AppName>/main.log"
+tail -f "$HOME/Library/Logs/<AppName>/main.log"
 ```
 
 ### Critical Checks (must pass)
 
-1. **UI displays correctly** - Not just a colored background (verify `loadFile()` is being used)
-2. **Window is draggable** - Click and drag on the title bar area (verify `titleBarStyle: 'hiddenInset'` is set on macOS, NOT `frame: false`)
-3. **Traffic lights work (macOS)** - Close/minimize/maximize buttons in top-left
-4. **Buttons are clickable** - Theme toggle, other header buttons respond to clicks (verify `-webkit-app-region: no-drag` on interactive elements)
-5. **No content hidden** - Header is not overlapped by traffic lights or cut off (verify `padding-left: 80px` on macOS header)
-6. **Providers available (if applicable)** - If using main-process API keys via IPC, confirm main log shows provider(s) registered and calls succeed
+1. **Architecture is correct** - Static apps load packaged files; server-backed apps start the packaged local server from unpacked real files
+2. **UI displays correctly** - Not just a colored background
+3. **Modular runtime logger exists** - Diagnostics are implemented through a reusable logging module, not scattered one-off console writes
+4. **Runtime logs exist** - Main, renderer, server if applicable, crash/unhandled-error, and startup context logs are written to the macOS app logs directory
+5. **Logging controls work** - Log level, noisy stream capture, or full diagnostics can be disabled/reduced without deleting instrumentation code
+6. **Log output is safe** - Secret values are redacted and oversized payloads are capped
+7. **Packaged payload is complete** - Inspect `app.asar` and `app.asar.unpacked`; do not rely only on source tree or build success
+8. **Server-backed routes work (if applicable)** - API routes/provider calls succeed from the packaged app, not only from dev
+9. **Runtime package bridges work (if applicable)** - Packaged CLI/proxy/helper packages can run and load their transitive dependencies
+10. **Environment variables are proven in the right process** - Main, child server, bridge, and renderer each receive only the configuration they need
+11. **Credentials/auth are proven separately** - Provider selection, env loading, OAuth/cache state, and real action calls are each verified
+12. **MCP flows are verified beyond discovery (if applicable)** - Bridge startup, auth/cache, no-spend probe where available, and real action behavior are checked separately
+13. **Window startup state is intended** - Centered fallback or native maximize is logged and visually verified; maximized is not fullscreen
+14. **Window is draggable** - Click and drag on the title bar area (verify `titleBarStyle: 'hiddenInset'` is set on macOS, NOT `frame: false`)
+15. **Traffic lights work (macOS)** - Close/minimize/maximize buttons in top-left
+16. **Buttons are clickable** - Theme toggle, other header buttons respond to clicks (verify `-webkit-app-region: no-drag` on interactive elements)
+17. **No content hidden** - Header is not overlapped by traffic lights or cut off (verify spacing around native controls)
+18. **Generated artifacts are ignored** - `release/`, unpacked `.app`, packaged archives, and compiled Electron bundles are not accidentally staged
 
 ### If UI is blank:
-1. Check main log: `tail -f "~/Library/Logs/<AppName>/main.log"`
+1. Check main log: `tail -f "$HOME/Library/Logs/<AppName>/main.log"`
 2. Verify asar contains renderer: `npx asar list "<app>.app/Contents/Resources/app.asar" | grep renderer`
-3. Confirm `loadFile()` is used (not `loadURL('app://...')`)
+3. For static apps, confirm `loadFile()` is used (not `loadURL('app://...')`)
+4. For server-backed apps, confirm the local server started, passed readiness, and the BrowserWindow loaded the resolved local URL
 
 ### If window won't drag:
 1. Confirm `titleBarStyle: 'hiddenInset'` is set on macOS
 2. Verify no `frame: false` on macOS BrowserWindow config
 3. Check CSS has `.window-drag-bar` with `-webkit-app-region: drag`
+
+### If a packaged-only module is missing:
+
+1. Search the app logs for the first missing module and require stack.
+2. Inspect `app.asar.unpacked` to see whether the package and its transitive dependencies are actually present.
+3. Check whether the dependency is hoisted in source `node_modules`.
+4. Update the standalone/runtime copy step to use the lockfile dependency graph.
+5. Add a regression test that reproduces the missing nested or hoisted dependency shape.
+
 ---
 
 ## Prevent committing binaries (required)
@@ -964,6 +1252,7 @@ When build configuration changes or build issues are encountered and fixed:
 
 | Version | Date | Notes |
 |---|---|---|
+| 4.5 | 2026-05-23 | **SERVER-BACKED PACKAGING & RUNTIME DEBUGGING:** Generalized the guide beyond static Vite apps to include local-server packaged apps; documented `app.asar.unpacked` child-process requirements, standalone runtime dependency closure checks, required modular runtime logging with disable/reduce controls, packaged environment-variable handling, MCP bridge/OAuth verification, native maximize startup, and packaged-payload inspection |
 | 4.4 | 2026-01-24 | **WINDOW SIZING:** Added new "Window Sizing Considerations" section; documented common issue where fixed window height causes UI cropping on displays with limited vertical space; added recommendations for dynamic sizing using `screen.getPrimaryDisplay().workAreaSize`; added common sizing mistakes table |
 | 4.3 | 2026-01-23 | **CRITICAL BUILD CONFIG & PACKAGED ENV:** Completely rewrote "Build Script Configuration" section; added detailed explanation of CommonJS entry point requirements; documented the `__dirname` banner trap (causes crash when used with `format: 'cjs'`); added complete module chain diagram; added two new troubleshooting entries for ERR_MODULE_NOT_FOUND and __dirname redeclaration errors; documented macOS packaged-app env loading requirement for IPC-based providers; added provider-not-available troubleshooting and verification checks |
 | 4.2 | 2026-01-23 | **SECURITY & SETUP:** Added "Initial setup and dependency installation" section with security best practices; documented npm audit workflow; explained how to handle transitive dependency vulnerabilities using npm overrides; added version verification steps |
