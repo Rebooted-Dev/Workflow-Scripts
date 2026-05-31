@@ -87,6 +87,6 @@ If the plan does not use task list syntax, add an addendum section instead of re
 ## Related Workflows
 
 - **[`01-execution.md`](./01-execution.md)** - Execute implementation plans (run this first, then confirm)
-- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create the implementation plan being verified
-- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review code quality after verification
-- **[`../03-debug/02-bug-fix-workflow.md`](../03-debug/02-bug-fix-workflow.md)** - Fix any bugs discovered during verification
+- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create the implementation plan being verified
+- **[`../05-review/01-code-review.md`](../05-review/01-code-review.md)** - Review code quality after verification
+- **[`../03-debugging/02-bug-fix-workflow.md`](../03-debugging/02-bug-fix-workflow.md)** - Fix any bugs discovered during verification

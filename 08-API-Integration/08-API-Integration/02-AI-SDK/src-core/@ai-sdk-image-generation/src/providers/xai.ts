@@ -20,7 +20,7 @@ export class XAIProvider extends BaseImageProvider {
 
     if (!this.client) {
       // Lazy import to avoid bundling unused providers
-      const { xai, createXai } = await import('@ai-sdk/xai');
+      const { createXai } = await import('@ai-sdk/xai');
 
       this.client = createXai({
         apiKey: this.apiKey,

@@ -156,14 +156,6 @@ const BUILT_IN_PROVIDERS: ImageProviderInfo[] = [
         }
       }
     ]
-  },
-  {
-    id: 'openrouter',
-    name: 'OpenRouter',
-    models: [
-      // OpenRouter doesn't support image generation via AI SDK
-      // Empty array indicates no support
-    ]
   }
 ];
 

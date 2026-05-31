@@ -49,6 +49,7 @@ export abstract class BaseImageProvider implements ImageProvider {
 
   validateParameters(params: Record<string, unknown>): void {
     // Base implementation - override in subclasses for provider-specific validation
+    void params;
   }
 
   getMetadata(): Record<string, unknown> {

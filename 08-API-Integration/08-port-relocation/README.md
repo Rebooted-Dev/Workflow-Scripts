@@ -83,7 +83,7 @@ See: [Browser Auto-Open Guide](./browser-auto-open.md)
 
 ## Related Documentation
 
-- [Deployment Index](../README.md) - Other deployment scenarios
+- [Deployment Index](../../07-deployment/README.md) - Other deployment scenarios
 - [Workflow Scripts README](../../README.md) - Complete workflow documentation
 
 ---

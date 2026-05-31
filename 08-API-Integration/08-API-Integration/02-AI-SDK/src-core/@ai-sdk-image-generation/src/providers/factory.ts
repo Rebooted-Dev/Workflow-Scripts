@@ -37,7 +37,7 @@ export class ProviderManager {
    * Get or create a provider instance
    */
   getProvider(id: ImageProviderId): ImageProvider {
-    let provider = this.providers.get(id);
+    let provider: ImageProvider | null | undefined = this.providers.get(id);
 
     if (!provider) {
       provider = providerFactories.create(id, this.config);
@@ -70,7 +70,7 @@ export class ProviderManager {
    * Get all configured providers
    */
   getConfiguredProviders(): ImageProviderId[] {
-    const availableProviders: ImageProviderId[] = ['openai', 'google', 'xai', 'fal', 'openrouter'];
+    const availableProviders: ImageProviderId[] = ['openai', 'google', 'xai', 'fal'];
     return availableProviders.filter(id => this.isProviderConfigured(id));
   }
 
@@ -90,7 +90,7 @@ export class ProviderManager {
    * Get all providers with their metadata
    */
   getAllProviderMetadata(): Record<string, unknown> {
-    const availableProviders: ImageProviderId[] = ['openai', 'google', 'xai', 'fal', 'openrouter'];
+    const availableProviders: ImageProviderId[] = ['openai', 'google', 'xai', 'fal'];
     const metadata: Record<string, unknown> = {};
 
     for (const id of availableProviders) {
@@ -130,7 +130,7 @@ export function getProviderManager(config?: ImageProviderConfig): ProviderManage
 /**
  * Create a provider manager with specific configuration
  */
-export function createProviderManager(config: ImageProviderConfig): ProviderManager {
+export function createProviderManager(config?: ImageProviderConfig): ProviderManager {
   return new ProviderManager(config);
 }
 

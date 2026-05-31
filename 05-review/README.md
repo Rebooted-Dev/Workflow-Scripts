@@ -73,7 +73,7 @@ All workflows save reports to `project/research/` using the standard naming conv
 
 ## Related Workflows
 
-- [Plan Review](../01-planning/01-plan-review.md) - Review implementation plans
+- [Plan Review](../01-Planning & Organizing/01-plan-review.md) - Review implementation plans
 - [Security Review](../06-security/01-security-review.md) - Security-focused audit
-- [Execution](../02-build-code/01-execution.md) - Implement fixes from review findings
+- [Execution](../02-code-build/01-execution.md) - Implement fixes from review findings
 - [Sync Documentation](../04-documentation/02-sync-documentation.md) - Update docs after data refactoring

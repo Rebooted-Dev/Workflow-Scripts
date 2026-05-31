@@ -51,5 +51,5 @@ The bug fix workflow uses a structured approach:
 
 - [Code Build](../02-code-build/01-execution.md) - Implement the fix
 - [Confirm Execution](../02-code-build/02-confirm-execution.md) - Verify the fix
-- [Code Review](../05-code-review-audit/01-code-review.md) - Review the fix
+- [Code Review](../05-review/01-code-review.md) - Review the fix
 - [Sync Documentation](../04-documentation/02-sync-documentation.md) - Update docs with bug info

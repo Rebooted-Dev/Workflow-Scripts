@@ -698,7 +698,7 @@ Schedule periodic reviews:
 ## Related Workflows
 
 - [Project Setup](./01-setup-project.md) - Initial project setup
-- [Code Review](../05-review-audit/01-code-review.md) - Code quality review
+- [Code Review](../05-review/01-code-review.md) - Code quality review
 - [Documentation Sync](../04-documentation/02-sync-documentation.md) - Keep documentation in sync with code
 
 **Note:** The paths above are relative to this file's location in `00-project-setup/`. Verify paths are correct for your workflow directory structure.

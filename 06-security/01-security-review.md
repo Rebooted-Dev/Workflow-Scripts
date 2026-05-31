@@ -114,7 +114,7 @@ Before scanning, verify:
 ## Related Workflows
 
 - **[`02-security-fix.md`](./02-security-fix.md)** - Fix security vulnerabilities identified in reviews
-- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - General code review (includes security checks)
+- **[`../05-review/01-code-review.md`](../05-review/01-code-review.md)** - General code review (includes security checks)
 
 **When to use which workflow:**
 - **Use Code Review** for routine pre-merge checks, general code quality, and broad defect detection. Code Review includes basic security scanning but is not exhaustive.
@@ -122,7 +122,7 @@ Before scanning, verify:
 
 **Timing guidance:** Run Code Review before every merge. Run Security Review quarterly, after security-critical changes, or before releases handling sensitive data.
 
-- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for security fixes
+- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plan for security fixes
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring
 
 ## Notes

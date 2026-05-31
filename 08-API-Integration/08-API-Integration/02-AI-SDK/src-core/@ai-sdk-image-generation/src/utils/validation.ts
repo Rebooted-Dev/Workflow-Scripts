@@ -11,14 +11,14 @@ import { registry } from '../core/registry.js';
  */
 export const imageGenerationRequestSchema = z.object({
   prompt: z.string().min(1, 'Prompt is required and cannot be empty'),
-  provider: z.enum(['openai', 'google', 'xai', 'fal', 'openrouter']).optional(),
+  provider: z.enum(['openai', 'google', 'xai', 'fal']).optional(),
   modelId: z.string().optional(),
   n: z.number().int().positive().max(10).default(1),
   size: z.string().optional(),
   aspectRatio: z.string().optional(),
-  providerOptions: z.record(z.unknown()).optional(),
+  providerOptions: z.record(z.string(), z.unknown()).optional(),
   abortSignal: z.instanceof(AbortSignal).optional(),
-  headers: z.record(z.string()).optional(),
+  headers: z.record(z.string(), z.string()).optional(),
   seed: z.number().int().optional()
 });
 
@@ -30,16 +30,15 @@ export const imageGeneratorConfigSchema = z.object({
     openai: z.string().optional(),
     google: z.string().optional(),
     xai: z.string().optional(),
-    fal: z.string().optional(),
-    openrouter: z.string().optional()
+    fal: z.string().optional()
   }).optional(),
-  defaultProvider: z.enum(['openai', 'google', 'xai', 'fal', 'openrouter']).optional(),
+  defaultProvider: z.enum(['openai', 'google', 'xai', 'fal']).optional(),
   defaultModel: z.string().optional(),
   defaultImageCount: z.number().int().positive().max(10).default(1),
   maxRetries: z.number().int().min(0).max(10).default(3),
   timeout: z.number().int().positive().default(60000), // 60 seconds
   debug: z.boolean().default(false)
-});
+}).strict();
 
 /**
  * Validate an image generation request
@@ -151,7 +150,7 @@ export function validateAndNormalizeRequest(
 
   // Validate image count against model limits
   if (model?.maxImages && normalized.n && normalized.n > model.maxImages) {
-    errors.push(`Model ${modelId} supports maximum ${model.maxImages} images per request, requested ${normalized.n}`);
+    normalized.n = model.maxImages;
   }
 
   // Clamp image count to reasonable limits
@@ -198,7 +197,7 @@ export function validateConfig(config: unknown): {
  * Type guard to check if a provider ID is valid
  */
 export function isValidProviderId(value: string): value is ImageProviderId {
-  const validProviders: ImageProviderId[] = ['openai', 'google', 'xai', 'fal', 'openrouter'];
+  const validProviders: ImageProviderId[] = ['openai', 'google', 'xai', 'fal'];
   return validProviders.includes(value as ImageProviderId);
 }
 
@@ -224,9 +223,6 @@ export function validateApiKey(provider: ImageProviderId, apiKey: string): boole
     case 'fal':
       // Fal keys are typically prefixed
       return apiKey.length > 10;
-    case 'openrouter':
-      // OpenRouter keys start with 'sk-or-v1-'
-      return apiKey.startsWith('sk-or-v1-');
     default:
       return true; // Allow custom providers
   }

@@ -59,6 +59,6 @@ Both workflows emphasize breaking work into phases:
 ## Related Workflows
 
 - [Implementation Plan](../01-Planning & Organizing/02-finalise-plan.md) - Create the plan to execute
-- [Code Review](../05-code-review-audit/01-code-review.md) - Review after implementation
+- [Code Review](../05-review/01-code-review.md) - Review after implementation
 - [Bug Description](../03-debugging/01-bug-description.md) - Structure bug reports before fixing
 - [Bug Fix](../03-debugging/02-bug-fix-workflow.md) - Systematic debugging workflow

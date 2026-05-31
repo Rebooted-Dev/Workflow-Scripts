@@ -365,7 +365,7 @@ async function startServer() {
 ## Related Guides
 
 - [Port Management Guide](./port-management-guide.md) - Port conflict resolution
-- [Deployment Index](../README.md) - Other deployment scenarios
+- [Deployment Index](../../07-deployment/README.md) - Other deployment scenarios
 
 ---
 

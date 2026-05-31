@@ -166,10 +166,10 @@ Apple-related MCPs for documentation (Swift, SwiftUI, UIKit, etc.) and Xcode too
 
 ### Apple Doc MCP (Apple Developer Documentation)
 
-**Source:** [MightyDillah/apple-doc-mcp](https://github.com/MightyDillah/apple-doc-mcp). Smart search over Apple Developer Documentation with wildcard support (SwiftUI, UIKit, Foundation, Metal, etc.). **Auth:** None. **NPM:** `apple-doc-mcp-server@latest`.
+**Source:** [MightyDillah/apple-doc-mcp](https://github.com/MightyDillah/apple-doc-mcp). Smart search over Apple Developer Documentation with wildcard support (SwiftUI, UIKit, Foundation, Metal, etc.). **Auth:** None. **NPM:** `apple-doc-mcp-server`. Resolve and review a concrete version before adding it to persistent MCP config; avoid implicit `@latest` for tools that will receive credentials.
 
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"apple-docs": { "command": "{NPX_PATH}", "args": ["-y", "apple-doc-mcp-server@latest"], "env": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
-- [ ] **OpenCode** under `mcp`: `"apple-docs": { "type": "local", "command": ["{NPX_PATH}", "-y", "apple-doc-mcp-server@latest"], "enabled": true, "environment": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"apple-docs": { "command": "{NPX_PATH}", "args": ["-y", "apple-doc-mcp-server@<reviewed-version>"], "env": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **OpenCode** under `mcp`: `"apple-docs": { "type": "local", "command": ["{NPX_PATH}", "-y", "apple-doc-mcp-server@<reviewed-version>"], "enabled": true, "environment": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Tools:** `discover_technologies`, `choose_technology`, `current_technology`, `search_symbols`, `get_documentation`, `get_version`.
 
 ### XcodeBuild MCP (Xcode / Swift / Simulator / Device)
@@ -193,8 +193,8 @@ Apple-related MCPs for documentation (Swift, SwiftUI, UIKit, etc.) and Xcode too
 
 **Source:** [Remotion MCP docs](https://www.remotion.dev/docs/ai/mcp) | npm: `@remotion/mcp`. **Installed by default.** Gives AI access to Remotion (React-based programmatic video) documentation so it can answer Remotion questions and suggest correct APIs. **Auth:** None (test phase). Remotion also offers **Agent Skills** (`npx remotion skills add`) for Cursor/Claude Code/Codex — install those in-project for workflow guidance.
 
-- [ ] **Cursor** `~/.cursor/mcp.json`: `"remotion": { "command": "{NPX_PATH}", "args": ["-y", "@remotion/mcp@latest"], "env": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
-- [ ] **OpenCode** under `mcp`: `"remotion": { "type": "local", "command": ["{NPX_PATH}", "-y", "@remotion/mcp@latest"], "enabled": true, "environment": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **Cursor** `~/.cursor/mcp.json`: `"remotion": { "command": "{NPX_PATH}", "args": ["-y", "@remotion/mcp@<reviewed-version>"], "env": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
+- [ ] **OpenCode** under `mcp`: `"remotion": { "type": "local", "command": ["{NPX_PATH}", "-y", "@remotion/mcp@<reviewed-version>"], "enabled": true, "environment": { "PATH": "<NPX_DIR>:/usr/bin:/bin:/usr/sbin:/sbin" } }`.
 - **Skills (optional):** In a Remotion project run `npx remotion skills add` to add Agent Skills to `.claude/skills` for Cursor/Claude Code/Codex.
 
 ---
@@ -219,7 +219,7 @@ Apple-related MCPs for documentation (Swift, SwiftUI, UIKit, etc.) and Xcode too
 
 - [ ] Add Google Developer Knowledge: `url`: `https://developerknowledge.googleapis.com/mcp`, `headers`: `{ "X-Goog-Api-Key": "YOUR_API_KEY" }`. Replace with real API key.
 - [ ] **Vercel** (optional): `"vercel": { "url": "https://mcp.vercel.com" }`. After restart, click “Needs login” to complete OAuth.
-- [ ] **Context7, Firebase:** Use `{NPX_PATH}` and PATH in env; disable the built-in plugin MCP in UI. Firebase: args `["-y", "firebase-tools@latest", "mcp"]`; run `firebase login` if needed.
+- [ ] **Context7, Firebase:** Use `{NPX_PATH}` and PATH in env; disable the built-in plugin MCP in UI. For credentialed servers, pin a reviewed version before storing the config. Firebase example: args `["-y", "firebase-tools@<reviewed-version>", "mcp"]`; run `firebase login` if needed.
 - [ ] **Nano Banana / Gmail / YouTube:** See §2c. **YouTube:** use `@iflow-mcp/youtube-mcp-server` (not `zubeid-youtube-mcp-server`).
 - [ ] **Dart:** See §2d. Install Dart first (Prerequisites); use `{DART_PATH}` (full path), never `"command": "dart"`.
 - [ ] **Security:** See §2d; use `{UVX_PATH}` and PATH.

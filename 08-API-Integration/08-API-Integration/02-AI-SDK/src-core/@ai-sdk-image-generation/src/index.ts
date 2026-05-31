@@ -2,7 +2,7 @@
  * AI SDK Image Generation Library
  *
  * A comprehensive, multi-provider image generation library built on the AI SDK.
- * Supports OpenAI, Google, xAI, Fal, and OpenRouter providers with automatic
+ * Supports OpenAI, Google, xAI, and Fal providers with automatic
  * fallback, retry logic, and provider-agnostic parameter handling.
  */
 
@@ -47,9 +47,3 @@ export { createRetryPolicy } from './utils/retry.js';
 
 // Configuration builders
 export { createImageGeneratorConfig } from './config/builder.js';
-
-// Re-export common AI SDK types for convenience
-export type {
-  GenerateImageResult as AISDKImageResult,
-  GenerateImageModel as AISDKImageModel
-} from 'ai';

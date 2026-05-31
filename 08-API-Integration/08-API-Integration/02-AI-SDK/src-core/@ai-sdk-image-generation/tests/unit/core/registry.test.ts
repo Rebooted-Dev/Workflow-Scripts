@@ -10,10 +10,11 @@ describe('Provider Registry', () => {
     it('should return all built-in providers', () => {
       const providers = getImageProviders();
 
-      expect(providers).toHaveLength(5);
+      expect(providers).toHaveLength(4);
       expect(providers.map(p => p.id)).toEqual(
-        expect.arrayContaining(['openai', 'google', 'xai', 'fal', 'openrouter'])
+        expect.arrayContaining(['openai', 'google', 'xai', 'fal'])
       );
+      expect(providers.map(p => p.id)).not.toContain('openrouter');
     });
 
     it('should include complete provider information', () => {
@@ -37,11 +38,6 @@ describe('Provider Registry', () => {
       expect(models[0]).toHaveProperty('provider', 'openai');
     });
 
-    it('should return empty array for provider with no models', () => {
-      const models = getImageModels('openrouter');
-      expect(models).toHaveLength(0);
-    });
-
     it('should return empty array for invalid provider', () => {
       const models = getImageModels('invalid' as any);
       expect(models).toHaveLength(0);
@@ -54,10 +50,6 @@ describe('Provider Registry', () => {
       expect(isImageProviderSupported('google')).toBe(true);
       expect(isImageProviderSupported('xai')).toBe(true);
       expect(isImageProviderSupported('fal')).toBe(true);
-    });
-
-    it('should return false for providers without models', () => {
-      expect(isImageProviderSupported('openrouter')).toBe(false);
     });
 
     it('should return false for invalid providers', () => {

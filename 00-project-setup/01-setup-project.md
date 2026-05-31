@@ -1013,7 +1013,7 @@ fi
    - After creating the topical file(s), **remove** those long sections from AGENTS.md and replace them with a single **"Detailed Documentation"** section that lists links to each created file and to `docs/agents/changelog-and-troubleshooting.md`.
 
 2. **Ensure AGENTS.md ends with a "Detailed Documentation" section** that includes:
-   - Link to [Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md) (created in Step 2.6.1).
+   - Link to the Changelog & Troubleshooting guide at `docs/agents/changelog-and-troubleshooting.md` (created in Step 2.6.1).
    - Links to any other `docs/agents/*.md` files created (e.g. project-structure.md, development-workflow.md, coding-standards.md). Create placeholder files with minimal content if the project does not yet have detailed docs, so the links resolve.
 
 3. **If AGENTS.md is already slim** (only Execution, Repository Management, slim Change Management, and a short "Detailed Documentation" list): create any docs/agents files that are linked but missing (e.g. stub or placeholder content), so that "Detailed Documentation" links do not break.
@@ -1368,7 +1368,7 @@ grep -r "old-dir-name" --include="*.md" . --exclude-dir=.git --exclude-dir=node_
 
 **Check markdown links resolve (standard after reorganisation):**
 
-- Run a markdown link checker (e.g. `markdown-link-check`, `lychee`) on `docs/`, `plans/`, `project/`, and root `.md` files after reorganisation to catch broken `[text](path)` links. If no tool is available, manually spot-check key documents that reference changelog, troubleshooting, or plans.
+- Run a markdown link checker (e.g. `markdown-link-check`, `lychee`) on `docs/`, `plans/`, `project/`, and root `.md` files after reorganisation to catch broken Markdown links. If no tool is available, manually spot-check key documents that reference changelog, troubleshooting, or plans.
 
 **After fixing:**
 

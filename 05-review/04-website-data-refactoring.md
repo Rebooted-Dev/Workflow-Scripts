@@ -594,7 +594,7 @@ import { IDENTITY, CONTACT } from '@/data';
 
 - [Code Refactoring](./03-code-refactoring.md) - General code quality refactoring
 - [Sync Documentation](../04-documentation/02-sync-documentation.md) - Update docs after refactoring
-- [Execution](../02-build-code/01-execution.md) - Implement the refactoring plan
+- [Execution](../02-code-build/01-execution.md) - Implement the refactoring plan
 - [Code Review](./01-code-review.md) - Review refactored code
 
 ---
@@ -615,7 +615,7 @@ import { IDENTITY, CONTACT } from '@/data';
 
 ## Notes
 
-- This workflow focuses on **planning** the refactoring; use [Execution](../02-build-code/01-execution.md) for implementation
+- This workflow focuses on **planning** the refactoring; use [Execution](../02-code-build/01-execution.md) for implementation
 - Adjust phases based on project complexity; simple sites may need fewer phases
 - For CMS integration, design data structure to map cleanly to CMS schemas
 - Consider future internationalization (i18n) when designing data structure

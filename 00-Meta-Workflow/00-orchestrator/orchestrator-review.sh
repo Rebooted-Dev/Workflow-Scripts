@@ -23,6 +23,7 @@ set -euo pipefail
 # Get script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKFLOW_DIR="$(dirname "$SCRIPT_DIR")"
+WORKFLOW_ROOT="$(dirname "$WORKFLOW_DIR")"
 
 # Default configuration
 MODEL=""
@@ -148,7 +149,11 @@ mkdir -p "$(dirname "$OUTPUT_FILE")"
 STATUS_FILE="${OUTPUT_FILE%.md}.json"
 
 # Determine workflow path
-WORKFLOW_FILE="${WORKFLOW_DIR}/01-planning/01-plan-review.md"
+WORKFLOW_FILE="${WORKFLOW_ROOT}/01-Planning & Organizing/01-plan-review.md"
+if [ ! -f "$WORKFLOW_FILE" ]; then
+  log_error "Default workflow file not found: $WORKFLOW_FILE"
+  exit 1
+fi
 
 # Build focus-specific instructions
 case "$FOCUS" in
@@ -249,12 +254,18 @@ fi
 
 # Execute review
 if [ -n "$TIMEOUT_CMD" ]; then
-  $TIMEOUT_CMD opencode "${OPENCODE_ARGS[@]}" > "$OUTPUT_FILE" 2>&1
+  if $TIMEOUT_CMD opencode "${OPENCODE_ARGS[@]}" > "$OUTPUT_FILE" 2>&1; then
+    EXIT_CODE=0
+  else
+    EXIT_CODE=$?
+  fi
 else
-  opencode "${OPENCODE_ARGS[@]}" > "$OUTPUT_FILE" 2>&1
+  if opencode "${OPENCODE_ARGS[@]}" > "$OUTPUT_FILE" 2>&1; then
+    EXIT_CODE=0
+  else
+    EXIT_CODE=$?
+  fi
 fi
-
-EXIT_CODE=$?
 
 # Record end time
 END_TIME=$(date '+%Y-%m-%d %H:%M:%S')

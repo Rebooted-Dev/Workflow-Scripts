@@ -71,7 +71,7 @@ describe('Validation Utilities', () => {
       const result = validateImageRequest(invalidRequest);
 
       expect(result.success).toBe(false);
-      expect(result.errors).toContain('provider: Invalid option: expected one of "openai"|"google"|"xai"|"fal"|"openrouter"');
+      expect(result.errors).toContain('provider: Invalid option: expected one of "openai"|"google"|"xai"|"fal"');
     });
 
     it('should reject invalid image count', () => {
@@ -183,7 +183,19 @@ describe('Validation Utilities', () => {
       const result = validateAndNormalizeRequest(request);
 
       expect(result.success).toBe(false);
-      expect(result.errors).toContain('provider: Invalid option: expected one of "openai"|"google"|"xai"|"fal"|"openrouter"');
+      expect(result.errors).toContain('provider: Invalid option: expected one of "openai"|"google"|"xai"|"fal"');
+    });
+
+    it('should reject OpenRouter for image generation', () => {
+      const request = {
+        prompt: 'Test',
+        provider: 'openrouter' as any
+      };
+
+      const result = validateAndNormalizeRequest(request);
+
+      expect(result.success).toBe(false);
+      expect(result.errors).toContain('provider: Invalid option: expected one of "openai"|"google"|"xai"|"fal"');
     });
   });
 
@@ -233,7 +245,6 @@ describe('Validation Utilities', () => {
       expect(isValidProviderId('google')).toBe(true);
       expect(isValidProviderId('xai')).toBe(true);
       expect(isValidProviderId('fal')).toBe(true);
-      expect(isValidProviderId('openrouter')).toBe(true);
     });
 
     it('should return false for invalid providers', () => {

@@ -2,6 +2,8 @@
  * Retry logic and policies for image generation
  */
 
+import { ImageGenerationError } from '../core/types.js';
+
 /**
  * Retry policy configuration
  */
@@ -30,6 +32,10 @@ export const defaultRetryPolicy: RetryPolicy = {
   backoffMultiplier: 2,
   jitterFactor: 0.1,
   isRetryable: (error: unknown): boolean => {
+    if (error instanceof ImageGenerationError) {
+      return error.retryable;
+    }
+
     // Check for custom error with retryable flag
     if (error && typeof error === 'object' && 'retryable' in error) {
       return (error as any).retryable === true;
@@ -40,8 +46,15 @@ export const defaultRetryPolicy: RetryPolicy = {
       const anyError = error as any;
       const status = anyError.status || anyError.response?.status;
       if (status) {
-        // Retry on 5xx errors, rate limits (429), and network timeouts
-        return status >= 500 || status === 429 || status === 'ECONNRESET' || status === 'ETIMEDOUT';
+        if (typeof status === 'number') {
+          return status >= 500 || status === 429;
+        }
+        return status === 'ECONNRESET' || status === 'ETIMEDOUT';
+      }
+
+      const code = anyError.code;
+      if (typeof code === 'string') {
+        return ['ECONNRESET', 'ETIMEDOUT', 'ENOTFOUND', 'ECONNREFUSED', 'EAI_AGAIN'].includes(code);
       }
     }
 

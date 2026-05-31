@@ -91,6 +91,24 @@ vi.mock('../../../src/providers/base.js', () => ({
             validateParameters: vi.fn(),
             getMetadata: vi.fn(() => ({ id: 'google', configured: !!config?.google }))
           };
+        case 'xai':
+          return {
+            id: 'xai',
+            name: 'xAI',
+            isConfigured: vi.fn(() => !!config?.xai),
+            getModel: vi.fn(() => ({ model: 'xai-model' })),
+            validateParameters: vi.fn(),
+            getMetadata: vi.fn(() => ({ id: 'xai', configured: !!config?.xai }))
+          };
+        case 'fal':
+          return {
+            id: 'fal',
+            name: 'Fal',
+            isConfigured: vi.fn(() => !!config?.fal),
+            getModel: vi.fn(() => ({ model: 'fal-model' })),
+            validateParameters: vi.fn(),
+            getMetadata: vi.fn(() => ({ id: 'fal', configured: !!config?.fal }))
+          };
         default:
           return null;
       }
@@ -213,9 +231,9 @@ describe('Provider Factory', () => {
 
         expect(metadata.openai).toEqual({ id: 'openai', configured: true });
         expect(metadata.google).toEqual({ id: 'google', configured: true });
-        expect(metadata.xai).toBeNull(); // Not configured
-        expect(metadata.fal).toBeNull(); // Not configured
-        expect(metadata.openrouter).toBeNull(); // Not configured
+        expect(metadata.xai).toEqual({ id: 'xai', configured: false });
+        expect(metadata.fal).toEqual({ id: 'fal', configured: false });
+        expect(metadata).not.toHaveProperty('openrouter');
       });
     });
 

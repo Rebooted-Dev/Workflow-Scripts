@@ -20,7 +20,7 @@ export class GoogleProvider extends BaseImageProvider {
 
     if (!this.client) {
       // Lazy import to avoid bundling unused providers
-      const { google, createGoogleGenerativeAI } = await import('@ai-sdk/google');
+      const { createGoogleGenerativeAI } = await import('@ai-sdk/google');
 
       this.client = createGoogleGenerativeAI({
         apiKey: this.apiKey,

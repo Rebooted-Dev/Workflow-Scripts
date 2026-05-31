@@ -197,5 +197,5 @@ Before scanning, verify:
 
 **Timing guidance:** Run Code Review before every merge. For security-critical changes (auth, data handling, API endpoints), follow this review with Security Review for comprehensive security validation.
 
-- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for review findings
+- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plan for review findings
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring

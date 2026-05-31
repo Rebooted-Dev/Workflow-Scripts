@@ -57,7 +57,15 @@ NC='\033[0m' # No Color
 # Configuration
 WORKFLOWS_DIR_NAME="Workflow-Scripts"
 WORKFLOWS_REMOTE="https://github.com/Rebooted-Dev/Workflow-Scripts"
-WORKFLOWS_BRANCH="main"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_REPO_BRANCH="$(git -C "$SCRIPT_DIR" rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+if [ -z "${WORKFLOWS_BRANCH:-}" ]; then
+  if [ -n "$SCRIPT_REPO_BRANCH" ] && [ "$SCRIPT_REPO_BRANCH" != "HEAD" ]; then
+    WORKFLOWS_BRANCH="$SCRIPT_REPO_BRANCH"
+  else
+    WORKFLOWS_BRANCH="main"
+  fi
+fi
 
 # Non-interactive mode: Set to "true" for CI/CD or automated runs
 # When "true", automatically clones Workflow-Scripts if missing (no prompt)
@@ -124,7 +132,7 @@ for project_path in "${PROJECTS[@]}"; do
     if [ "$clone_workflows" = "true" ]; then
       echo -e "  ${BLUE}→ Cloning Workflow-Scripts...${NC}"
       cd "$project_path"
-      if git clone "$WORKFLOWS_REMOTE" "$WORKFLOWS_DIR_NAME"; then
+      if git clone --branch "$WORKFLOWS_BRANCH" "$WORKFLOWS_REMOTE" "$WORKFLOWS_DIR_NAME"; then
         echo -e "  ${GREEN}✓ Cloned successfully${NC}"
         ((SUCCESS_COUNT++))
       else
@@ -175,10 +183,18 @@ for project_path in "${PROJECTS[@]}"; do
     continue
   fi
   
-  # Check if behind
+  # Check if behind the configured sync branch.
+  target_ref="origin/${WORKFLOWS_BRANCH}"
+  if ! git rev-parse --verify "$target_ref" >/dev/null 2>&1; then
+    echo -e "  ${RED}✗ Remote branch not found: ${target_ref}${NC}"
+    ((FAIL_COUNT++))
+    echo ""
+    continue
+  fi
+
   LOCAL=$(git rev-parse @)
-  REMOTE=$(git rev-parse "@{u}")
-  BASE=$(git merge-base @ "@{u}")
+  REMOTE=$(git rev-parse "$target_ref")
+  BASE=$(git merge-base @ "$target_ref")
   
   if [ "$LOCAL" = "$REMOTE" ]; then
     echo -e "  ${GREEN}✓ Already up to date${NC}"
@@ -250,7 +266,7 @@ PROJECTS=(
 ```bash
 WORKFLOWS_DIR_NAME="Workflow-Scripts"  # Change if you use a different directory name
 WORKFLOWS_REMOTE="https://github.com/Rebooted-Dev/Workflow-Scripts"  # Your remote URL
-WORKFLOWS_BRANCH="main"  # Your default branch name
+WORKFLOWS_BRANCH="v1.5"  # Optional override; otherwise defaults to the script repo branch
 ```
 
 **Non-Interactive Mode (for CI/CD):**
@@ -315,7 +331,7 @@ fi
 
 # Then in the pull section, wrap the actual command:
 if [ "$DRY_RUN" = true ]; then
-  echo -e "  ${BLUE}[DRY RUN] Would pull changes${NC}"
+  echo -e "  ${BLUE}[DRY RUN] Would pull changes from origin/${WORKFLOWS_BRANCH}${NC}"
 else
   git pull --ff-only origin "$WORKFLOWS_BRANCH"
 fi
@@ -338,19 +354,25 @@ check_status() {
     cd "$workflows_path"
     git fetch origin --quiet
     
+    target_ref="origin/${WORKFLOWS_BRANCH}"
+    if ! git rev-parse --verify "$target_ref" >/dev/null 2>&1; then
+      echo -e "${RED}✗${NC} $project_name: Remote branch not found: ${target_ref}"
+      continue
+    fi
+
     LOCAL=$(git rev-parse @ 2>/dev/null)
-    REMOTE=$(git rev-parse "@{u}" 2>/dev/null)
-    BASE=$(git merge-base @ "@{u}" 2>/dev/null)
+    REMOTE=$(git rev-parse "$target_ref" 2>/dev/null)
+    BASE=$(git merge-base @ "$target_ref" 2>/dev/null)
     
     project_name=$(basename "$project_path")
     
     if [ "$LOCAL" = "$REMOTE" ]; then
       echo -e "${GREEN}✓${NC} $project_name: Up to date"
     elif [ "$LOCAL" = "$BASE" ]; then
-      behind=$(git rev-list --count HEAD..@{u})
+      behind=$(git rev-list --count "HEAD..${target_ref}")
       echo -e "${YELLOW}⚠${NC} $project_name: Behind by $behind commit(s)"
     elif [ "$REMOTE" = "$BASE" ]; then
-      ahead=$(git rev-list --count @{u}..HEAD)
+      ahead=$(git rev-list --count "${target_ref}..HEAD")
       echo -e "${BLUE}→${NC} $project_name: Ahead by $ahead commit(s)"
     else
       echo -e "${RED}✗${NC} $project_name: Diverged"
@@ -496,7 +518,7 @@ cd /path/to/project/Workflow-Scripts
 git init
 git remote add origin https://github.com/Rebooted-Dev/Workflow-Scripts
 git fetch
-git checkout -b main origin/main
+git checkout -b "${WORKFLOWS_BRANCH:-v1.5}" "origin/${WORKFLOWS_BRANCH:-v1.5}"
 ```
 
 #### Issue: "Pull failed (may need manual merge)"

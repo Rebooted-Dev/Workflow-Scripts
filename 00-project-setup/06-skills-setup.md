@@ -644,8 +644,8 @@ Skills don’t add new tools; they tell the agent *when* and *how* to use the MC
 
 | MCP | Purpose | Config |
 |-----|---------|--------|
-| **Apple Doc MCP** | Search Apple Developer docs and fetch symbol/documentation. | See [05-mcp-and-config-setup.md §2e](05-mcp-and-config-setup.md). NPM: `apple-doc-mcp-server@latest`. |
-| **XcodeBuild MCP** | Build, run, simulators, devices, SPM, project discovery, logs. | Same doc §2e. NPM: `xcodebuildmcp@latest`; **args must include `"mcp"`**. |
+| **Apple Doc MCP** | Search Apple Developer docs and fetch symbol/documentation. | See [05-mcp-and-config-setup.md §2e](05-mcp-and-config-setup.md). Pin a reviewed `apple-doc-mcp-server` version in persistent MCP config. |
+| **XcodeBuild MCP** | Build, run, simulators, devices, SPM, project discovery, logs. | Same doc §2e. Use the pinned version documented there; **args must include `"mcp"`**. |
 | **Xcode 26.3+ native** | Apple’s built-in Xcode MCP tools via `xcrun mcpbridge`. | Optional; see 05 doc. Use if you prefer Apple’s official tools. |
 
 MCP config (command, args, env) is in [05-mcp-and-config-setup.md](05-mcp-and-config-setup.md); this section only describes which Apple/iOS capabilities are best as skills vs MCPs.

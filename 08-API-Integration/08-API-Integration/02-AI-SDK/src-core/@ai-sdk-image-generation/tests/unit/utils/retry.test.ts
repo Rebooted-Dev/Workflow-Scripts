@@ -71,8 +71,8 @@ describe('Retry Utilities', () => {
 
     it('should retry on failure and succeed', async () => {
       const operation = vi.fn()
-        .mockRejectedValueOnce(new Error('Fail 1'))
-        .mockRejectedValueOnce(new Error('Fail 2'))
+        .mockRejectedValueOnce(new Error('Network timeout 1'))
+        .mockRejectedValueOnce(new Error('Network timeout 2'))
         .mockResolvedValueOnce('success');
 
       const onRetry = vi.fn();
@@ -85,10 +85,17 @@ describe('Retry Utilities', () => {
     });
 
     it('should stop after max retries', async () => {
-      const operation = vi.fn().mockRejectedValue(new Error('Always fails'));
+      const operation = vi.fn().mockRejectedValue(new Error('Network timeout'));
 
-      await expect(withRetry(operation, createRetryPolicy({ maxRetries: 2 }))).rejects.toThrow('Always fails');
+      await expect(withRetry(operation, createRetryPolicy({ maxRetries: 2 }))).rejects.toThrow('Network timeout');
       expect(operation).toHaveBeenCalledTimes(3); // Initial + 2 retries
+    });
+
+    it('should not retry generic non-transient errors', async () => {
+      const operation = vi.fn().mockRejectedValue(new Error('invalid api key'));
+
+      await expect(withRetry(operation, createRetryPolicy({ maxRetries: 3 }))).rejects.toThrow('invalid api key');
+      expect(operation).toHaveBeenCalledTimes(1);
     });
 
     it('should not retry if error is not retryable', async () => {
@@ -105,7 +112,7 @@ describe('Retry Utilities', () => {
 
     it('should call onRetry callback with correct parameters', async () => {
       const operation = vi.fn()
-        .mockRejectedValueOnce(new Error('Fail'))
+        .mockRejectedValueOnce(new Error('Network timeout'))
         .mockResolvedValueOnce('success');
 
       const onRetry = vi.fn();
@@ -202,6 +209,15 @@ describe('Retry Utilities', () => {
 
       // Should retry rate limit errors
       expect(policy.isRetryable(new Error('Rate limit exceeded'))).toBe(true);
+    });
+
+    it('should retry explicit transient status and code errors', () => {
+      const policy = createRetryPolicy();
+
+      expect(policy.isRetryable({ status: 429 })).toBe(true);
+      expect(policy.isRetryable({ response: { status: 503 } })).toBe(true);
+      expect(policy.isRetryable({ code: 'ECONNRESET' })).toBe(true);
+      expect(policy.isRetryable({ code: 'EINVAL' })).toBe(false);
     });
   });
 

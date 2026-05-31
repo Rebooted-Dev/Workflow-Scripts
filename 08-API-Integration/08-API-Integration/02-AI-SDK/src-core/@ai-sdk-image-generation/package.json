@@ -45,7 +45,6 @@
     "@ai-sdk/openai": "^2.0.42",
     "@ai-sdk/xai": "^2.0.23",
     "@fal-ai/client": "^1.7.0",
-    "@openrouter/ai-sdk-provider": "^1.2.0",
     "ai": "^5.0.60",
     "zod": "^4.1.11"
   },
@@ -62,14 +61,15 @@
     "@ai-sdk/fal": {
       "optional": true
     },
-    "@openrouter/ai-sdk-provider": {
-      "optional": true
-    },
     "@fal-ai/client": {
       "optional": true
     }
   },
   "devDependencies": {
+    "@ai-sdk/google": "2.0.74",
+    "@ai-sdk/openai": "2.0.106",
+    "@ai-sdk/xai": "2.0.73",
+    "@fal-ai/client": "1.10.1",
     "@types/node": "^22.14.0",
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "@typescript-eslint/parser": "^8.19.1",

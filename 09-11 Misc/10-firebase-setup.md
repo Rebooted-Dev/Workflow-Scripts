@@ -372,8 +372,8 @@ firebase deploy --only hosting
 
 ## Related Guides
 
-- [Port Management Guide](./08-port-relocation/port-management-guide.md) - Development server setup
-- [Deployment Index](./README.md) - Other deployment scenarios
+- [Port Management Guide](../08-API-Integration/08-port-relocation/port-management-guide.md) - Development server setup
+- [Deployment Index](../07-deployment/README.md) - Other deployment scenarios
 - [Firebase Documentation](https://firebase.google.com/docs/hosting) - Official Firebase docs
 
 ---

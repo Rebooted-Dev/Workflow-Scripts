@@ -101,4 +101,4 @@ When workflows generate reports or analysis documents, follow the convention def
 
 **See also:**
 - Severity & Priority Rubric: [`severity-priority-rubric.md`](./severity-priority-rubric.md)
-- Main README: [`../README.md`](../README.md)
+- Main README: [`../README.md`](../../README.md)

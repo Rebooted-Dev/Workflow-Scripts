@@ -102,7 +102,6 @@ describe('Configuration Builder', () => {
       process.env.GEMINI_API_KEY = 'gemini-test';
       process.env.XAI_API_KEY = 'xai-test';
       process.env.FAL_API_KEY = 'fal-test';
-      process.env.OPENROUTER_API_KEY = 'openrouter-test';
 
       const config = createConfigBuilder()
         .withEnvironmentKeys()
@@ -112,7 +111,6 @@ describe('Configuration Builder', () => {
       expect(config.apiKeys?.google).toBe('gemini-test');
       expect(config.apiKeys?.xai).toBe('xai-test');
       expect(config.apiKeys?.fal).toBe('fal-test');
-      expect(config.apiKeys?.openrouter).toBe('openrouter-test');
     });
 
     it('should handle missing environment variables', () => {

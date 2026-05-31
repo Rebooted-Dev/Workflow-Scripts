@@ -166,9 +166,9 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 ## Related Workflows
 
 - **[`01-bug-description.md`](./01-bug-description.md)** - Create comprehensive bug reports for complex or persistent bugs
-- **[`../02-build-code/01-execution.md`](../02-build-code/01-execution.md)** - Implement bug fixes using execution workflow
-- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review bug fixes before merging
-- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for complex bug fixes
+- **[`../02-code-build/01-execution.md`](../02-code-build/01-execution.md)** - Implement bug fixes using execution workflow
+- **[`../05-review/01-code-review.md`](../05-review/01-code-review.md)** - Review bug fixes before merging
+- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plan for complex bug fixes
 - **[`../06-security/02-security-fix.md`](../06-security/02-security-fix.md)** - Fix security-related bugs
 
 ## Notes

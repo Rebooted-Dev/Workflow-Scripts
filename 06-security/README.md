@@ -58,10 +58,10 @@ Both workflows cover OWASP Top 10 and common vulnerability categories:
 
 ## Related Workflows
 
-- [Code Review](../05-review-audit/01-code-review.md) - General review (includes some security)
-- [Bug Fix](../03-debug/02-bug-fix-workflow.md) - For non-security bugs
-- [Execution](../02-build-code/01-execution.md) - For implementing security fixes
+- [Code Review](../05-review/01-code-review.md) - General review (includes some security)
+- [Bug Fix](../03-debugging/02-bug-fix-workflow.md) - For non-security bugs
+- [Execution](../02-code-build/01-execution.md) - For implementing security fixes
 
 ## Additional Resources
 
-- Security patch in deployment: [`../07-deployment/09-react-bug.md`](../07-deployment/09-react-bug.md) - React/Next.js RCE patch example
+- Security patch in deployment: [`../09-11%20Misc/09-nextjs-react-update.md`](../09-11%20Misc/09-nextjs-react-update.md) - React/Next.js RCE patch example

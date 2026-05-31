@@ -12,6 +12,7 @@ vi.mock('ai', () => ({
 }));
 
 import { experimental_generateImage as mockGenerateImage } from 'ai';
+import { createProviderManager as mockCreateProviderManager } from '../../../src/providers/factory.js';
 
 // Mock providers
 vi.mock('../../../src/providers/factory.js', () => ({
@@ -84,7 +85,7 @@ describe('ImageGenerator', () => {
     it('should generate image successfully', async () => {
       const result = await generator.generate(validRequest);
 
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         images: ['mock-base64-image'],
         warnings: [],
         provider: 'openai',
@@ -94,7 +95,8 @@ describe('ImageGenerator', () => {
       expect(mockGenerateImage).toHaveBeenCalledWith({
         model: { model: 'mock-model' },
         prompt: 'A beautiful sunset',
-        n: 1
+        n: 1,
+        size: '1024x1024'
       });
     });
 
@@ -142,7 +144,8 @@ describe('ImageGenerator', () => {
       expect(mockGenerateImage).toHaveBeenCalledWith({
         model: { model: 'mock-model' },
         prompt: 'A cat',
-        n: 1
+        n: 1,
+        size: '1024x1024'
       });
     });
 
@@ -157,13 +160,13 @@ describe('ImageGenerator', () => {
       expect(mockGenerateImage).toHaveBeenCalledWith({
         model: { model: 'mock-model' },
         prompt: 'Multiple images',
-        n: 1 // Default max is 1 for most models
+        n: 1, // Default max is 1 for most models
+        size: '1024x1024'
       });
     });
 
     it('should handle provider not configured error', async () => {
-      const mockProviderManager = (await import('../../../src/providers/factory.js')).getProviderManager;
-      mockProviderManager.mockReturnValueOnce({
+      mockCreateProviderManager.mockReturnValueOnce({
         getProvider: vi.fn(() => ({
           isConfigured: vi.fn(() => false),
           validateParameters: vi.fn(),
@@ -173,7 +176,12 @@ describe('ImageGenerator', () => {
         validateProviderParameters: vi.fn()
       });
 
-      await expect(generator.generate(validRequest)).rejects.toThrow(ImageGenerationError);
+      const unconfiguredGenerator = new ImageGenerator({
+        apiKeys: { openai: 'test-key' },
+        debug: false
+      });
+
+      await expect(unconfiguredGenerator.generate(validRequest)).rejects.toThrow(ImageGenerationError);
       expect(mockGenerateImage).not.toHaveBeenCalled();
     });
 
@@ -187,9 +195,15 @@ describe('ImageGenerator', () => {
     });
 
     it('should handle AI SDK errors', async () => {
-      mockGenerateImage.mockRejectedValueOnce(new Error('AI SDK Error'));
+      mockGenerateImage.mockRejectedValue(new Error('AI SDK Error'));
 
-      await expect(generator.generate(validRequest)).rejects.toThrow(ImageGenerationError);
+      const noRetryGenerator = new ImageGenerator({
+        apiKeys: { openai: 'test-key' },
+        debug: false,
+        maxRetries: 0
+      });
+
+      await expect(noRetryGenerator.generate(validRequest)).rejects.toThrow(ImageGenerationError);
     });
 
     it('should include warnings in result', async () => {

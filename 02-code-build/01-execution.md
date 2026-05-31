@@ -107,8 +107,8 @@ Execute implementation in phases with verification and documentation updates.
 ## Related Workflows
 
 - **[`02-confirm-execution.md`](./02-confirm-execution.md)** - Validate that implementation matches the plan after execution
-- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plans before starting execution
-- **[`../01-planning/01-plan-review.md`](../01-planning/01-plan-review.md)** - Review plans for correctness before execution
-- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review code quality after implementation
-- **[`../03-debug/02-bug-fix-workflow.md`](../03-debug/02-bug-fix-workflow.md)** - Fix bugs discovered during implementation
+- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plans before starting execution
+- **[`../01-Planning & Organizing/01-plan-review.md`](../01-Planning & Organizing/01-plan-review.md)** - Review plans for correctness before execution
+- **[`../05-review/01-code-review.md`](../05-review/01-code-review.md)** - Review code quality after implementation
+- **[`../03-debugging/02-bug-fix-workflow.md`](../03-debugging/02-bug-fix-workflow.md)** - Fix bugs discovered during implementation
 - **[`../04-documentation/02-sync-documentation.md`](../04-documentation/02-sync-documentation.md)** - Update documentation after code changes

@@ -21,7 +21,7 @@ export class FalProvider extends BaseImageProvider {
 
     if (!this.client) {
       // Lazy import to avoid bundling unused providers
-      const { fal, createFal } = await import('@ai-sdk/fal');
+      const { createFal } = await import('@ai-sdk/fal');
 
       this.client = createFal({
         apiKey: this.apiKey,

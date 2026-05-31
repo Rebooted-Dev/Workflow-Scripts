@@ -5,6 +5,25 @@
 import type { ImageGeneratorConfig, ImageProviderConfig } from '../core/types.js';
 import { validateConfig } from '../utils/validation.js';
 
+const primaryEnvironmentKeys = [
+  'OPENAI_API_KEY',
+  'GEMINI_API_KEY',
+  'XAI_API_KEY',
+  'FAL_API_KEY'
+] as const;
+
+const defaultEnvironmentMapping: Record<string, keyof ImageProviderConfig> = {
+  // Primary keys (preferred)
+  OPENAI_API_KEY: 'openai',
+  GEMINI_API_KEY: 'google',
+  XAI_API_KEY: 'xai',
+  FAL_API_KEY: 'fal',
+  // Fallback keys
+  APP_OPENAI_API_KEY: 'openai',
+  GOOGLE_API_KEY: 'google',
+  GROK_API_KEY: 'xai'
+};
+
 /**
  * Builder class for creating image generator configurations
  */
@@ -34,27 +53,16 @@ export class ImageGeneratorConfigBuilder {
    * Load API keys from environment variables
    */
   withEnvironmentKeys(mapping?: Record<string, keyof ImageProviderConfig>): this {
-    const defaultMapping = {
-      // Primary keys (preferred)
-      OPENAI_API_KEY: 'openai',
-      GEMINI_API_KEY: 'google',
-      XAI_API_KEY: 'xai',
-      FAL_API_KEY: 'fal',
-      OPENROUTER_API_KEY: 'openrouter',
-      // Fallback keys
-      APP_OPENAI_API_KEY: 'openai',
-      GOOGLE_API_KEY: 'google',
-      GROK_API_KEY: 'xai'
+    const finalMapping: Record<string, keyof ImageProviderConfig> = {
+      ...defaultEnvironmentMapping,
+      ...mapping
     };
 
-    const finalMapping = { ...defaultMapping, ...mapping };
-
     // Process primary keys first, then fallbacks (so fallbacks don't override primaries)
-    const primaryKeys = ['OPENAI_API_KEY', 'GEMINI_API_KEY', 'XAI_API_KEY', 'FAL_API_KEY', 'OPENROUTER_API_KEY'];
-    const processedProviders = new Set<string>();
+    const processedProviders = new Set<keyof ImageProviderConfig>();
 
     // First pass: primary keys
-    primaryKeys.forEach(envVar => {
+    primaryEnvironmentKeys.forEach(envVar => {
       const provider = finalMapping[envVar];
       if (provider && process.env[envVar] && !processedProviders.has(provider)) {
         this.withApiKey(provider, process.env[envVar]!);
@@ -64,7 +72,7 @@ export class ImageGeneratorConfigBuilder {
 
     // Second pass: fallback keys (only if primary not set)
     Object.entries(finalMapping).forEach(([envVar, provider]) => {
-      if (!primaryKeys.includes(envVar) && process.env[envVar] && !processedProviders.has(provider)) {
+      if (!primaryEnvironmentKeys.includes(envVar as typeof primaryEnvironmentKeys[number]) && process.env[envVar] && !processedProviders.has(provider)) {
         this.withApiKey(provider, process.env[envVar]!);
         processedProviders.add(provider);
       }
@@ -125,7 +133,14 @@ export class ImageGeneratorConfigBuilder {
    * Merge with existing configuration
    */
   withConfig(config: Partial<ImageGeneratorConfig>): this {
-    this.config = { ...this.config, ...config };
+    this.config = {
+      ...this.config,
+      ...config,
+      apiKeys: {
+        ...this.config.apiKeys,
+        ...config.apiKeys
+      }
+    };
     return this;
   }
 
@@ -166,8 +181,8 @@ export function createImageGeneratorConfig(
   options: Partial<ImageGeneratorConfig> = {}
 ): ImageGeneratorConfig {
   return createConfigBuilder()
-    .withEnvironmentKeys()
     .withConfig(options)
+    .withEnvironmentKeys()
     .build();
 }
 

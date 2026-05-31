@@ -236,7 +236,7 @@ Create a structured bug description report with the following sections:
 ## Related Workflows
 
 - **[`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md)** - Fix bugs (use this for initial bug investigation and fixes)
-- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for complex bug fixes
+- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plan for complex bug fixes
 - **[`../06-security/02-security-fix.md`](../06-security/02-security-fix.md)** - Fix security-related bugs
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for severity and priority classification
 

@@ -4,7 +4,7 @@ A comprehensive, multi-provider image generation library built on the [AI SDK](h
 
 ## Features
 
-- **Multi-Provider Support**: OpenAI, Google, xAI, Fal, and OpenRouter
+- **Multi-Provider Support**: OpenAI, Google, xAI, and Fal
 - **Automatic Fallbacks**: Seamlessly switch providers when one fails
 - **Parameter Validation**: Provider-specific parameter validation and normalization
 - **Retry Logic**: Exponential backoff with configurable retry policies
@@ -23,7 +23,7 @@ npm install @ai-sdk/image-generation
 This library requires the following peer dependencies:
 
 ```bash
-npm install ai @ai-sdk/openai @ai-sdk/google @ai-sdk/xai @ai-sdk/fal @openrouter/ai-sdk-provider @fal-ai/client zod
+npm install ai @ai-sdk/openai @ai-sdk/google @ai-sdk/xai @ai-sdk/fal @fal-ai/client zod
 ```
 
 ## Quick Start
@@ -107,7 +107,6 @@ interface ImageGeneratorConfig {
     google?: string;
     xai?: string;
     fal?: string;
-    openrouter?: string;
   };
   defaultProvider?: ImageProviderId;
   defaultModel?: string;
@@ -171,9 +170,6 @@ interface ImageGenerationResult {
 - **Parameters**: `aspectRatio` (e.g., "16:9", "1:1")
 - **Streaming**: Special support for `fal-ai/flux-krea-lora/stream`
 
-#### OpenRouter
-- **Status**: Not supported for image generation via AI SDK
-
 ### Error Handling
 
 The library provides comprehensive error handling with typed errors:
@@ -216,7 +212,6 @@ The library automatically loads API keys from environment variables:
 - `GEMINI_API_KEY` or `GOOGLE_API_KEY` - Google API key
 - `XAI_API_KEY` or `GROK_API_KEY` - xAI API key
 - `FAL_API_KEY` - Fal API key
-- `OPENROUTER_API_KEY` - OpenRouter API key
 
 ## Examples
 

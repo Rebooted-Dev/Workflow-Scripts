@@ -589,7 +589,7 @@ project/
 ## Related Guides
 
 - [Browser Auto-Open Guide](./browser-auto-open.md) - Detailed browser configuration
-- [Deployment Index](../README.md) - Other deployment scenarios
+- [Deployment Index](../../07-deployment/README.md) - Other deployment scenarios
 
 ---
 

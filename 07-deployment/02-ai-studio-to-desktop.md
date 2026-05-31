@@ -1395,8 +1395,12 @@ npm --version
 python --version
 pip --version
 
-# Check environment variables
-cat .env
+# Check environment variable names without printing secret values
+if [ -f .env ]; then
+  sed -n 's/^\([A-Za-z_][A-Za-z0-9_]*\)=.*/\1=<redacted>/p' .env
+else
+  echo ".env not found"
+fi
 ```
 
 ### Test basic functionality
@@ -1747,9 +1751,12 @@ DATABASE_URL=sqlite:///./database.db
 
 echo "🚀 Starting ${this.migrationData.metadata.title}"
 
-# Load environment variables
+# Load environment variables from a trusted local .env file.
+# Do not print secret values to logs.
 if [ -f ".env" ]; then
-    export $(cat .env | xargs)
+    set -a
+    . ./.env
+    set +a
 fi
 
 # Run based on project type

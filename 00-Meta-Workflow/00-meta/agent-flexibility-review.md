@@ -463,7 +463,7 @@ After updating workflows, test with:
 ## Related Documents
 
 - **[`parallel-agents-review.md`](./parallel-agents-review.md)** - Historical review of parallel agent usage (archived)
-- **[`../README.md`](../README.md)** - Main workflow documentation
+- **[`../README.md`](../../README.md)** - Main workflow documentation
 
 ---
 

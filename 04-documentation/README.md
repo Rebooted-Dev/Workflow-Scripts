@@ -145,6 +145,6 @@ docs/
 
 ## Related Workflows
 
-- [Execution](../02-build-code/01-execution.md) - Often triggers doc updates
-- [Code Review](../05-review-audit/01-code-review.md) - May identify doc gaps
+- [Execution](../02-code-build/01-execution.md) - Often triggers doc updates
+- [Code Review](../05-review/01-code-review.md) - May identify doc gaps
 - [Project Setup](../00-project-setup/01-setup-project.md) - Initial documentation structure

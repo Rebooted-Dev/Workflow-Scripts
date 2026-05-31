@@ -100,7 +100,7 @@ When a documentation sync effort is fully complete, clearly mark the sync summar
 - **[`00-doc-templates.md`](./00-doc-templates.md)** - Reference templates for consistent documentation structure
 - **[`09-optional.md`](./09-optional.md)** - Checklist of optional documentation types to consider
 - **[`ascii-art-prompts.md`](./ascii-art-prompts.md)** - Prompts for generating ASCII art diagrams
-- **[`../02-build-code/01-execution.md`](../02-build-code/01-execution.md)** - Update documentation after code changes
+- **[`../02-code-build/01-execution.md`](../02-code-build/01-execution.md)** - Update documentation after code changes
 
 ## Notes
 - Keep updates minimal and accurate; avoid speculative content.

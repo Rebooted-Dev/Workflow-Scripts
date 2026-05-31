@@ -6,13 +6,11 @@ import { experimental_generateImage as generateImage } from 'ai';
 import type {
   ImageGenerationRequest,
   ImageGenerationResult,
-  ImageGeneratorConfig,
-  ImageProviderId
+  ImageGeneratorConfig
 } from './types.js';
 import { ImageGenerationError } from './types.js';
 import { registry } from './registry.js';
-import { getProviderManager } from '../providers/factory.js';
-import { validateAndNormalizeRequest } from '../utils/validation.js';
+import { validateAndNormalizeRequest, validateConfig } from '../utils/validation.js';
 import { withRetryAndTimeout, createRateLimitRetryPolicy } from '../utils/retry.js';
 import { createProviderManager } from '../providers/factory.js';
 
@@ -24,6 +22,11 @@ export class ImageGenerator {
   private providerManager: any;
 
   constructor(config: ImageGeneratorConfig) {
+    const validation = validateConfig(config);
+    if (!validation.success) {
+      throw new Error(`Invalid configuration: ${validation.errors.join(', ')}`);
+    }
+
     this.config = config;
     // Create a dedicated provider manager for this generator instance
     // to avoid issues with the global singleton
@@ -119,12 +122,11 @@ export class ImageGenerator {
     request: ImageGenerationRequest
   ): Promise<ImageGenerationResult> {
     const retryPolicy = createRateLimitRetryPolicy({
-      maxRetries: this.config.maxRetries || 3,
+      maxRetries: this.config.maxRetries ?? 3,
       initialDelay: 1000,
       maxDelay: 30000
     });
 
-    let lastError: unknown;
     let attemptCount = 0;
 
     try {
@@ -134,14 +136,13 @@ export class ImageGenerator {
           return await this.generateSingleAttempt(request);
         },
         retryPolicy,
-        this.config.timeout || 60000,
+        this.config.timeout ?? 60000,
         (error, attempt, delay) => {
           this.logWarn(`Generation attempt ${attempt} failed, retrying in ${delay}ms`, {
             error: error instanceof Error ? error.message : String(error),
             attempt,
             delay
           });
-          lastError = error;
         }
       );
 
@@ -206,10 +207,13 @@ export class ImageGenerator {
 
     // Extract base64 images
     const images = result.images.map((img: any) => img.base64);
+    const warnings = (result.warnings || []).map((warning: unknown) =>
+      typeof warning === 'string' ? warning : JSON.stringify(warning)
+    );
 
     return {
       images,
-      warnings: result.warnings,
+      warnings,
       provider: request.provider,
       model: request.modelId,
       providerMetadata: result.providerMetadata
@@ -258,7 +262,9 @@ export class ImageGenerator {
     originalError: unknown
   ): Promise<ImageGenerationResult> {
     const configuredProviders = this.providerManager.getConfiguredProviders();
-    const fallbackProviders = configuredProviders.filter(p => p !== originalRequest.provider);
+    const fallbackProviders = configuredProviders.filter(
+      (p: ImageGenerationRequest['provider']) => p !== originalRequest.provider
+    );
 
     for (const fallbackProvider of fallbackProviders) {
       try {

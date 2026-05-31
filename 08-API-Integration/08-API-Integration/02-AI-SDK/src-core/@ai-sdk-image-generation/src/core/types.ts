@@ -5,7 +5,7 @@
 /**
  * Supported image provider identifiers
  */
-export type ImageProviderId = 'openai' | 'google' | 'xai' | 'fal' | 'openrouter';
+export type ImageProviderId = 'openai' | 'google' | 'xai' | 'fal';
 
 /**
  * Image model capabilities and configuration
@@ -59,8 +59,6 @@ export interface ImageProviderConfig {
   xai?: string;
   /** Fal API key */
   fal?: string;
-  /** OpenRouter API key */
-  openrouter?: string;
 }
 
 /**

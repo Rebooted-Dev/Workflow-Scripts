@@ -160,10 +160,10 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 ## Related Workflows
 
 - **[`01-security-review.md`](./01-security-review.md)** - Identify security vulnerabilities (run this first)
-- **[`../03-debug/02-bug-fix-workflow.md`](../03-debug/02-bug-fix-workflow.md)** - Fix non-security bugs
-- **[`../02-build-code/01-execution.md`](../02-build-code/01-execution.md)** - Execute security fixes using execution workflow
-- **[`../05-review-audit/01-code-review.md`](../05-review-audit/01-code-review.md)** - Review security fixes before merging
-- **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for complex security fixes
+- **[`../03-debugging/02-bug-fix-workflow.md`](../03-debugging/02-bug-fix-workflow.md)** - Fix non-security bugs
+- **[`../02-code-build/01-execution.md`](../02-code-build/01-execution.md)** - Execute security fixes using execution workflow
+- **[`../05-review/01-code-review.md`](../05-review/01-code-review.md)** - Review security fixes before merging
+- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plan for complex security fixes
 
 ## Notes
 - Security fixes are time-sensitive; prioritize P0/S0 issues immediately.

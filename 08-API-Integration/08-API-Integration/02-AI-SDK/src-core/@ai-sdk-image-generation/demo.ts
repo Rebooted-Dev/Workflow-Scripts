@@ -32,7 +32,7 @@ providers.forEach(provider => {
 
 // Test 2: Provider Support Check
 console.log('\n🔍 Testing Provider Support...');
-['openai', 'google', 'xai', 'fal', 'openrouter'].forEach(provider => {
+['openai', 'google', 'xai', 'fal'].forEach(provider => {
   const supported = isImageProviderSupported(provider as any);
   console.log(`  ${provider}: ${supported ? '✅ Supported' : '❌ Not supported'}`);
 });

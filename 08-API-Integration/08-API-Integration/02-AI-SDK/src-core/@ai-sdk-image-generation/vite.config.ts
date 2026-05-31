@@ -16,7 +16,6 @@ export default defineConfig({
         '@ai-sdk/google',
         '@ai-sdk/xai',
         '@ai-sdk/fal',
-        '@openrouter/ai-sdk-provider',
         '@fal-ai/client',
         'zod'
       ],
@@ -27,7 +26,6 @@ export default defineConfig({
           '@ai-sdk/google': 'aiSdkGoogle',
           '@ai-sdk/xai': 'aiSdkXai',
           '@ai-sdk/fal': 'aiSdkFal',
-          '@openrouter/ai-sdk-provider': 'openrouter',
           '@fal-ai/client': 'falClient',
           'zod': 'zod'
         }

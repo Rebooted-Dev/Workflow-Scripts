@@ -6,6 +6,37 @@ import type { ImageProviderConfig } from '../core/types.js';
 import { BaseImageProvider, ProviderFactory, providerFactories } from './base.js';
 
 /**
+ * Remove the legacy AI SDK response_format flag from OpenAI image requests.
+ */
+export function stripOpenAIImageResponseFormat(input: unknown, init?: RequestInit): RequestInit | undefined {
+  try {
+    const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : (input as any)?.url;
+    if (init?.method !== 'POST' || !url || !url.includes('/images/generations')) {
+      return init;
+    }
+
+    const headers = new Headers(init.headers as any);
+    const contentType = headers.get('content-type') || headers.get('Content-Type');
+    if (!contentType || !contentType.includes('application/json') || typeof init.body !== 'string') {
+      return init;
+    }
+
+    const body = JSON.parse(init.body);
+    if (!body || !Object.prototype.hasOwnProperty.call(body, 'response_format')) {
+      return init;
+    }
+
+    delete (body as any).response_format;
+    return {
+      ...init,
+      body: JSON.stringify(body),
+    };
+  } catch {
+    return init;
+  }
+}
+
+/**
  * OpenAI image provider
  */
 export class OpenAIProvider extends BaseImageProvider {
@@ -36,27 +67,7 @@ export class OpenAIProvider extends BaseImageProvider {
 
       const originalFetch = globalThis.fetch.bind(globalThis);
       const safeFetch: typeof fetch = async (input: any, init?: RequestInit) => {
-        try {
-          const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input?.url;
-          if (init?.method === 'POST' && url && url.includes('/images/generations')) {
-            const headers = new Headers(init.headers as any);
-            const contentType = headers.get('content-type') || headers.get('Content-Type');
-            if (contentType && contentType.includes('application/json') && typeof init.body === 'string') {
-              try {
-                const body = JSON.parse(init.body as string);
-                if (body && Object.prototype.hasOwnProperty.call(body, 'response_format')) {
-                  delete (body as any).response_format;
-                  init.body = JSON.stringify(body);
-                }
-              } catch {
-                // ignore JSON parse errors and fall through
-              }
-            }
-          }
-        } catch {
-          // ignore shim errors and fall through
-        }
-        return originalFetch(input as any, init as any);
+        return originalFetch(input as any, stripOpenAIImageResponseFormat(input, init) as any);
       };
 
       this.client = createOpenAI({
