@@ -54,7 +54,7 @@ mkdir -p project/plans
 # 6. Create docs and docs/agents (if they don't exist)
 mkdir -p docs docs/agents
 
-# 7. Verify setup
+# 7. Verify setup (see Step 0 for detailed prerequisite verification)
 git status | grep <WORKFLOWS_DIR> || echo "✓ Workflows ignored"
 ls project/ && echo "✓ project/ structure created"
 ls project/changelog/ && echo "✓ project/changelog/ (type folders + plans) and index created"
@@ -66,6 +66,8 @@ ls -d docs docs/agents 2>/dev/null && echo "✓ docs/ and docs/agents/ created"
 # 8. Run track-repos workflow (discover repos, update AGENTS.md/CLAUDE.md/GEMINI.md with repo map and sync instructions)
 # Follow: Workflow-Scripts/00-project-setup/04-track-repos-and-agent-map.md
 ```
+
+For detailed prerequisite verification (git repo checks, .gitignore, workflows directory validation, placeholder checks), see **Step 0** below.
 
 For a comprehensive setup with AGENTS.md configuration and backups, continue with the detailed steps below.
 

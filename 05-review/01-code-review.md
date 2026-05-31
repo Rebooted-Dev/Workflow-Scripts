@@ -1,7 +1,7 @@
 # Workflow: Code Review
 
 ## Purpose
-Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `project/plans/`.
+Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `project/research/`.
 
 ## Inputs
 - Repository root (determine using one of):
@@ -19,7 +19,7 @@ If ambiguous:
 Before scanning, verify:
 - [ ] Repository root is identified and accessible
 - [ ] Rubric file exists at `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`
-- [ ] `project/plans/` directory exists (create if needed) and is writable
+- [ ] `project/research/` directory exists (create if needed) and is writable
 - [ ] At least one implementation file exists in scope
 
 **Abort conditions:**
@@ -148,7 +148,7 @@ Before scanning, verify:
      - Short-term actions (next 2 sprints)
      - Tracking items (backlog)
 
-5. **Save the report to `project/plans/` with a dated filename following the format: `code-review-YYMMDD-HHMM-{model}.md`**
+5. **Save the report to `project/research/` with a dated filename following the format: `code-review-YYMMDD-HHMM-{model}.md`**
    - **YYMMDD**: Date stamp (2-digit year, month, day)
    - **HHMM**: Time stamp (24-hour format)
    - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)

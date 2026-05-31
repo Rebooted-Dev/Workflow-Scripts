@@ -1,7 +1,7 @@
 # Workflow: Code Optimization
 
 ## Purpose
-Perform a structured analysis to identify performance bottlenecks, resource inefficiencies, and optimization opportunities, then file a report in `project/plans/`.
+Perform a structured analysis to identify performance bottlenecks, resource inefficiencies, and optimization opportunities, then file a report in `project/research/`.
 
 ## Inputs
 - Repository root.
@@ -54,7 +54,7 @@ Perform a structured analysis to identify performance bottlenecks, resource inef
    - Recommended optimization roadmap
    - Expected impact of addressing high-priority items
 
-5. Save the report to `project/plans/` with a dated filename following the format: `code-optimization-YYMMDD-HHMM-{model}.md`
+5. Save the report to `project/research/` with a dated filename following the format: `code-optimization-YYMMDD-HHMM-{model}.md`
    - **YYMMDD**: Date stamp (2-digit year, month, day)
    - **HHMM**: Time stamp (24-hour format)
    - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)

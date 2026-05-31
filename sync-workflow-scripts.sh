@@ -5,7 +5,8 @@
 # IMPORTANT: Before first use, you MUST either:
 #   1. Update the PROJECTS array below with your project paths, OR
 #   2. Use the --auto flag to auto-discover projects, OR
-#   3. Set WORKFLOW_SYNC_BASE_DIR environment variable
+#   3. Set WORKFLOW_SYNC_BASE_DIR environment variable, OR
+#   4. Set WORKFLOW_SYNC_PROJECTS environment variable
 #
 # Usage:
 #   ./sync-workflow-scripts.sh              # Sync all projects
@@ -16,6 +17,7 @@
 #
 # Environment:
 #   WORKFLOW_SYNC_BASE_DIR  Override base directory for auto-discovery
+#   WORKFLOW_SYNC_PROJECTS  Colon-separated project paths to sync
 #   NON_INTERACTIVE=true    Auto-clone when Workflow-Scripts missing
 
 # Exit on error (but we'll handle errors gracefully)
@@ -48,12 +50,17 @@ NON_INTERACTIVE="${NON_INTERACTIVE:-false}"
 
 # Project paths - UPDATE THESE WITH YOUR ACTUAL PROJECT PATHS
 # Or use --auto flag to discover them automatically
-PROJECTS=(
-  "/Volumes/Skynet/Software Development Projects/RBC Projects/New/Nu-Meta"
-  # Add more project paths here, one per line
-  # "/path/to/Project2"
-  # "/path/to/Project3"
-)
+# Or set WORKFLOW_SYNC_PROJECTS env var (colon-separated paths)
+if [ -n "${WORKFLOW_SYNC_PROJECTS:-}" ]; then
+  IFS=':' read -ra PROJECTS <<< "$WORKFLOW_SYNC_PROJECTS"
+else
+  PROJECTS=(
+    # Add your project paths here, one per line:
+    # "/path/to/Project1"
+    # "/path/to/Project2"
+    # "/path/to/Project3"
+  )
+fi
 
 # Flags
 DRY_RUN=false
@@ -93,6 +100,7 @@ while [[ $# -gt 0 ]]; do
       echo "Environment:"
       echo "  NON_INTERACTIVE=true   Auto-clone when Workflow-Scripts missing (no prompt)"
       echo "  WORKFLOW_SYNC_BASE_DIR Override BASE_DIR for auto-discovery (--auto)"
+      echo "  WORKFLOW_SYNC_PROJECTS Colon-separated project paths to sync"
       exit 0
       ;;
     *)
@@ -143,6 +151,7 @@ if [ ${#PROJECTS[@]} -eq 0 ]; then
   echo "  1. Edit PROJECTS array in this script with your project paths"
   echo "  2. Use --auto flag to auto-discover projects"
   echo "  3. Set WORKFLOW_SYNC_BASE_DIR environment variable"
+  echo "  4. Set WORKFLOW_SYNC_PROJECTS env var (colon-separated project paths)"
   echo ""
   echo "Example:"
   echo "  ./sync-workflow-scripts.sh --auto"

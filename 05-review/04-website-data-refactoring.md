@@ -423,7 +423,7 @@ npm run build
 
 ### Refactoring Report
 
-Save to `project/plans/website-data-refactoring-YYMMDD-HHMM-{model}.md`:
+Save to `project/research/website-data-refactoring-YYMMDD-HHMM-{model}.md`:
 
 ```markdown
 # Website Data Refactoring Report
@@ -606,7 +606,7 @@ import { IDENTITY, CONTACT } from '@/data';
 - [ ] TypeScript interfaces created for all data structures
 - [ ] Migration plan with phases and exit criteria
 - [ ] Backwards compatibility strategy defined
-- [ ] Report saved to `project/plans/` with dated filename
+- [ ] Report saved to `project/research/` with dated filename
 - [ ] Findings ordered by priority (P0-P3)
 - [ ] Each finding includes evidence and rationale
 - [ ] Implementation checklist provided
