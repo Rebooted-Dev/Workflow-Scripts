@@ -43,7 +43,7 @@ Option B (helper script):
 ./Workflow-Scripts/pull-workflows.sh
 
 # Or from inside the workflows directory:
-cd Workflow-Scripts && ./pull-workflows.sh
+cd Workflow-Scripts && ./scripts/pull-workflows.sh
 ```
 
 Notes:
@@ -67,7 +67,7 @@ Helper script (commits staged changes and pushes):
 ```bash
 cd /path/to/your-project/Workflow-Scripts
 git add .
-./update-workflows.sh "docs: clarify execution log updates"
+./scripts/update-workflows.sh "docs: clarify execution log updates"
 ```
 
 ## Alternative Model: Git Submodule (Advanced)

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- 2026-06-03: Moved `pull-workflows.sh`, `sync-workflow-scripts.sh`, and `update-workflows.sh` into `scripts/`; root wrappers preserve existing `./Workflow-Scripts/*.sh` entry points; scripts resolve repo root via `REPO_ROOT`.
+
 ### Added
 - 2026-06-03: Added `08-API-Integration/08-API-Integration/03-higgsfield-mcp/` — workflow for Higgsfield MCP connect, auth, and reconnect diagnostics (filed from Podcast Studio `project/research/2026-06-03-higgsfield-mcp-connect-auth-reconnect-technical-note.md`).
 

@@ -852,8 +852,15 @@ When workflows generate reports or analysis documents, follow the convention def
 workflows/
 ├── README.md (this file)
 ├── SHARING_AND_SYNC.md (guide for sharing workflows across projects)
-├── update-workflows.sh (helper for maintainers to commit/push workflow changes)
-├── pull-workflows.sh (helper script for pulling workflow updates)
+├── pull-workflows.sh (wrapper → scripts/pull-workflows.sh)
+├── update-workflows.sh (wrapper → scripts/update-workflows.sh)
+├── sync-workflow-scripts.sh (wrapper → scripts/sync-workflow-scripts.sh)
+├── scripts/
+│   ├── README.md
+│   ├── pull-workflows.sh
+│   ├── update-workflows.sh
+│   ├── sync-workflow-scripts.sh
+│   └── validation/
 ├── 00-Meta-Workflow/
 │   ├── 00-docs/
 │   │   ├── CODE-REVIEW-*.md (code review reports)
