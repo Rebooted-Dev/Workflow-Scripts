@@ -45,7 +45,7 @@ These tasks require human judgment, decision-making, or manual execution that ca
 | Set up views (Board, Table, Roadmap) | P1 | [ ] |
 | Configure auto-add workflow for `seo` labels | P1 | [ ] |
 
-**Reference:** Project configuration in `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P0.3
+**Reference:** Project configuration in `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P0.3
 
 ---
 
@@ -230,7 +230,7 @@ These tasks require human judgment, decision-making, or manual execution that ca
 | Schedule weekly automated reports | P1 | [ ] |
 | Schedule monthly full report | P1 | [ ] |
 
-**Reference:** Detailed setup in `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P0.2
+**Reference:** Detailed setup in `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P0.2
 
 ### SEO Panel Deployment (Optional - Self-Hosted)
 
@@ -247,7 +247,7 @@ These tasks require human judgment, decision-making, or manual execution that ca
 | Set up automated reports | P2 | [ ] |
 | Configure weekly site audit | P2 | [ ] |
 
-**Reference:** Detailed deployment in `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P2.1
+**Reference:** Detailed deployment in `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P2.1
 
 ### CookieYes Consent Management
 
@@ -258,7 +258,7 @@ These tasks require human judgment, decision-making, or manual execution that ca
 | Test consent flow | P1 | [ ] |
 | Verify PDPA-compliant consent banner | P1 | [ ] |
 
-**Reference:** Setup in `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P1.4 |
+**Reference:** Setup in `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P1.4 |
 
 ### SEO/GEO Policy Decisions
 

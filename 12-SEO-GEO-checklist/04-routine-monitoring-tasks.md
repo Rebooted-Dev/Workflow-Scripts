@@ -25,7 +25,7 @@ These tasks require ongoing, periodic attention after deployment to ensure conti
 | Latest Voyage GEO report uploaded | P1 | [ ] |
 | Canonry citation data up-to-date | P2 | [ ] |
 
-**Reference:** GEO Dashboard deployment in `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P3.3
+**Reference:** GEO Dashboard deployment in `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md` Section P3.3
 
 ---
 

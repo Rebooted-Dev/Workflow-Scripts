@@ -24,7 +24,7 @@ Do you need a deployment/security/SEO/GEO checklist?
 └─ Quick security check → ./08a-pre-deployment-security-check.md
 
 Do you need to manage development server ports?
-└─ Yes → ../08-API-Integration/08-port-relocation/port-management-guide.md
+└─ Yes → ./08-port-relocation/port-management-guide.md
 
 Do you need to apply Next.js/React updates?
 └─ Yes → ../09-11 Misc/09-nextjs-react-update.md
@@ -47,10 +47,10 @@ Use when migrating projects from Google AI Studio or Colab to local desktop deve
 
 ### Development Tools
 
-#### [Port Management Guide](../08-API-Integration/08-port-relocation/port-management-guide.md)
+#### [Port Management Guide](./08-port-relocation/port-management-guide.md)
 Use when resolving port conflicts, managing multiple dev servers, or configuring browser auto-open.
 
-#### [Browser Auto-Open Guide](../08-API-Integration/08-port-relocation/browser-auto-open.md)
+#### [Browser Auto-Open Guide](./08-port-relocation/browser-auto-open.md)
 Use when setting up automatic browser opening for local development servers.
 
 ### Cloud Hosting
@@ -84,7 +84,7 @@ Use when applying React, React DOM, Next.js, or eslint-config-next updates.
 
 ### Local Development With Port Conflicts
 
-1. Follow [Port Management Guide](../08-API-Integration/08-port-relocation/port-management-guide.md)
+1. Follow [Port Management Guide](./08-port-relocation/port-management-guide.md)
 2. Configure your dev server to use an available port.
 3. Run the project dev command.
 

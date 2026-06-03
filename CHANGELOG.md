@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- 2026-06-03: Added `08-API-Integration/08-API-Integration/03-higgsfield-mcp/` — workflow for Higgsfield MCP connect, auth, and reconnect diagnostics (filed from Podcast Studio `project/research/2026-06-03-higgsfield-mcp-connect-auth-reconnect-technical-note.md`).
+
+### Changed
+- 2026-06-03: Moved `08-port-relocation/` from `08-API-Integration/` to `07-deployment/` — aligns with deployment README; port management is deployment/dev-server concern, not API integration.
+- 2026-06-03: Filed SEO Dashboard plans under `12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/` and updated checklist cross-references (was incorrectly under port-relocation).
+- 2026-06-03: Flattened `08-API-Integration/` layout (removed duplicate `08-API-Integration/08-API-Integration/` nesting).
 - 2026-05-24: Expanded `11-Skills/` with eight high-ROI recurring workflow skills: bug-fix plan/log workflow, provider capability verification, provider plumbing audit, execution artifact triage, export/render parity debugging, webhook bot hardening, live bot launch verification, and multi-agent plan orchestration. Reconciled overlaps by sharpening boundaries in existing plan, execute, repo-log, and dirty-worktree skills.
 - 2026-05-24: Added `11-Skills/` with six reusable Codex skills for high-ROI recurring workflows: plan review/finalization, execute-and-confirm, repo logs/docs sync, filed code review to remediation, dirty worktree publishing, and prompt quality auditing.
 - 2026-02-28: Completed P1.1, P1.2, and P1.3 tasks (index `06-skills-setup.md` in `00-project-setup/README.md`
