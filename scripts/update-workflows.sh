@@ -4,8 +4,7 @@
 # This script intentionally does NOT touch the parent project repo.
 #
 # Usage (from Workflow-Scripts repo):
-#   ./Workflow-Scripts/update-workflows.sh "docs: clarify workflow instructions"
-#   ./Workflow-Scripts/scripts/update-workflows.sh "docs: clarify workflow instructions"
+#   ./scripts/update-workflows.sh "docs: clarify workflow instructions"
 
 set -euo pipefail
 

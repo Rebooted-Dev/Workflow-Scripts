@@ -65,7 +65,7 @@ Synthesized from directory ratings (e.g. mcp-awesome.com, Smithery usage, Firecr
 ## 1. Workflow-Scripts sync
 
 - [ ] Sync Workflow-Scripts from remote (e.g. `beta` branch).
-- [ ] From project root: `./Workflow-Scripts/pull-workflows.sh`  
+- [ ] From project root: `./Workflow-Scripts/scripts/pull-workflows.sh`
   **Or** from inside: `cd Workflow-Scripts && git pull --ff-only`.
 - [ ] Confirm new workflows/skills if present.
 

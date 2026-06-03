@@ -5,7 +5,6 @@
 # from the main project repo.
 #
 # Usage (from host project root):
-#   ./Workflow-Scripts/pull-workflows.sh
 #   ./Workflow-Scripts/scripts/pull-workflows.sh
 
 set -euo pipefail

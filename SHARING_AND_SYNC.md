@@ -40,7 +40,7 @@ Option B (helper script):
 
 ```bash
 # From the project root (use your actual directory name, e.g. Workflow-Scripts or workflows):
-./Workflow-Scripts/pull-workflows.sh
+./Workflow-Scripts/scripts/pull-workflows.sh
 
 # Or from inside the workflows directory:
 cd Workflow-Scripts && ./scripts/pull-workflows.sh

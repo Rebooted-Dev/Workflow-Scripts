@@ -661,7 +661,7 @@ MCP config (command, args, env) is in [05-mcp-and-config-setup.md](05-mcp-and-co
 ## 1. Workflow-Scripts sync
 
 - [ ] Sync Workflow-Scripts from remote (e.g. `beta` branch).
-- [ ] From project root: `./Workflow-Scripts/pull-workflows.sh`  
+- [ ] From project root: `./Workflow-Scripts/scripts/pull-workflows.sh`
   **Or** from inside: `cd Workflow-Scripts && git pull --ff-only`.
 - [ ] If this repo or Workflow-Scripts includes project skills (e.g. in `.cursor/skills/` or docs that reference skills), confirm they’re present after sync.
 

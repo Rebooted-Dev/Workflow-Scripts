@@ -1,6 +1,6 @@
 # Workflow-Scripts — Shell Scripts
 
-Executable helpers for syncing and maintaining this repository. Root-level `*.sh` files are thin wrappers that delegate here.
+Executable helpers for syncing and maintaining this repository.
 
 ## Repository maintenance
 
@@ -15,7 +15,7 @@ Executable helpers for syncing and maintaining this repository. Root-level `*.sh
 From a **host project root** (e.g. Podcast Studio):
 
 ```bash
-./Workflow-Scripts/pull-workflows.sh
+./Workflow-Scripts/scripts/pull-workflows.sh
 ```
 
 From **this repo** (maintainer):
@@ -24,8 +24,6 @@ From **this repo** (maintainer):
 ./scripts/update-workflows.sh "docs: describe your change"
 ./scripts/sync-workflow-scripts.sh --status
 ```
-
-Wrappers at the repo root (`../pull-workflows.sh`, etc.) call the same implementations.
 
 ## Validation
 

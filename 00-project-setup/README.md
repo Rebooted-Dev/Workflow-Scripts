@@ -86,7 +86,7 @@ Key steps:
 ### 05-mcp-and-config-setup.md
 
 Task list for MCP and configuration setup:
-- **Workflow-Scripts sync** – Pull latest workflows (e.g. `pull-workflows.sh` or `git pull` in Workflow-Scripts)
+- **Workflow-Scripts sync** – Pull latest workflows (e.g. `scripts/pull-workflows.sh` or `git pull` in Workflow-Scripts)
 - **Google Developer Knowledge MCP** – Enable API, enable MCP, create key; add to Cursor and OpenCode
 - **Cursor MCP** – Add remote MCP; fix stdio server errors with full paths to npx/uvx
 - **OpenCode** – Add MCP, set default `model` (e.g. `zai-coding-plan/glm-5`), ensure Z.AI auth

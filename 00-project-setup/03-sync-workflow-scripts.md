@@ -475,8 +475,8 @@ Add a reference to this sync script in `SHARING_AND_SYNC.md`:
 
 For managing multiple projects, use the sync script:
 
-- Sync all projects: `./sync-workflow-scripts.sh`
-- Check status: `./sync-workflow-scripts.sh --status`
+- Sync all projects: `./Workflow-Scripts/scripts/sync-workflow-scripts.sh`
+- Check status: `./Workflow-Scripts/scripts/sync-workflow-scripts.sh --status`
 
 See [00-project-setup/03-sync-workflow-scripts.md](../00-project-setup/03-sync-workflow-scripts.md) for setup instructions.
 ```
