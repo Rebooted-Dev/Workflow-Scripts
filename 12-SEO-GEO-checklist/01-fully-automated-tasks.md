@@ -60,7 +60,7 @@ These tasks can be executed automatically via scripts, CI/CD pipelines, or tooli
 | `.github/workflows/update-llms-txt.yml` | Monthly llms.txt regeneration | [ ] |
 | `.github/workflows/deploy-geo-dashboard.yml` | GitHub Pages GEO dashboard deployment | [ ] |
 
-**Reference:** Full workflow specs in `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md`
+**Reference:** Full workflow specs in `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md`
 
 ### TypeScript SEO Scripts
 
@@ -71,7 +71,7 @@ These tasks can be executed automatically via scripts, CI/CD pipelines, or tooli
 | `scripts/geo-analyzer.ts` | GEO visibility analysis via OpenRouter API | [ ] |
 | `scripts/seo-panel-sync.ts` | Sync data from SEO Panel API | [ ] |
 
-**Reference:** Full TypeScript implementations in `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-mvp-poc-implementation-plan.md`
+**Reference:** Full TypeScript implementations in `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-mvp-poc-implementation-plan.md`
 
 ---
 

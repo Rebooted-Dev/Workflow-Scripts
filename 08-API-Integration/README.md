@@ -8,6 +8,7 @@ This directory contains workflows and guides for integrating various AI APIs and
 
 - **Integrating Google Genkit?** → Start with [`01-genkit/genkit-integration-guide.md`](./01-genkit/genkit-integration-guide.md)
 - **Using Vercel AI SDK?** → See [`02-AI-SDK/ai-sdk-integration-v2.md`](./02-AI-SDK/ai-sdk-integration-v2.md)
+- **Higgsfield MCP connect / auth / reconnect?** → Use [`03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md`](./03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md)
 - **Need provider reference docs?** → Check [`02-AI-SDK/service-providers/`](./02-AI-SDK/service-providers/)
 - **Evaluating token caching?** → Read [`gemini-token-caching-analysis.md`](./gemini-token-caching-analysis.md)
 
@@ -27,6 +28,9 @@ This directory contains workflows and guides for integrating various AI APIs and
 │       ├── openai.md - OpenAI provider
 │       ├── openrouter.md - OpenRouter provider
 │       └── xai.md - xAI Grok provider
+├── 03-higgsfield-mcp/
+│   ├── README.md - Higgsfield MCP workflow index
+│   └── higgsfield-mcp-connect-auth-reconnect.md - Connect, auth, reconnect diagnostics
 └── gemini-token-caching-analysis.md - Token caching feasibility analysis
 ```
 
@@ -70,6 +74,20 @@ Reference documentation for various AI SDK providers. These files are copied fro
 
 **Note:** For the latest information, see the [official AI SDK documentation](https://sdk.vercel.ai/docs).
 
+### Higgsfield MCP Connect, Auth, and Reconnect
+
+**File:** [`03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md`](./03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md)
+
+Structured workflow for diagnosing and recovering Higgsfield MCP failures:
+
+- Separates discovery auth (`tools/list`) from execution auth (`generate_image` / `get_cost`)
+- CLI `--auth-check` probe and app `/api/higgsfield-mcp/status` + `/reconnect`
+- Stale `~/.mcp-auth/` recovery and post-reconnect triage (including Gemini dunning red herrings)
+
+**When to use:** When MCP image generation fails with expired tokens, list-only probe false confidence, or reconnect does not restore images.
+
+**Canonical host reference:** `project/research/2026-06-03-higgsfield-mcp-connect-auth-reconnect-technical-note.md` in Podcast Creative Studio AI.
+
 ### Token Caching Analysis
 
 **File:** [`gemini-token-caching-analysis.md`](./gemini-token-caching-analysis.md)
@@ -92,6 +110,9 @@ Need to integrate an AI API?
 │  │
 │  └─ Need provider reference?
 │     └─→ 02-AI-SDK/service-providers/
+│
+├─ Higgsfield MCP auth or reconnect issues?
+│  └─→ 03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md
 │
 ├─ Evaluating caching strategy?
 │  └─→ gemini-token-caching-analysis.md
@@ -120,4 +141,4 @@ This directory was optimized on 2026-01-20. For optimization history and details
 
 ---
 
-*Last updated: 2026-01-20*
+*Last updated: 2026-06-03*

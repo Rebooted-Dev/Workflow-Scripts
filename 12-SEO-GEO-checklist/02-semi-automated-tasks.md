@@ -19,8 +19,8 @@ These tasks involve a combination of automated tooling and human judgment. Autom
 ## SEO Tool Stack Integration
 
 This checklist supports the **Stack A SEO Dashboard** implementation strategy. See:
-- **Tool Integration Strategy:** `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-seo-tool-integration-strategy.md`
-- **Implementation Plan:** `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md`
+- **Tool Integration Strategy:** `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-seo-tool-integration-strategy.md`
+- **Implementation Plan:** `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md`
 
 ### Tool Stack Reference (Stack A - Zero-Cost Consolidation)
 
@@ -181,7 +181,7 @@ This checklist supports the **Stack A SEO Dashboard** implementation strategy. S
 | Competitor AI visibility comparison | Voyage GEO (manual comparison) | [ ] |
 | AI answer position tracking | Voyage GEO | [ ] |
 
-**Reference:** Full GEO tool setup in `Workflow-Scripts/07-deployment/08-port-relocation/2026-03-18-SEO-Dashboard/2026-03-18-seo-tool-integration-strategy.md` Section "Extended Stack A: Zero-Cost + GEO"
+**Reference:** Full GEO tool setup in `Workflow-Scripts/12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-seo-tool-integration-strategy.md` Section "Extended Stack A: Zero-Cost + GEO"
 
 ### Content Refresh Workflow
 

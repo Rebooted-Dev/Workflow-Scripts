@@ -393,7 +393,7 @@ brew uninstall nginx
 
 ## Related Documentation
 
-- [Port Management Guide](./08-port-relocation/port-management-guide.md) - For port conflicts
+- [Port Management Guide](../07-deployment/08-port-relocation/port-management-guide.md) - For port conflicts
 - [Firebase Hosting](./10-firebase-setup.md) - For cloud deployment alternative
 - [Deployment Index](./README.md) - Other deployment options
 
