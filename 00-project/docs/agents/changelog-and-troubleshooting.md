@@ -9,7 +9,7 @@ Paths below are relative to `00-project/` unless noted.
 ## Changelog System (`changelog/` directory)
 
 - **When to create changelog entries**: For any change to Workflow-Scripts workflows, scripts, or `00-project/` meta (features, fixes, refactors, docs, config). One file per change. For **completed plans**, default is **`plans-completed/<category>/`** plus a Type=`plan` row in **`changelog/index.md`**; alternate is **`changelog/plans/`** when explicitly requested.
-- **Location**: Use the `changelog/` directory. Do NOT use a single `CHANGELOG.md` at repo root for new entries (legacy root `CHANGELOG.md` may remain until migrated).
+- **Location**: Use the `changelog/` directory. Do NOT use a single `CHANGELOG.md` at repo root — root `CHANGELOG.md` was removed after migration (2026-07-03).
 - **Structure**:
   - Type folders: `added/`, `changed/`, `fixed/`, `improved/`, `docs/`, `refactor/`, `config/` for short change entries.
   - Optional **`plans/`** subdir for plans archived next to the changelog (date-prefixed filenames).

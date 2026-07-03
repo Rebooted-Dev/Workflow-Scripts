@@ -9,7 +9,7 @@ This directory is the **project meta workspace** for the [Workflow-Scripts](http
 ├── AGENTS.md              # Slim agent guidelines for Workflow-Scripts meta work
 ├── README.md              # This file
 ├── changelog/             # Change entries (type folders + plans archive + index)
-├── docs/                  # Project documentation (agents/ for agent-facing guides)
+├── docs/                  # Project documentation — see docs/README.md (✅ completed)
 ├── plans/                 # Active plans, README map, TODO
 ├── plans-completed/       # Filed completed plans by category
 ├── troubleshooting/       # Troubleshooting entries by category
@@ -19,6 +19,10 @@ This directory is the **project meta workspace** for the [Workflow-Scripts](http
 ```
 
 Workflow instruction files live in the parent repo (`00-project-setup/`, `01-Planning & Organizing/`, etc.). **Operational records** for Workflow-Scripts itself (changelog, plans, troubleshooting, docs) live directly under `00-project/`.
+
+## Documentation
+
+Full documentation: **[`docs/README.md`](./docs/README.md)** (user manual, architecture, deployment, testing, API reference).
 
 ## Git operations
 
