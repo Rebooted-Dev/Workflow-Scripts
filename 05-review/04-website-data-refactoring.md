@@ -401,8 +401,8 @@ npm run type-check  # or: tsc --noEmit
 ### Step 5.3: Build Verification
 
 ```bash
-# Production build
-npm run build
+# Production build or verification command from project docs
+<project-verification-command>
 
 # Verify build succeeds
 # Check bundle size hasn't increased significantly

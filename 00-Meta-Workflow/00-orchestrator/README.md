@@ -58,7 +58,7 @@ The orchestrator (you or a script) launches OpenCode in non-interactive mode wit
 ./00-Meta-Workflow/00-orchestrator/orchestrator-review.sh \
   plans/implementation-plan.md \
   -m openai/gpt-4o \
-  -o plans/reviews/review-output.md &
+  -o plans/implementation-plan.reviews/review-output.md &
 
 REVIEW_PID=$!
 
@@ -103,7 +103,7 @@ Automate plan reviews in your pipeline:
       -m openai/gpt-4o
     
     # Check if review found critical issues
-    if grep -q "P0" plans/reviews/*.md; then
+    if grep -q "P0" plans/implementation-plan.reviews/*.md; then
       echo "Critical issues found in plan"
       exit 1
     fi
@@ -134,7 +134,7 @@ Orchestrators work with existing workflows:
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `REVIEW_MODEL` | Default model to use | OpenCode configured model |
-| `OUTPUT_DIR` | Directory for review outputs | `plans/reviews` |
+| `OUTPUT_DIR` | Directory for review outputs | `plans/implementation-plan.reviews` |
 | `TIMEOUT_MINUTES` | Default timeout | 30 |
 
 ### Output Files
@@ -147,7 +147,7 @@ Example status file:
 ```json
 {
   "plan_path": "plans/implementation-plan.md",
-  "output_file": "plans/reviews/20240210-143022-implementation-plan-general-review.md",
+  "output_file": "plans/implementation-plan.reviews/20240210-143022-implementation-plan-general-review.md",
   "model": "openai/gpt-4o",
   "focus": "general",
   "start_time": "2024-02-10 14:30:22",

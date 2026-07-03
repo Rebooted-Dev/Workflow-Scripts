@@ -73,6 +73,47 @@ if (!data.workflow_file || !fs.existsSync(data.workflow_file)) {
 ' "$status_file"
 }
 
+run_default_output_case() {
+  local temp_dir="$1"
+  local bin_dir="$temp_dir/bin-default"
+  local plan_dir="$temp_dir/plans"
+  local plan_file="$plan_dir/implementation-plan.md"
+
+  mkdir -p "$bin_dir" "$plan_dir"
+  printf '# Test Plan\n\nBody\n' > "$plan_file"
+
+  cat > "$bin_dir/opencode" <<'EOF'
+#!/usr/bin/env bash
+for arg in "$@"; do
+  if [ "$arg" = "--prompt" ]; then
+    echo "--prompt should not be used" >&2
+    exit 64
+  fi
+done
+echo "fake opencode invoked"
+exit 0
+EOF
+  chmod +x "$bin_dir/opencode"
+
+  cat > "$bin_dir/timeout" <<'EOF'
+#!/usr/bin/env bash
+shift
+exec "$@"
+EOF
+  chmod +x "$bin_dir/timeout"
+
+  PATH="$bin_dir:$PATH" bash "$SCRIPT" "$plan_file" --timeout 1 >/dev/null 2>&1
+
+  if [ ! -d "$plan_dir/implementation-plan.reviews" ]; then
+    echo "Expected default output directory beside plan" >&2
+    return 1
+  fi
+  find "$plan_dir/implementation-plan.reviews" -name '*-general-review.md' -type f | grep -q . || {
+    echo "Expected default review output file in sibling .reviews directory" >&2
+    return 1
+  }
+}
+
 main() {
   local temp_dir
   temp_dir="$(mktemp -d)"
@@ -80,6 +121,7 @@ main() {
 
   run_case 42 failed "$temp_dir"
   run_case 124 timeout "$temp_dir"
+  run_default_output_case "$temp_dir"
 
   echo "Orchestrator review checks OK"
 }

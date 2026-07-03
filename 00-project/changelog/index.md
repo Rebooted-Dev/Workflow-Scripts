@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-03 | fixed | Deep review remediation | fixed/2026-07-03-fixed-deep-review-remediation.md | Hardened sync/orchestrator/update helpers and added validators |
 | 2026-07-03 | changed | Standardize artifact routing and directory names | changed/2026-07-03-changed-standardize-artifact-routing-and-directory-names.md | Adopted metadata-root routing and renamed planning/reference directories |
 | 2026-07-03 | docs | Verify Workflow-Scripts deep review | docs/2026-07-03-docs-verify-workflow-scripts-deep-review.md | Corrected finding inventory and added artifact-routing guidance |
 | 2026-07-03 | changed | Remove root CHANGELOG.md after migration | changed/2026-07-03-changed-remove-root-changelog-md.md | Deleted root file; changelog dir is canonical |

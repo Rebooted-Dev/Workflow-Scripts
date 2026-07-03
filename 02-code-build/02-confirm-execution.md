@@ -57,7 +57,7 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 2. Use parallel agents to verify completion against the repo. Suggested agent roles (spawn additional agents as needed):
    - Compare plan tasks to `git diff` / relevant files; confirm the code changes exist.
-   - If build/checks were not already run (e.g. audit without prior 01 run), run `npm run build` and any other checks; otherwise spot-check or re-run only if you need to confirm.
+   - If build/checks were not already run (e.g. audit without prior 01 run), run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs; if none exists, state that explicitly. `npm run build` is only an example.
    - Spot-check user-facing behavior (if applicable) and confirm key flows still work.
    - Look for gaps: missing docs/log updates, missing edge-case handling, broken imports.
    - [Spawn additional agents if you discover other verification needs, such as:
@@ -70,7 +70,7 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 4. Add a verification addendum to the plan containing:
    - Timestamp: `YYYY-MM-DD HH:MM`
-   - Commands run (e.g., `npm run build`)
+   - Commands run (for example, the project-specific build/test command)
    - What was verified manually (if any)
    - Any misreporting or mismatches (with file paths / evidence)
    - Next steps (only for incomplete items)

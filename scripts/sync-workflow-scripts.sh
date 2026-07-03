@@ -34,6 +34,9 @@ NC='\033[0m' # No Color
 # Configuration
 WORKFLOWS_DIR_NAME="Workflow-Scripts"
 WORKFLOWS_REMOTE="https://github.com/Rebooted-Dev/Workflow-Scripts"
+WORKFLOWS_REMOTE_HTTPS="https://github.com/Rebooted-Dev/Workflow-Scripts"
+WORKFLOWS_REMOTE_SSH="git@github.com:Rebooted-Dev/Workflow-Scripts"
+AUTO_DISCOVER_MAX_DEPTH="${WORKFLOW_SYNC_MAX_DEPTH:-3}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SCRIPT_REPO_BRANCH="$(git -C "$REPO_ROOT" rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
@@ -63,6 +66,11 @@ NON_INTERACTIVE="${NON_INTERACTIVE:-false}"
 # Or set WORKFLOW_SYNC_PROJECTS env var (colon-separated paths)
 if [ -n "${WORKFLOW_SYNC_PROJECTS:-}" ]; then
   IFS=':' read -ra PROJECTS <<< "$WORKFLOW_SYNC_PROJECTS"
+  for i in "${!PROJECTS[@]}"; do
+    if [[ "${PROJECTS[$i]}" != /* ]]; then
+      PROJECTS[$i]="$(pwd)/${PROJECTS[$i]}"
+    fi
+  done
 else
   PROJECTS=(
     # Add your project paths here, one per line:
@@ -125,6 +133,8 @@ done
 # Auto-discovery function
 find_projects() {
   local found_projects=()
+  local project_path
+  local project_root
   
   if [ ! -d "$BASE_DIR" ]; then
     echo -e "${RED}Error: Base directory not found: $BASE_DIR${NC}" >&2
@@ -136,16 +146,35 @@ find_projects() {
     # Get parent directory (the project root)
     project_root=$(dirname "$project_path")
     found_projects+=("$project_root")
-  done < <(find "$BASE_DIR" -type d -name "$WORKFLOWS_DIR_NAME" -print0 2>/dev/null)
+  done < <(find "$BASE_DIR" -maxdepth "$AUTO_DISCOVER_MAX_DEPTH" \
+    \( -name .git -o -name node_modules -o -name build -o -name dist -o -name backup -o -name backups \) -prune \
+    -o -type d -name "$WORKFLOWS_DIR_NAME" -print0 2>/dev/null)
   
   # Remove duplicates and return
-  printf '%s\n' "${found_projects[@]}" | sort -u
+  if [ ${#found_projects[@]} -gt 0 ]; then
+    printf '%s\n' "${found_projects[@]}" | sort -u
+  fi
+}
+
+is_workflows_remote() {
+  local remote_url="$1"
+  case "$remote_url" in
+    "$WORKFLOWS_REMOTE_HTTPS"|"$WORKFLOWS_REMOTE_HTTPS.git"|"$WORKFLOWS_REMOTE_SSH"|"$WORKFLOWS_REMOTE_SSH.git")
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
 }
 
 # Use auto-discovery if requested
 if [ "$AUTO_DISCOVER" = true ]; then
-  echo -e "${BLUE}Auto-discovering projects in: $BASE_DIR${NC}"
-  mapfile -t PROJECTS < <(find_projects)
+  echo -e "${BLUE}Auto-discovering projects in: $BASE_DIR (max depth: $AUTO_DISCOVER_MAX_DEPTH)${NC}"
+  PROJECTS=()
+  while IFS= read -r project_path; do
+    [ -n "$project_path" ] && PROJECTS+=("$project_path")
+  done < <(find_projects)
   if [ ${#PROJECTS[@]} -eq 0 ]; then
     echo -e "${YELLOW}No projects found with $WORKFLOWS_DIR_NAME directory${NC}"
     exit 0
@@ -188,64 +217,70 @@ check_status() {
     
     if [ ! -d "$project_path" ]; then
       echo -e "${RED}✗${NC} $project_name: Project directory not found"
-      ((missing_count++))
+      missing_count=$((missing_count + 1))
       continue
     fi
     
     if [ ! -d "$workflows_path/.git" ]; then
       echo -e "${YELLOW}⊘${NC} $project_name: Workflow-Scripts not found or not a git repo"
-      ((missing_count++))
+      missing_count=$((missing_count + 1))
       continue
     fi
     
-    cd "$workflows_path" 2>/dev/null || continue
-
-    remote_url=$(git remote get-url origin 2>/dev/null || echo "")
-    if [ "$remote_url" != "$WORKFLOWS_REMOTE" ] && [ "$remote_url" != "${WORKFLOWS_REMOTE}.git" ]; then
+    remote_url=$(git -C "$workflows_path" remote get-url origin 2>/dev/null || echo "")
+    if ! is_workflows_remote "$remote_url"; then
       echo -e "${RED}✗${NC} $project_name: origin remote does not match Workflow-Scripts ($remote_url)"
-      ((missing_count++))
+      missing_count=$((missing_count + 1))
       continue
     fi
     
     # Fetch quietly
     if [ "$VERBOSE" = true ]; then
-      git fetch origin
+      if ! git -C "$workflows_path" fetch origin; then
+        echo -e "${RED}✗${NC} $project_name: Fetch failed"
+        missing_count=$((missing_count + 1))
+        continue
+      fi
     else
-      git fetch origin --quiet 2>/dev/null
+      if ! git -C "$workflows_path" fetch origin --quiet 2>/dev/null; then
+        echo -e "${RED}✗${NC} $project_name: Fetch failed"
+        missing_count=$((missing_count + 1))
+        continue
+      fi
     fi
     
     target_ref="origin/${WORKFLOWS_BRANCH}"
-    if ! git rev-parse --verify "$target_ref" >/dev/null 2>&1; then
+    if ! git -C "$workflows_path" rev-parse --verify "$target_ref" >/dev/null 2>&1; then
       echo -e "${RED}✗${NC} $project_name: Remote branch not found: ${target_ref}"
-      ((missing_count++))
+      missing_count=$((missing_count + 1))
       continue
     fi
 
     # Check status against the configured sync branch, not a stale upstream.
-    LOCAL=$(git rev-parse @ 2>/dev/null || echo "")
-    REMOTE=$(git rev-parse "$target_ref" 2>/dev/null || echo "")
+    LOCAL=$(git -C "$workflows_path" rev-parse @ 2>/dev/null || echo "")
+    REMOTE=$(git -C "$workflows_path" rev-parse "$target_ref" 2>/dev/null || echo "")
     
     if [ -z "$LOCAL" ] || [ -z "$REMOTE" ]; then
       echo -e "${YELLOW}⊘${NC} $project_name: Cannot determine status"
       continue
     fi
     
-    BASE=$(git merge-base @ "$target_ref" 2>/dev/null || echo "")
+    BASE=$(git -C "$workflows_path" merge-base @ "$target_ref" 2>/dev/null || echo "")
     
     if [ "$LOCAL" = "$REMOTE" ]; then
       echo -e "${GREEN}✓${NC} $project_name: Up to date"
-      ((success_count++))
+      success_count=$((success_count + 1))
     elif [ "$LOCAL" = "$BASE" ]; then
-      behind=$(git rev-list --count "HEAD..${target_ref}" 2>/dev/null || echo "?")
+      behind=$(git -C "$workflows_path" rev-list --count "HEAD..${target_ref}" 2>/dev/null || echo "?")
       echo -e "${YELLOW}⚠${NC} $project_name: Behind by $behind commit(s)"
-      ((behind_count++))
+      behind_count=$((behind_count + 1))
     elif [ "$REMOTE" = "$BASE" ]; then
-      ahead=$(git rev-list --count "${target_ref}..HEAD" 2>/dev/null || echo "?")
+      ahead=$(git -C "$workflows_path" rev-list --count "${target_ref}..HEAD" 2>/dev/null || echo "?")
       echo -e "${BLUE}→${NC} $project_name: Ahead by $ahead commit(s)"
-      ((ahead_count++))
+      ahead_count=$((ahead_count + 1))
     else
       echo -e "${RED}✗${NC} $project_name: Diverged from remote"
-      ((diverged_count++))
+      diverged_count=$((diverged_count + 1))
     fi
   done
   
@@ -291,7 +326,7 @@ for project_path in "${PROJECTS[@]}"; do
   # Check if project directory exists
   if [ ! -d "$project_path" ]; then
     echo -e "  ${RED}✗ Project directory not found${NC}"
-    ((FAIL_COUNT++))
+    FAIL_COUNT=$((FAIL_COUNT + 1))
     echo ""
     continue
   fi
@@ -301,7 +336,7 @@ for project_path in "${PROJECTS[@]}"; do
     echo -e "  ${YELLOW}⚠ Workflow-Scripts not found${NC}"
     if [ "$DRY_RUN" = true ]; then
       echo -e "  ${BLUE}[DRY RUN] Would prompt to clone ${WORKFLOWS_BRANCH} (or auto-clone if NON_INTERACTIVE=true)${NC}"
-      ((SKIP_COUNT++))
+      SKIP_COUNT=$((SKIP_COUNT + 1))
     else
       clone_workflows=false
       if [ "$NON_INTERACTIVE" = "true" ]; then
@@ -318,18 +353,15 @@ for project_path in "${PROJECTS[@]}"; do
       fi
       if [ "$clone_workflows" = true ]; then
         echo -e "  ${BLUE}→ Cloning Workflow-Scripts...${NC}"
-        if ! cd "$project_path" 2>/dev/null; then
-          echo -e "  ${RED}✗ Cannot access project directory${NC}"
-          ((FAIL_COUNT++))
-        elif git clone --branch "$WORKFLOWS_BRANCH" "$WORKFLOWS_REMOTE" "$WORKFLOWS_DIR_NAME"; then
+        if git -C "$project_path" clone --branch "$WORKFLOWS_BRANCH" "$WORKFLOWS_REMOTE" "$WORKFLOWS_DIR_NAME"; then
           echo -e "  ${GREEN}✓ Cloned successfully${NC}"
-          ((SUCCESS_COUNT++))
+          SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
         else
           echo -e "  ${RED}✗ Clone failed${NC}"
-          ((FAIL_COUNT++))
+          FAIL_COUNT=$((FAIL_COUNT + 1))
         fi
       else
-        ((SKIP_COUNT++))
+        SKIP_COUNT=$((SKIP_COUNT + 1))
       fi
     fi
     echo ""
@@ -339,62 +371,57 @@ for project_path in "${PROJECTS[@]}"; do
   # Check if it's a git repository
   if [ ! -d "$workflows_path/.git" ]; then
     echo -e "  ${RED}✗ Not a git repository${NC}"
-    ((FAIL_COUNT++))
+    FAIL_COUNT=$((FAIL_COUNT + 1))
     echo ""
     continue
   fi
   
-  # Navigate to Workflow-Scripts directory
-  cd "$workflows_path" || {
-    echo -e "  ${RED}✗ Cannot access directory${NC}"
-    ((FAIL_COUNT++))
-    echo ""
-    continue
-  }
-
-  remote_url=$(git remote get-url origin 2>/dev/null || echo "")
-  if [ "$remote_url" != "$WORKFLOWS_REMOTE" ] && [ "$remote_url" != "${WORKFLOWS_REMOTE}.git" ]; then
+  remote_url=$(git -C "$workflows_path" remote get-url origin 2>/dev/null || echo "")
+  if ! is_workflows_remote "$remote_url"; then
     echo -e "  ${RED}✗ Origin remote mismatch: ${remote_url}${NC}"
-    echo -e "  ${YELLOW}  Expected: ${WORKFLOWS_REMOTE}${NC}"
-    ((FAIL_COUNT++))
+    echo -e "  ${YELLOW}  Expected HTTPS or SSH remote for Rebooted-Dev/Workflow-Scripts${NC}"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
     echo ""
     continue
   fi
   
   # Check for uncommitted changes
-  if ! git diff-index --quiet HEAD -- 2>/dev/null; then
+  STASH_CREATED=false
+  if [ -n "$(git -C "$workflows_path" status --porcelain)" ]; then
     echo -e "  ${YELLOW}⚠ Uncommitted changes detected${NC}"
     if [ "$DRY_RUN" = true ]; then
       echo -e "  ${BLUE}[DRY RUN] Would stash changes${NC}"
     else
       echo -e "  ${YELLOW}  Stashing changes...${NC}"
-      git stash push -m "Auto-stash before sync $(date +%Y-%m-%d\ %H:%M:%S)" 2>/dev/null || {
+      if git -C "$workflows_path" stash push -u -m "Auto-stash before sync $(date +%Y-%m-%d\ %H:%M:%S)" 2>/dev/null; then
+        STASH_CREATED=true
+      else
         echo -e "  ${RED}✗ Stash failed${NC}"
-        ((FAIL_COUNT++))
+        FAIL_COUNT=$((FAIL_COUNT + 1))
         echo ""
         continue
-      }
+      fi
     fi
   fi
   
   # Check current branch
-  current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached")
-  upstream_ref=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo "")
+  current_branch=$(git -C "$workflows_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached")
+  upstream_ref=$(git -C "$workflows_path" rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo "")
   if [ "$current_branch" == "detached" ] || [ "$current_branch" == "HEAD" ]; then
     echo -e "  ${YELLOW}⚠ Detached HEAD state${NC}"
     if [ "$DRY_RUN" = true ]; then
       echo -e "  ${BLUE}[DRY RUN] Would switch to ${WORKFLOWS_BRANCH} branch${NC}"
     else
       echo -e "  ${YELLOW}  Switching to ${WORKFLOWS_BRANCH} branch...${NC}"
-      git fetch origin 2>/dev/null || true
-      git checkout "$WORKFLOWS_BRANCH" 2>/dev/null || git checkout -b "$WORKFLOWS_BRANCH" "origin/${WORKFLOWS_BRANCH}" 2>/dev/null || {
+      git -C "$workflows_path" fetch origin 2>/dev/null || true
+      git -C "$workflows_path" checkout "$WORKFLOWS_BRANCH" 2>/dev/null || git -C "$workflows_path" checkout -b "$WORKFLOWS_BRANCH" "origin/${WORKFLOWS_BRANCH}" 2>/dev/null || {
         echo -e "  ${RED}✗ Cannot switch to branch${NC}"
-        ((FAIL_COUNT++))
+        FAIL_COUNT=$((FAIL_COUNT + 1))
         echo ""
         continue
       }
-      current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached")
-      upstream_ref=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo "")
+      current_branch=$(git -C "$workflows_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached")
+      upstream_ref=$(git -C "$workflows_path" rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo "")
     fi
   fi
 
@@ -403,14 +430,14 @@ for project_path in "${PROJECTS[@]}"; do
       echo -e "  ${BLUE}[DRY RUN] Would switch from ${current_branch} to ${WORKFLOWS_BRANCH}${NC}"
     else
       echo -e "  ${YELLOW}  Switching from ${current_branch} to ${WORKFLOWS_BRANCH}...${NC}"
-      git checkout "$WORKFLOWS_BRANCH" 2>/dev/null || git checkout -b "$WORKFLOWS_BRANCH" "origin/${WORKFLOWS_BRANCH}" 2>/dev/null || {
+      git -C "$workflows_path" checkout "$WORKFLOWS_BRANCH" 2>/dev/null || git -C "$workflows_path" checkout -b "$WORKFLOWS_BRANCH" "origin/${WORKFLOWS_BRANCH}" 2>/dev/null || {
         echo -e "  ${RED}✗ Cannot switch to ${WORKFLOWS_BRANCH}${NC}"
-        ((FAIL_COUNT++))
+        FAIL_COUNT=$((FAIL_COUNT + 1))
         echo ""
         continue
       }
-      current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached")
-      upstream_ref=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo "")
+      current_branch=$(git -C "$workflows_path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached")
+      upstream_ref=$(git -C "$workflows_path" rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo "")
     fi
   fi
 
@@ -427,16 +454,16 @@ for project_path in "${PROJECTS[@]}"; do
     echo -e "  ${BLUE}[DRY RUN] Would fetch from origin${NC}"
   else
     if [ "$VERBOSE" = true ]; then
-      git fetch origin || {
+      git -C "$workflows_path" fetch origin || {
         echo -e "  ${RED}✗ Fetch failed${NC}"
-        ((FAIL_COUNT++))
+        FAIL_COUNT=$((FAIL_COUNT + 1))
         echo ""
         continue
       }
     else
-      git fetch origin --quiet 2>/dev/null || {
+      git -C "$workflows_path" fetch origin --quiet 2>/dev/null || {
         echo -e "  ${RED}✗ Fetch failed${NC}"
-        ((FAIL_COUNT++))
+        FAIL_COUNT=$((FAIL_COUNT + 1))
         echo ""
         continue
       }
@@ -444,61 +471,79 @@ for project_path in "${PROJECTS[@]}"; do
   fi
   
   target_ref="origin/${WORKFLOWS_BRANCH}"
-  if [ "$DRY_RUN" != true ] && ! git rev-parse --verify "$target_ref" >/dev/null 2>&1; then
+  if [ "$DRY_RUN" != true ] && ! git -C "$workflows_path" rev-parse --verify "$target_ref" >/dev/null 2>&1; then
     echo -e "  ${RED}✗ Remote branch not found: ${target_ref}${NC}"
-    ((FAIL_COUNT++))
+    FAIL_COUNT=$((FAIL_COUNT + 1))
     echo ""
     continue
   fi
 
   # Check if behind against the configured sync branch, not a stale upstream.
-  LOCAL=$(git rev-parse @ 2>/dev/null || echo "")
-  REMOTE=$(git rev-parse "$target_ref" 2>/dev/null || echo "")
+  LOCAL=$(git -C "$workflows_path" rev-parse @ 2>/dev/null || echo "")
+  REMOTE=$(git -C "$workflows_path" rev-parse "$target_ref" 2>/dev/null || echo "")
+  SYNC_READY_FOR_STASH_POP=false
   
   if [ -z "$LOCAL" ] || [ -z "$REMOTE" ]; then
     echo -e "  ${YELLOW}⚠ Cannot determine sync status${NC}"
-    ((SKIP_COUNT++))
+    SKIP_COUNT=$((SKIP_COUNT + 1))
     echo ""
     continue
   fi
   
-  BASE=$(git merge-base @ "$target_ref" 2>/dev/null || echo "")
+  BASE=$(git -C "$workflows_path" merge-base @ "$target_ref" 2>/dev/null || echo "")
   
   if [ "$LOCAL" = "$REMOTE" ]; then
     echo -e "  ${GREEN}✓ Already up to date${NC}"
-    ((SUCCESS_COUNT++))
+    SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+    SYNC_READY_FOR_STASH_POP=true
   elif [ "$LOCAL" = "$BASE" ]; then
     echo -e "  ${BLUE}→ Pulling changes...${NC}"
     if [ "$DRY_RUN" = true ]; then
       echo -e "  ${BLUE}[DRY RUN] Would pull changes from origin/${WORKFLOWS_BRANCH}${NC}"
-      ((SUCCESS_COUNT++))
+      SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
     else
       if [ "$VERBOSE" = true ]; then
-        if git pull --ff-only origin "$WORKFLOWS_BRANCH"; then
+        if git -C "$workflows_path" pull --ff-only origin "$WORKFLOWS_BRANCH"; then
           echo -e "  ${GREEN}✓ Updated successfully${NC}"
-          ((SUCCESS_COUNT++))
+          SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+          SYNC_READY_FOR_STASH_POP=true
         else
           echo -e "  ${RED}✗ Pull failed (may need manual merge)${NC}"
-          ((FAIL_COUNT++))
+          FAIL_COUNT=$((FAIL_COUNT + 1))
         fi
       else
-        if git pull --ff-only origin "$WORKFLOWS_BRANCH" --quiet 2>/dev/null; then
+        if git -C "$workflows_path" pull --ff-only origin "$WORKFLOWS_BRANCH" --quiet 2>/dev/null; then
           echo -e "  ${GREEN}✓ Updated successfully${NC}"
-          ((SUCCESS_COUNT++))
+          SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+          SYNC_READY_FOR_STASH_POP=true
         else
           echo -e "  ${RED}✗ Pull failed (may need manual merge)${NC}"
-          ((FAIL_COUNT++))
+          FAIL_COUNT=$((FAIL_COUNT + 1))
         fi
       fi
     fi
   elif [ "$REMOTE" = "$BASE" ]; then
     echo -e "  ${YELLOW}⚠ Local commits ahead of remote${NC}"
     echo -e "  ${YELLOW}  Consider pushing your changes${NC}"
-    ((SKIP_COUNT++))
+    SKIP_COUNT=$((SKIP_COUNT + 1))
   else
     echo -e "  ${YELLOW}⚠ Diverged from remote${NC}"
     echo -e "  ${YELLOW}  Manual merge required${NC}"
-    ((SKIP_COUNT++))
+    SKIP_COUNT=$((SKIP_COUNT + 1))
+  fi
+
+  if [ "$STASH_CREATED" = true ] && [ "$SYNC_READY_FOR_STASH_POP" = true ]; then
+    echo -e "  ${YELLOW}  Re-applying stashed changes...${NC}"
+    if git -C "$workflows_path" stash pop --quiet; then
+      echo -e "  ${GREEN}✓ Stashed changes reapplied${NC}"
+    else
+      echo -e "  ${RED}✗ Stash pop failed; resolve manually with:${NC}"
+      echo -e "  ${YELLOW}  git -C \"${workflows_path}\" stash pop${NC}"
+      FAIL_COUNT=$((FAIL_COUNT + 1))
+    fi
+  elif [ "$STASH_CREATED" = true ]; then
+    echo -e "  ${YELLOW}⚠ Stash retained; recover manually with:${NC}"
+    echo -e "  ${YELLOW}  git -C \"${workflows_path}\" stash pop${NC}"
   fi
   
   echo ""

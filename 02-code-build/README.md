@@ -52,7 +52,7 @@ Both workflows emphasize breaking work into phases:
 
 ### Verification Steps
 
-- Run `npm run build` (or project equivalent)
+- Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs; if none exists, state that explicitly
 - Test in dev server when applicable
 - Check git diff to confirm changes
 

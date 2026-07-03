@@ -10,6 +10,7 @@ This directory contains workflows for reviewing code quality, performance, and m
 | [`02-code-optimization.md`](./02-code-optimization.md) | Performance-focused analysis | When performance issues suspected |
 | [`03-code-refactoring.md`](./03-code-refactoring.md) | Code quality and technical debt | When code is hard to maintain |
 | [`04-website-data-refactoring.md`](./04-website-data-refactoring.md) | Website content/data organization | When data is scattered or untyped |
+| [`05-comprehensive-audit.md`](./05-comprehensive-audit.md) | Deep repo audit and improvement plan | When you need a broad evidence-backed assessment |
 
 ## Quick Decision Guide
 
@@ -25,8 +26,11 @@ What are you looking for?
          ├── Code quality, maintainability, tech debt
          │   └── Use 03-code-refactoring.md
          │
-         └── Scattered/untyped website content, data organization
-             └── Use 04-website-data-refactoring.md
+         ├── Scattered/untyped website content, data organization
+         │   └── Use 04-website-data-refactoring.md
+         │
+         └── Full repository audit and improvement strategy
+             └── Use 05-comprehensive-audit.md
 ```
 
 ## Workflow Relationships
@@ -37,13 +41,14 @@ What are you looking for?
 | **02-code-optimization** | Performance | S1-S2, P1-P2 | Performance issues, scaling |
 | **03-code-refactoring** | Maintainability | S2-S3, P2-P3 | Tech debt, before new features |
 | **04-website-data-refactoring** | Data organization | S2-S3, P2-P3 | Content scattered, CMS prep |
+| **05-comprehensive-audit** | Full repo health | S0-S3, P0-P3 | Deep audit, roadmap planning |
 
 ## Shared Elements
 
 All workflows use:
 - **Severity scoring**: S0 (Critical) → S3 (Low)
 - **Priority scoring**: P0 (Blocker) → P3 (Backlog)
-- **Parallel agents**: 3-5 agents scanning different aspects
+- **Parallel agents**: follow `../00-Meta-Workflow/00-meta/agent-spawning-policy.md`
 - **Output format**: Report saved to `<metadata-root>/research/` with findings ordered by priority
 
 See [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md) for the full scoring rubric.
@@ -70,6 +75,7 @@ All workflows save reports to `<metadata-root>/research/` using the metadata-roo
 - `<metadata-root>/research/code-optimization-YYMMDD-HHMM-{model}.md`
 - `<metadata-root>/research/code-refactoring-YYMMDD-HHMM-{model}.md`
 - `<metadata-root>/research/website-data-refactoring-YYMMDD-HHMM-{model}.md`
+- `<metadata-root>/research/comprehensive-audit-YYMMDD-HHMM-{model}.md`
 
 ## Related Workflows
 

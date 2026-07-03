@@ -5,3 +5,4 @@ Chronological index of troubleshooting entries.
 
 | Date | Category | Title | File | Status |
 |------|----------|-------|------|--------|
+| 2026-07-03 | environment | Deep review remediation | environment/2026-07-03-environment-deep-review-remediation.md | resolved |

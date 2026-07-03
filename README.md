@@ -341,7 +341,7 @@ Workflow will:
 3. Break work into phases with exit criteria
 4. For each phase:
    - Implement smallest change
-   - Verify (`npm run build`, `npm run dev`)
+   - Verify with the project-specific command from `AGENTS.md`, package scripts, Makefile, or local test docs
    - Update task list and changelog
 5. Final verification before completion
 
@@ -353,8 +353,8 @@ User: "Implement the user authentication feature from the plan.
 Workflow will:
 - Read the implementation plan
 - Implement Phase 1 changes
-- Run npm run build
-- Test in dev server
+- Run the project-specific verification command
+- Test in a dev server when relevant and trusted
 - Update the changelog (`docs/CHANGELOG.md` preferred)
 - Update task list with checkboxes (`- [✅]` for completed, `- [ ]` for pending)
 - Proceed to next phase
@@ -773,8 +773,8 @@ Step 7: Code Review
 - Defer P3 items unless they unblock higher priorities
 
 ### 2. Verify Before Proceeding
-- Use `npm run build` to verify changes
-- Test in dev server (`npm run dev`) when applicable
+- Use the project-specific verification command from `AGENTS.md`, package scripts, Makefile, or local test docs
+- Test in a dev server when applicable and trusted
 - Don't skip verification steps
 
 ### 3. Document as You Go

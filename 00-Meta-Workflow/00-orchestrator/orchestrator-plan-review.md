@@ -23,12 +23,12 @@ Launch a non-interactive OpenCode process to perform plan review using a differe
 - OpenCode CLI installed (`opencode` command available)
 - Target model configured in OpenCode (check with `opencode models`)
 - Plan document exists and is readable
-- Output directory exists (default: `plans/reviews/`)
+- Output directory exists (default: `plans/implementation-plan.reviews/`)
 
 ## Inputs
 
 - **Plan document path** (required) - Path to the plan to review
-- **Output file path** (optional) - Where to save the review output (default: `plans/reviews/YYYY-MM-DD-HHMM-<plan-name>-review.md`)
+- **Output file path** (optional) - Where to save the review output (default: `plans/implementation-plan.reviews/YYYY-MM-DD-HHMM-<plan-name>-review.md`)
 - **Model** (optional) - Model to use for review (default: uses OpenCode default model)
 - **Review type** (optional) - `quick` or `deep` (default: `deep`)
 - **Timeout** (optional) - Maximum time to wait for review in minutes (default: 30)
@@ -64,7 +64,7 @@ Launch a non-interactive OpenCode process to perform plan review using a differe
                ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    OUTPUT FILE                               │
-│    plans/reviews/YYYY-MM-DD-plan-name-review.md              │
+│    plans/implementation-plan.reviews/YYYY-MM-DD-plan-name-review.md              │
 └──────────────┬──────────────────────────────────────────────┘
                │
                │ 3. Return control
@@ -95,8 +95,8 @@ Launch a non-interactive OpenCode process to perform plan review using a differe
 # Launch review as background task
 opencode run \
   -m openai/gpt-4o \
-  --prompt "Review the plan at plans/implementation-plan.md following the workflow at Workflow-Scripts/01-planning-and-organizing/01-plan-review.md. Output to plans/reviews/review-output.md" \
-  > plans/reviews/review-log.txt 2>&1 &
+  "Review the plan at plans/implementation-plan.md following the workflow at Workflow-Scripts/01-planning-and-organizing/01-plan-review.md. Output to plans/implementation-plan.reviews/review-output.md" \
+  > plans/implementation-plan.reviews/review-log.txt 2>&1 &
 
 REVIEW_PID=$!
 
@@ -131,7 +131,7 @@ set -euo pipefail
 # Configuration
 PLAN_PATH="${1:-}"
 MODEL="${2:-${REVIEW_MODEL:-""}}"
-OUTPUT_DIR="${OUTPUT_DIR:-"plans/reviews"}"
+OUTPUT_DIR="${OUTPUT_DIR:-"$(dirname "$PLAN_PATH")/$(basename "$PLAN_PATH" .md).reviews"}"
 TIMEOUT_MINUTES="${TIMEOUT_MINUTES:-30}"
 
 # Validate inputs
@@ -188,11 +188,11 @@ START_TIME=$(date '+%Y-%m-%d %H:%M:%S')
 if [ -n "$MODEL" ]; then
   opencode run \
     -m "$MODEL" \
-    --prompt "$REVIEW_PROMPT" \
+    "$REVIEW_PROMPT" \
     > "$OUTPUT_FILE" 2>&1
 else
   opencode run \
-    --prompt "$REVIEW_PROMPT" \
+    "$REVIEW_PROMPT" \
     > "$OUTPUT_FILE" 2>&1
 fi
 
@@ -236,7 +236,7 @@ Create `Workflow-Scripts/orchestrator/parallel-review.sh`:
 set -euo pipefail
 
 PLAN_PATH="${1:-}"
-OUTPUT_DIR="${OUTPUT_DIR:-"plans/reviews"}"
+OUTPUT_DIR="${OUTPUT_DIR:-"$(dirname "$PLAN_PATH")/$(basename "$PLAN_PATH" .md).reviews"}"
 
 if [ -z "$PLAN_PATH" ]; then
   echo "Usage: $0 <plan-path>"
@@ -266,7 +266,7 @@ for MODEL_CONFIG in "${MODELS[@]}"; do
   
   opencode run \
     -m "$MODEL" \
-    --prompt "Review plan at $PLAN_PATH focusing on $FOCUS. Follow Workflow-Scripts/01-planning-and-organizing/01-plan-review.md workflow." \
+    "Review plan at $PLAN_PATH focusing on $FOCUS. Follow Workflow-Scripts/01-planning-and-organizing/01-plan-review.md workflow." \
     > "$OUTPUT_FILE" 2>&1 &
   
   PIDS+=($!)
@@ -325,7 +325,7 @@ async function runReview(config: ReviewConfig): Promise<ReviewResult> {
   
   const args = ['run'];
   if (config.model) args.push('-m', config.model);
-  args.push('--prompt', prompt);
+  args.push(prompt);
   
   return new Promise((resolve) => {
     const proc = spawn('opencode', args, {
@@ -380,8 +380,8 @@ async function main() {
   
   // Run reviews with multiple models
   const configs: ReviewConfig[] = [
-    { planPath, model: 'openai/gpt-4o', outputPath: 'plans/reviews/architecture-review.md' },
-    { planPath, model: 'openai/gpt-4o-mini', outputPath: 'plans/reviews/security-review.md' },
+    { planPath, model: 'openai/gpt-4o', outputPath: 'plans/implementation-plan.reviews/architecture-review.md' },
+    { planPath, model: 'openai/gpt-4o-mini', outputPath: 'plans/implementation-plan.reviews/security-review.md' },
   ];
   
   const results = await Promise.all(configs.map(runReview));
@@ -415,8 +415,8 @@ Once the plan is written, the orchestrator can automatically launch reviews:
 # From within the research workflow
 opencode run \
   -m openai/gpt-4o \
-  --prompt "Review the plan at plans/implementation-plan.md following 01-plan-review.md workflow" \
-  > plans/reviews/auto-review.md 2>&1
+  "Review the plan at plans/implementation-plan.md following 01-plan-review.md workflow" \
+  > plans/implementation-plan.reviews/auto-review.md 2>&1
 ```
 
 **Option B: Parallel Reviews**

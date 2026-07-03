@@ -30,8 +30,19 @@ if [ -z "$COMMIT_MSG" ]; then
     exit 1
 fi
 
-if [ -n "$(git diff --name-only)" ]; then
-    echo "Error: you have unstaged changes. Stage them first (git add ...)."
+unstaged_paths="$(git diff --name-only)"
+untracked_paths="$(git ls-files --others --exclude-standard)"
+
+if [ -n "$unstaged_paths" ] || [ -n "$untracked_paths" ]; then
+    echo "Error: you have unstaged or untracked changes. Stage or remove them first."
+    if [ -n "$unstaged_paths" ]; then
+        echo "Unstaged tracked paths:"
+        printf '%s\n' "$unstaged_paths"
+    fi
+    if [ -n "$untracked_paths" ]; then
+        echo "Untracked paths:"
+        printf '%s\n' "$untracked_paths"
+    fi
     exit 1
 fi
 

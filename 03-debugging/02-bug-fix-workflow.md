@@ -97,8 +97,8 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 - Spawn 1 integration testing agent per external system affected (database, API, third-party service)
 - Spawn 1 documentation review agent if bug fix changes documented behavior or requires user communication
 
-**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
-Run `npm run build` and relevant tests. If failures occur, fix and re-run.
+**Agent Spawning Policy:** Follow `../00-Meta-Workflow/00-meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
+Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs plus relevant tests. If no command exists, state that explicitly. If failures occur, fix and re-run.
 
 ### 7. Documentation
 **Update logs (only for completed tasks that change or affect project code). For every completed bug fix, update BOTH changelog and troubleshooting (skip troubleshooting only for truly trivial mechanical fixes with no investigation).**
@@ -116,7 +116,7 @@ Run `npm run build` and relevant tests. If failures occur, fix and re-run.
 - **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
 
 ### 8. Final Verification
-- Run final `npm run build` to confirm the repo is shippable.
+- Run the final project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs to confirm the repo is shippable; if none exists, state that explicitly.
 - Perform a smoke test to ensure the fix works in the actual environment.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
 - Verify the fix addresses the root cause and doesn't introduce new issues.

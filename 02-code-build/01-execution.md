@@ -60,7 +60,7 @@ Execute implementation in phases with verification and documentation updates.
       - Security hardening]
 - Verify (repeat until exit criteria met)
   - Use parallel agents to run checks concurrently. Suggested agent roles (spawn additional agents as needed):
-    - Run `npm run build` and check for build errors
+    - Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs; if none exists, state that explicitly. `npm run build` is only an example.
     - Check for TypeScript/ESLint errors and warnings
     - Validate file structure and imports are correct
     - Review git diff for unintended changes or secrets
@@ -70,7 +70,7 @@ Execute implementation in phases with verification and documentation updates.
       - Security scanning
       - Documentation validation
       - Integration testing]
-  - If relevant, run: `npm run dev` and perform a quick smoke test of the affected flow.
+  - If relevant and the project is trusted, run the local dev command from project docs and perform a quick smoke test of the affected flow.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
@@ -84,7 +84,7 @@ Execute implementation in phases with verification and documentation updates.
 
 ## Finalization (After All Phases)
 
-- Run a final `npm run build` to confirm the repo is shippable.
+- Run the final project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs to confirm the repo is shippable; if none exists, state that explicitly.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
 - **Update the implementation plan:** Ensure task status and completion markers are consistent. **Then execute the full `03-mark-completed.md` workflow** to verify implementation, reconcile logs, and archive the plan properly. Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the complete process.
 - **If plan is fully completed, file it in `project/plans-completed/`:**
@@ -99,7 +99,7 @@ Execute implementation in phases with verification and documentation updates.
 - [ ] Goal and acceptance criteria confirmed
 - [ ] Repo state checked (`git status`)
 - [ ] Plan identified in `plans/`
-- [ ] Each phase: implement → verify (build, lint, smoke) → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
+- [ ] Each phase: implement → verify with the project-specific build/lint/test/smoke command → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
 - [ ] Final build passes; no secrets in diff
 - [ ] Plan fully marked; completion marker added when done
 - [ ] (Optional) Confirm execution run for verification addendum
