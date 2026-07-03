@@ -19,6 +19,8 @@ Workflow-Scripts is **not an application** — it is a library of Markdown workf
 | Fix a bug | `03-debugging/02-bug-fix-workflow.md` |
 | Update documentation | `04-documentation/02-sync-documentation.md` |
 | Code/security review | `05-review/01-code-review.md` |
+| Website data refactoring | `05-review/04-website-data-refactoring.md` |
+| Comprehensive repo audit | `05-review/05-comprehensive-audit.md` |
 | Security audit | `06-security/01-security-review.md` |
 | Pull latest workflows | `scripts/pull-workflows.sh` |
 | Delegate review to another model | `00-Meta-Workflow/00-orchestrator/orchestrator-review.sh` |
@@ -60,6 +62,8 @@ When editing **this repository**, log changes under `00-project/changelog/` and 
 | `project/changelog/` | `00-project/changelog/` |
 | `project/troubleshooting/` | `00-project/troubleshooting/` |
 | `project/plans/` | `00-project/plans/` |
+| `project/research/` | `00-project/research/` |
+| `project/plans-completed/` | `00-project/plans-completed/` |
 | `docs/` | `00-project/docs/` |
 
 ### 5. Skills vs full workflows
@@ -74,17 +78,17 @@ When editing **this repository**, log changes under `00-project/changelog/` and 
 ./00-Meta-Workflow/00-orchestrator/orchestrator-review.sh path/to/plan.md -m <model>
 ```
 
-Requires OpenCode CLI. Captures review output for the orchestrating agent.
+Requires OpenCode CLI. Captures review output beside the plan in `<plan-dir>/<plan-name>.reviews/<timestamp>-<focus>-review.md`.
 
 ## Troubleshooting
 
 | Problem | Check |
 |---------|-------|
 | `pull-workflows.sh` refuses to pull | Uncommitted changes in Workflow-Scripts — commit, stash, or discard |
-| Detached HEAD after fetch | `git checkout main` (or `v1.6`) before pulling |
+| Detached HEAD after fetch | `git checkout main` (or `v1.7`) before pulling |
 | Broken workflow cross-links | Some legacy links reference `09-11 Misc/` — files moved to `08-API-Integration/` |
-| Empty `PROJECTS` in sync script | Edit `scripts/sync-workflow-scripts.sh` and set host project paths |
-| Workflow output path confusion | Host projects use `project/plans/`; this repo uses `00-project/plans/` |
+| Empty `PROJECTS` in sync script | Configure via `PROJECTS[]`, `--auto`, `WORKFLOW_SYNC_PROJECTS`, or `WORKFLOW_SYNC_BASE_DIR` in `scripts/sync-workflow-scripts.sh` |
+| Workflow output path confusion | **Plans** → `<metadata-root>/plans/`; **review/audit/research reports** → `<metadata-root>/research/`. See [naming-conventions.md](../../00-Meta-Workflow/00-meta/naming-conventions.md) |
 
 For resolved bugs filed in this repo, see `00-project/troubleshooting/index.md`.
 
@@ -97,4 +101,7 @@ New work: `00-research-and-plan.md`. Bug: `02-bug-fix-workflow.md`. Docs drift: 
 No repo-wide build. The embedded `@ai-sdk/image-generation` package under `08-API-Integration/` has its own npm/vitest toolchain.
 
 **Where do reports go?**  
-Review and planning reports use `{type}-YYMMDD-HHMM-{model}.md` in the host `plans/` directory (or `00-project/plans/` here).
+Filename format: `{type}-YYMMDD-HHMM-{model}.md` per [naming-conventions.md](../../00-Meta-Workflow/00-meta/naming-conventions.md). **Implementation plans** go to `<metadata-root>/plans/`. **Review, audit, and research reports** go to `<metadata-root>/research/`. In this repo the metadata root is `00-project/`; consumer host projects use `project/`.
+
+**How many parallel agents should I spawn?**
+Review and audit workflows follow [agent-spawning-policy.md](../../00-Meta-Workflow/00-meta/agent-spawning-policy.md): 3–6 total agents per session, with a hard cap of 6.

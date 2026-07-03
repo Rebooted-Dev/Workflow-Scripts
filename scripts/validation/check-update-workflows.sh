@@ -32,6 +32,21 @@ printf '%s\n' "$output" | grep -q 'untracked.txt' || {
 }
 rm "$repo/untracked.txt"
 
+printf 'dirty\n' >> "$repo/README.md"
+set +e
+output="$(bash "$repo/scripts/update-workflows.sh" "docs: test" 2>&1)"
+exit_code=$?
+set -e
+if [ "$exit_code" -eq 0 ]; then
+  echo "Expected modified tracked file to fail" >&2
+  exit 1
+fi
+printf '%s\n' "$output" | grep -q 'README.md' || {
+  echo "Expected output to name README.md" >&2
+  exit 1
+}
+git -C "$repo" checkout -- README.md
+
 printf 'staged\n' >> "$repo/README.md"
 git -C "$repo" add README.md
 
@@ -52,5 +67,14 @@ git -C "$repo" log --oneline -1 | grep -q 'docs: staged check' || {
   echo "Expected staged-only changes to reach commit step" >&2
   exit 1
 }
+grep -q 'mock git push' /tmp/check-update-workflows.out || {
+  echo "Expected staged-only changes to reach mocked push" >&2
+  exit 1
+}
+
+if grep -q 'git diff --name-only' "$SCRIPT"; then
+  echo "scripts/update-workflows.sh must use git status --porcelain, not git diff --name-only" >&2
+  exit 1
+fi
 
 echo "update-workflows checks OK"

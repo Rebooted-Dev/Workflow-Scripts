@@ -3,6 +3,8 @@
 ## Purpose
 Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `<metadata-root>/research/` using the metadata-root rule in `../00-Meta-Workflow/00-meta/naming-conventions.md`.
 
+Use the shared review contract in `../00-Meta-Workflow/00-meta/review-workflow-core.md` for report routing, pre-flight checks, untrusted-content handling, severity/priority scoring, evidence quality, deduplication, report outline, and acceptance criteria.
+
 ## Inputs
 - Repository root (determine using one of):
   - User-specified path
@@ -16,6 +18,8 @@ If ambiguous:
 - Default to current working directory with warning
 
 ## Pre-Flight Validation
+Follow `../00-Meta-Workflow/00-meta/review-workflow-core.md`; code-review-specific checks are:
+
 Before scanning, verify:
 - [ ] Repository root is identified and accessible
 - [ ] Rubric file exists at `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`
@@ -30,9 +34,7 @@ Before scanning, verify:
 - No files in scope → Abort with: "No files found to scan in {scope}."
 
 ## Prioritization Rule
-- Score each finding with severity (S0–S3) and priority (P0–P3).
-- Present the report ordered by priority (P0 to P3), then severity within each priority.
-- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
+Use `../00-Meta-Workflow/00-meta/review-workflow-core.md` and the shared rubric at `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
 
 **Evidence Requirements (from rubric):**
 - **S0/S1 findings MUST include:**
@@ -99,7 +101,7 @@ Before scanning, verify:
    - Bad: "Check it works"
    - Good: "Execute `./scripts/verify.sh` and confirm output contains 'OK: 5/5 checks passed'"
 
-3. **Group, deduplicate, and order findings:**
+3. **Group, deduplicate, and order findings using `../00-Meta-Workflow/00-meta/review-workflow-core.md`:**
 
    **Deduplication process:**
    - Group findings by file path and line number range (±5 lines)

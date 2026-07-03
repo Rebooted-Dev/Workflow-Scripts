@@ -20,16 +20,18 @@ Workflow-Scripts/
 │
 ├── scripts/
 │   ├── pull-workflows.sh
-│   ├── update-workflows.sh
-│   ├── sync-workflow-scripts.sh
-│   ├── migrate-changelog.py           # One-time CHANGELOG migration helper
+│   ├── update-workflows.sh            # Staged-only commit + push
+│   ├── sync-workflow-scripts.sh       # Multi-project batch sync
 │   └── validation/
 │       ├── check-active-markdown-links.sh
-│       └── check-orchestrator-review.sh
+│       ├── check-orchestrator-review.sh
+│       ├── check-sync-workflow-scripts.sh
+│       ├── check-update-workflows.sh
+│       └── check-review-workflow-policy.sh
 │
 ├── 00-Meta-Workflow/
 │   ├── 00-orchestrator/               # Delegated review (shell + workflow)
-│   ├── 00-meta/                       # Rubrics, glossary, naming, templates
+│   ├── 00-meta/                       # Rubrics, glossary, naming, agent policy
 │   ├── 00-docs/                       # Generated reports, archived reviews
 │   ├── 00-plans/                      # Legacy active plans index
 │   └── 00-plans-completed/            # Legacy completed plans index
@@ -40,6 +42,9 @@ Workflow-Scripts/
 │   ├── troubleshooting/               # Bug/issue knowledge base
 │   ├── plans/                         # Active plans, TODO.md
 │   ├── plans-completed/               # Filed completed plans
+│   ├── research/                      # Review/audit/research reports
+│   ├── KIV/                           # Keep-in-view items
+│   ├── build/archive/                 # Retired tooling (e.g. migrate-changelog.py)
 │   └── docs/                          # This documentation set
 │
 ├── 00-project-setup/                  # Consumer project bootstrap (7 workflows)
@@ -47,11 +52,11 @@ Workflow-Scripts/
 ├── 02-code-build/                     # Execution, confirm
 ├── 03-debugging/                      # Bug description, bug fix
 ├── 04-documentation/                  # Create docs, sync docs, mark completed
-├── 05-review/                         # Code review, optimization, refactoring
+├── 05-review/                         # Code review, optimization, refactoring, website data, comprehensive audit
 ├── 06-security/                       # Security review, security fix
 ├── 07-deployment/                     # Electron, ports, pre-deploy, SEO plans
 ├── 08-API-Integration/                # Genkit, AI SDK, MCP, misc deploy guides
-├── 10-technical-docs/Gemini/          # Offline Gemini API reference (14 files)
+├── 10-technical-docs/Gemini/          # Offline Gemini API reference (14 topic files)
 ├── 11-Skills/                         # 14 Codex skill bundles
 └── 12-SEO-GEO-checklist/              # SEO automation tasks + dashboard plans
 ```
@@ -64,7 +69,8 @@ Workflow-Scripts/
 | `04-documentation/00-doc-templates.md` | Section templates for all doc types |
 | `04-documentation/03-mark-completed.md` | Completion marking and plan archiving |
 | `00-Meta-Workflow/00-meta/severity-priority-rubric.md` | Shared P0–P3 / S0–S3 scoring |
-| `00-Meta-Workflow/00-meta/naming-conventions.md` | Report filename standard |
+| `00-Meta-Workflow/00-meta/naming-conventions.md` | Report filename and metadata-root routing |
+| `00-Meta-Workflow/00-meta/agent-spawning-policy.md` | Parallel agent caps for review workflows |
 | `00-project-setup/01-setup-project.md` | Multi-repo bootstrap for consumers |
 | `00-project-setup/03-sync-workflow-scripts.md` | Multi-project sync guide |
 | `00-project/AGENTS.md` | Agent rules for Workflow-Scripts meta work |
@@ -77,6 +83,7 @@ Workflow-Scripts/
 | `project/changelog/` | `00-project/changelog/` |
 | `project/troubleshooting/` | `00-project/troubleshooting/` |
 | `project/plans/` | `00-project/plans/` |
+| `project/research/` | `00-project/research/` |
 | `project/plans-completed/` | `00-project/plans-completed/` |
 | `docs/` | `00-project/docs/` |
 | `AGENTS.md` (host root) | `00-project/AGENTS.md` |
@@ -86,9 +93,10 @@ Workflow-Scripts/
 | Task | Go to |
 |------|-------|
 | Pull latest workflows | `scripts/pull-workflows.sh` |
-| Publish workflow edits | `scripts/update-workflows.sh` |
+| Publish workflow edits | `scripts/update-workflows.sh` (stage first) |
 | Sync all host projects | `scripts/sync-workflow-scripts.sh` |
 | Log a change | `00-project/changelog/` + `index.md` |
 | File a bug fix | `00-project/troubleshooting/` + changelog |
+| File a review report | `00-project/research/` (or host `project/research/`) |
 | Generate docs | `04-documentation/01-create-docs.md` |
-| Validate links | `scripts/validation/check-active-markdown-links.sh` |
+| Pre-publish validation | All five scripts under `scripts/validation/` |

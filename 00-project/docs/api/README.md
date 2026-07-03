@@ -28,9 +28,11 @@ Maintainer helper — commits staged changes and pushes.
 
 ```bash
 cd Workflow-Scripts
-git add .
+git add <files-to-publish>   # stage only what you intend to commit
 ./scripts/update-workflows.sh "docs: describe your change"
 ```
+
+The script commits **staged changes only** and rejects unstaged tracked files or untracked files.
 
 ### `scripts/sync-workflow-scripts.sh`
 
@@ -40,11 +42,12 @@ Multi-project batch sync.
 |------|--------|
 | `--status` | Show sync state per configured project |
 | `--dry-run` | Preview without pulling |
-| `--auto` | Non-interactive auto-clone when missing |
+| `--verbose` | Detailed per-project output |
+| `--auto` | Auto-discover host projects under `WORKFLOW_SYNC_BASE_DIR` |
 
-Environment: `WORKFLOW_SYNC_BASE_DIR`, `WORKFLOWS_BRANCH`, `NON_INTERACTIVE`, `WORKFLOW_SYNC_PROJECTS`.
+Environment: `WORKFLOW_SYNC_BASE_DIR`, `WORKFLOW_SYNC_PROJECTS` (colon-separated paths), `WORKFLOW_SYNC_MAX_DEPTH`, `WORKFLOWS_BRANCH`, `NON_INTERACTIVE=true` (auto-clone when Workflow-Scripts missing).
 
-Configure `PROJECTS` array in the script before first use.
+Configure via `PROJECTS[]` in the script, `--auto`, or the env vars above.
 
 ## Orchestrator
 
@@ -54,7 +57,7 @@ Configure `PROJECTS` array in the script before first use.
 ./00-Meta-Workflow/00-orchestrator/orchestrator-review.sh <plan.md> [-m <model>] [options]
 ```
 
-Launches non-interactive OpenCode for plan review. Requires OpenCode CLI installed. See `00-orchestrator/README.md`.
+Launches non-interactive OpenCode for plan review. Requires OpenCode CLI installed. Default output: `<plan-dir>/<plan-name>.reviews/<timestamp>-<focus>-review.md`. See [00-Meta-Workflow/00-orchestrator/README.md](../../../00-Meta-Workflow/00-orchestrator/README.md).
 
 ## Workflow Interfaces
 
@@ -68,7 +71,7 @@ Each workflow Markdown file defines:
 | Outputs | Report paths, changelog updates |
 | Acceptance criteria | Completion checks |
 
-Output reports follow `{type}-YYMMDD-HHMM-{model}.md` in host `plans/`.
+Output reports follow `{type}-YYMMDD-HHMM-{model}.md` per [naming-conventions.md](../../../00-Meta-Workflow/00-meta/naming-conventions.md). **Plans** → `<metadata-root>/plans/`; **review/audit/research reports** → `<metadata-root>/research/`.
 
 ## `@ai-sdk/image-generation`
 

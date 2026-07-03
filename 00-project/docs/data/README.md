@@ -12,8 +12,9 @@ Workflow-Scripts has **no database or persistent datastore**. All state is file-
 | Troubleshooting entries | `00-project/troubleshooting/<category>/` | Markdown |
 | Active plans | `00-project/plans/` | Markdown |
 | Completed plans | `00-project/plans-completed/<category>/` | Markdown |
-| Review reports | Host `plans/` or `00-project/plans/` | Markdown (dated filenames) |
-| Generated reports | `00-Meta-Workflow/00-docs/` | Markdown |
+| Review/audit/research reports | `<metadata-root>/research/` (`project/research/` or `00-project/research/`) | Markdown (dated filenames) |
+| Implementation plans | `<metadata-root>/plans/` | Markdown |
+| Generated workflow reports (legacy) | `00-Meta-Workflow/00-docs/` | Markdown |
 | Skills | `11-Skills/<name>/SKILL.md` | Markdown + YAML stub |
 
 ## Changelog Entry Schema
@@ -45,11 +46,16 @@ Filename: `<yyyy-mm-dd>-<type>-<short-title>.md`
 
 ## Report Filename Schema
 
-Per `00-Meta-Workflow/00-meta/naming-conventions.md`:
+Per [naming-conventions.md](../../../00-Meta-Workflow/00-meta/naming-conventions.md):
 
 ```
 {report-type}-YYMMDD-HHMM-{model}.md
 ```
+
+Storage:
+- Review/audit/research reports → `<metadata-root>/research/`
+- Active plans → `<metadata-root>/plans/`
+- Completed plans → `<metadata-root>/plans-completed/<category>/`
 
 ## Entity Relationships
 

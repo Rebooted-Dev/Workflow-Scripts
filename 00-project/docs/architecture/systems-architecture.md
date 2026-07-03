@@ -32,7 +32,7 @@ The host `.gitignore` excludes `Workflow-Scripts/` so `git add .` from the host 
 | Skills | `11-Skills/` | Thin Codex skill triggers over deep workflows |
 | Shell scripts | `scripts/` | Pull, push, multi-project sync, validation |
 | Meta workspace | `00-project/` | Changelog, troubleshooting, plans, docs for Workflow-Scripts itself |
-| Reference libraries | `07-deployment/`, `08-API-Integration/`, `10-technical-docs/` | Consumer-oriented guides (not Workflow-Scripts runtime) |
+| Reference libraries | `07-deployment/`, `08-API-Integration/`, `10-technical-docs/`, `12-SEO-GEO-checklist/` | Consumer-oriented guides (not Workflow-Scripts runtime) |
 
 ## Key Workflows
 
@@ -53,7 +53,9 @@ Orchestrator agent
 orchestrator-review.sh  ──▶  OpenCode (non-interactive, alternate model)
     │
     ▼
-Captured review output  ──▶  plans/ or 00-project/plans/
+Captured review output  ──▶  <plan-dir>/<plan-name>.reviews/  (orchestrator)
+Review/audit reports    ──▶  <metadata-root>/research/
+Implementation plans    ──▶  <metadata-root>/plans/
 ```
 
 ### Change logging (Workflow-Scripts meta)
@@ -89,4 +91,5 @@ See [Deployment documentation](../deployment/README.md) for runbooks.
 
 - Root `CHANGELOG.md` was removed after migration to `00-project/changelog/` (2026-07-03).
 - Dual plan indexes (`00-Meta-Workflow/00-plans*` vs `00-project/plans*`) — optional consolidation tracked in `00-project/plans/TODO.md`.
-- Some cross-links still reference removed `09-11 Misc/` paths; files live under `08-API-Integration/`.
+- Some bundled reference-library READMEs still reference removed `09-11 Misc/` paths; files live under `08-API-Integration/`.
+- Deep review remediation (2026-07-03) added `agent-spawning-policy.md`, three validation scripts, and standardized `<metadata-root>/research/` routing for review outputs.

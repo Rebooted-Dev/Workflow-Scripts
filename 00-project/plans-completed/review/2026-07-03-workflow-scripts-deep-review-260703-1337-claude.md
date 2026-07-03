@@ -3,7 +3,7 @@
 **Date:** 260703 1337 (24-hour format)
 **Model:** claude (Fable 5)
 **Scope:** Entire `Workflow-Scripts/` repository — executable scripts (`scripts/*.sh`, `scripts/migrate-changelog.py`, `00-Meta-Workflow/00-orchestrator/orchestrator-review.sh`) and workflow instruction documents (root `README.md`, `05-review/`, `06-security/`, `00-Meta-Workflow/00-meta/`, `00-project-setup/`, directory READMEs)
-**Status:** Independently verified and corrected on 2026-07-03; see §2.1
+**Status:** ✅ COMPLETED and filed; current-worktree verification refreshed on 2026-07-03; see §2.5
 **Guiding workflows:** `05-review/01-code-review.md`, `06-security/01-security-review.md`, `05-review/02-code-optimization.md`
 **Rubric:** `00-Meta-Workflow/00-meta/severity-priority-rubric.md` (S0–S3 severity, P0–P3 priority)
 
@@ -538,5 +538,101 @@ Beyond the itemized fixes, five structural improvements would remove the *classe
 | 027 | P3 | S3 | Docs | 05-review/fable-review.md | Orphan workflow with conflicting severity scale |
 
 ---
+
+### §2.4 Current Worktree Verification Update — GPT-5, 2026-07-03
+
+Re-checked against the current `Workflow-Scripts/` worktree (HEAD: `cba3ef8`, plus uncommitted local documentation/report updates).
+
+**Corrections to the original report:**
+- The §2.1 table is a preserved point-in-time verification record from before the clarification remediation. Several rows are now stale because the worktree has since remediated them.
+- The §2.4 table is a preserved point-in-time verification record from before the follow-up implementation pass. Rows marked open/deferred/partial/backlog there were revisited in §2.5.
+
+**Finding verification status:**
+
+| Finding | Status | Verification note |
+|---|---|---|
+| 001 | Remediated | `bash scripts/validation/check-review-workflow-policy.sh` passed; active review/security workflows now route reports to `<metadata-root>/research/`. |
+| 002 | Remediated | `bash scripts/validation/check-sync-workflow-scripts.sh` passed; validator rejects post-increment counters under `set -e`. |
+| 003 | Remediated | `bash scripts/validation/check-sync-workflow-scripts.sh` passed; validator rejects `mapfile` in the sync script. |
+| 004 | Remediated with correction | `rg 'stash pop' scripts/sync-workflow-scripts.sh` shows restore/warning paths at lines 537, 541, and 546. |
+| 005 | Remediated | `bash scripts/validation/check-orchestrator-review.sh` passed; `orchestrator-review.sh` now appends the review prompt positionally. |
+| 006 | Remediated | `find . -name migrate-changelog.py` shows the one-shot migrator only under `00-project/build/archive/`, not active `scripts/`. |
+| 007 | Stale / archived | Same archive check as 006; the oldest-first behavior is no longer in an active script path. |
+| 008 | Remediated | `bash scripts/validation/check-sync-workflow-scripts.sh` passed; validator rejects `cd "$workflows_path"` in main loops. |
+| 009 | Remediated | `bash scripts/validation/check-sync-workflow-scripts.sh` exercised empty auto-discovery and confirmed "No projects found". |
+| 010 | Remediated | `bash scripts/validation/check-sync-workflow-scripts.sh` created an SSH-origin fixture and reached the expected fetch path rather than remote rejection. |
+| 011 | Superseded by §2.5 | This was still open at the time of the §2.4 check, then remediated in the follow-up implementation pass. |
+| 012 | Remediated | `bash scripts/validation/check-orchestrator-review.sh` passed; help/options behavior is covered by the validator. |
+| 013 | Remediated for active links | `bash scripts/validation/check-active-markdown-links.sh` passed. |
+| 013a | Remediated | `bash scripts/validation/check-orchestrator-review.sh` passed; default output now lands beside the plan in `<plan-name>.reviews/`. |
+| 014 | Remediated | `bash scripts/validation/check-review-workflow-policy.sh` passed; active review workflows reference `agent-spawning-policy.md` and avoid conflicting local maximums. |
+| 015 | Superseded by §2.5 | Shared review-core extraction was still deferred at the time of the §2.4 check, then completed in the follow-up implementation pass. |
+| 016 | Superseded by §2.5 | Local illustrative P0-P3 examples remained at the time of the §2.4 check, then were removed/enforced in the follow-up implementation pass. |
+| 017 | Remediated | `naming-conventions.md` defines the metadata-root mapping; policy validation confirms active review workflows use it. |
+| 018 | Remediated for active build/security docs | `README.md`, `02-code-build`, and `06-security/02-security-fix.md` now direct agents to project-specific verification commands; `npm run build` remains only as example or historical text. |
+| 019 | Remediated | `06-security/README.md` now uses `<metadata-root>/research/security-review-YYMMDD-HHMM-{model}.md`. |
+| 020 | Remediated | `bash scripts/validation/check-review-workflow-policy.sh` passed; active review workflows include untrusted-content guidance. |
+| 021 | Remediated | `06-security/02-security-fix.md` now says build/dev/test commands execute project code and should run only after trust is established. |
+| 022 | Preserved positive observation | Current script scan still shows local scripts only; no listener/secret-handling surface was introduced by the remediation. |
+| 023 | Superseded by §2.5 | Serial fetch optimization was intentionally moved to measured-baseline backlog in the follow-up implementation pass. |
+| 024 | Remediated | `rg 'maxdepth' scripts/sync-workflow-scripts.sh` confirms auto-discovery is bounded. |
+| 025 | Accepted as intentional | The `- [✅]` convention is retained by clarification decision §2.2. |
+| 026 | Remediated | `find . -maxdepth 1 -type d` shows `01-planning-and-organizing/` and `10-technical-docs/`; old spaced names are absent. |
+| 027 | Remediated | `05-review/05-comprehensive-audit.md` exists, is listed in `05-review/README.md`, and maps Critical/High/Medium/Low to S0-S3. |
+
+**New findings during verification:** none.
+
+**Remaining PLAUSIBLE items and what blocks them:** none.
+
+**Validation commands run for this update:**
+- `bash scripts/validation/check-active-markdown-links.sh` -> `Active markdown links OK`
+- `bash scripts/validation/check-orchestrator-review.sh` -> `Orchestrator review checks OK`
+- `bash scripts/validation/check-review-workflow-policy.sh` -> `review workflow policy checks OK`
+- `bash scripts/validation/check-sync-workflow-scripts.sh` -> `sync-workflow-scripts checks OK`
+
+### §2.5 Final Filing Verification — GPT-5, 2026-07-03
+
+Re-checked the report after the follow-up implementation plan was completed and filed under `00-project/plans-completed/review/2026-07-03-workflow-scripts-deep-review-follow-up-implementation-plan.md`.
+
+**Final status:** all actionable issues are dealt with. Items are either remediated, accepted as intentional, preserved as a positive observation, archived/stale because the active code moved, or intentionally backlogged with a measurement gate.
+
+| Finding | Final status | Evidence |
+|---|---|---|
+| 001 | Remediated | `check-review-workflow-policy.sh` passes and active review/security workflows route reports to `<metadata-root>/research/`. |
+| 002 | Remediated | `check-sync-workflow-scripts.sh` passes and rejects post-increment counters under `set -e`. |
+| 003 | Remediated | `check-sync-workflow-scripts.sh` passes and rejects `mapfile` in the sync script. |
+| 004 | Remediated | Sync stash restore/warning paths are present and covered by `check-sync-workflow-scripts.sh`. |
+| 005 | Remediated | `check-orchestrator-review.sh` passes and validates positional prompt handling. |
+| 006 | Remediated / archived | `migrate-changelog.py` is archived under `00-project/build/archive/`, not active `scripts/`. |
+| 007 | Stale / archived | Same archive status as 006; oldest-first behavior is no longer in an active script path. |
+| 008 | Remediated | `check-sync-workflow-scripts.sh` passes and rejects loop-local `cd "$workflows_path"` behavior. |
+| 009 | Remediated | `check-sync-workflow-scripts.sh` covers empty auto-discovery behavior. |
+| 010 | Remediated | `check-sync-workflow-scripts.sh` covers SSH-origin fixture behavior. |
+| 011 | Remediated | `scripts/update-workflows.sh` now uses `git status --porcelain`; `check-update-workflows.sh` covers untracked failure, modified tracked failure, staged-only commit reaching mocked push, and absence of `git diff --name-only` in the helper. |
+| 012 | Remediated | `check-orchestrator-review.sh` passes and covers help/options behavior. |
+| 013 | Remediated for active links | `check-active-markdown-links.sh` passes. |
+| 013a | Remediated | `check-orchestrator-review.sh` passes and covers output placement. |
+| 014 | Remediated | `check-review-workflow-policy.sh` passes and active workflows reference `agent-spawning-policy.md` without conflicting local maximums. |
+| 015 | Remediated | `00-Meta-Workflow/00-meta/review-workflow-core.md` is the shared review contract and all four active review workflows reference it. |
+| 016 | Remediated | Optimization, refactoring, and security review workflows use the shared-rubric priority sentence; `check-review-workflow-policy.sh` rejects local indented `P0:`/`P1:`/`P2:`/`P3:` scoring lists. |
+| 017 | Remediated | Metadata-root mapping exists in naming conventions and active review workflows use the shared routing policy. |
+| 018 | Remediated for active build/security docs | Build/security docs now direct agents to project-specific verification commands; npm remains example/historical text only. |
+| 019 | Remediated | Security README naming is aligned to `<metadata-root>/research/security-review-YYMMDD-HHMM-{model}.md`. |
+| 020 | Remediated | `check-review-workflow-policy.sh` passes and active review workflows include untrusted-content guidance. |
+| 021 | Remediated | Security-fix workflow warns that build/dev/test commands execute project code and should run only after trust is established. |
+| 022 | Preserved positive observation | No secret/listener surface was introduced by the remediation. |
+| 023 | Dealt with as backlog | `00-project/plans/TODO.md` requires measuring `scripts/sync-workflow-scripts.sh --status` across at least 5 configured projects before considering fetch parallelization. |
+| 024 | Remediated | Auto-discovery is bounded and covered by sync validator expectations. |
+| 025 | Accepted as intentional | `- [✅]` remains the documented checkbox convention per clarification decision §2.2. |
+| 026 | Remediated | Current top-level directory names use `01-planning-and-organizing/` and `10-technical-docs/`; old spaced names are absent. |
+| 027 | Remediated | Comprehensive audit workflow is integrated as `05-review/05-comprehensive-audit.md` and indexed in `05-review/README.md`. |
+
+**Validation commands run for final filing:**
+- `bash scripts/validation/check-update-workflows.sh` -> `update-workflows checks OK`
+- `bash scripts/validation/check-active-markdown-links.sh` -> `Active markdown links OK`
+- `bash scripts/validation/check-orchestrator-review.sh` -> `Orchestrator review checks OK`
+- `bash scripts/validation/check-review-workflow-policy.sh` -> `review workflow policy checks OK`
+- `bash scripts/validation/check-sync-workflow-scripts.sh` -> `sync-workflow-scripts checks OK`
+- `git diff --check` -> passed with no output
 
 *Original review note: no source files were modified during the initial review. Independent verification on 2026-07-03 updated this report for accuracy; current verification confirms the file-level behaviors above, with the correction that `scripts/validation/` exists. Findings 002/003/009 were checked against this machine's `/bin/bash` 3.2.57 behavior where possible; FINDING-005 was confirmed against the installed OpenCode CLI (`opencode run --help`: message is positional, no `--prompt` flag).*

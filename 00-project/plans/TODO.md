@@ -15,3 +15,5 @@ When a plan is finished and should be archived, follow **`plans-completed/README
 ## Active
 
 - [ ] Migrate legacy meta content from `00-Meta-Workflow/` into `00-project/` (optional follow-up)
+- [ ] Battle-test the deep-review workflow set (`2026-07-03-deep-review-00-overview.md`, `-01-review-pass.md`, `-02-verification-pass.md`) on a consumer repo, then promote it to a numbered workflow (e.g. `05-review/05-deep-review.md`) and index it in `05-review/README.md`
+- [ ] Measure `scripts/sync-workflow-scripts.sh --status` across at least 5 configured projects before considering parallel fetch optimization; if implemented later, keep fetch parallelism separate from status rendering and preserve `scripts/validation/check-sync-workflow-scripts.sh` behavior.

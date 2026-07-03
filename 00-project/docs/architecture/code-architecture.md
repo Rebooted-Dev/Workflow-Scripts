@@ -34,8 +34,8 @@ Markdown files define agent-executable processes. They are **not compiled** — 
 
 Conventions:
 - Numbered prefixes (`01-`, `02-`) indicate sequence within a category
-- Outputs go to host `plans/` with dated filenames per `00-meta/naming-conventions.md`
-- Flexible agent spawning ("suggested roles, spawn additional as needed")
+- **Plans** → `<metadata-root>/plans/`; **review/audit/research reports** → `<metadata-root>/research/` per [naming-conventions.md](../../../00-Meta-Workflow/00-meta/naming-conventions.md)
+- Parallel agents follow [agent-spawning-policy.md](../../../00-Meta-Workflow/00-meta/agent-spawning-policy.md) (3–6 total per session, cap 6)
 
 ### Layer 2: Shell automation
 
@@ -55,6 +55,9 @@ Environment variables: `WORKFLOW_SYNC_BASE_DIR`, `WORKFLOWS_BRANCH`, `NON_INTERA
 |--------|--------|
 | `check-active-markdown-links.sh` | Active Markdown link integrity (skips archives) |
 | `check-orchestrator-review.sh` | Orchestrator review workflow consistency |
+| `check-sync-workflow-scripts.sh` | Sync script portability (bash 3.2, `git -C`, env-var handling) |
+| `check-update-workflows.sh` | Staged-only commit contract for maintainer publish |
+| `check-review-workflow-policy.sh` | Agent policy refs, research output routing, no stale agent caps |
 
 ### Layer 4: Skills
 
@@ -98,7 +101,8 @@ Tested with vitest under `tests/unit/`.
 | Workflow category | Top-level numbered directory + README |
 | Rubric | `00-Meta-Workflow/00-meta/severity-priority-rubric.md` |
 | Report naming | `{type}-YYMMDD-HHMM-{model}.md` |
-| Meta vs consumer paths | `00-project/` ↔ host `project/` |
+| Meta vs consumer paths | `00-project/` ↔ host `project/` (plans, research, changelog, troubleshooting) |
+| Agent spawning | `00-Meta-Workflow/00-meta/agent-spawning-policy.md` |
 
 ## Extension Points
 

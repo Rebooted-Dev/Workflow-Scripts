@@ -16,6 +16,10 @@ for file in "${files[@]}"; do
     echo "$rel does not reference agent-spawning-policy.md" >&2
     exit 1
   }
+  grep -q 'review-workflow-core.md' "$file" || {
+    echo "$rel does not reference review-workflow-core.md" >&2
+    exit 1
+  }
   grep -q '<metadata-root>/research/' "$file" || {
     echo "$rel does not route generated reports to <metadata-root>/research/" >&2
     exit 1
@@ -37,6 +41,14 @@ fi
 
 if grep -RIn 'plans/security-review' "$ROOT_DIR/05-review" "$ROOT_DIR/06-security"; then
   echo "Found stale root plans/security-review routing" >&2
+  exit 1
+fi
+
+if grep -RInE '^[[:space:]]*-[[:space:]]*P[0-3]:' \
+  "$ROOT_DIR/05-review/02-code-optimization.md" \
+  "$ROOT_DIR/05-review/03-code-refactoring.md" \
+  "$ROOT_DIR/06-security/01-security-review.md"; then
+  echo "Found local priority-band scoring lists in active review workflows" >&2
   exit 1
 fi
 

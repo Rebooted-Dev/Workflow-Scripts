@@ -5,6 +5,13 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-03 | docs | File deep review report complete | docs/2026-07-03-docs-file-deep-review-report-complete.md | Added final verification and filed completed deep review report |
+| 2026-07-03 | plan | Workflow-Scripts Deep Review Report | ../plans-completed/review/2026-07-03-workflow-scripts-deep-review-260703-1337-claude.md | Filed completed deep review report |
+| 2026-07-03 | plan | Workflow-Scripts Deep Review Follow-Up Implementation Plan | ../plans-completed/review/2026-07-03-workflow-scripts-deep-review-follow-up-implementation-plan.md | Filed completed follow-up remediation plan |
+| 2026-07-03 | changed | Shared review workflow core | changed/2026-07-03-changed-shared-review-workflow-core.md | Added shared review core and kept priority scoring on the shared rubric |
+| 2026-07-03 | fixed | Update workflows dirty tree safety | fixed/2026-07-03-fixed-update-workflows-dirty-tree-safety.md | Hardened staged commit helper and regression validator |
+| 2026-07-03 | docs | Refresh deep review current verification | docs/2026-07-03-docs-refresh-deep-review-current-verification.md | Added current-worktree verification addendum to the deep review report |
+| 2026-07-03 | docs | Sync 00-project/docs with v1.7 changes | docs/2026-07-03-docs-sync-00-project-docs-v17.md | Re-synced docs hub after deep review remediation |
 | 2026-07-03 | plan | Workflow-Scripts Deep Review Remediation Plan | ../plans-completed/review/2026-07-03-workflow-scripts-deep-review-remediation.md | Filed completed remediation plan for `v1.7` |
 | 2026-07-03 | fixed | Deep review remediation | fixed/2026-07-03-fixed-deep-review-remediation.md | Hardened sync/orchestrator/update helpers and added validators |
 | 2026-07-03 | changed | Standardize artifact routing and directory names | changed/2026-07-03-changed-standardize-artifact-routing-and-directory-names.md | Adopted metadata-root routing and renamed planning/reference directories |

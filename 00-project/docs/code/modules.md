@@ -5,11 +5,14 @@
 | Module | Path | Responsibility |
 |--------|------|----------------|
 | Pull | `scripts/pull-workflows.sh` | ff-only pull with dirty-tree and detached-HEAD guards |
-| Update | `scripts/update-workflows.sh` | Maintainer commit + push |
+| Update | `scripts/update-workflows.sh` | Maintainer staged-only commit + push |
 | Sync | `scripts/sync-workflow-scripts.sh` | Multi-project batch pull (`PROJECTS[]`, flags, env vars) |
 | Link check | `scripts/validation/check-active-markdown-links.sh` | Markdown link validation |
 | Orchestrator check | `scripts/validation/check-orchestrator-review.sh` | Orchestrator workflow validation |
-| Changelog migrate | `scripts/migrate-changelog.py` | One-time legacy CHANGELOG.md → `00-project/changelog/` |
+| Sync check | `scripts/validation/check-sync-workflow-scripts.sh` | Sync script portability and policy |
+| Update check | `scripts/validation/check-update-workflows.sh` | Staged-only publish contract |
+| Review policy check | `scripts/validation/check-review-workflow-policy.sh` | Agent policy and output routing |
+| Changelog migrate (archived) | `00-project/build/archive/migrate-changelog.py` | One-time legacy CHANGELOG.md → `00-project/changelog/` |
 
 ## `00-orchestrator/` — Delegated Review
 
@@ -25,12 +28,12 @@ Each numbered directory is a **module group** of related workflows:
 
 | Group | Path | Workflows |
 |-------|------|-----------|
-| Setup | `00-project-setup/` | Bootstrap, sync, MCP, skills, migration |
+| Setup | `00-project-setup/` | Bootstrap, optimize, sync, MCP, skills, track repos, migrate — see [README](../../../00-project-setup/README.md) |
 | Planning | `01-planning-and-organizing/` | Research, review, finalise |
 | Build | `02-code-build/` | Execution, confirm |
 | Debug | `03-debugging/` | Bug description, bug fix |
 | Documentation | `04-documentation/` | Create docs, sync docs, mark completed |
-| Review | `05-review/` | Code review, optimization, refactoring |
+| Review | `05-review/` | Code review, optimization, refactoring, website data refactoring, comprehensive audit |
 | Security | `06-security/` | Security review, security fix |
 | Deployment | `07-deployment/` | Electron, ports, checklists |
 | API Integration | `08-API-Integration/` | Genkit, AI SDK, MCP, misc guides |
@@ -56,9 +59,11 @@ Each numbered directory is a **module group** of related workflows:
 | `export-render-parity-debugger` | Render parity debugging |
 | `execution-artifact-triage` | Build artifact triage |
 
+Research scan (not a skill bundle): `11-Skills/2026-05-24-workflow-scripts-skill-candidate-scan.md`.
+
 ## `@ai-sdk/image-generation` — TypeScript Package
 
-Path: `08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/`
+Path: `08-API-Integration/02-AI-SDK/src-core/@ai-sdk/image-generation/`
 
 | Module | Path | Responsibility |
 |--------|------|----------------|
@@ -81,6 +86,7 @@ Tests: `tests/unit/` (vitest).
 | Changelog | `00-project/changelog/` | One file per change + `index.md` |
 | Troubleshooting | `00-project/troubleshooting/` | Bug/issue entries + `index.md` |
 | Plans | `00-project/plans/` | Active plans, `TODO.md` |
+| Research | `00-project/research/` | Review/audit/research reports |
 | Plans completed | `00-project/plans-completed/` | Filed completed plans |
 | Docs | `00-project/docs/` | This documentation set |
 | Agent rules | `00-project/AGENTS.md` | Slim agent instructions |

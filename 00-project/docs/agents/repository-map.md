@@ -4,7 +4,7 @@
 
 | # | Name | Directory | Remote URL | Branch |
 |---|------|-----------|------------|--------|
-| 1 | Workflow-Scripts | `.` (repository root) | `https://github.com/Rebooted-Dev/Workflow-Scripts` | `main` / `v1.6` |
+| 1 | Workflow-Scripts | `.` (repository root) | `https://github.com/Rebooted-Dev/Workflow-Scripts` | `main` / `v1.5` / `v1.6` / `v1.7` |
 
 ## Purpose
 
@@ -32,6 +32,7 @@ When working on Workflow-Scripts project records, use paths under `00-project/`:
 | Changelog | `00-project/changelog/` |
 | Troubleshooting | `00-project/troubleshooting/` |
 | Active plans | `00-project/plans/` |
+| Research reports | `00-project/research/` |
 | Completed plans | `00-project/plans-completed/` |
 | Documentation | `00-project/docs/` |
-| KIV / research / build | `00-project/KIV/`, `00-project/research/`, `00-project/build/` |
+| KIV / build archive | `00-project/KIV/`, `00-project/build/archive/` |
