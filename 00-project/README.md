@@ -18,7 +18,7 @@ This directory is the **project meta workspace** for the [Workflow-Scripts](http
 └── build/                 # Build artifacts; active plans may also live here
 ```
 
-Workflow instruction files live in the parent repo (`00-project-setup/`, `01-Planning & Organizing/`, etc.). **Operational records** for Workflow-Scripts itself (changelog, plans, troubleshooting, docs) live directly under `00-project/`.
+Workflow instruction files live in the parent repo (`00-project-setup/`, `01-planning-and-organizing/`, etc.). **Operational records** for Workflow-Scripts itself (changelog, plans, troubleshooting, docs) live directly under `00-project/`.
 
 ## Documentation
 

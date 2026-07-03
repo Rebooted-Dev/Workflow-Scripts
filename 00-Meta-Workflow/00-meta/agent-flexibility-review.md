@@ -148,7 +148,7 @@ Use parallel agents to validate each item. Suggested agent roles (adapt as neede
 
 ## Specific Recommendations by Workflow
 
-### 1. Plan Review (`01-planning/01-plan-review.md`)
+### 1. Plan Review (`01-planning-and-organizing/01-plan-review.md`)
 
 **Current:** Fixed 4 agents for validation, 4 agents for issue identification
 
@@ -179,7 +179,7 @@ Use parallel agents to validate each item. Suggested agent roles (adapt as neede
    - optimization, modularization, and refactoring opportunities
 ```
 
-### 2. Implementation Plan (`01-planning/02-finalise-plan.md`)
+### 2. Implementation Plan (`01-planning-and-organizing/02-finalise-plan.md`)
 
 **Current:** Fixed 3 agents for codebase scanning, 3 for dependency validation, 3 for feasibility checking
 
@@ -385,8 +385,8 @@ Each agent should read related files in parallel batches during implementation.
 All workflows have been successfully updated to use the flexible agent pattern. The following files were updated:
 
 ### Phase 1: Core Workflows ✅
-1. ✅ `01-planning/01-plan-review.md` - Updated with flexible agent guidance
-2. ✅ `01-planning/02-finalise-plan.md` - Updated with flexible agent guidance
+1. ✅ `01-planning-and-organizing/01-plan-review.md` - Updated with flexible agent guidance
+2. ✅ `01-planning-and-organizing/02-finalise-plan.md` - Updated with flexible agent guidance
 3. ✅ `02-build-code/01-execution.md` - Updated with flexible agent guidance
 
 ### Phase 2: Review Workflows ✅

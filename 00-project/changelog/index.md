@@ -5,6 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-03 | changed | Standardize artifact routing and directory names | changed/2026-07-03-changed-standardize-artifact-routing-and-directory-names.md | Adopted metadata-root routing and renamed planning/reference directories |
+| 2026-07-03 | docs | Verify Workflow-Scripts deep review | docs/2026-07-03-docs-verify-workflow-scripts-deep-review.md | Corrected finding inventory and added artifact-routing guidance |
 | 2026-07-03 | changed | Remove root CHANGELOG.md after migration | changed/2026-07-03-changed-remove-root-changelog-md.md | Deleted root file; changelog dir is canonical |
 | 2026-07-03 | docs | Comprehensive 00-project documentation set | docs/2026-07-03-docs-comprehensive-00-project-docs.md | Full docs in 00-project/docs/; CHANGELOG.md migrated |
 | 2026-07-03 | config | Flatten 00-project directory layout | config/2026-07-03-config-00-project-flatten-layout.md | Meta dirs moved from 00-project/project/ to 00-project/ root; references updated |
@@ -38,7 +40,7 @@ Chronological index of changelog entries and completed plans.
 | 2026-02-10 | fixed | sync-workflow-scripts.sh | fixed/2026-02-10-fixed-sync-workflow-scripts-sh-quoted-git-refs-u-head.md | Migrated from CHANGELOG.md |
 | 2026-02-10 | added | sync-workflow-scripts.sh | added/2026-02-10-added-sync-workflow-scripts-sh-non-interactive-support.md | Migrated from CHANGELOG.md |
 | 2026-02-10 | added | Added SCRIPT-REVIEW-REPORT.md | added/2026-02-10-added-added-script-review-report-md-review-of-workflow.md | Migrated from CHANGELOG.md |
-| 2026-02-10 | added | Added `01-planning/00-research-and-plan.md` | added/2026-02-10-added-added-01-planning-00-research-and-plan-md-compre.md | Migrated from CHANGELOG.md |
+| 2026-02-10 | added | Added `01-planning-and-organizing/00-research-and-plan.md` | added/2026-02-10-added-added-01-planning-00-research-and-plan-md-compre.md | Migrated from CHANGELOG.md |
 | 2026-02-10 | added | Added `00-orchestrator/` directory with orchestrator workflows | added/2026-02-10-added-added-00-orchestrator-directory-with-orchestrato.md | Migrated from CHANGELOG.md |
 | 2026-02-10 | changed | Improved sync-workflow-scripts.sh documentation | changed/2026-02-10-changed-improved-sync-workflow-scripts-sh-documentation.md | Migrated from CHANGELOG.md |
 | 2026-02-10 | changed | Enhanced README.md Completion Status Conventions | changed/2026-02-10-changed-enhanced-readme-md-completion-status-conventions.md | Migrated from CHANGELOG.md |

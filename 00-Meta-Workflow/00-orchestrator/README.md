@@ -203,9 +203,9 @@ Potential additions to the orchestrator:
 
 ## Related Workflows
 
-- **[`01-Planning & Organizing/01-plan-review.md`](../../01-Planning & Organizing/01-plan-review.md)** - The actual review workflow being executed
-- **[`01-Planning & Organizing/00-research-and-plan.md`](../../01-Planning & Organizing/00-research-and-plan.md)** - Create plans that can be reviewed
-- **[`01-Planning & Organizing/02-finalise-plan.md`](../../01-Planning & Organizing/02-finalise-plan.md)** - Process review feedback
+- **[`01-planning-and-organizing/01-plan-review.md`](../../01-planning-and-organizing/01-plan-review.md)** - The actual review workflow being executed
+- **[`01-planning-and-organizing/00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md)** - Create plans that can be reviewed
+- **[`01-planning-and-organizing/02-finalise-plan.md`](../../01-planning-and-organizing/02-finalise-plan.md)** - Process review feedback
 
 ## Getting Help
 

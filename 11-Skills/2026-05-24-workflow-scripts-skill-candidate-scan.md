@@ -42,7 +42,7 @@ Do not duplicate these areas unless creating a narrower specialist:
 
 | Existing skill | Covered workflow area |
 |---|---|
-| `workflow-plan-review-finalize` | `01-Planning & Organizing/01-plan-review.md`, `02-finalise-plan.md` |
+| `workflow-plan-review-finalize` | `01-planning-and-organizing/01-plan-review.md`, `02-finalise-plan.md` |
 | `execute-and-confirm-plan` | `02-code-build/01-execution.md`, `02-confirm-execution.md`, `03-execute-and-confirm.md` |
 | `repo-logs-and-docs-sync` | changelog, troubleshooting, docs/index updates |
 | `filed-code-review-to-remediation` | `05-review/01-code-review.md` to remediation planning |

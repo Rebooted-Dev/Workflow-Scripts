@@ -5,7 +5,7 @@
 ---
 
 ## Summary
-- Completed P3.1 — enhanced `01-planning/01-plan-review.md` output template to explicitly require severity and priority labels per item
+- Completed P3.1 — enhanced `01-planning-and-organizing/01-plan-review.md` output template to explicitly require severity and priority labels per item
 
 ## Scope
 - Migrated from root `CHANGELOG.md` (legacy monolithic changelog).

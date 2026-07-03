@@ -55,10 +55,10 @@ Use when setting up automatic browser opening for local development servers.
 
 ### Cloud Hosting
 
-#### [Firebase Hosting Setup](../09-11%20Misc/10-firebase-setup.md)
+#### [Firebase Hosting Setup](../08-API-Integration/10-firebase-setup.md)
 Use when deploying static sites or SPAs to Firebase Hosting.
 
-#### [Nginx Deployment Guide](../09-11%20Misc/11-nginx.md)
+#### [Nginx Deployment Guide](../08-API-Integration/11-nginx.md)
 Use when deploying applications with nginx on macOS, Linux, or a server.
 
 ### Pre-Deployment Checklists
@@ -71,7 +71,7 @@ Use for quick validation before deployment.
 
 ### Framework Updates
 
-#### [Next.js / React Update Guide](../09-11%20Misc/09-nextjs-react-update.md)
+#### [Next.js / React Update Guide](../08-API-Integration/09-nextjs-react-update.md)
 Use when applying React, React DOM, Next.js, or eslint-config-next updates.
 
 ## Common Scenarios
@@ -79,7 +79,7 @@ Use when applying React, React DOM, Next.js, or eslint-config-next updates.
 ### Static Site To Firebase
 
 1. Build your site: `npm run build`
-2. Follow [Firebase Hosting Setup](../09-11%20Misc/10-firebase-setup.md)
+2. Follow [Firebase Hosting Setup](../08-API-Integration/10-firebase-setup.md)
 3. Deploy: `firebase deploy --only hosting`
 
 ### Local Development With Port Conflicts

@@ -150,7 +150,7 @@ Execute a phased remediation plan that fixes confirmed P0/P1/P2 issues and appli
 
 **Tasks**
 
-- [✅] **P3.1** In `01-planning/01-plan-review.md`, make output template explicitly require both severity and priority labels per item.
+- [✅] **P3.1** In `01-planning-and-organizing/01-plan-review.md`, make output template explicitly require both severity and priority labels per item.
 - [✅] **P3.2** Standardize cross-reference path style across workflows (format consistency; not a breakage fix).
 - [✅] **P3.3** Add terminology glossary in `00-meta/` and link from root README.
 - [✅] **P3.4** Improve README coverage/navigation in intermediate `08-API-Integration/` paths where helpful.
@@ -216,7 +216,7 @@ Phase-level checks:
 - **P2:** `00-docs/old-reviews/README.md` created with archive context
 - `00-project-setup/01-setup-project.md` placeholder validation step added
 - `README.md` updated with `00-docs/` category and file structure section
-- **P3:** `01-planning/01-plan-review.md` output template enhanced with severity/priority labels
+- **P3:** `01-planning-and-organizing/01-plan-review.md` output template enhanced with severity/priority labels
 - **P3:** `00-meta/glossary.md` created with workflow terminology
 - **P3:** `00-meta/agent-flexibility-review.md` updated with concrete trigger thresholds
 - **P3:** `08-API-Integration/01-genkit/README.md` and `02-AI-SDK/README.md` created

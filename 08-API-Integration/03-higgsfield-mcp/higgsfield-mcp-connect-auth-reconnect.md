@@ -221,7 +221,7 @@ Report: Higgsfield / MCP / image auth issue
 
 - **[`../../../03-debugging/02-bug-fix-workflow.md`](../../../03-debugging/02-bug-fix-workflow.md)** — code defects in preflight/reconnect/guards
 - **[`../../../03-debugging/01-bug-description.md`](../../../03-debugging/01-bug-description.md)** — structured report for persistent auth issues
-- **[`../../../01-Planning & Organizing/00-research-and-plan.md`](../../../01-Planning & Organizing/00-research-and-plan.md)** — auth recovery implementation planning
+- **[`../../../01-planning-and-organizing/00-research-and-plan.md`](../../../01-planning-and-organizing/00-research-and-plan.md)** — auth recovery implementation planning
 - **[`../../../04-documentation/02-sync-documentation.md`](../../../04-documentation/02-sync-documentation.md)** — sync `docs/configuration/README.md` after runbook changes
 
 ## Key principles (summary)

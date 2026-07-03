@@ -32,7 +32,7 @@ The host `.gitignore` excludes `Workflow-Scripts/` so `git add .` from the host 
 | Skills | `11-Skills/` | Thin Codex skill triggers over deep workflows |
 | Shell scripts | `scripts/` | Pull, push, multi-project sync, validation |
 | Meta workspace | `00-project/` | Changelog, troubleshooting, plans, docs for Workflow-Scripts itself |
-| Reference libraries | `07-deployment/`, `08-API-Integration/`, `10 Technical Docs/` | Consumer-oriented guides (not Workflow-Scripts runtime) |
+| Reference libraries | `07-deployment/`, `08-API-Integration/`, `10-technical-docs/` | Consumer-oriented guides (not Workflow-Scripts runtime) |
 
 ## Key Workflows
 

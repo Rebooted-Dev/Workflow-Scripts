@@ -95,7 +95,7 @@ Launch a non-interactive OpenCode process to perform plan review using a differe
 # Launch review as background task
 opencode run \
   -m openai/gpt-4o \
-  --prompt "Review the plan at plans/implementation-plan.md following the workflow at Workflow-Scripts/01-planning/01-plan-review.md. Output to plans/reviews/review-output.md" \
+  --prompt "Review the plan at plans/implementation-plan.md following the workflow at Workflow-Scripts/01-planning-and-organizing/01-plan-review.md. Output to plans/reviews/review-output.md" \
   > plans/reviews/review-log.txt 2>&1 &
 
 REVIEW_PID=$!
@@ -156,7 +156,7 @@ mkdir -p "$OUTPUT_DIR"
 
 # Build the review prompt
 REVIEW_PROMPT="
-You are performing a plan review following the workflow at Workflow-Scripts/01-planning/01-plan-review.md.
+You are performing a plan review following the workflow at Workflow-Scripts/01-planning-and-organizing/01-plan-review.md.
 
 Plan to review: $PLAN_PATH
 
@@ -266,7 +266,7 @@ for MODEL_CONFIG in "${MODELS[@]}"; do
   
   opencode run \
     -m "$MODEL" \
-    --prompt "Review plan at $PLAN_PATH focusing on $FOCUS. Follow Workflow-Scripts/01-planning/01-plan-review.md workflow." \
+    --prompt "Review plan at $PLAN_PATH focusing on $FOCUS. Follow Workflow-Scripts/01-planning-and-organizing/01-plan-review.md workflow." \
     > "$OUTPUT_FILE" 2>&1 &
   
   PIDS+=($!)
@@ -319,7 +319,7 @@ async function runReview(config: ReviewConfig): Promise<ReviewResult> {
   
   const prompt = `
     Review the plan at ${config.planPath} following the workflow at 
-    Workflow-Scripts/01-planning/01-plan-review.md. 
+    Workflow-Scripts/01-planning-and-organizing/01-plan-review.md.
     Append findings to the plan document.
   `;
   
@@ -473,9 +473,9 @@ After reviews complete, the orchestrator:
 
 ## Related Workflows
 
-- **[`01-planning/01-plan-review.md`](../../01-Planning & Organizing/01-plan-review.md)** - The actual review workflow being executed
-- **[`01-planning/02-finalise-plan.md`](../../01-Planning & Organizing/02-finalise-plan.md)** - Process review feedback into final plan
-- **[`01-planning/00-research-and-plan.md`](../../01-Planning & Organizing/00-research-and-plan.md)** - Create initial plans to be reviewed
+- **[`01-planning-and-organizing/01-plan-review.md`](../../01-planning-and-organizing/01-plan-review.md)** - The actual review workflow being executed
+- **[`01-planning-and-organizing/02-finalise-plan.md`](../../01-planning-and-organizing/02-finalise-plan.md)** - Process review feedback into final plan
+- **[`01-planning-and-organizing/00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md)** - Create initial plans to be reviewed
 
 ## Notes
 

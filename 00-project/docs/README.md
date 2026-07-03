@@ -45,7 +45,7 @@ These are consumer-oriented guides bundled with Workflow-Scripts, not meta docs 
 |-----------|---------|
 | `07-deployment/` | Electron, Firebase, port management, pre-deploy checklists |
 | `08-API-Integration/` | Genkit, AI SDK, Higgsfield MCP, service provider reference |
-| `10 Technical Docs/Gemini/` | Offline Gemini API reference |
+| `10-technical-docs/Gemini/` | Offline Gemini API reference |
 | `12-SEO-GEO-checklist/` | SEO/GEO automation and monitoring tasks |
 | `11-Skills/` | Codex skill bundles wrapping recurring workflows |
 

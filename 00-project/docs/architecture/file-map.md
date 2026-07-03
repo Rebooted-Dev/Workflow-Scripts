@@ -43,7 +43,7 @@ Workflow-Scripts/
 │   └── docs/                          # This documentation set
 │
 ├── 00-project-setup/                  # Consumer project bootstrap (7 workflows)
-├── 01-Planning & Organizing/          # Research, review, finalise
+├── 01-planning-and-organizing/          # Research, review, finalise
 ├── 02-code-build/                     # Execution, confirm
 ├── 03-debugging/                      # Bug description, bug fix
 ├── 04-documentation/                  # Create docs, sync docs, mark completed
@@ -51,7 +51,7 @@ Workflow-Scripts/
 ├── 06-security/                       # Security review, security fix
 ├── 07-deployment/                     # Electron, ports, pre-deploy, SEO plans
 ├── 08-API-Integration/                # Genkit, AI SDK, MCP, misc deploy guides
-├── 10 Technical Docs/Gemini/          # Offline Gemini API reference (14 files)
+├── 10-technical-docs/Gemini/          # Offline Gemini API reference (14 files)
 ├── 11-Skills/                         # 14 Codex skill bundles
 └── 12-SEO-GEO-checklist/              # SEO automation tasks + dashboard plans
 ```

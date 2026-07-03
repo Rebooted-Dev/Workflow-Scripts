@@ -26,7 +26,7 @@ The workflows are organized into eleven categories:
 
 1. **Orchestrator** (`00-Meta-Workflow/00-orchestrator/`) - **NEW** Launch non-interactive OpenCode processes to delegate workflows to different models
 2. **Initial Setup** (`00-project-setup/`) - Set up new projects with dual repository management and troubleshooting system
-3. **Planning** (`01-Planning & Organizing/`) - Create structured implementation plans
+3. **Planning** (`01-planning-and-organizing/`) - Create structured implementation plans
 4. **Build/Code** (`02-code-build/`) - Execute implementation with verification
 5. **Debugging** (`03-debugging/`) - Systematically identify and fix bugs
 6. **Documentation** (`04-documentation/`) - Keep documentation in sync with code
@@ -46,9 +46,9 @@ The workflows are organized into eleven categories:
 |------|----------|----------|
 | **Automated plan review (different model)** | **Orchestrator Review** | **`00-Meta-Workflow/00-orchestrator/orchestrator-review.sh`** ← DELEGATED |
 | Setting up new project | Project Setup | `00-project-setup/01-setup-project.md` |
-| **Researching & creating plan** | **Research & Plan** | **`01-Planning & Organizing/00-research-and-plan.md`** ← START HERE |
-| Starting a new feature | Implementation Plan | `01-Planning & Organizing/02-finalise-plan.md` |
-| Reviewing a plan | Plan Review | `01-Planning & Organizing/01-plan-review.md` |
+| **Researching & creating plan** | **Research & Plan** | **`01-planning-and-organizing/00-research-and-plan.md`** ← START HERE |
+| Starting a new feature | Implementation Plan | `01-planning-and-organizing/02-finalise-plan.md` |
+| Reviewing a plan | Plan Review | `01-planning-and-organizing/01-plan-review.md` |
 | Optimizing code performance | Code Optimization | `05-review/02-code-optimization.md` |
 | Refactoring code | Code Refactoring | `05-review/03-code-refactoring.md` |
 | Security audit | Security Review | `06-security/01-security-review.md` |
@@ -91,7 +91,7 @@ The workflows are organized into eleven categories:
 **How to use:**
 1. Use the shell script: `./00-Meta-Workflow/00-orchestrator/orchestrator-review.sh plans/my-plan.md -m openai/gpt-4o`
 2. The script launches OpenCode non-interactively with specified model
-3. Review output is captured to `plans/reviews/` directory
+3. Review output is captured to the configured review output directory
 4. Orchestrator manages the results and next steps
 
 **Key benefits:**
@@ -102,7 +102,7 @@ The workflows are organized into eleven categories:
 
 ### 1. Planning Workflows
 
-#### Research and Plan (`01-Planning & Organizing/00-research-and-plan.md`) ← START HERE
+#### Research and Plan (`01-planning-and-organizing/00-research-and-plan.md`) ← START HERE
 
 **Purpose:** Conduct deep research and create a comprehensive initial implementation plan from a goal or problem statement.
 
@@ -117,7 +117,7 @@ The workflows are organized into eleven categories:
 3. Creates an implementation plan in `plans/` directory
 4. Then proceed to plan review
 
-#### Implementation Plan (`01-Planning & Organizing/02-finalise-plan.md`)
+#### Implementation Plan (`01-planning-and-organizing/02-finalise-plan.md`)
 
 **Purpose:** Generate a consolidated, priority-ordered implementation plan from requirements and feedback.
 
@@ -169,7 +169,7 @@ Workflow will:
 1. Specify repository root (or specific focus areas)
 2. Workflow scans codebase using parallel agents
 3. Findings are scored with severity (S0-S3) and priority (P0-P3)
-4. Report saved to `plans/` (project root) with a dated filename
+4. Report saved to `<metadata-root>/research/` with a dated filename
 
 **Example:**
 ```
@@ -180,7 +180,7 @@ Workflow will:
 - Scan services/ directory
 - Identify security issues, bugs, and risks
 - Score each finding (S0-S3, P0-P3)
-- Generate report: plans/code-review-YYMMDD-HHMM-{model}.md
+- Generate report: <metadata-root>/research/code-review-YYMMDD-HHMM-{model}.md
 ```
 
 **Output Format:**
@@ -207,7 +207,7 @@ Workflow will:
 1. Specify repository root (or specific focus areas)
 2. Workflow scans codebase using parallel agents focused on performance
 3. Findings are scored with severity (S0-S3) and priority (P0-P3)
-4. Report saved to `plans/` (project root) with a dated filename
+4. Report saved to `<metadata-root>/research/` with a dated filename
 
 **Example:**
 ```
@@ -217,7 +217,7 @@ Workflow will:
 - Scan data processing code
 - Identify performance issues, resource inefficiencies
 - Score each finding (S0-S3, P0-P3)
-- Generate report: plans/code-optimization-YYMMDD-HHMM-{model}.md
+- Generate report: <metadata-root>/research/code-optimization-YYMMDD-HHMM-{model}.md
 ```
 
 **Output Format:**
@@ -254,7 +254,7 @@ Workflow will:
 1. Specify repository root (or specific focus areas)
 2. Workflow scans codebase using parallel agents focused on code quality
 3. Findings are scored with severity (S0-S3) and priority (P0-P3)
-4. Report saved to `plans/` (project root) with a dated filename
+4. Report saved to `<metadata-root>/research/` with a dated filename
 
 **Example:**
 ```
@@ -264,7 +264,7 @@ Workflow will:
 - Scan authentication code
 - Identify code duplication, complexity, maintainability issues
 - Score each finding (S0-S3, P0-P3)
-- Generate report: plans/code-refactoring-YYMMDD-HHMM-{model}.md
+- Generate report: <metadata-root>/research/code-refactoring-YYMMDD-HHMM-{model}.md
 ```
 
 **Output Format:**
@@ -287,7 +287,7 @@ Workflow will:
 - Inconsistent code style
 - Dead code and unused dependencies
 
-#### Plan Review (`01-Planning & Organizing/01-plan-review.md`)
+#### Plan Review (`01-planning-and-organizing/01-plan-review.md`)
 
 **Purpose:** Review implementation plans for correctness, risk, feasibility, and completeness.
 
@@ -427,7 +427,7 @@ Workflow will:
 
 ### 5. Security Workflows
 
-#### Security Review (`05-security/01-security-review.md`)
+#### Security Review (`06-security/01-security-review.md`)
 
 **Purpose:** Perform a structured security review identifying vulnerabilities, security risks, and compliance issues.
 
@@ -442,7 +442,7 @@ Workflow will:
 1. Specify repository root (or focus areas)
 2. Workflow scans codebase using 6 parallel agents focused on different security domains
 3. Findings are scored with severity (S0-S3) and priority (P0-P3)
-4. Report saved to `plans/` (project root) with a dated filename
+4. Report saved to `<metadata-root>/research/` with a dated filename
 
 **Example:**
 ```
@@ -452,7 +452,7 @@ Workflow will:
 - Scan auth files, API endpoints, and related code
 - Identify vulnerabilities (injection, XSS, auth bypass, etc.)
 - Score each finding (S0-S3, P0-P3)
-- Generate report: plans/security-review-YYMMDD-HHMM-{model}.md
+- Generate report: <metadata-root>/research/security-review-YYMMDD-HHMM-{model}.md
 ```
 
 **Security Focus Areas:**
@@ -475,7 +475,7 @@ Workflow will:
   - Suggested fix with security best practices
   - Verification steps
 
-#### Security Fix (`05-security/02-security-fix.md`)
+#### Security Fix (`06-security/02-security-fix.md`)
 
 **Purpose:** Systematically identify, fix, and verify security vulnerabilities.
 
@@ -495,7 +495,7 @@ Workflow will:
 **Example:**
 ```
 User: "Fix the SQL injection vulnerability identified in the security review 
-       at plans/security-review-260118-1400-claude.md, issue #3."
+       at project/research/security-review-260118-1400-claude.md, issue #3."
        
 Workflow will:
 - Read security review report
@@ -526,7 +526,7 @@ Workflow will:
 
 ### 6. Documentation Workflows
 
-#### Sync Documentation (`03-documentation/02-sync-documentation.md`)
+#### Sync Documentation (`04-documentation/02-sync-documentation.md`)
 
 **Purpose:** Review code and update documentation to match the codebase accurately.
 
@@ -649,7 +649,7 @@ Step 4: Development
 Step 5: Code Review
 → Use "Code Review" workflow
 → Input: Repository root
-→ Output: plans/code-review-260118-1600-claude.md
+→ Output: project/research/code-review-260118-1600-claude.md
 
 Step 6: Documentation
 → Use "Sync Documentation" workflow
@@ -682,7 +682,7 @@ Step 3: Documentation (if needed)
 Step 1: Code Review
 → Use "Code Review" workflow
 → Input: Repository root
-→ Output: plans/code-review-260118-1000-claude.md
+→ Output: project/research/code-review-260118-1000-claude.md
 
 Step 2: Planning
 → Use "Implementation Plan" workflow
@@ -706,7 +706,7 @@ Step 4: Documentation
 Step 1: Security Review
 → Use "Security Review" workflow
 → Input: Repository root
-→ Output: plans/security-review-260118-1400-claude.md
+→ Output: project/research/security-review-260118-1400-claude.md
 
 Step 2: Security Fix (for critical issues)
 → Use "Security Fix" workflow
@@ -730,7 +730,7 @@ Step 4: Documentation (if needed)
 Step 1: Code Optimization Review
 → Use "Code Optimization" workflow
 → Input: Repository root (or specific focus area)
-→ Output: plans/code-optimization-260118-1500-claude.md
+→ Output: project/research/code-optimization-260118-1500-claude.md
 
 Step 2: Planning
 → Use "Implementation Plan" workflow
@@ -745,7 +745,7 @@ Step 3: Implementation
 Step 4: Code Refactoring Review
 → Use "Code Refactoring" workflow
 → Input: Repository root (or specific focus area)
-→ Output: plans/code-refactoring-260118-1600-claude.md
+→ Output: project/research/code-refactoring-260118-1600-claude.md
 
 Step 5: Planning
 → Use "Implementation Plan" workflow
@@ -843,13 +843,13 @@ When workflows generate reports or analysis documents, follow the convention def
 - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
 
 **Examples:**
-- `plans/code-review-260404-1430-claude.md`
-- `plans/security-audit-260403-0920-gpt4.md`
+- `project/research/code-review-260404-1430-claude.md`
+- `project/research/security-audit-260403-0920-gpt4.md`
 
 ## Workflow File Structure
 
 ```
-workflows/
+Workflow-Scripts/
 ├── README.md (this file)
 ├── SHARING_AND_SYNC.md (guide for sharing workflows across projects)
 ├── scripts/
@@ -886,7 +886,7 @@ workflows/
 │   ├── 05-mcp-and-config-setup.md
 │   ├── 06-skills-setup.md
 │   └── 07-migrate-project-structure.md
-├── 01-Planning & Organizing/
+├── 01-planning-and-organizing/
 │   ├── README.md (directory index)
 │   ├── 00-research-and-plan.md
 │   ├── 01-plan-review.md
@@ -912,6 +912,17 @@ workflows/
 │   ├── README.md (directory index)
 │   ├── 01-security-review.md
 │   └── 02-security-fix.md
+├── 07-deployment/
+│   ├── README.md (deployment guide index with decision tree)
+│   ├── ... (deployment guides)
+│   └── 08-port-relocation/
+├── 08-API-Integration/
+│   ├── README.md (API integration index)
+│   ├── 01-genkit/
+│   ├── 02-AI-SDK/
+│   └── 03-higgsfield-mcp/
+├── 10-technical-docs/
+│   └── Gemini/
 ├── 11-Skills/
 │   ├── workflow-plan-review-finalize/
 │   │   ├── SKILL.md
@@ -931,12 +942,7 @@ workflows/
 │   └── prompt-quality-auditor/
 │       ├── SKILL.md
 │       └── agents/openai.yaml
-└── 07-deployment/
-    ├── README.md (deployment guide index with decision tree)
-    ├── ... (deployment guides)
-    └── 08-API-Integration/
-        ├── README.md (API integration index)
-        └── ... (integration guides)
+└── 12-SEO-GEO-checklist/
 ```
 
 **Note:** Each directory now has a README.md with navigation guidance. Files in `00-meta/` are templates, rubrics, and analysis/review documents about the workflows. Files in `00-docs/` are generated reports, archived reviews, and analysis documents.
@@ -966,5 +972,6 @@ If you're unsure which workflow to use:
 - Workflows are designed to be used with AI agents that can execute them
 - Each workflow is self-contained but designed to work together
 - Priority ordering (P0-P3) is consistent across all workflows
-- All workflows produce dated outputs in `plans/` (project root) or update existing files
-- Documentation updates go to `docs/` and the changelog (`docs/CHANGELOG.md` preferred)
+- Generated review, audit, research, and findings reports go to `<metadata-root>/research/`; active plans go to `<metadata-root>/plans/`.
+- If a project has no metadata root, run `00-project-setup/01-setup-project.md` to create the standard `project/` structure before filing artifacts.
+- Documentation updates go to the project docs directory and changelog defined by the metadata-root rule.

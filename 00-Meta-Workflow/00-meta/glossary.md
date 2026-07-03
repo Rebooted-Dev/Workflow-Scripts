@@ -24,18 +24,22 @@ Common terms and conventions used across Workflow-Scripts documentation.
 
 | Directory | Purpose |
 |-----------|---------|
-| **01a-orchestrator/** | Launch non-interactive OpenCode processes to delegate workflows |
+| **00-Meta-Workflow/00-orchestrator/** | Launch non-interactive OpenCode processes to delegate workflows |
+| **00-project/** | Workflow-Scripts' own metadata root for changelog, plans, research, troubleshooting, and docs |
 | **00-project-setup/** | Set up new projects with dual repo management |
-| **00-meta/** | Templates, rubrics, analysis documents about workflows |
-| **00-docs/** | Generated reports, archived reviews, analysis documents |
-| **01-planning/** | Create and review implementation plans |
+| **00-Meta-Workflow/00-meta/** | Templates, rubrics, analysis documents about workflows |
+| **00-Meta-Workflow/00-docs/** | Generated reports, archived reviews, analysis documents |
+| **01-planning-and-organizing/** | Create and review implementation plans |
 | **02-build-code/** | Execute implementation with verification |
-| **03-debug/** | Systematically identify and fix bugs |
+| **03-debugging/** | Systematically identify and fix bugs |
 | **04-documentation/** | Keep documentation in sync with code |
-| **05-review-audit/** | Review code and plans for quality |
+| **05-review/** | Review code and plans for quality |
 | **06-security/** | Security reviews and fixes |
 | **07-deployment/** | Deployment guides and configuration |
 | **08-API-Integration/** | API integration guides |
+| **10-technical-docs/** | Offline technical references |
+| **11-Skills/** | Reusable Codex skill bundles |
+| **12-SEO-GEO-checklist/** | SEO/GEO checklists and dashboard artifacts |
 
 ## Task Marking Conventions
 
@@ -44,6 +48,8 @@ Common terms and conventions used across Workflow-Scripts documentation.
 | `- [✅]` | Completed task — mark immediately after completion and verification |
 | `- [ ]` | Pending or in-progress task |
 | `**Status:** ✅ COMPLETED` | Plan or document fully complete |
+
+The `- [✅]` marker is intentional. Do not replace it with `- [x]`; the visual checkmark is easier to scan for users who have difficulty distinguishing red/green state markers.
 
 ## Agent Concepts
 
@@ -65,11 +71,11 @@ Common terms and conventions used across Workflow-Scripts documentation.
 
 | Term | Definition |
 |------|-----------|
-| **Changelog** | Record of changes: `changelog/<type>/<YYYY-MM-DD>-<title>.md` |
-| **Troubleshooting** | Issue records: `troubleshooting/<category>/<YYYY-MM-DD>-<title>.md` |
-| **Plans** | Active plans in `plans/`; completed plans moved to `plans-completed/` |
-| **00-docs/** | Generated reports and archived analysis |
-| **00-meta/** | Templates and rubrics for workflow design |
+| **Metadata root** | `project/` in host projects; `00-project/` in Workflow-Scripts itself |
+| **Changelog** | Record of changes: `<metadata-root>/changelog/<type>/<YYYY-MM-DD>-<title>.md` |
+| **Troubleshooting** | Issue records: `<metadata-root>/troubleshooting/<category>/<YYYY-MM-DD>-<title>.md` |
+| **Plans** | Active plans in `<metadata-root>/plans/`; completed plans moved to `<metadata-root>/plans-completed/` |
+| **Research** | Reviews, audits, investigations, and findings in `<metadata-root>/research/` |
 
 ## Common Placeholders
 

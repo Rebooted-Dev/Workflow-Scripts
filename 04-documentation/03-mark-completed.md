@@ -176,7 +176,7 @@ Display **all** flagged issues in **descending order of importance or urgency**,
 - **[`01-create-docs.md`](./01-create-docs.md)** — Create documentation from scratch
 - **[`02-sync-documentation.md`](./02-sync-documentation.md)** — Sync existing docs to code
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** — Severity/priority for ordering flagged issues
-- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** — Finalise plans before marking completed
+- **[`../01-planning-and-organizing/02-finalise-plan.md`](../01-planning-and-organizing/02-finalise-plan.md)** — Finalise plans before marking completed
 
 ## Notes
 - **Parallel agents:** Use as many agents as needed to cover P0–P3 and different areas (security, hooks, components, docs) so verification runs in parallel and finishes faster.

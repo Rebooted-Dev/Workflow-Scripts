@@ -92,7 +92,7 @@ Run tests: `npm test` from package directory (vitest).
 | Service providers | `08-API-Integration/02-AI-SDK/service-providers/` |
 | Genkit guide | `08-API-Integration/01-genkit/genkit-integration-guide.md` |
 | Higgsfield MCP | `08-API-Integration/03-higgsfield-mcp/` |
-| Gemini API reference | `10 Technical Docs/Gemini/` |
+| Gemini API reference | `10-technical-docs/Gemini/` |
 
 ## Authentication and Authorization
 

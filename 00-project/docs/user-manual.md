@@ -13,8 +13,8 @@ Workflow-Scripts is **not an application** — it is a library of Markdown workf
 | Goal | Where to start |
 |------|----------------|
 | Set up workflows in a new project | `00-project-setup/01-setup-project.md` |
-| Research and plan new work | `01-Planning & Organizing/00-research-and-plan.md` |
-| Review or finalize a plan | `01-Planning & Organizing/01-plan-review.md` |
+| Research and plan new work | `01-planning-and-organizing/00-research-and-plan.md` |
+| Review or finalize a plan | `01-planning-and-organizing/01-plan-review.md` |
 | Implement from a plan | `02-code-build/01-execution.md` |
 | Fix a bug | `03-debugging/02-bug-fix-workflow.md` |
 | Update documentation | `04-documentation/02-sync-documentation.md` |
@@ -64,7 +64,7 @@ When editing **this repository**, log changes under `00-project/changelog/` and 
 
 ### 5. Skills vs full workflows
 
-**Full workflows** (`01-Planning & Organizing/`, `02-code-build/`, etc.) are detailed multi-phase instructions.
+**Full workflows** (`01-planning-and-organizing/`, `02-code-build/`, etc.) are detailed multi-phase instructions.
 
 **Skills** (`11-Skills/*/SKILL.md`) are thin Codex triggers that point agents at the right workflow. Install per `00-project-setup/06-skills-setup.md`.
 

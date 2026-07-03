@@ -38,8 +38,8 @@ Run implementation (Execution) followed by validation (Confirm Execution) in one
 
 - **[`01-execution.md`](./01-execution.md)** - Execution only (implement and verify in phases)
 - **[`02-confirm-execution.md`](./02-confirm-execution.md)** - Confirm only (audit plan vs code; run after 01 or standalone)
-- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plans before execution
-- **[`../01-Planning & Organizing/01-plan-review.md`](../01-Planning & Organizing/01-plan-review.md)** - Review plans before execution
+- **[`../01-planning-and-organizing/02-finalise-plan.md`](../01-planning-and-organizing/02-finalise-plan.md)** - Create implementation plans before execution
+- **[`../01-planning-and-organizing/01-plan-review.md`](../01-planning-and-organizing/01-plan-review.md)** - Review plans before execution
 - **[`../05-review/01-code-review.md`](../05-review/01-code-review.md)** - Code review after implementation
 - **[`../03-debugging/02-bug-fix-workflow.md`](../03-debugging/02-bug-fix-workflow.md)** - Fix bugs discovered during implementation
 - **[`../04-documentation/02-sync-documentation.md`](../04-documentation/02-sync-documentation.md)** - Update documentation after code changes

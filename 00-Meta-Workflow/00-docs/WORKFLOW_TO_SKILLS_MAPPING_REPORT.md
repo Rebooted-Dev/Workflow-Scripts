@@ -66,7 +66,7 @@ Workflows are comprehensive process documents that provide:
 | Meta | `00-meta/` | 6 | Templates, rubrics, analysis documents |
 | Orchestrator | `00-orchestrator/` | 3 | Non-interactive plan review automation |
 | Project Setup | `00-project-setup/` | 7 | New project setup, MCP/skills configuration |
-| Planning | `01-planning/` | 4 | Research, plan creation, review |
+| Planning | `01-planning-and-organizing/` | 4 | Research, plan creation, review |
 | Build/Code | `02-build-code/` | 5 | Implementation execution, confirmation |
 | Debug | `03-debug/` | 3 | Bug description, bug fix workflow |
 | Documentation | `04-documentation/` | 7 | Doc creation, sync, templates |
@@ -117,7 +117,7 @@ These workflows describe complete processes that span multiple phases, involve m
 3. **Already work well** — Current workflow format is appropriate
 
 **Examples:**
-- `01-planning/00-research-and-plan.md` — 341 lines, 3 phases, research → plan → output
+- `01-planning-and-organizing/00-research-and-plan.md` — 341 lines, 3 phases, research → plan → output
 - `02-build-code/01-execution.md` — Implementation with verification
 - `03-debug/02-bug-fix-workflow.md` — 8-step bug fix process
 - `05-review-audit/01-code-review.md` — Parallel agent scanning with finding templates
@@ -171,7 +171,7 @@ Based on the workflow content, these domain-specific skills could be extracted:
 | `commit-style` | Referenced in workflows | Consistent commit message format |
 | `changelog-workflow` | `04-documentation/` | Changelog entry creation |
 | `troubleshooting-entry` | `03-debug/` | Troubleshooting log format |
-| `plan-review` | `01-planning/01-plan-review.md` | Plan validation |
+| `plan-review` | `01-planning-and-organizing/01-plan-review.md` | Plan validation |
 | `code-review-process` | `05-review-audit/01-code-review.md` | Structured review |
 
 ### 4.3 Observations
@@ -286,9 +286,9 @@ The existing broken symlinks in `09-skills/` should be removed. The workflows sh
 
 | File | Lines | Purpose |
 |------|-------|---------|
-| `01-planning/00-research-and-plan.md` | 341 | Research + create implementation plan |
-| `01-planning/01-plan-review.md` | ~100 | Review implementation plans |
-| `01-planning/02-finalise-plan.md` | ~120 | Consolidate into priority-ordered plan |
+| `01-planning-and-organizing/00-research-and-plan.md` | 341 | Research + create implementation plan |
+| `01-planning-and-organizing/01-plan-review.md` | ~100 | Review implementation plans |
+| `01-planning-and-organizing/02-finalise-plan.md` | ~120 | Consolidate into priority-ordered plan |
 | `02-build-code/01-execution.md` | ~180 | Execute implementation phases |
 | `02-build-code/02-confirm-execution.md` | ~130 | Verify implementation |
 | `03-debug/02-bug-fix-workflow.md` | ~280 | Systematic bug fixing |

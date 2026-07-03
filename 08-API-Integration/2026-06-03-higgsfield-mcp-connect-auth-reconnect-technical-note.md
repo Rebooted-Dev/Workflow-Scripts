@@ -5,7 +5,7 @@
 **Scope:** Podcast Creative Studio AI Higgsfield MCP image provider (`higgsfield-mcp`) — bridge startup, OAuth/session lifecycle, readiness probes, app recovery APIs, and common misdiagnoses.  
 **Audience:** Developers and operators debugging MCP auth, reconnect flows, or image-batch failures.
 
-**Agent workflow (Workflow-Scripts):** [`Workflow-Scripts/08-API-Integration/08-API-Integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md`](../../Workflow-Scripts/08-API-Integration/08-API-Integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md) — step-by-step triage and recovery procedure filed from this note.
+**Agent workflow (Workflow-Scripts):** [`08-API-Integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md`](./03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md) — step-by-step triage and recovery procedure filed from this note.
 
 This note distills lessons, incidents, and workarounds from production integration work (2026-05-22 through 2026-05-30). Primary sources are listed in [Source documents](#source-documents).
 
@@ -247,24 +247,24 @@ flowchart TD
 
 | Date | Topic | Path |
 |------|-------|------|
-| 2026-05-30 | Auth recovery (status/reconnect/guards) | [project/troubleshooting/runtime/2026-05-30-runtime-higgsfield-mcp-auth-boundary-probe.md](../troubleshooting/runtime/2026-05-30-runtime-higgsfield-mcp-auth-boundary-probe.md) |
-| 2026-05-30 | Gemini dunning after reconnect | [project/troubleshooting/runtime/2026-05-30-runtime-gemini-dunning-after-higgsfield-reconnect.md](../troubleshooting/runtime/2026-05-30-runtime-gemini-dunning-after-higgsfield-reconnect.md) |
-| 2026-05-25 | Stale auth cache | [project/troubleshooting/runtime/2026-05-25-runtime-higgsfield-mcp-stale-auth-cache.md](../troubleshooting/runtime/2026-05-25-runtime-higgsfield-mcp-stale-auth-cache.md) |
-| 2026-05-22 | Expired token | [project/troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-expired-token.md](../troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-expired-token.md) |
-| 2026-05-22 | Bridge endpoint | [project/troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-bridge-endpoint.md](../troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-bridge-endpoint.md) |
-| 2026-05-22 | Resolution casing | [project/troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-resolution-casing.md](../troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-resolution-casing.md) |
-| 2026-05-22 | Parallel timeout | [project/troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-parallel-timeout.md](../troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-parallel-timeout.md) |
-| 2026-05-23 | macOS standalone runtime | [project/troubleshooting/runtime/2026-05-23-runtime-macos-higgsfield-mcp-standalone-runtime.md](../troubleshooting/runtime/2026-05-23-runtime-macos-higgsfield-mcp-standalone-runtime.md) |
+| 2026-05-30 | Auth recovery (status/reconnect/guards) | `project/troubleshooting/runtime/2026-05-30-runtime-higgsfield-mcp-auth-boundary-probe.md` |
+| 2026-05-30 | Gemini dunning after reconnect | `project/troubleshooting/runtime/2026-05-30-runtime-gemini-dunning-after-higgsfield-reconnect.md` |
+| 2026-05-25 | Stale auth cache | `project/troubleshooting/runtime/2026-05-25-runtime-higgsfield-mcp-stale-auth-cache.md` |
+| 2026-05-22 | Expired token | `project/troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-expired-token.md` |
+| 2026-05-22 | Bridge endpoint | `project/troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-bridge-endpoint.md` |
+| 2026-05-22 | Resolution casing | `project/troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-resolution-casing.md` |
+| 2026-05-22 | Parallel timeout | `project/troubleshooting/runtime/2026-05-22-runtime-higgsfield-mcp-parallel-timeout.md` |
+| 2026-05-23 | macOS standalone runtime | `project/troubleshooting/runtime/2026-05-23-runtime-macos-higgsfield-mcp-standalone-runtime.md` |
 
 ### Plans and investigations
 
-- [project/plans-completed/investigation/2026-05-30-higgsfield-mcp-auth-failure-investigation.md](../plans-completed/investigation/2026-05-30-higgsfield-mcp-auth-failure-investigation.md)
-- [project/plans-completed/implementation/2026-05-30-higgsfield-mcp-auth-recovery-implementation-plan.md](../plans-completed/implementation/2026-05-30-higgsfield-mcp-auth-recovery-implementation-plan.md)
-- [project/plans-completed/higgsfield-mcp-support/higgsfield-support/2026-05-22-higgsfield-mcp-lessons-learnt.md](../plans-completed/higgsfield-mcp-support/higgsfield-support/2026-05-22-higgsfield-mcp-lessons-learnt.md) — broader MCP integration lessons (payload, casing, probes, model IDs)
+- `project/plans-completed/investigation/2026-05-30-higgsfield-mcp-auth-failure-investigation.md`
+- `project/plans-completed/implementation/2026-05-30-higgsfield-mcp-auth-recovery-implementation-plan.md`
+- `project/plans-completed/higgsfield-mcp-support/higgsfield-support/2026-05-22-higgsfield-mcp-lessons-learnt.md` — broader MCP integration lessons (payload, casing, probes, model IDs)
 
 ### Changelog index
 
-- [project/changelog/index.md](../changelog/index.md) — rows tagged Higgsfield MCP Auth / Reconnect / Preflight (2026-05-22 through 2026-05-31)
+- [00-project/changelog/index.md](../00-project/changelog/index.md) — rows tagged Higgsfield MCP Auth / Reconnect / Preflight (2026-05-22 through 2026-05-31)
 
 ---
 

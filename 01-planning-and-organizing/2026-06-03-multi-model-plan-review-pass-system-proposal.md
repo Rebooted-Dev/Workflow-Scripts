@@ -175,7 +175,7 @@ The orchestrator already knows how to delegate one review non-interactively:
 ```bash
 opencode run \
   -m openai/gpt-5.1 \
-  --prompt "Review the plan at <PLAN> following Workflow-Scripts/01-Planning & Organizing/01-plan-review.md. \
+  --prompt "Review the plan at <PLAN> following Workflow-Scripts/01-planning-and-organizing/01-plan-review.md. \
             Emit findings in the structured schema. Write ONLY to <PLAN>.reviews/<name>.review.gpt-5.1.<ts>.md. \
             Do not edit the plan file." \
   > "<PLAN>.reviews/<name>.review.gpt-5.1.<ts>.log" 2>&1 &
@@ -234,8 +234,8 @@ This is exactly the kind of plan the system is for: high-impact, pre-execution, 
 
 ## References
 
-- `Workflow-Scripts/01-Planning & Organizing/01-plan-review.md` — Concurrency & Multi-Model Usage section (source of the single-writer rule + naming convention)
-- `Workflow-Scripts/01-Planning & Organizing/02-finalise-plan.md` — consolidation into next-version plan
+- `Workflow-Scripts/01-planning-and-organizing/01-plan-review.md` — Concurrency & Multi-Model Usage section (source of the single-writer rule + naming convention)
+- `Workflow-Scripts/01-planning-and-organizing/02-finalise-plan.md` — consolidation into next-version plan
 - `Workflow-Scripts/00-Meta-Workflow/00-orchestrator/orchestrator-plan-review.md` — OpenCode delegation mechanics (`opencode run -m`)
 - `Workflow-Scripts/11-Skills/multi-agent-plan-orchestration/SKILL.md` — split/critique/synthesize model + guardrails
 - `Workflow-Scripts/11-Skills/workflow-plan-review-finalize/SKILL.md` — evidence discipline, dated addenda

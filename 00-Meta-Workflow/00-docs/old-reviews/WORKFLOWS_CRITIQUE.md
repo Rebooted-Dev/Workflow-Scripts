@@ -61,7 +61,7 @@ The workflows directory is well-organized and comprehensive, with strong documen
 
 **Recommendation:**
 - Audit all cross-references between workflow files
-- Consider using absolute paths from workflows root (e.g., `workflows/01-planning/...`)
+- Consider using absolute paths from workflows root (e.g., `workflows/01-planning-and-organizing/...`)
 - Add a validation script to check for broken links
 
 **Severity:** S2 (Medium) - Could cause broken navigation  
@@ -139,8 +139,8 @@ All workflows now have clear guidance on when to use them vs alternatives.
 **Status:** ✅ **FIXED** - Added "Related Workflows" sections to:
 - `02-build-code/01-execution.md`
 - `02-build-code/02-confirm-execution.md`
-- `01-planning/01-plan-review.md`
-- `01-planning/02-finalise-plan.md`
+- `01-planning-and-organizing/01-plan-review.md`
+- `01-planning-and-organizing/02-finalise-plan.md`
 - `03-debug/01-bug-description.md`
 - `03-debug/02-bug-fix-workflow.md`
 - `04-documentation/01-create-docs.md`
@@ -313,7 +313,7 @@ Note: `00-meta/` files already have clear status indicators in their README.
 **Location:** Various workflow files
 
 **Issue:** Some workflows lack concrete examples:
-- `01-planning/01-plan-review.md` - has structure but could use example output
+- `01-planning-and-organizing/01-plan-review.md` - has structure but could use example output
 - `05-review-audit/` workflows - could benefit from example findings
 - `06-security/` workflows - examples would help users understand severity
 

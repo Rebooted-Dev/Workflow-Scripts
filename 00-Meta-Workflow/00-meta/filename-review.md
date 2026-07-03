@@ -19,7 +19,7 @@ workflows/
 │   ├── sync-summary-template.md
 │   ├── parallel-agents-review.md
 │   └── filename-review.md
-├── 01-planning/
+├── 01-planning-and-organizing/
 │   ├── 01-plan-review.md
 │   └── 02-finalise-plan.md
 ├── 02-build-code/
@@ -63,7 +63,7 @@ workflows/
 Keep current structure but improve clarity of ambiguous names.
 
 **Changes:**
-1. `builder.md` → `execution.md` or `development-workflow.md` (Note: `implementation.md` conflicts with `01-planning/01-plan-review.md`)
+1. `builder.md` → `execution.md` or `development-workflow.md` (Note: `implementation.md` conflicts with `01-planning-and-organizing/01-plan-review.md`)
 2. `debug.md` → `debug-workflow.md` or `bug-fix-workflow.md`
 3. `documentation-sync-summary.md` → `sync-summary-template.md` or `documentation-sync-template.md`
 4. `PARALLEL_AGENTS_REVIEW.md` → `parallel-agents-review.md` (move to `00-meta/` or keep at root)
@@ -97,7 +97,7 @@ workflows/
 │   ├── sync-summary-template.md
 │   ├── parallel-agents-review.md
 │   └── filename-review.md
-├── 01-planning/
+├── 01-planning-and-organizing/
 │   ├── 01-plan-review.md
 │   └── 02-finalise-plan.md
 ├── 02-build-code/
@@ -126,7 +126,7 @@ workflows/
 **Proposed:** `02-build-code/01-execution.md`
 **Reason:** 
 - "Builder" is ambiguous and doesn't clearly indicate it's a development workflow
-- "Execution" clearly describes executing/implementing the plan (distinct from `01-planning/01-plan-review.md` which is for planning)
+- "Execution" clearly describes executing/implementing the plan (distinct from `01-planning-and-organizing/01-plan-review.md` which is for planning)
 - Creates clear distinction: planning phase vs. execution phase
 - Alternative: `development-workflow.md` if you prefer more explicit naming
 
@@ -178,7 +178,7 @@ workflows/
 │   ├── sync-summary-template.md
 │   ├── parallel-agents-review.md
 │   └── filename-review.md
-├── 01-planning/
+├── 01-planning-and-organizing/
 │   ├── 01-plan-review.md
 │   └── 02-finalise-plan.md
 ├── 02-build-code/

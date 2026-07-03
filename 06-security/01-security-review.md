@@ -1,7 +1,7 @@
 # Workflow: Security Review
 
 ## Purpose
-Perform a structured security review that identifies vulnerabilities, security risks, and compliance issues, then file a report in `plans/` (project root).
+Perform a structured security review that identifies vulnerabilities, security risks, and compliance issues, then file a report in `<metadata-root>/research/` using the metadata-root rule in `../00-Meta-Workflow/00-meta/naming-conventions.md`.
 
 ## Inputs
 - Repository root.
@@ -12,7 +12,8 @@ Perform a structured security review that identifies vulnerabilities, security r
 Before scanning, verify:
 - [ ] Repository root is identified and accessible
 - [ ] Rubric file exists at `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`
-- [ ] `plans/` directory exists (create if needed) and is writable
+- [ ] Metadata root exists (`project/` for host projects, `00-project/` for Workflow-Scripts itself); if missing, suggest running `00-project-setup/01-setup-project.md`
+- [ ] `<metadata-root>/research/` directory exists (create if needed) and is writable
 - [ ] At least one implementation file exists in scope
 
 **Abort conditions:**
@@ -70,7 +71,7 @@ Before scanning, verify:
    - Recommended security hardening measures
    - Timeline for addressing critical issues
 
-5. Save the report to `plans/` (project root) with a dated filename following the format: `security-review-YYMMDD-HHMM-{model}.md`
+5. Save the report to `<metadata-root>/research/` with a dated filename following the format: `security-review-YYMMDD-HHMM-{model}.md`
    - **YYMMDD**: Date stamp (2-digit year, month, day)
    - **HHMM**: Time stamp (24-hour format)
    - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
@@ -122,7 +123,7 @@ Before scanning, verify:
 
 **Timing guidance:** Run Code Review before every merge. Run Security Review quarterly, after security-critical changes, or before releases handling sensitive data.
 
-- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plan for security fixes
+- **[`../01-planning-and-organizing/02-finalise-plan.md`](../01-planning-and-organizing/02-finalise-plan.md)** - Create implementation plan for security fixes
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring
 
 ## Notes

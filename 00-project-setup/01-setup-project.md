@@ -1283,8 +1283,8 @@ Summary of the standard slim setup. Details are in the referenced steps.
 **Populating docs/agents/:** The workflow creates at least `changelog-and-troubleshooting.md`. Step 2.9.3 adds other topical files by relocating content from AGENTS.md. To adopt a full refactor plan:
 
 1. Put the proposal in `project/plans/` (as an active plan document) or add to `project/plans/TODO.md`.
-2. Run `05-review-audit/01-code-review.md` on the plan; address P0/P1 findings.
-3. Run `01-planning/01-plan-review.md` and `02-finalise-plan.md`; implement, retaining only a slim AGENTS.md (Execution, Repository Management, slim Change Management, and "Detailed Documentation" links to `docs/agents/`) and using the project's troubleshooting system (`project/troubleshooting/` directory and index).
+2. Run `05-review/01-code-review.md` on the plan; address P0/P1 findings.
+3. Run `01-planning-and-organizing/01-plan-review.md` and `02-finalise-plan.md`; implement, retaining only a slim AGENTS.md (Execution, Repository Management, slim Change Management, and "Detailed Documentation" links to `docs/agents/`) and using the project's troubleshooting system (`project/troubleshooting/` directory and index).
 4. When the plan is confirmed completed, file it per Step 2.8.4 (default: `project/plans-completed/<category>/` + both indexes).
 
 

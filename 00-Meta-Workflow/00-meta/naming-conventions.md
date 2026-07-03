@@ -41,10 +41,22 @@ All generated reports should include this header:
 **Status:** [Draft/Complete]
 ```
 
+### Metadata Root Resolution
+
+Workflows should infer the metadata root instead of requiring the user to name output directories in every prompt:
+
+1. If the user gives an explicit output directory, use it.
+2. If the repository is Workflow-Scripts itself and contains `00-project/`, use `00-project/`.
+3. Otherwise, if the repository contains `project/`, use `project/`.
+4. If no metadata root exists, suggest running `00-project-setup/01-setup-project.md` before filing generated artifacts. Do not create ad hoc root-level `plans/`, `research/`, `changelog/`, or `troubleshooting/` directories as a substitute for setup.
+
 ### Storage Location
 
-- Save to `plans/` (project root) or appropriate subdirectory
-- Use `00-docs/` for Workflow-Scripts internal reports
+- Review, audit, research, and findings reports: `<metadata-root>/research/{report-type}-YYMMDD-HHMM-{model}.md`
+- Active implementation plans: `<metadata-root>/plans/{plan-name}.md`
+- Completed/filed plans: `<metadata-root>/plans-completed/<category>/{plan-name}.md`
+- Changelog entries: `<metadata-root>/changelog/<type>/<YYYY-MM-DD>-<type>-<short-title>.md`
+- Troubleshooting entries: `<metadata-root>/troubleshooting/<category>/<YYYY-MM-DD>-<category>-<short-title>.md`
 
 ---
 

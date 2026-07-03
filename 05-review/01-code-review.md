@@ -1,7 +1,7 @@
 # Workflow: Code Review
 
 ## Purpose
-Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `project/research/`.
+Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `<metadata-root>/research/` using the metadata-root rule in `../00-Meta-Workflow/00-meta/naming-conventions.md`.
 
 ## Inputs
 - Repository root (determine using one of):
@@ -19,7 +19,8 @@ If ambiguous:
 Before scanning, verify:
 - [ ] Repository root is identified and accessible
 - [ ] Rubric file exists at `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`
-- [ ] `project/research/` directory exists (create if needed) and is writable
+- [ ] Metadata root exists (`project/` for host projects, `00-project/` for Workflow-Scripts itself); if missing, suggest running `00-project-setup/01-setup-project.md`
+- [ ] `<metadata-root>/research/` directory exists (create if needed) and is writable
 - [ ] At least one implementation file exists in scope
 
 **Abort conditions:**
@@ -148,7 +149,7 @@ Before scanning, verify:
      - Short-term actions (next 2 sprints)
      - Tracking items (backlog)
 
-5. **Save the report to `project/research/` with a dated filename following the format: `code-review-YYMMDD-HHMM-{model}.md`**
+5. **Save the report to `<metadata-root>/research/` with a dated filename following the format: `code-review-YYMMDD-HHMM-{model}.md`**
    - **YYMMDD**: Date stamp (2-digit year, month, day)
    - **HHMM**: Time stamp (24-hour format)
    - **{model}**: AI model name (e.g., `claude`, `gpt4`, `gemini`)
@@ -197,5 +198,5 @@ Before scanning, verify:
 
 **Timing guidance:** Run Code Review before every merge. For security-critical changes (auth, data handling, API endpoints), follow this review with Security Review for comprehensive security validation.
 
-- **[`../01-Planning & Organizing/02-finalise-plan.md`](../01-Planning & Organizing/02-finalise-plan.md)** - Create implementation plan for review findings
+- **[`../01-planning-and-organizing/02-finalise-plan.md`](../01-planning-and-organizing/02-finalise-plan.md)** - Create implementation plan for review findings
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for severity and priority scoring

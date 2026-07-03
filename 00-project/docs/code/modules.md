@@ -26,7 +26,7 @@ Each numbered directory is a **module group** of related workflows:
 | Group | Path | Workflows |
 |-------|------|-----------|
 | Setup | `00-project-setup/` | Bootstrap, sync, MCP, skills, migration |
-| Planning | `01-Planning & Organizing/` | Research, review, finalise |
+| Planning | `01-planning-and-organizing/` | Research, review, finalise |
 | Build | `02-code-build/` | Execution, confirm |
 | Debug | `03-debugging/` | Bug description, bug fix |
 | Documentation | `04-documentation/` | Create docs, sync docs, mark completed |

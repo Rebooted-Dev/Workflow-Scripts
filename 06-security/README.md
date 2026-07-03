@@ -18,7 +18,7 @@ This directory contains workflows for security review and vulnerability remediat
 └─────────────────────────┘      └────────────────────┘
          │                                │
          ▼                                ▼
-   plans/security-review-*.md    Updated code + troubleshooting entry
+   <metadata-root>/research/security-review-*.md    Updated code + troubleshooting entry
 ```
 
 ## Quick Decision Guide
@@ -53,8 +53,9 @@ Both workflows cover OWASP Top 10 and common vulnerability categories:
 
 ## Output Locations
 
-- Security review reports: `plans/security-review-YYYY-MM-DD-HH-MM.md`
-- Security fix documentation: `troubleshooting/security/` + changelog
+- Security review reports: `<metadata-root>/research/security-review-YYMMDD-HHMM-{model}.md`
+- Security fix documentation: `<metadata-root>/troubleshooting/security/` + `<metadata-root>/changelog/`
+- If no metadata root exists, run `00-project-setup/01-setup-project.md` before filing security artifacts.
 
 ## Related Workflows
 
@@ -64,4 +65,4 @@ Both workflows cover OWASP Top 10 and common vulnerability categories:
 
 ## Additional Resources
 
-- Security patch in deployment: [`../09-11%20Misc/09-nextjs-react-update.md`](../09-11%20Misc/09-nextjs-react-update.md) - React/Next.js RCE patch example
+- Security patch in deployment: [`../08-API-Integration/09-nextjs-react-update.md`](../08-API-Integration/09-nextjs-react-update.md) - React/Next.js RCE patch example

@@ -44,7 +44,7 @@ All workflows use:
 - **Severity scoring**: S0 (Critical) → S3 (Low)
 - **Priority scoring**: P0 (Blocker) → P3 (Backlog)
 - **Parallel agents**: 3-5 agents scanning different aspects
-- **Output format**: Report saved to `project/research/` with findings ordered by priority
+- **Output format**: Report saved to `<metadata-root>/research/` with findings ordered by priority
 
 See [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md) for the full scoring rubric.
 
@@ -64,16 +64,16 @@ When running multiple reviews:
 
 ## Output Location
 
-All workflows save reports to `project/research/` using the standard naming convention defined in [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md):
+All workflows save reports to `<metadata-root>/research/` using the metadata-root and naming convention defined in [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md). In host projects this is normally `project/research/`; in Workflow-Scripts itself this is `00-project/research/`. If no metadata root exists, run `00-project-setup/01-setup-project.md` before filing reports.
 
-- `project/research/code-review-YYMMDD-HHMM-{model}.md`
-- `project/research/code-optimization-YYMMDD-HHMM-{model}.md`
-- `project/research/code-refactoring-YYMMDD-HHMM-{model}.md`
-- `project/research/website-data-refactoring-YYMMDD-HHMM-{model}.md`
+- `<metadata-root>/research/code-review-YYMMDD-HHMM-{model}.md`
+- `<metadata-root>/research/code-optimization-YYMMDD-HHMM-{model}.md`
+- `<metadata-root>/research/code-refactoring-YYMMDD-HHMM-{model}.md`
+- `<metadata-root>/research/website-data-refactoring-YYMMDD-HHMM-{model}.md`
 
 ## Related Workflows
 
-- [Plan Review](../01-Planning & Organizing/01-plan-review.md) - Review implementation plans
+- [Plan Review](../01-planning-and-organizing/01-plan-review.md) - Review implementation plans
 - [Security Review](../06-security/01-security-review.md) - Security-focused audit
 - [Execution](../02-code-build/01-execution.md) - Implement fixes from review findings
 - [Sync Documentation](../04-documentation/02-sync-documentation.md) - Update docs after data refactoring

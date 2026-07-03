@@ -34,6 +34,6 @@ This release consolidates historical work from `beta` and `master` into `main` f
 ## Migration Notes for Existing Users
 
 - If your local scripts or docs reference `00-orchestrator/`, update to `01a-orchestrator/`.
-- If your local scripts or docs reference `01-planning/`, update to `01b-planning/`.
+- If your local scripts or docs reference `01-planning-and-organizing/`, update to `01b-planning/`.
 - Re-run any internal automation that depends on old path names.
 

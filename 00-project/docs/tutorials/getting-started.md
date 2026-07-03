@@ -34,7 +34,7 @@ State that your project has multiple repositories and that workflow changes are 
 
 ## Step 5: Run your first workflow
 
-1. Open `01-Planning & Organizing/00-research-and-plan.md`
+1. Open `01-planning-and-organizing/00-research-and-plan.md`
 2. Provide a goal (e.g. "Add user authentication")
 3. Follow the workflow phases — output goes to your host `plans/` directory
 
