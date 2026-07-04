@@ -5,6 +5,9 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-04 | docs | Clarify project metadata routing | docs/2026-07-04-docs-clarify-project-meta-routing.md | Clarified `00-project/` applies only to Workflow-Scripts system work; consumer projects use root `project/` |
+| 2026-07-04 | docs | Route adversarial workflow artifacts under project metadata | docs/2026-07-04-docs-route-adversarial-workflow-artifacts.md | Kept generated workflow artifacts under `00-project/` and added harness concept-test plan |
+| 2026-07-04 | docs | Factor adversarial multi-model workflow plan | docs/2026-07-04-docs-factor-adversarial-multi-model-workflow-plan.md | Expanded plan from review-only to shared research, planning, and review orchestration |
 | 2026-07-03 | docs | File deep review report complete | docs/2026-07-03-docs-file-deep-review-report-complete.md | Added final verification and filed completed deep review report |
 | 2026-07-03 | plan | Workflow-Scripts Deep Review Report | ../plans-completed/review/2026-07-03-workflow-scripts-deep-review-260703-1337-claude.md | Filed completed deep review report |
 | 2026-07-03 | plan | Workflow-Scripts Deep Review Follow-Up Implementation Plan | ../plans-completed/review/2026-07-03-workflow-scripts-deep-review-follow-up-implementation-plan.md | Filed completed follow-up remediation plan |

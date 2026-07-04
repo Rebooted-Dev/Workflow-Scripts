@@ -14,6 +14,7 @@ When a plan is finished and should be archived, follow **`plans-completed/README
 
 ## Active
 
+- [ ] Execute `2026-07-03-multi-model-plan-review-pass-system-implementation-plan.md` (multi-model plan-review fan-out + reconciler; finalised 2026-07-03 from the 2026-06-03 research proposal + its review addendum). Start with Phase 1 (schema/conventions spec).
 - [ ] Migrate legacy meta content from `00-Meta-Workflow/` into `00-project/` (optional follow-up)
 - [ ] Battle-test the deep-review workflow set (`2026-07-03-deep-review-00-overview.md`, `-01-review-pass.md`, `-02-verification-pass.md`) on a consumer repo, then promote it to a numbered workflow (e.g. `05-review/05-deep-review.md`) and index it in `05-review/README.md`
 - [ ] Measure `scripts/sync-workflow-scripts.sh --status` across at least 5 configured projects before considering parallel fetch optimization; if implemented later, keep fetch parallelism separate from status rendering and preserve `scripts/validation/check-sync-workflow-scripts.sh` behavior.
