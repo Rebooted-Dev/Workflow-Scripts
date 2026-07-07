@@ -3,6 +3,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/../.."
 
+bash scripts/validation/check-moved-targets.sh
 tools/wf validate
 tools/wf init-frontmatter --check
 tools/wf init-ledger-frontmatter --check

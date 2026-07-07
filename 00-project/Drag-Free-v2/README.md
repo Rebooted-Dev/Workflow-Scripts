@@ -8,6 +8,8 @@ path: README.md
 ---
 # Workflows Directory
 
+> **Archive status (2026-07-07):** This `00-project/Drag-Free-v2/` tree is retained as promotion evidence only. The active v2.0a topology is the repository-root `workflows/`, `core/`, `reference/`, `tools/`, `MOVED.json`, `MOVED.md`, `catalog.json`, and `ROUTER.md` tree. Redirect-target repair evidence is filed under `00-project/build/drag-free-v2-separation/`.
+
 **Repository:** [https://github.com/Rebooted-Dev/Workflow-Scripts](https://github.com/Rebooted-Dev/Workflow-Scripts)
 
 <div align="center">
@@ -24,7 +26,7 @@ This directory contains structured workflow instructions for common development 
 
 **Redirect cleanup:** Added 2026-07-06. Owner: Workflow-Scripts maintainer. Target: remove root redirect stubs in the next release cycle after archive remediation, after downstream consumers have had one cycle to follow `MOVED.md` / `catalog.json` redirects.
 
-**Why Workflows?**  
+**Why Workflows?**
 Workflows ensure that:
 - Tasks are completed systematically and thoroughly
 - Quality standards are consistently applied
@@ -146,10 +148,10 @@ The workflows are organized into eleven categories:
 
 **Example:**
 ```
-User: "Create an implementation plan for adding user authentication. 
-       Review the existing plan at plans/auth-plan.md and incorporate 
+User: "Create an implementation plan for adding user authentication.
+       Review the existing plan at plans/auth-plan.md and incorporate
        feedback from the team."
-       
+
 Workflow will:
 - Read plans/auth-plan.md
 - Analyze codebase for feasibility
@@ -187,7 +189,7 @@ Workflow will:
 ```
 User: "Perform a code review focusing on security and error handling
         in the services/ directory."
-       
+
 Workflow will:
 - Scan services/ directory
 - Identify security issues, bugs, and risks
@@ -317,7 +319,7 @@ Workflow will:
 **Example:**
 ```
 User: "Review the plan at plans/feature-x-260118-1430-claude.md"
-       
+
 Workflow will:
 - Read and analyze the plan
 - Validate technical feasibility
@@ -359,9 +361,9 @@ Workflow will:
 
 **Example:**
 ```
-User: "Implement the user authentication feature from the plan. 
+User: "Implement the user authentication feature from the plan.
        Start with Phase 1: API integration."
-       
+
 Workflow will:
 - Read the implementation plan
 - Implement Phase 1 changes
@@ -411,9 +413,9 @@ Workflow will:
 
 **Example:**
 ```
-User: "The image generation is failing with error 'API key invalid'. 
+User: "The image generation is failing with error 'API key invalid'.
        Here are the logs: [logs]"
-       
+
 Workflow will:
 - Analyze logs and error message
 - Form hypotheses (key format, env var, service config)
@@ -459,7 +461,7 @@ Workflow will:
 **Example:**
 ```
 User: "Perform a security review focusing on authentication and API endpoints."
-       
+
 Workflow will:
 - Scan auth files, API endpoints, and related code
 - Identify vulnerabilities (injection, XSS, auth bypass, etc.)
@@ -506,9 +508,9 @@ Workflow will:
 
 **Example:**
 ```
-User: "Fix the SQL injection vulnerability identified in the security review 
+User: "Fix the SQL injection vulnerability identified in the security review
        at project/research/security-review-260118-1400-claude.md, issue #3."
-       
+
 Workflow will:
 - Read security review report
 - Investigate the vulnerability
@@ -562,7 +564,7 @@ Workflow will:
 **Example:**
 ```
 User: "Sync documentation after the authentication feature was added."
-       
+
 Workflow will:
 - Scan codebase for auth-related code
 - Check docs/ for auth documentation
@@ -644,7 +646,7 @@ Step 1: Planning
 → Output: plans/feature-auth-260118-1430-claude.md
 
 Step 2: Review
-→ Use "Plan Review" workflow  
+→ Use "Plan Review" workflow
 → Input: plans/feature-auth-260118-1430-claude.md
 → Output: Feedback appended to plan
 

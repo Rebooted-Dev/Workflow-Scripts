@@ -97,6 +97,9 @@ def markdown_files(base: Path):
     for path in sorted(base.rglob("*.md")):
         if any(part in skip_parts for part in path.parts):
             continue
+        path_rel = rel(path, base)
+        if path_rel.startswith("00-project/Drag-Free-v2/"):
+            continue
         yield path
 
 

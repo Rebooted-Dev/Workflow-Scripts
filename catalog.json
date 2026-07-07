@@ -20,6 +20,43 @@
       "todos": []
     },
     {
+      "created": "2026-03-18",
+      "id": "2026-03-18-SEO-Dashboard-2026-03-18-seo-tool-integration-strategy",
+      "name": "seo-tool-integration-strategy",
+      "overview": "Comprehensive strategy for consolidating fragmented SEO tools into unified workflows to minimize tool-hopping and maximize efficiency.",
+      "path": "workflows/seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-seo-tool-integration-strategy.md",
+      "research_completed": "2026-03-18",
+      "status": "draft",
+      "title": "SEO Tool Integration Strategy",
+      "type": "strategy"
+    },
+    {
+      "created": "2026-03-18",
+      "id": "2026-03-18-SEO-Dashboard-2026-03-18-stack-a-mvp-poc-implementation-plan",
+      "name": "stack-a-mvp-poc-implementation-plan",
+      "overview": "MVP and Proof of Concept implementation plan for Stack A (Zero-Cost Maximum Consolidation SEO Tool Stack)",
+      "path": "workflows/seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-mvp-poc-implementation-plan.md",
+      "priority": "high",
+      "status": "draft",
+      "title": "Stack A MVP & Proof of Concept Implementation Plan",
+      "type": "implementation-plan"
+    },
+    {
+      "consolidated_from": [
+        "/Volumes/Skynet/Software Development Projects/Websites/Ai-Mian's-Clinic/project/plans/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-mvp-poc-implementation-plan.md"
+      ],
+      "created": "2026-03-18",
+      "id": "2026-03-18-SEO-Dashboard-2026-03-18-stack-a-seo-dashboard-implementation-plan",
+      "name": "stack-a-seo-dashboard-implementation-plan",
+      "overview": "Detailed implementation plan for Stack A SEO Dashboard MVP with priority-ordered phases, dependencies, and verification steps",
+      "path": "workflows/seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md",
+      "priority": "high",
+      "status": "draft",
+      "title": "Stack A SEO Dashboard - Detailed Implementation Plan",
+      "type": "implementation-plan",
+      "updated": "2026-03-18"
+    },
+    {
       "date": "2026-01-18",
       "id": "added-2026-01-18-added-added-deployment-workflows-index-readme-07-deplo",
       "notes": "- Added deployment workflows index README (07-deployment/README.md) - central navigation with decision tree for choosing deployment guides",
@@ -985,6 +1022,22 @@
       "title": "Delegated Agent Orchestration"
     },
     {
+      "id": "deployment-07-seo-and-ai-search-phased-implementation-with-submission-1cca3e93-plan",
+      "isProject": "false",
+      "name": "seo-and-ai-search-phased-implementation-with-submission",
+      "overview": "Extended phased implementation plan for making a new website SEO-ready and AI-search/chatbot-friendly, including explicit steps for submitting the site to search engines and establishing an ongoing monitoring cadence.",
+      "path": "workflows/deployment/07-seo-and-ai-search-phased-implementation-with-submission_1cca3e93.plan.md",
+      "title": "07 Seo And Ai Search Phased Implementation With Submission_1Cca3E93.Plan",
+      "todos": [
+        "id: phase6b-gsc",
+        "id: phase6b-bing",
+        "id: phase6b-indexnow",
+        "id: phase6b-alt-engines",
+        "id: phase6c-local-directories",
+        "id: phase9-ai-visibility"
+      ]
+    },
+    {
       "description": "Safely commit and push intended changes from a mixed or dirty worktree. Use when the user asks to push updates, commit current work, publish a fix, or handle git status with unrelated local changes, nested repositories, ignored generated files, or possible index.lock issues.",
       "id": "dirty-worktree-safe-publish-skill",
       "name": "dirty-worktree-safe-publish",
@@ -1093,6 +1146,14 @@
       "path": "00-project/changelog/docs/2026-07-06-docs-record-five-project-sync-status.md",
       "status": "complete",
       "title": "Record five-project sync status",
+      "type": "docs"
+    },
+    {
+      "date": "2026-07-07",
+      "id": "docs-2026-07-07-docs-file-drag-free-v2-migration-problem-statement",
+      "path": "00-project/changelog/docs/2026-07-07-docs-file-drag-free-v2-migration-problem-statement.md",
+      "status": "complete",
+      "title": "File Drag-Free-v2 migration problem statement",
       "type": "docs"
     },
     {
@@ -1404,6 +1465,14 @@
       "path": "00-project/changelog/fixed/2026-07-06-fixed-wf-validate-warning-cleanup.md",
       "status": "complete",
       "title": "Clear wf validate warnings",
+      "type": "fixed"
+    },
+    {
+      "date": "2026-07-07",
+      "id": "fixed-2026-07-07-fixed-drag-free-v2-redirect-targets",
+      "path": "00-project/changelog/fixed/2026-07-07-fixed-drag-free-v2-redirect-targets.md",
+      "status": "complete",
+      "title": "Repair Drag-Free-v2 redirect targets",
       "type": "fixed"
     },
     {
@@ -1732,6 +1801,14 @@
       "path": "00-project/troubleshooting/build/2026-07-06-build-wf-run-timeout-not-forwarded.md",
       "status": "resolved",
       "title": "wf run timeout not forwarded"
+    },
+    {
+      "category": "build",
+      "date": "2026-07-07",
+      "id": "build-2026-07-07-build-drag-free-v2-redirect-targets",
+      "path": "00-project/troubleshooting/build/2026-07-07-build-drag-free-v2-redirect-targets.md",
+      "status": "resolved",
+      "title": "Drag-Free-v2 redirect targets incomplete"
     },
     {
       "agents": [
@@ -2145,6 +2222,17 @@
         "create implementation plan"
       ],
       "version": "2.0"
+    },
+    {
+      "branch": "v2.0a",
+      "category": "research",
+      "date": "2026-07-07",
+      "id": "research-2026-07-07-drag-free-v2-migration-problem-statement",
+      "kind": "reference",
+      "path": "00-project/research/2026-07-07-drag-free-v2-migration-problem-statement.md",
+      "related-commit": "2f625ff",
+      "status": "open",
+      "title": "Drag-Free-v2 Migration Problem Statement"
     },
     {
       "agents": [

@@ -7,6 +7,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-07 | fixed | Repair Drag-Free-v2 redirect targets | fixed/2026-07-07-fixed-drag-free-v2-redirect-targets.md | Restored all MOVED.json canonical targets, refreshed compatibility stubs, archived Drag-Free-v2 as evidence, and added redirect validation. |
 | 2026-07-07 | docs | File Drag-Free-v2 migration problem statement | docs/2026-07-07-docs-file-drag-free-v2-migration-problem-statement.md | Filed detailed research on incomplete v2.0a promotion: 92 missing and 16 self-stubbed MOVED.json targets; v1.7 remains intact. |
 | 2026-07-06 | config | Archive Workflow-Scripts consolidated evidence | config/2026-07-06-config-archive-workflow-scripts-consolidated-evidence.md | Archived retained consolidated logs, patches, and status inventories under 00-project/build/archive. |
 | 2026-07-06 | fixed | Restore rationalized planning targets | fixed/2026-07-06-fixed-rationalized-planning-targets.md | Restored missing canonical planning targets and filed the engineering-quality survey rerun. |

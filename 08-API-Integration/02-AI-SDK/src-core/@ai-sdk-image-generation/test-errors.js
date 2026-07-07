@@ -1,6 +1,3 @@
-// Quick test to see actual error messages
-import { validateAndNormalizeRequest } from './src/utils/validation.js';
+# Moved
 
-console.log('Testing unsupported provider:');
-const result = validateAndNormalizeRequest({ prompt: 'Test', provider: 'unsupported' });
-console.log('Errors:', result.errors);
+This file moved to `reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/test-errors.js`. See `MOVED.md` at the repository root for the full redirect map.

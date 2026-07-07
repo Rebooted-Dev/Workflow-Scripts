@@ -1,6 +1,7 @@
 ---
 date: 2026-07-07
-kind: problem-statement
+category: research
+kind: reference
 status: open
 branch: v2.0a
 related-commit: 2f625ff
