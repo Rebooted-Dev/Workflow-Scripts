@@ -7,6 +7,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-07 | docs | File Drag-Free-v2 migration problem statement | docs/2026-07-07-docs-file-drag-free-v2-migration-problem-statement.md | Filed detailed research on incomplete v2.0a promotion: 92 missing and 16 self-stubbed MOVED.json targets; v1.7 remains intact. |
 | 2026-07-06 | config | Archive Workflow-Scripts consolidated evidence | config/2026-07-06-config-archive-workflow-scripts-consolidated-evidence.md | Archived retained consolidated logs, patches, and status inventories under 00-project/build/archive. |
 | 2026-07-06 | fixed | Restore rationalized planning targets | fixed/2026-07-06-fixed-rationalized-planning-targets.md | Restored missing canonical planning targets and filed the engineering-quality survey rerun. |
 | 2026-07-06 | docs | File adversarial workflow promotion plan | docs/2026-07-06-docs-file-adversarial-workflow-promotion-plan.md | Completed adversarial workflow Phase 5 by filing a separate promotion implementation plan with exact source and destination paths. |
