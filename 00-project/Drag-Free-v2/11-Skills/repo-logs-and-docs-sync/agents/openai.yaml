@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Logs And Docs Sync"
+  short_description: "Update changelog, troubleshooting, docs, and indexes."
+  default_prompt: "Use this skill after code changes or non-trivial debugging to update changelog, troubleshooting, docs, and related indexes."

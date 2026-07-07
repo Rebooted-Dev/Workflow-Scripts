@@ -1,0 +1,3 @@
+name: workflow-skill-maintainer
+description: Create, update, validate, and parity-check Workflow-Scripts skills and generated skill bundles.
+entrypoint: SKILL.md

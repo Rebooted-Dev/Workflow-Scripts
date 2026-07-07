@@ -1,0 +1,44 @@
+name: Workflow Scripts CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Validate workflow catalog and generated files
+        run: |
+          tools/wf validate
+          tools/wf build --check
+          tools/wf build skills --check
+
+      - name: Run repository validation scripts
+        run: |
+          bash scripts/validation/check-wf-cli.sh
+          bash scripts/validation/check-workflow-skills.sh
+          bash scripts/validation/check-active-markdown-links.sh
+          bash scripts/validation/check-orchestrator-review.sh
+          bash scripts/validation/check-review-workflow-policy.sh
+          bash scripts/validation/check-sync-workflow-scripts.sh
+          bash scripts/validation/check-update-workflows.sh
+
+      - name: Shellcheck scripts
+        run: |
+          find scripts tools 00-Meta-Workflow -name '*.sh' -print0 | xargs -0 shellcheck
+
+      - name: Check generated output is committed
+        run: |
+          git diff --check
+          git diff --exit-code

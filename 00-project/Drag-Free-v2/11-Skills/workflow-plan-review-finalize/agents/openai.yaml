@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workflow Plan Review Finalize"
+  short_description: "Review and finalize repo implementation plans."
+  default_prompt: "Use this skill to review a named plan against the live repo, append findings, create a dated final plan, and update plan trackers."

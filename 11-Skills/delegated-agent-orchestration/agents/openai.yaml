@@ -1,0 +1,3 @@
+name: delegated-agent-orchestration
+description: Coordinate helper agents and provider harnesses with single-writer discipline and honest blocked-state reporting.
+entrypoint: SKILL.md

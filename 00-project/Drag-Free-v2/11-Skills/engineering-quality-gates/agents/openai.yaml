@@ -1,0 +1,3 @@
+name: engineering-quality-gates
+description: Apply Workflow-Scripts engineering standards during planning, implementation, code review, security review, and confirmation.
+entrypoint: SKILL.md
