@@ -217,7 +217,7 @@ Additionally, `00-Meta-Workflow/00-plans-completed/` (4 plan files + index) were
 |----------|------|
 | Live root (`workflows/`, `core/`, `reference/`, `tools/`) | Intended canonical v2 layout (incomplete) |
 | Old numbered dirs | Compatibility stubs (mostly) |
-| `00-Drag-Free-v2/` | Planning artifacts, research papers, unified implementation plan |
+| `workflows-drag-free/00-Drag-Free-v2/` | Planning artifacts, research papers, unified implementation plan |
 | `00-project/Drag-Free-v2/` | Second copy of promoted tree with its own stubs and v2 files |
 
 This duplication increases navigation cost and makes it unclear which tree is authoritative during remediation.
@@ -255,7 +255,7 @@ Root `README.md` on `v2.0a` correctly describes the migration model (stubs + `MO
 2. **Multi-stage promotion without atomic commit** — Work spanned Drag-Free-v2 sandbox → live tree → checkpoint branch, with intermediate changelog entries filed as complete.
 3. **Incomplete copy scope** — Core planning/build/review workflows were prioritized; deployment, setup, API integration, and SEO/GEO were stubbed but not copied.
 4. **Canonical path overwrite error** — Some files were stubbed at their own canonical destination (`core/meta/README.md` → `core/meta/README.md`), suggesting a bulk stub script ran against both old and new paths without exclusion rules.
-5. **Duplicate artifact trees** — `00-project/Drag-Free-v2/` and `00-Drag-Free-v2/` preserve overlapping snapshots, obscuring which copy was intended as source-of-truth for the live promotion.
+5. **Duplicate artifact trees** — `00-project/Drag-Free-v2/` and `workflows-drag-free/00-Drag-Free-v2/` preserve overlapping snapshots, obscuring which copy was intended as source-of-truth for the live promotion.
 
 ---
 
@@ -307,7 +307,7 @@ Root `README.md` on `v2.0a` correctly describes the migration model (stubs + `MO
 
 ## Open Questions
 
-1. Was `00-project/Drag-Free-v2/` or `00-Drag-Free-v2/` the intended source tree for the live promotion?
+1. Was `00-project/Drag-Free-v2/` or `workflows-drag-free/00-Drag-Free-v2/` the intended source tree for the live promotion?
 2. Should unmigrated `10-technical-docs/Gemini/Image Generation/` files move to `reference/technical-docs/` or stay at legacy paths?
 3. Should `00-Meta-Workflow/00-plans-completed/` be added to `MOVED.json` or left as a legacy-only enclave?
 4. Is the v2 frontmatter rewrite required for reference/deployment docs, or is a path-only move acceptable for those categories?
@@ -326,7 +326,7 @@ Root `README.md` on `v2.0a` correctly describes the migration model (stubs + `MO
 | Phase 6 changelog | `00-project/changelog/changed/2026-07-06-changed-directory-rationalization.md` |
 | Promotion changelog | `00-project/changelog/config/2026-07-06-config-promote-drag-free-v2-to-live-workflow-scripts.md` |
 | Meta migration decision | `00-project/research/2026-07-06-legacy-meta-workflow-migration-decision.md` |
-| Unified implementation plan | `00-Drag-Free-v2/2026-07-06-drag-free-v2-unified-implementation-plan.md` |
+| Unified implementation plan | `workflows-drag-free/00-Drag-Free-v2/2026-07-06-drag-free-v2-unified-implementation-plan.md` |
 
 ---
 

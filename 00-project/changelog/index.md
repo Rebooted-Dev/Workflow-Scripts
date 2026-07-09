@@ -7,6 +7,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-09 | changed | Move Drag-Free-v2 evidence under workflows-drag-free | changed/2026-07-09-changed-move-drag-free-v2-evidence-under-workflows-drag-free.md | Relocated the legacy planning and research evidence tree under the consolidated v2 root and excluded it from active scans. |
 | 2026-07-09 | changed | Consolidate v2 under workflows-drag-free | changed/2026-07-09-changed-consolidate-v2-under-workflows-drag-free.md | Moved active Drag-Free-v2 support files under workflows-drag-free and updated redirects, validators, generated routing, and current docs. |
 | 2026-07-07 | fixed | Repair Drag-Free-v2 redirect targets | fixed/2026-07-07-fixed-drag-free-v2-redirect-targets.md | Restored all MOVED.json canonical targets, refreshed compatibility stubs, archived Drag-Free-v2 as evidence, and added redirect validation. |
 | 2026-07-07 | docs | File Drag-Free-v2 migration problem statement | docs/2026-07-07-docs-file-drag-free-v2-migration-problem-statement.md | Filed detailed research on incomplete v2.0a promotion: 92 missing and 16 self-stubbed MOVED.json targets; v1.7 remains intact. |

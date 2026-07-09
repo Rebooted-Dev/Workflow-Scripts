@@ -12,6 +12,7 @@ const root = process.argv[2];
 const skipParts = new Set(['.git', 'node_modules', 'backups', 'old-reviews']);
 const skipPathPatterns = [
   /(^|\/)00-Meta-Workflow\/00-plans-completed(\/|$)/,
+  /(^|\/)00-Drag-Free-v2(\/|$)/,
 ];
 const linkPattern = /!?\[[^\]]*\]\(([^)]+)\)/g;
 const problems = [];

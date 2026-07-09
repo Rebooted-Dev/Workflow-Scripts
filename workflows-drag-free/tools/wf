@@ -116,6 +116,8 @@ def markdown_files(base: Path):
         path_rel = rel(path, base)
         if path_rel.startswith("00-project/Drag-Free-v2/"):
             continue
+        if path_rel.startswith("00-Drag-Free-v2/"):
+            continue
         yield path
 
 
