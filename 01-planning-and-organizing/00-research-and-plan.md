@@ -1,3 +1,3 @@
 # Moved
 
-This file moved to `workflows/planning/00-research-and-plan.md`. See `MOVED.md` at the repository root for the full redirect map.
+This file moved to `workflows-drag-free/planning/00-research-and-plan.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.

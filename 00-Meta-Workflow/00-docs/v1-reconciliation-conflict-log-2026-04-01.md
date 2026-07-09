@@ -1,3 +1,3 @@
 # Moved
 
-This file moved to `reference/meta-workflow/docs/v1-reconciliation-conflict-log-2026-04-01.md`. See `MOVED.md` at the repository root for the full redirect map.
+This file moved to `workflows-drag-free/reference/meta-workflow/docs/v1-reconciliation-conflict-log-2026-04-01.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.

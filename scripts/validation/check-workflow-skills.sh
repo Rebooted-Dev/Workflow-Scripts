@@ -11,7 +11,7 @@ import sys
 
 root = Path.cwd()
 skill_root = root / "11-Skills"
-workflow_root = root / "workflows"
+workflow_root = root / "workflows-drag-free"
 errors = []
 
 def frontmatter(path):

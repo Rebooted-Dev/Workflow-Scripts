@@ -1,0 +1,1023 @@
+{
+  "generated_by": "tools/wf build",
+  "records": [
+    {
+      "created": "2026-03-18",
+      "id": "2026-03-18-SEO-Dashboard-2026-03-18-seo-tool-integration-strategy",
+      "name": "seo-tool-integration-strategy",
+      "overview": "Comprehensive strategy for consolidating fragmented SEO tools into unified workflows to minimize tool-hopping and maximize efficiency.",
+      "path": "seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-seo-tool-integration-strategy.md",
+      "research_completed": "2026-03-18",
+      "status": "draft",
+      "title": "SEO Tool Integration Strategy",
+      "type": "strategy"
+    },
+    {
+      "created": "2026-03-18",
+      "id": "2026-03-18-SEO-Dashboard-2026-03-18-stack-a-mvp-poc-implementation-plan",
+      "name": "stack-a-mvp-poc-implementation-plan",
+      "overview": "MVP and Proof of Concept implementation plan for Stack A (Zero-Cost Maximum Consolidation SEO Tool Stack)",
+      "path": "seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-mvp-poc-implementation-plan.md",
+      "priority": "high",
+      "status": "draft",
+      "title": "Stack A MVP & Proof of Concept Implementation Plan",
+      "type": "implementation-plan"
+    },
+    {
+      "consolidated_from": [
+        "/Volumes/Skynet/Software Development Projects/Websites/Ai-Mian's-Clinic/project/plans/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-mvp-poc-implementation-plan.md"
+      ],
+      "created": "2026-03-18",
+      "id": "2026-03-18-SEO-Dashboard-2026-03-18-stack-a-seo-dashboard-implementation-plan",
+      "name": "stack-a-seo-dashboard-implementation-plan",
+      "overview": "Detailed implementation plan for Stack A SEO Dashboard MVP with priority-ordered phases, dependencies, and verification steps",
+      "path": "seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md",
+      "priority": "high",
+      "status": "draft",
+      "title": "Stack A SEO Dashboard - Detailed Implementation Plan",
+      "type": "implementation-plan",
+      "updated": "2026-03-18"
+    },
+    {
+      "id": "code-design",
+      "kind": "standard",
+      "path": "core/standards/code-design.md",
+      "status": "active",
+      "title": "Code Design Standard"
+    },
+    {
+      "id": "debt-ledger",
+      "kind": "standard",
+      "path": "core/debt-ledger.md",
+      "status": "active",
+      "title": "Debt Ledger"
+    },
+    {
+      "id": "deployment-07-seo-and-ai-search-phased-implementation-with-submission-1cca3e93-plan",
+      "isProject": "false",
+      "name": "seo-and-ai-search-phased-implementation-with-submission",
+      "overview": "Extended phased implementation plan for making a new website SEO-ready and AI-search/chatbot-friendly, including explicit steps for submitting the site to search engines and establishing an ongoing monitoring cadence.",
+      "path": "deployment/07-seo-and-ai-search-phased-implementation-with-submission_1cca3e93.plan.md",
+      "title": "07 Seo And Ai Search Phased Implementation With Submission_1Cca3E93.Plan",
+      "todos": [
+        "id: phase6b-gsc",
+        "id: phase6b-bing",
+        "id: phase6b-indexnow",
+        "id: phase6b-alt-engines",
+        "id: phase6c-local-directories",
+        "id: phase9-ai-visibility"
+      ]
+    },
+    {
+      "id": "error-handling",
+      "kind": "standard",
+      "path": "core/standards/error-handling.md",
+      "status": "active",
+      "title": "Error Handling Standard"
+    },
+    {
+      "id": "observability",
+      "kind": "standard",
+      "path": "core/standards/observability.md",
+      "status": "active",
+      "title": "Observability Standard"
+    },
+    {
+      "id": "security-baseline",
+      "kind": "standard",
+      "path": "core/standards/security-baseline.md",
+      "status": "active",
+      "title": "Security Baseline Standard"
+    },
+    {
+      "category": "build",
+      "id": "build-02-code-build-readme",
+      "kind": "reference",
+      "path": "build/README.md",
+      "title": "Code Build Workflows",
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "bug-hunter",
+        "test-strategist",
+        "docs-writer",
+        "security-scanner"
+      ],
+      "category": "build",
+      "id": "confirm-execution",
+      "inputs": [
+        "plan-path"
+      ],
+      "kind": "workflow",
+      "next": [
+        "mark-completed"
+      ],
+      "outputs": [
+        "verification-addendum"
+      ],
+      "path": "build/02-confirm-execution.md",
+      "prev": [
+        "execution"
+      ],
+      "requires": [
+        "metadata-root",
+        "parallel-agents",
+        "verification-gates",
+        "filing-and-logging"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "repo-records-and-filing",
+        "skill: delegated-agent-orchestration"
+      ],
+      "title": "Workflow: Confirm Execution",
+      "triggers": [
+        "confirm execution",
+        "verify this implementation plan"
+      ],
+      "version": "2.0"
+    },
+    {
+      "category": "build",
+      "id": "execute-and-confirm",
+      "inputs": [
+        "plan-path"
+      ],
+      "kind": "workflow",
+      "next": [
+        "mark-completed"
+      ],
+      "outputs": [
+        "implemented-code",
+        "verification-addendum"
+      ],
+      "path": "build/03-execute-and-confirm.md",
+      "prev": [
+        "finalise-plan"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "repo-records-and-filing",
+        "skill: delegated-agent-orchestration"
+      ],
+      "title": "Workflow: Execute and Confirm",
+      "triggers": [
+        "execute and confirm",
+        "run execution then confirm"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "implementer",
+        "test-writer",
+        "security-scanner",
+        "docs-writer"
+      ],
+      "category": "build",
+      "id": "execution",
+      "inputs": [
+        "plan-path"
+      ],
+      "kind": "workflow",
+      "next": [
+        "confirm-execution"
+      ],
+      "outputs": [
+        "implemented-code",
+        "changelog-entry"
+      ],
+      "path": "build/01-execution.md",
+      "prev": [
+        "finalise-plan"
+      ],
+      "requires": [
+        "metadata-root",
+        "filing-and-logging",
+        "parallel-agents",
+        "verification-gates",
+        "code-design",
+        "error-handling",
+        "observability",
+        "security-baseline"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "repo-records-and-filing",
+        "skill: delegated-agent-orchestration"
+      ],
+      "title": "Workflow: Execution",
+      "triggers": [
+        "execute the plan",
+        "proceed with this plan"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "bug-hunter",
+        "test-writer",
+        "security-scanner",
+        "docs-writer"
+      ],
+      "category": "debugging",
+      "id": "bug-fix-workflow",
+      "inputs": [
+        "bug-report",
+        "repository-root"
+      ],
+      "kind": "workflow",
+      "next": [
+        "confirm-execution"
+      ],
+      "outputs": [
+        "bug-fix",
+        "regression-test",
+        "changelog-entry"
+      ],
+      "path": "debugging/02-bug-fix-workflow.md",
+      "prev": [
+        "bug-description"
+      ],
+      "requires": [
+        "metadata-root",
+        "filing-and-logging",
+        "verification-gates",
+        "code-design",
+        "error-handling",
+        "observability",
+        "security-baseline"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "repo-records-and-filing",
+        "skill: delegated-agent-orchestration"
+      ],
+      "title": "Workflow: Bug Fix",
+      "triggers": [
+        "fix this bug",
+        "debug this issue"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "security-scanner",
+        "docs-writer"
+      ],
+      "category": "deployment",
+      "id": "deploy",
+      "inputs": [
+        "deployment-target"
+      ],
+      "kind": "workflow",
+      "next": [],
+      "outputs": [
+        "deployment-record"
+      ],
+      "path": "deployment/00-deploy.md",
+      "prev": [
+        "confirm-execution"
+      ],
+      "requires": [
+        "metadata-root",
+        "security-baseline",
+        "observability"
+      ],
+      "title": "Workflow: Deploy",
+      "triggers": [
+        "deploy",
+        "release"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "architecture-reviewer",
+        "security-scanner",
+        "test-strategist"
+      ],
+      "category": "planning",
+      "id": "architecture-design",
+      "inputs": [
+        "goal",
+        "repository-root"
+      ],
+      "kind": "workflow",
+      "next": [
+        "plan-review"
+      ],
+      "outputs": [
+        "design-brief",
+        "architecture-decision-records"
+      ],
+      "path": "planning/04-architecture-design.md",
+      "prev": [
+        "research-and-plan"
+      ],
+      "requires": [
+        "metadata-root",
+        "code-design",
+        "error-handling",
+        "observability",
+        "security-baseline"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "repo-records-and-filing",
+        "skill: delegated-agent-orchestration"
+      ],
+      "title": "Workflow: Architecture Design",
+      "triggers": [
+        "architecture design",
+        "design brief",
+        "adr"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "architecture-reviewer",
+        "test-strategist",
+        "security-scanner"
+      ],
+      "category": "planning",
+      "id": "plan-review",
+      "inputs": [
+        "plan-path",
+        "repository-root"
+      ],
+      "kind": "workflow",
+      "next": [
+        "finalise-plan"
+      ],
+      "outputs": [
+        "plan-review-findings"
+      ],
+      "path": "planning/01-plan-review.md",
+      "prev": [
+        "research-and-plan"
+      ],
+      "requires": [
+        "metadata-root",
+        "parallel-agents",
+        "verification-gates",
+        "code-design",
+        "error-handling",
+        "observability",
+        "security-baseline"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "delegated-agent-orchestration",
+        "repo-records-and-filing"
+      ],
+      "title": "Workflow: Plan Review",
+      "triggers": [
+        "review this plan",
+        "plan review"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "architecture-reviewer",
+        "test-strategist",
+        "docs-writer"
+      ],
+      "category": "planning",
+      "id": "plan-review-and-finalise",
+      "inputs": [
+        "plan-path",
+        "review-findings"
+      ],
+      "kind": "workflow",
+      "next": [
+        "execution"
+      ],
+      "outputs": [
+        "final-implementation-plan"
+      ],
+      "path": "planning/03-plan-review-and-finalise.md",
+      "prev": [
+        "plan-review"
+      ],
+      "requires": [
+        "metadata-root",
+        "filing-and-logging",
+        "verification-gates"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "repo-records-and-filing",
+        "skill: delegated-agent-orchestration"
+      ],
+      "title": "Workflow: Plan Review and Finalisation",
+      "triggers": [
+        "review and finalise this plan",
+        "finalize this plan after review"
+      ],
+      "version": "2.0"
+    },
+    {
+      "category": "planning",
+      "id": "planning-fable-like",
+      "kind": "reference",
+      "path": "planning/fable-like.md",
+      "title": "Claude Fable 5 - System Prompt",
+      "version": "2.0"
+    },
+    {
+      "category": "planning",
+      "id": "planning-readme",
+      "kind": "reference",
+      "path": "planning/README.md",
+      "title": "Planning Workflows",
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "architecture-reviewer",
+        "test-strategist",
+        "docs-writer"
+      ],
+      "category": "planning",
+      "id": "research-and-plan",
+      "inputs": [
+        "goal",
+        "repository-root"
+      ],
+      "kind": "workflow",
+      "next": [
+        "plan-review"
+      ],
+      "outputs": [
+        "research-findings",
+        "implementation-plan"
+      ],
+      "path": "planning/00-research-and-plan.md",
+      "prev": [],
+      "requires": [
+        "metadata-root",
+        "parallel-agents",
+        "code-design",
+        "error-handling",
+        "observability",
+        "security-baseline"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "repo-records-and-filing",
+        "skill: delegated-agent-orchestration"
+      ],
+      "title": "Workflow: Research and Create Implementation Plan",
+      "triggers": [
+        "research and plan",
+        "create implementation plan"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "bug-hunter",
+        "security-scanner",
+        "performance-reviewer",
+        "docs-writer"
+      ],
+      "category": "review",
+      "id": "code-review",
+      "inputs": [
+        "repository-root",
+        "focus-areas"
+      ],
+      "kind": "workflow",
+      "next": [
+        "filed-code-review-to-remediation"
+      ],
+      "outputs": [
+        "code-review-report"
+      ],
+      "path": "review/01-code-review.md",
+      "prev": [
+        "confirm-execution"
+      ],
+      "requires": [
+        "metadata-root",
+        "parallel-agents",
+        "review-workflow-core",
+        "severity-priority-rubric",
+        "code-design",
+        "error-handling",
+        "observability",
+        "security-baseline"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "delegated-agent-orchestration",
+        "repo-records-and-filing"
+      ],
+      "title": "Workflow: Code Review",
+      "triggers": [
+        "review this codebase",
+        "code review"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "bug-hunter",
+        "security-scanner",
+        "performance-reviewer",
+        "docs-writer"
+      ],
+      "category": "review",
+      "id": "comprehensive-audit",
+      "inputs": [
+        "repository-root",
+        "audit-scope"
+      ],
+      "kind": "workflow",
+      "next": [
+        "finalise-plan"
+      ],
+      "outputs": [
+        "comprehensive-audit-report"
+      ],
+      "path": "review/05-comprehensive-audit.md",
+      "prev": [
+        "code-review"
+      ],
+      "requires": [
+        "metadata-root",
+        "review-workflow-core",
+        "severity-priority-rubric",
+        "agent-spawning-policy"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "delegated-agent-orchestration",
+        "repo-records-and-filing"
+      ],
+      "title": "Workflow: Comprehensive Audit",
+      "triggers": [
+        "comprehensive audit",
+        "audit this repo",
+        "full repository audit"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "bug-hunter",
+        "security-scanner",
+        "performance-reviewer",
+        "docs-writer"
+      ],
+      "category": "review",
+      "id": "deep-review",
+      "inputs": [
+        "repository-root",
+        "optional-focus"
+      ],
+      "kind": "workflow",
+      "next": [
+        "finalise-plan"
+      ],
+      "outputs": [
+        "deep-review-report",
+        "verification-addendum"
+      ],
+      "path": "review/06-deep-review.md",
+      "prev": [],
+      "requires": [
+        "metadata-root",
+        "review-workflow-core",
+        "severity-priority-rubric",
+        "agent-spawning-policy"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "delegated-agent-orchestration",
+        "repo-records-and-filing"
+      ],
+      "title": "Workflow: Deep Review",
+      "triggers": [
+        "deep review",
+        "comprehensive deep review",
+        "multi-lens review"
+      ],
+      "version": "2.0"
+    },
+    {
+      "category": "review",
+      "id": "review-readme",
+      "kind": "reference",
+      "path": "review/README.md",
+      "title": "Review & Audit Workflows",
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "bug-hunter",
+        "performance-reviewer",
+        "docs-writer"
+      ],
+      "category": "review",
+      "id": "website-data-refactoring",
+      "inputs": [
+        "repository-root",
+        "content-scope"
+      ],
+      "kind": "workflow",
+      "next": [
+        "finalise-plan"
+      ],
+      "outputs": [
+        "website-data-refactor-plan"
+      ],
+      "path": "review/04-website-data-refactoring.md",
+      "prev": [
+        "code-review"
+      ],
+      "requires": [
+        "metadata-root",
+        "review-workflow-core",
+        "severity-priority-rubric"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "repo-records-and-filing"
+      ],
+      "title": "Workflow: Website Data Refactoring",
+      "triggers": [
+        "website data refactor",
+        "refactor website content data",
+        "content model review"
+      ],
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "architecture-reviewer",
+      "kind": "role",
+      "mission": "Review boundaries, dependencies, interfaces, and architectural tradeoffs.",
+      "path": "core/roles/architecture-reviewer.md",
+      "tier": "strong",
+      "title": "Architecture Reviewer",
+      "tools": "read-only",
+      "verify": "different-model",
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "bug-hunter",
+      "kind": "role",
+      "mission": "Find behavioral defects, edge cases, stale state, and regression risks.",
+      "path": "core/roles/bug-hunter.md",
+      "tier": "medium",
+      "title": "Bug Hunter",
+      "tools": "read-only",
+      "verify": "same-model-ok",
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "dependency-reviewer",
+      "kind": "role",
+      "mission": "Review dependency, supply-chain, licensing, and versioning risks.",
+      "path": "core/roles/dependency-reviewer.md",
+      "tier": "medium",
+      "title": "Dependency Reviewer",
+      "tools": "read-only",
+      "verify": "same-model-ok",
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "docs-writer",
+      "kind": "role",
+      "mission": "Keep user-facing and operator documentation aligned with implementation changes.",
+      "path": "core/roles/docs-writer.md",
+      "tier": "light",
+      "title": "Docs Writer",
+      "tools": "write-docs",
+      "verify": "same-model-ok",
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "implementer",
+      "kind": "role",
+      "mission": "Apply scoped implementation changes using existing repository patterns.",
+      "path": "core/roles/implementer.md",
+      "tier": "medium",
+      "title": "Implementer",
+      "tools": "write-code",
+      "verify": "same-model-ok",
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "performance-reviewer",
+      "kind": "role",
+      "mission": "Review runtime, scaling, latency, resource, and repeated-work risks.",
+      "path": "core/roles/performance-reviewer.md",
+      "tier": "medium",
+      "title": "Performance Reviewer",
+      "tools": "read-only",
+      "verify": "same-model-ok",
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "security-scanner",
+      "kind": "role",
+      "mission": "Review security-sensitive changes, trust boundaries, secrets, and unsafe execution paths.",
+      "path": "core/roles/security-scanner.md",
+      "tier": "strong",
+      "title": "Security Scanner",
+      "tools": "read-only",
+      "verify": "different-model",
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "test-strategist",
+      "kind": "role",
+      "mission": "Define practical verification coverage for the task risk and repository test surface.",
+      "path": "core/roles/test-strategist.md",
+      "tier": "medium",
+      "title": "Test Strategist",
+      "tools": "read-only",
+      "verify": "same-model-ok",
+      "version": "2.0"
+    },
+    {
+      "category": "roles",
+      "id": "test-writer",
+      "kind": "role",
+      "mission": "Add or update focused tests for changed behavior and confirmed bugs.",
+      "path": "core/roles/test-writer.md",
+      "tier": "medium",
+      "title": "Test Writer",
+      "tools": "write-tests",
+      "verify": "same-model-ok",
+      "version": "2.0"
+    },
+    {
+      "category": "root",
+      "id": "moved",
+      "kind": "reference",
+      "path": "MOVED.md",
+      "title": "MOVED",
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "security-scanner",
+        "dependency-reviewer",
+        "bug-hunter"
+      ],
+      "category": "security",
+      "id": "security-review",
+      "inputs": [
+        "repository-root",
+        "focus-areas",
+        "security-requirements"
+      ],
+      "kind": "workflow",
+      "next": [
+        "security-fix"
+      ],
+      "outputs": [
+        "security-review-report"
+      ],
+      "path": "security/01-security-review.md",
+      "prev": [
+        "confirm-execution"
+      ],
+      "requires": [
+        "metadata-root",
+        "parallel-agents",
+        "review-workflow-core",
+        "severity-priority-rubric",
+        "security-baseline",
+        "error-handling",
+        "observability"
+      ],
+      "skills": [
+        "workflow-intake-and-routing",
+        "engineering-quality-gates",
+        "delegated-agent-orchestration",
+        "repo-records-and-filing"
+      ],
+      "title": "Workflow: Security Review",
+      "triggers": [
+        "security review",
+        "audit security"
+      ],
+      "version": "2.0"
+    },
+    {
+      "agents": [
+        "architecture-reviewer",
+        "test-strategist",
+        "security-scanner",
+        "docs-writer"
+      ],
+      "category": "setup",
+      "id": "setup-greenfield-mvp",
+      "inputs": [
+        "product-brief",
+        "target-deployment"
+      ],
+      "kind": "workflow",
+      "next": [
+        "research-and-plan",
+        "execution"
+      ],
+      "outputs": [
+        "walking-skeleton",
+        "deployment-path",
+        "debt-ledger"
+      ],
+      "path": "setup/08-greenfield-mvp.md",
+      "prev": [],
+      "requires": [
+        "metadata-root",
+        "code-design",
+        "error-handling",
+        "observability",
+        "security-baseline"
+      ],
+      "title": "Workflow: Greenfield MVP",
+      "triggers": [
+        "start a new project",
+        "greenfield mvp",
+        "walking skeleton"
+      ],
+      "version": "2.0"
+    }
+  ],
+  "redirects": {
+    "00-Meta-Workflow/00-docs/CODE-REVIEW-WORKFLOW-SCRIPTS-2026-02-28.md": "workflows-drag-free/reference/meta-workflow/docs/CODE-REVIEW-WORKFLOW-SCRIPTS-2026-02-28.md",
+    "00-Meta-Workflow/00-docs/README.md": "workflows-drag-free/reference/meta-workflow/docs/README.md",
+    "00-Meta-Workflow/00-docs/WORKFLOW_TO_SKILLS_MAPPING_REPORT.md": "workflows-drag-free/reference/meta-workflow/docs/WORKFLOW_TO_SKILLS_MAPPING_REPORT.md",
+    "00-Meta-Workflow/00-docs/old-reviews/README.md": "workflows-drag-free/reference/meta-workflow/docs/old-reviews/README.md",
+    "00-Meta-Workflow/00-docs/old-reviews/SCRIPT-REVIEW-REPORT.md": "workflows-drag-free/reference/meta-workflow/docs/old-reviews/SCRIPT-REVIEW-REPORT.md",
+    "00-Meta-Workflow/00-docs/old-reviews/WORKFLOWS_CRITIQUE.md": "workflows-drag-free/reference/meta-workflow/docs/old-reviews/WORKFLOWS_CRITIQUE.md",
+    "00-Meta-Workflow/00-docs/v1-reconciliation-conflict-log-2026-04-01.md": "workflows-drag-free/reference/meta-workflow/docs/v1-reconciliation-conflict-log-2026-04-01.md",
+    "00-Meta-Workflow/00-meta/README.md": "workflows-drag-free/core/meta/README.md",
+    "00-Meta-Workflow/00-meta/agent-flexibility-review.md": "workflows-drag-free/core/meta/agent-flexibility-review.md",
+    "00-Meta-Workflow/00-meta/agent-spawning-policy.md": "workflows-drag-free/core/meta/agent-spawning-policy.md",
+    "00-Meta-Workflow/00-meta/filename-review.md": "workflows-drag-free/core/meta/filename-review.md",
+    "00-Meta-Workflow/00-meta/glossary.md": "workflows-drag-free/core/meta/glossary.md",
+    "00-Meta-Workflow/00-meta/naming-conventions.md": "workflows-drag-free/core/meta/naming-conventions.md",
+    "00-Meta-Workflow/00-meta/parallel-agents-review.md": "workflows-drag-free/core/meta/parallel-agents-review.md",
+    "00-Meta-Workflow/00-meta/review-workflow-core.md": "workflows-drag-free/core/meta/review-workflow-core.md",
+    "00-Meta-Workflow/00-meta/severity-priority-rubric.md": "workflows-drag-free/core/meta/severity-priority-rubric.md",
+    "00-Meta-Workflow/00-meta/sync-summary-template.md": "workflows-drag-free/core/meta/sync-summary-template.md",
+    "00-Meta-Workflow/00-orchestrator/README.md": "workflows-drag-free/tools/orchestrator/README.md",
+    "00-Meta-Workflow/00-orchestrator/orchestrator-plan-review.md": "workflows-drag-free/tools/orchestrator/orchestrator-plan-review.md",
+    "00-Meta-Workflow/00-orchestrator/orchestrator-review.sh": "workflows-drag-free/tools/orchestrator/orchestrator-review.sh",
+    "00-Meta-Workflow/00-plans/index.md": "workflows-drag-free/reference/meta-workflow/plans/index.md",
+    "00-Meta-Workflow/00-token-efficiency/fable-token-savings.md": "workflows-drag-free/reference/meta-workflow/token-efficiency/fable-token-savings.md",
+    "00-project-setup/01-setup-project.md": "workflows-drag-free/setup/01-setup-project.md",
+    "00-project-setup/02-optimize-workflow-scripts.md": "workflows-drag-free/setup/02-optimize-workflow-scripts.md",
+    "00-project-setup/03-sync-workflow-scripts.md": "workflows-drag-free/setup/03-sync-workflow-scripts.md",
+    "00-project-setup/04-track-repos-and-agent-map.md": "workflows-drag-free/setup/04-track-repos-and-agent-map.md",
+    "00-project-setup/05-mcp-and-config-setup.md": "workflows-drag-free/setup/05-mcp-and-config-setup.md",
+    "00-project-setup/06-skills-setup.md": "workflows-drag-free/setup/06-skills-setup.md",
+    "00-project-setup/07-migrate-project-structure.md": "workflows-drag-free/setup/07-migrate-project-structure.md",
+    "00-project-setup/08-greenfield-mvp.md": "workflows-drag-free/setup/08-greenfield-mvp.md",
+    "00-project-setup/README.md": "workflows-drag-free/setup/README.md",
+    "01-planning-and-organizing/00-research-and-plan.md": "workflows-drag-free/planning/00-research-and-plan.md",
+    "01-planning-and-organizing/01-plan-review.md": "workflows-drag-free/planning/01-plan-review.md",
+    "01-planning-and-organizing/02-finalise-plan.md": "workflows-drag-free/planning/02-finalise-plan.md",
+    "01-planning-and-organizing/03-plan-review-and-finalise.md": "workflows-drag-free/planning/03-plan-review-and-finalise.md",
+    "01-planning-and-organizing/04-architecture-design.md": "workflows-drag-free/planning/04-architecture-design.md",
+    "01-planning-and-organizing/README.md": "workflows-drag-free/planning/README.md",
+    "01-planning-and-organizing/fable-like.md": "workflows-drag-free/planning/fable-like.md",
+    "02-code-build/01-execution.md": "workflows-drag-free/build/01-execution.md",
+    "02-code-build/02-confirm-execution.md": "workflows-drag-free/build/02-confirm-execution.md",
+    "02-code-build/03-execute-and-confirm.md": "workflows-drag-free/build/03-execute-and-confirm.md",
+    "02-code-build/README.md": "workflows-drag-free/build/README.md",
+    "03-debugging/01-bug-description.md": "workflows-drag-free/debugging/01-bug-description.md",
+    "03-debugging/02-bug-fix-workflow.md": "workflows-drag-free/debugging/02-bug-fix-workflow.md",
+    "03-debugging/README.md": "workflows-drag-free/debugging/README.md",
+    "04-documentation/00-doc-templates.md": "workflows-drag-free/documentation/00-doc-templates.md",
+    "04-documentation/01-create-docs.md": "workflows-drag-free/documentation/01-create-docs.md",
+    "04-documentation/02-sync-documentation.md": "workflows-drag-free/documentation/02-sync-documentation.md",
+    "04-documentation/03-mark-completed.md": "workflows-drag-free/documentation/03-mark-completed.md",
+    "04-documentation/09-optional.md": "workflows-drag-free/documentation/09-optional.md",
+    "04-documentation/README.md": "workflows-drag-free/documentation/README.md",
+    "04-documentation/ascii-art-prompts.md": "workflows-drag-free/documentation/ascii-art-prompts.md",
+    "05-review/01-code-review.md": "workflows-drag-free/review/01-code-review.md",
+    "05-review/02-code-optimization.md": "workflows-drag-free/review/02-code-optimization.md",
+    "05-review/03-code-refactoring.md": "workflows-drag-free/review/03-code-refactoring.md",
+    "05-review/04-website-data-refactoring.md": "workflows-drag-free/review/04-website-data-refactoring.md",
+    "05-review/05-comprehensive-audit.md": "workflows-drag-free/review/05-comprehensive-audit.md",
+    "05-review/README.md": "workflows-drag-free/review/README.md",
+    "06-security/01-security-review.md": "workflows-drag-free/security/01-security-review.md",
+    "06-security/02-security-fix.md": "workflows-drag-free/security/02-security-fix.md",
+    "06-security/README.md": "workflows-drag-free/security/README.md",
+    "07-deployment/00-deploy.md": "workflows-drag-free/deployment/00-deploy.md",
+    "07-deployment/01a-MACOS_ELECTRON_GUIDE.md": "workflows-drag-free/deployment/01a-MACOS_ELECTRON_GUIDE.md",
+    "07-deployment/01b-electron-vite.md": "workflows-drag-free/deployment/01b-electron-vite.md",
+    "07-deployment/02-ai-studio-to-desktop.md": "workflows-drag-free/deployment/02-ai-studio-to-desktop.md",
+    "07-deployment/07-seo-and-ai-search-phased-implementation-with-submission_1cca3e93.plan.md": "workflows-drag-free/deployment/07-seo-and-ai-search-phased-implementation-with-submission_1cca3e93.plan.md",
+    "07-deployment/08-port-relocation/README.md": "workflows-drag-free/deployment/08-port-relocation/README.md",
+    "07-deployment/08-port-relocation/browser-auto-open.md": "workflows-drag-free/deployment/08-port-relocation/browser-auto-open.md",
+    "07-deployment/08-port-relocation/port-management-guide.md": "workflows-drag-free/deployment/08-port-relocation/port-management-guide.md",
+    "07-deployment/08a-pre-deployment-security-check.md": "workflows-drag-free/deployment/08a-pre-deployment-security-check.md",
+    "07-deployment/08b-DEPLOYMENT_OPTIMIZATION_REPORT.md": "workflows-drag-free/deployment/08b-DEPLOYMENT_OPTIMIZATION_REPORT.md",
+    "07-deployment/README.md": "workflows-drag-free/deployment/README.md",
+    "08-API-Integration/01-genkit/README.md": "workflows-drag-free/reference/api-integration/01-genkit/README.md",
+    "08-API-Integration/01-genkit/genkit-integration-guide.md": "workflows-drag-free/reference/api-integration/01-genkit/genkit-integration-guide.md",
+    "08-API-Integration/02-AI-SDK/README.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/README.md",
+    "08-API-Integration/02-AI-SDK/ai-sdk-integration-v2.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/ai-sdk-integration-v2.md",
+    "08-API-Integration/02-AI-SDK/service-providers/README.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/service-providers/README.md",
+    "08-API-Integration/02-AI-SDK/service-providers/fal.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/service-providers/fal.md",
+    "08-API-Integration/02-AI-SDK/service-providers/google.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/service-providers/google.md",
+    "08-API-Integration/02-AI-SDK/service-providers/openai.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/service-providers/openai.md",
+    "08-API-Integration/02-AI-SDK/service-providers/openrouter.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/service-providers/openrouter.md",
+    "08-API-Integration/02-AI-SDK/service-providers/xai.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/service-providers/xai.md",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/CHANGELOG.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/CHANGELOG.md",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/README.md": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/README.md",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/demo.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/demo.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/package-lock.json": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/package-lock.json",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/package.json": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/package.json",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/config/builder.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/config/builder.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/core/generator.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/core/generator.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/core/registry.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/core/registry.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/core/types.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/core/types.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/index.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/index.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/base.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/base.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/factory.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/factory.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/fal.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/fal.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/google.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/google.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/openai.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/openai.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/xai.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/providers/xai.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/utils/retry.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/utils/retry.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/utils/validation.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/src/utils/validation.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/test-errors.js": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/test-errors.js",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/test-fal.js": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/test-fal.js",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/test-summary.js": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/test-summary.js",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/config/builder.test.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/config/builder.test.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/core/generator.test.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/core/generator.test.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/core/registry.test.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/core/registry.test.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/providers/factory.test.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/providers/factory.test.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/providers/openai.test.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/providers/openai.test.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/utils/retry.test.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/utils/retry.test.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/utils/validation.test.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/utils/validation.test.ts",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tsconfig.json": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tsconfig.json",
+    "08-API-Integration/02-AI-SDK/src-core/@ai-sdk-image-generation/vite.config.ts": "workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/vite.config.ts",
+    "08-API-Integration/03-higgsfield-mcp/README.md": "workflows-drag-free/reference/api-integration/03-higgsfield-mcp/README.md",
+    "08-API-Integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md": "workflows-drag-free/reference/api-integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md",
+    "08-API-Integration/09-nextjs-react-update.md": "workflows-drag-free/reference/api-integration/09-nextjs-react-update.md",
+    "08-API-Integration/10-firebase-setup.md": "workflows-drag-free/reference/api-integration/10-firebase-setup.md",
+    "08-API-Integration/11-nginx.md": "workflows-drag-free/reference/api-integration/11-nginx.md",
+    "08-API-Integration/2026-06-03-higgsfield-mcp-connect-auth-reconnect-technical-note.md": "workflows-drag-free/reference/api-integration/2026-06-03-higgsfield-mcp-connect-auth-reconnect-technical-note.md",
+    "08-API-Integration/OPTIMIZATION_HISTORY.md": "workflows-drag-free/reference/api-integration/OPTIMIZATION_HISTORY.md",
+    "08-API-Integration/README.md": "workflows-drag-free/reference/api-integration/README.md",
+    "08-API-Integration/backups/2026-01-21/01-genkit/GENKIT_MIGRATION_COMPLETED.md": "workflows-drag-free/reference/api-integration/backups/2026-01-21/01-genkit/GENKIT_MIGRATION_COMPLETED.md",
+    "08-API-Integration/backups/2026-01-21/01-genkit/genkit-integration-plan.md": "workflows-drag-free/reference/api-integration/backups/2026-01-21/01-genkit/genkit-integration-plan.md",
+    "08-API-Integration/backups/2026-01-21/01-genkit/genkit-integration.md": "workflows-drag-free/reference/api-integration/backups/2026-01-21/01-genkit/genkit-integration.md",
+    "08-API-Integration/backups/2026-01-21/01-genkit/genkit-migration-implementation.md": "workflows-drag-free/reference/api-integration/backups/2026-01-21/01-genkit/genkit-migration-implementation.md",
+    "08-API-Integration/gemini-token-caching-analysis.md": "workflows-drag-free/reference/api-integration/gemini-token-caching-analysis.md",
+    "10-technical-docs/Gemini/Background-execution.md": "workflows-drag-free/reference/technical-docs/Gemini/Background-execution.md",
+    "10-technical-docs/Gemini/Image Generation/image-understanding.md": "workflows-drag-free/reference/technical-docs/Gemini/Image Generation/image-understanding.md",
+    "10-technical-docs/Gemini/Image Generation/media-resolution.md": "workflows-drag-free/reference/technical-docs/Gemini/Image Generation/media-resolution.md",
+    "10-technical-docs/Gemini/Image Generation/nano-banana.md": "workflows-drag-free/reference/technical-docs/Gemini/Image Generation/nano-banana.md",
+    "10-technical-docs/Gemini/Interactions-api.md": "workflows-drag-free/reference/technical-docs/Gemini/Interactions-api.md",
+    "10-technical-docs/Gemini/Live/live-api.md": "workflows-drag-free/reference/technical-docs/Gemini/Live/live-api.md",
+    "10-technical-docs/Gemini/Live/live-translate.md": "workflows-drag-free/reference/technical-docs/Gemini/Live/live-translate.md",
+    "10-technical-docs/Gemini/OpenAI-Compatibility.md": "workflows-drag-free/reference/technical-docs/Gemini/OpenAI-Compatibility.md",
+    "10-technical-docs/Gemini/Thinking/thinking.md": "workflows-drag-free/reference/technical-docs/Gemini/Thinking/thinking.md",
+    "10-technical-docs/Gemini/Thinking/thought-signatures.md": "workflows-drag-free/reference/technical-docs/Gemini/Thinking/thought-signatures.md",
+    "10-technical-docs/Gemini/Token-counting.md": "workflows-drag-free/reference/technical-docs/Gemini/Token-counting.md",
+    "10-technical-docs/Gemini/long-context.md": "workflows-drag-free/reference/technical-docs/Gemini/long-context.md",
+    "10-technical-docs/Gemini/structured-output.md": "workflows-drag-free/reference/technical-docs/Gemini/structured-output.md",
+    "10-technical-docs/Gemini/text-generation.md": "workflows-drag-free/reference/technical-docs/Gemini/text-generation.md",
+    "12-SEO-GEO-checklist/01-fully-automated-tasks.md": "workflows-drag-free/seo-geo/01-fully-automated-tasks.md",
+    "12-SEO-GEO-checklist/02-semi-automated-tasks.md": "workflows-drag-free/seo-geo/02-semi-automated-tasks.md",
+    "12-SEO-GEO-checklist/03-manual-human-tasks.md": "workflows-drag-free/seo-geo/03-manual-human-tasks.md",
+    "12-SEO-GEO-checklist/04-routine-monitoring-tasks.md": "workflows-drag-free/seo-geo/04-routine-monitoring-tasks.md",
+    "12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-seo-tool-integration-strategy.md": "workflows-drag-free/seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-seo-tool-integration-strategy.md",
+    "12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-mvp-poc-implementation-plan.md": "workflows-drag-free/seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-mvp-poc-implementation-plan.md",
+    "12-SEO-GEO-checklist/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md": "workflows-drag-free/seo-geo/2026-03-18-SEO-Dashboard/2026-03-18-stack-a-seo-dashboard-implementation-plan.md"
+  }
+}

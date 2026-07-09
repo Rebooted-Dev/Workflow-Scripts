@@ -1,3 +1,3 @@
 # Moved
 
-This file moved to `workflows/debugging/02-bug-fix-workflow.md`. See `MOVED.md` at the repository root for the full redirect map.
+This file moved to `workflows-drag-free/debugging/02-bug-fix-workflow.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.

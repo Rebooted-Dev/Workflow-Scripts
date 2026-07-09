@@ -1,3 +1,3 @@
 # Moved
 
-This file moved to `reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/core/registry.test.ts`. See `MOVED.md` at the repository root for the full redirect map.
+This file moved to `workflows-drag-free/reference/api-integration/02-AI-SDK/src-core/@ai-sdk-image-generation/tests/unit/core/registry.test.ts`. See `workflows-drag-free/MOVED.md` for the full redirect map.

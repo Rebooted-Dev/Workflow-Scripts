@@ -20,9 +20,9 @@ jobs:
 
       - name: Validate workflow catalog and generated files
         run: |
-          tools/wf validate
-          tools/wf build --check
-          tools/wf build skills --check
+          workflows-drag-free/tools/wf validate
+          workflows-drag-free/tools/wf build --check
+          workflows-drag-free/tools/wf build skills --check
 
       - name: Run repository validation scripts
         run: |
@@ -36,7 +36,7 @@ jobs:
 
       - name: Shellcheck scripts
         run: |
-          find scripts tools 00-Meta-Workflow -name '*.sh' -print0 | xargs -0 shellcheck
+          find scripts workflows-drag-free/tools -name '*.sh' -print0 | xargs -0 shellcheck
 
       - name: Check generated output is committed
         run: |

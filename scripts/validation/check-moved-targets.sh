@@ -9,8 +9,9 @@ import re
 import sys
 from pathlib import Path, PurePosixPath
 
-root = Path.cwd()
-moved_path = root / "MOVED.json"
+repo_root = Path.cwd()
+active_root = repo_root / "workflows-drag-free"
+moved_path = active_root / "MOVED.json"
 
 try:
     moved = json.loads(moved_path.read_text(encoding="utf-8"))
@@ -42,8 +43,8 @@ for old_path, target in moved.items():
         malformed.append(f"{old_path} -> {target}")
         continue
 
-    target_path = root / target
-    old_file = root / old_path
+    target_path = repo_root / target
+    old_file = repo_root / old_path
 
     if not target_path.exists():
         missing.append(target)

@@ -14,24 +14,24 @@ Keep a single source of truth for workflow instructions while allowing each proj
 
 ## Directory Compatibility
 
-Drag-Free-v2 reorganized the workflow repository into `workflows/`, `reference/`, `core/`, and `tools/`. Old markdown paths remain as redirect stubs for one release cycle. Consumers and agents should resolve moved files through `MOVED.md` or the `redirects` table in `catalog.json` before assuming a path is missing.
+Drag-Free-v2 reorganized the workflow repository into `workflows-drag-free/`, `workflows-drag-free/reference/`, `workflows-drag-free/core/`, and `workflows-drag-free/tools/`. Old markdown paths remain as redirect stubs for one release cycle. Consumers and agents should resolve moved files through `workflows-drag-free/MOVED.md` or the `redirects` table in `workflows-drag-free/catalog.json` before assuming a path is missing.
 
 Cleanup tracking: added 2026-07-06. Owner: Workflow-Scripts maintainer. Target: remove root redirect stubs in the next release cycle after archive remediation, once consumers have had one cycle to migrate.
 
 ## Recommended Model: Multi-Repo with Local Workflows Directory
 
-The host project has **multiple repositories**, not a single repo. The workflows directory (e.g. `Workflow-Scripts/` or `workflows/`) is a **local** clone inside the project directory and is its own git repository.
+The host project has **multiple repositories**, not a single repo. The workflows directory (e.g. `Workflow-Scripts/` or `workflows-drag-free/`) is a **local** clone inside the project directory and is its own git repository.
 
 Key properties:
 - **Multi-repo**: Main project repo and the workflows repo are independent; both exist under the same project directory on disk.
 - The main project **must** ignore the workflows directory in `.gitignore` so `git add .` from the project root never stages workflow changes.
-- Updating workflows in a project is `git pull` inside the workflows directory (e.g. `Workflow-Scripts/` or `workflows/`).
+- Updating workflows in a project is `git pull` inside the workflows directory (e.g. `Workflow-Scripts/` or `workflows-drag-free/`).
 - Reusable Codex skills under `11-Skills/` are part of this workflows repo and sync with it; copy or install them into an agent's active skills directory only when that agent runtime requires a separate discovery location.
 - Project docs (e.g. `AGENTS.md`) should state clearly that the project has multiple repositories so agents and contributors do not assume one repo.
 
 ### Initial Setup (Per Project)
 
-1. Ensure the project treats this as multi-repo: add the workflows directory to the project's `.gitignore` (e.g. `Workflow-Scripts/` or `workflows/`).
+1. Ensure the project treats this as multi-repo: add the workflows directory to the project's `.gitignore` (e.g. `Workflow-Scripts/` or `workflows-drag-free/`).
 
 2. Clone Workflow-Scripts into **this local project directory** (project root):
 

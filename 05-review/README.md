@@ -1,3 +1,3 @@
 # Moved
 
-This file moved to `workflows/review/README.md`. See `MOVED.md` at the repository root for the full redirect map.
+This file moved to `workflows-drag-free/review/README.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.

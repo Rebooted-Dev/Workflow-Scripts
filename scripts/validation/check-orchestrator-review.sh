@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-SCRIPT="$ROOT_DIR/tools/orchestrator/orchestrator-review.sh"
+SCRIPT="$ROOT_DIR/workflows-drag-free/tools/orchestrator/orchestrator-review.sh"
 TEMP_DIR=""
 
 assert_json_field() {

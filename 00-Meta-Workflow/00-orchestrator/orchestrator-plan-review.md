@@ -1,3 +1,3 @@
 # Moved
 
-This file moved to `tools/orchestrator/orchestrator-plan-review.md`. See `MOVED.md` at the repository root for the full redirect map.
+This file moved to `workflows-drag-free/tools/orchestrator/orchestrator-plan-review.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.
