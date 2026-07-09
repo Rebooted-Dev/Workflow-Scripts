@@ -5,6 +5,7 @@ Chronological index of troubleshooting entries.
 
 | Date | Category | Title | File | Status |
 |------|----------|-------|------|--------|
+| 2026-07-09 | build | Numbered workflows-drag-free path drift | build/2026-07-09-build-numbered-workflows-drag-free-path-drift.md | resolved |
 | 2026-07-09 | build | Drag-Free-v2 evidence location drift | build/2026-07-09-build-drag-free-v2-evidence-location-drift.md | resolved |
 | 2026-07-09 | build | V2 root rename reference drift | build/2026-07-09-build-v2-root-rename-reference-drift.md | resolved |
 | 2026-07-07 | build | Drag-Free-v2 redirect targets incomplete | build/2026-07-07-build-drag-free-v2-redirect-targets.md | resolved |

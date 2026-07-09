@@ -168,7 +168,7 @@ mkdir -p "$(dirname "$OUTPUT_FILE")"
 STATUS_FILE="${OUTPUT_FILE%.md}.json"
 
 # Determine workflow path
-WORKFLOW_FILE="${WORKFLOW_ROOT}/planning/01-plan-review.md"
+WORKFLOW_FILE="${WORKFLOW_ROOT}/01-planning/01-plan-review.md"
 if [ ! -f "$WORKFLOW_FILE" ]; then
   log_error "Default workflow file not found: $WORKFLOW_FILE"
   exit 1

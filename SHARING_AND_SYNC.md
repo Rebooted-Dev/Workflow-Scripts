@@ -14,7 +14,7 @@ Keep a single source of truth for workflow instructions while allowing each proj
 
 ## Directory Compatibility
 
-Drag-Free-v2 reorganized the workflow repository into `workflows-drag-free/`, `workflows-drag-free/reference/`, `workflows-drag-free/core/`, and `workflows-drag-free/tools/`. Old markdown paths remain as redirect stubs for one release cycle. Consumers and agents should resolve moved files through `workflows-drag-free/MOVED.md` or the `redirects` table in `workflows-drag-free/catalog.json` before assuming a path is missing.
+Drag-Free-v2 reorganized the workflow repository into `workflows-drag-free/`, `workflows-drag-free/reference/`, `workflows-drag-free/00-core/`, and `workflows-drag-free/tools/`. Old markdown paths remain as redirect stubs for one release cycle. Consumers and agents should resolve moved files through `workflows-drag-free/MOVED.md` or the `redirects` table in `workflows-drag-free/catalog.json` before assuming a path is missing.
 
 Cleanup tracking: added 2026-07-06. Owner: Workflow-Scripts maintainer. Target: remove root redirect stubs in the next release cycle after archive remediation, once consumers have had one cycle to migrate.
 

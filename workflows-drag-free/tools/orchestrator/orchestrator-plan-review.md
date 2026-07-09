@@ -473,9 +473,9 @@ After reviews complete, the orchestrator:
 
 ## Related Workflows
 
-- **[`01-planning-and-organizing/01-plan-review.md`](../../planning/01-plan-review.md)** - The actual review workflow being executed
-- **[`01-planning-and-organizing/02-finalise-plan.md`](../../planning/02-finalise-plan.md)** - Process review feedback into final plan
-- **[`01-planning-and-organizing/00-research-and-plan.md`](../../planning/00-research-and-plan.md)** - Create initial plans to be reviewed
+- **[`01-planning-and-organizing/01-plan-review.md`](../../01-planning/01-plan-review.md)** - The actual review workflow being executed
+- **[`01-planning-and-organizing/02-finalise-plan.md`](../../01-planning/02-finalise-plan.md)** - Process review feedback into final plan
+- **[`01-planning-and-organizing/00-research-and-plan.md`](../../01-planning/00-research-and-plan.md)** - Create initial plans to be reviewed
 
 ## Notes
 

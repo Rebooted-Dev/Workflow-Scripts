@@ -256,10 +256,10 @@ def cmd_validate(args) -> int:
             if not resolved.exists():
                 warnings.append(f"{path}: broken markdown link {target}")
     phrase = "Completion requires evidence, not intent."
-    core_has_phrase = any(phrase in read_text(base / r["path"]) for r in recs if r["path"].startswith("core/"))
+    core_has_phrase = any(phrase in read_text(base / r["path"]) for r in recs if r["path"].startswith("00-core/"))
     if core_has_phrase:
         for rec in recs:
-            if rec["path"].startswith("core/"):
+            if rec["path"].startswith("00-core/"):
                 continue
             if phrase in rec.get("body", ""):
                 errors.append(f"{rec['path']}: duplicates core phrase {phrase!r}")

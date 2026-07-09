@@ -6,18 +6,18 @@ Use this compact index before reading the full workflow library.
 
 | Workflow | Category | Path | Triggers | Next |
 |---|---|---|---|---|
-| `confirm-execution` | build | `build/02-confirm-execution.md` | confirm execution; verify this implementation plan | ['mark-completed'] |
-| `execute-and-confirm` | build | `build/03-execute-and-confirm.md` | execute and confirm; run execution then confirm | ['mark-completed'] |
-| `execution` | build | `build/01-execution.md` | execute the plan; proceed with this plan | ['confirm-execution'] |
-| `bug-fix-workflow` | debugging | `debugging/02-bug-fix-workflow.md` | fix this bug; debug this issue | ['confirm-execution'] |
-| `deploy` | deployment | `deployment/00-deploy.md` | deploy; release | [] |
-| `architecture-design` | planning | `planning/04-architecture-design.md` | architecture design; design brief; adr | ['plan-review'] |
-| `plan-review` | planning | `planning/01-plan-review.md` | review this plan; plan review | ['finalise-plan'] |
-| `plan-review-and-finalise` | planning | `planning/03-plan-review-and-finalise.md` | review and finalise this plan; finalize this plan after review | ['execution'] |
-| `research-and-plan` | planning | `planning/00-research-and-plan.md` | research and plan; create implementation plan | ['plan-review'] |
-| `code-review` | review | `review/01-code-review.md` | review this codebase; code review | ['filed-code-review-to-remediation'] |
-| `comprehensive-audit` | review | `review/05-comprehensive-audit.md` | comprehensive audit; audit this repo; full repository audit | ['finalise-plan'] |
-| `deep-review` | review | `review/06-deep-review.md` | deep review; comprehensive deep review; multi-lens review | ['finalise-plan'] |
-| `website-data-refactoring` | review | `review/04-website-data-refactoring.md` | website data refactor; refactor website content data; content model review | ['finalise-plan'] |
-| `security-review` | security | `security/01-security-review.md` | security review; audit security | ['security-fix'] |
-| `setup-greenfield-mvp` | setup | `setup/08-greenfield-mvp.md` | start a new project; greenfield mvp; walking skeleton | ['research-and-plan', 'execution'] |
+| `confirm-execution` | build | `02-build/02-confirm-execution.md` | confirm execution; verify this implementation plan | ['mark-completed'] |
+| `execute-and-confirm` | build | `02-build/03-execute-and-confirm.md` | execute and confirm; run execution then confirm | ['mark-completed'] |
+| `execution` | build | `02-build/01-execution.md` | execute the plan; proceed with this plan | ['confirm-execution'] |
+| `bug-fix-workflow` | debugging | `03-debugging/02-bug-fix-workflow.md` | fix this bug; debug this issue | ['confirm-execution'] |
+| `deploy` | deployment | `07-deployment/00-deploy.md` | deploy; release | [] |
+| `architecture-design` | planning | `01-planning/04-architecture-design.md` | architecture design; design brief; adr | ['plan-review'] |
+| `plan-review` | planning | `01-planning/01-plan-review.md` | review this plan; plan review | ['finalise-plan'] |
+| `plan-review-and-finalise` | planning | `01-planning/03-plan-review-and-finalise.md` | review and finalise this plan; finalize this plan after review | ['execution'] |
+| `research-and-plan` | planning | `01-planning/00-research-and-plan.md` | research and plan; create implementation plan | ['plan-review'] |
+| `code-review` | review | `05-review/01-code-review.md` | review this codebase; code review | ['filed-code-review-to-remediation'] |
+| `comprehensive-audit` | review | `05-review/05-comprehensive-audit.md` | comprehensive audit; audit this repo; full repository audit | ['finalise-plan'] |
+| `deep-review` | review | `05-review/06-deep-review.md` | deep review; comprehensive deep review; multi-lens review | ['finalise-plan'] |
+| `website-data-refactoring` | review | `05-review/04-website-data-refactoring.md` | website data refactor; refactor website content data; content model review | ['finalise-plan'] |
+| `security-review` | security | `06-security/01-security-review.md` | security review; audit security | ['security-fix'] |
+| `setup-greenfield-mvp` | setup | `00-setup/08-greenfield-mvp.md` | start a new project; greenfield mvp; walking skeleton | ['research-and-plan', 'execution'] |

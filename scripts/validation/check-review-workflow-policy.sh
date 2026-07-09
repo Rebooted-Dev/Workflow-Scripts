@@ -4,10 +4,10 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 files=(
-  "$ROOT_DIR/workflows-drag-free/review/01-code-review.md"
-  "$ROOT_DIR/workflows-drag-free/review/02-code-optimization.md"
-  "$ROOT_DIR/workflows-drag-free/review/03-code-refactoring.md"
-  "$ROOT_DIR/workflows-drag-free/security/01-security-review.md"
+  "$ROOT_DIR/workflows-drag-free/05-review/01-code-review.md"
+  "$ROOT_DIR/workflows-drag-free/05-review/02-code-optimization.md"
+  "$ROOT_DIR/workflows-drag-free/05-review/03-code-refactoring.md"
+  "$ROOT_DIR/workflows-drag-free/06-security/01-security-review.md"
 )
 
 for file in "${files[@]}"; do
@@ -31,10 +31,10 @@ for file in "${files[@]}"; do
 done
 
 if grep -RInE 'Maximum recommended:|Maximum: [0-9]+ agents|3-5 additional agents' \
-  "$ROOT_DIR/workflows-drag-free/review/01-code-review.md" \
-  "$ROOT_DIR/workflows-drag-free/review/02-code-optimization.md" \
-  "$ROOT_DIR/workflows-drag-free/review/03-code-refactoring.md" \
-  "$ROOT_DIR/workflows-drag-free/security/01-security-review.md"; then
+  "$ROOT_DIR/workflows-drag-free/05-review/01-code-review.md" \
+  "$ROOT_DIR/workflows-drag-free/05-review/02-code-optimization.md" \
+  "$ROOT_DIR/workflows-drag-free/05-review/03-code-refactoring.md" \
+  "$ROOT_DIR/workflows-drag-free/06-security/01-security-review.md"; then
   echo "Found conflicting local agent maximum in active review workflows" >&2
   exit 1
 fi
@@ -45,9 +45,9 @@ if grep -RIn 'plans/security-review' "$ROOT_DIR/05-review" "$ROOT_DIR/06-securit
 fi
 
 if grep -RInE '^[[:space:]]*-[[:space:]]*P[0-3]:' \
-  "$ROOT_DIR/workflows-drag-free/review/02-code-optimization.md" \
-  "$ROOT_DIR/workflows-drag-free/review/03-code-refactoring.md" \
-  "$ROOT_DIR/workflows-drag-free/security/01-security-review.md"; then
+  "$ROOT_DIR/workflows-drag-free/05-review/02-code-optimization.md" \
+  "$ROOT_DIR/workflows-drag-free/05-review/03-code-refactoring.md" \
+  "$ROOT_DIR/workflows-drag-free/06-security/01-security-review.md"; then
   echo "Found local priority-band scoring lists in active review workflows" >&2
   exit 1
 fi

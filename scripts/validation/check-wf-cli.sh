@@ -100,8 +100,8 @@ if WF_ROOT="$tmpdir" "$WF_TOOL" validate >/tmp/wf-bad-role.out 2>&1; then
 fi
 grep -q "unresolved role reference" /tmp/wf-bad-role.out
 
-mkdir -p "$tmpdir/core"
-cat >"$tmpdir/core/verification-gates.md" <<'MD'
+mkdir -p "$tmpdir/00-core"
+cat >"$tmpdir/00-core/verification-gates.md" <<'MD'
 ---
 id: verification-gates
 version: 2.0

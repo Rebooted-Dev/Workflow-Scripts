@@ -1,3 +1,3 @@
 # Moved
 
-This file moved to `workflows-drag-free/deployment/08b-DEPLOYMENT_OPTIMIZATION_REPORT.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.
+This file moved to `workflows-drag-free/07-deployment/08b-DEPLOYMENT_OPTIMIZATION_REPORT.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.
