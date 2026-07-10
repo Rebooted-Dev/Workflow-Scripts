@@ -1,4 +1,0 @@
-interface:
-  display_name: "Webhook Bot Hardening Reviewer"
-  short_description: "Harden public webhook bots and recovery paths."
-  default_prompt: "Use this skill to threat-model and harden a public webhook/chat-bot pipeline with safety, rate limits, durable recovery, and operator controls."

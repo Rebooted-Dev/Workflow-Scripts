@@ -1,4 +1,0 @@
-interface:
-  display_name: "Filed Code Review To Remediation"
-  short_description: "Turn verified code reviews into filed remediation plans."
-  default_prompt: "Use this skill to run or consume a filed code review, verify findings, and create a priority-ordered remediation plan."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Export Render Parity Debugger"
-  short_description: "Fix output parity across app, HTML, Markdown, PDF, and ZIP."
-  default_prompt: "Use this skill to diagnose export/rendering differences across all output surfaces and verify parity after the fix."

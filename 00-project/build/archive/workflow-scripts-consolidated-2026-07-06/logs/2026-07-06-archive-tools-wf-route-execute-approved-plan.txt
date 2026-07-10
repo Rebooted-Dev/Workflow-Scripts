@@ -1,0 +1,1 @@
+BLOCKED: tools/wf is not present in materialized archive scratch tree, so `tools/wf route "execute this approved plan"` could not be run. Expected mapping is documented in workflow frontmatter: workflows/build/03-execute-and-confirm.md with primary skill execute-and-confirm-plan and required skills workflow-intake-and-routing, engineering-quality-gates, repo-records-and-filing.

@@ -1,0 +1,118 @@
+{
+  "rows": [
+    {
+      "body_tokens": 1038,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "01-planning-and-organizing/01-plan-review.md",
+      "referenced_core_tokens": 370,
+      "total_with_core": 1408
+    },
+    {
+      "body_tokens": 1464,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/filing-and-logging.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "02-code-build/01-execution.md",
+      "referenced_core_tokens": 577,
+      "total_with_core": 2041
+    },
+    {
+      "body_tokens": 2257,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "05-review/01-code-review.md",
+      "referenced_core_tokens": 370,
+      "total_with_core": 2627
+    },
+    {
+      "body_tokens": 1504,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "06-security/01-security-review.md",
+      "referenced_core_tokens": 370,
+      "total_with_core": 1874
+    },
+    {
+      "body_tokens": 2275,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "01-planning-and-organizing/00-research-and-plan.md",
+      "referenced_core_tokens": 370,
+      "total_with_core": 2645
+    },
+    {
+      "body_tokens": 1293,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "01-planning-and-organizing/02-finalise-plan.md",
+      "referenced_core_tokens": 370,
+      "total_with_core": 1663
+    },
+    {
+      "body_tokens": 1322,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md",
+        "core/filing-and-logging.md"
+      ],
+      "path": "02-code-build/02-confirm-execution.md",
+      "referenced_core_tokens": 577,
+      "total_with_core": 1899
+    },
+    {
+      "body_tokens": 913,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "05-review/02-code-optimization.md",
+      "referenced_core_tokens": 370,
+      "total_with_core": 1283
+    },
+    {
+      "body_tokens": 981,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "05-review/03-code-refactoring.md",
+      "referenced_core_tokens": 370,
+      "total_with_core": 1351
+    },
+    {
+      "body_tokens": 1346,
+      "core_files": [
+        "core/metadata-root.md",
+        "core/filing-and-logging.md",
+        "core/parallel-agents.md",
+        "core/verification-gates.md"
+      ],
+      "path": "06-security/02-security-fix.md",
+      "referenced_core_tokens": 577,
+      "total_with_core": 1923
+    }
+  ],
+  "tokenizer": "wf-estimate-v1"
+}

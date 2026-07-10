@@ -1,0 +1,2 @@
+workflow skill validation failed:
+- /private/tmp/wf-skill-mismatch.fTInME/repo/11-Skills/workflow-intake-and-routing/SKILL.md: frontmatter name 'wrong-folder-name' does not match folder 'workflow-intake-and-routing'

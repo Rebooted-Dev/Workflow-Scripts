@@ -21,6 +21,8 @@ Sandboxed command:
 
 ```bash
 tools/wf run plan-review 00-project/plans/Drag-Free-v2/research/2026-07-06-workflow-system-v2-redesign-proposal.md --output 00-project/plans/Drag-Free-v2/research/2026-07-06-workflow-system-v2-redesign-proposal.reviews/2026-07-06-opencode-plan-review.md --timeout 5
+
+> **Path note (2026-07-10):** Plan package relocated to `workflows-drag-free/00-project/research/2026-07-06-workflow-system-v2-redesign-proposal.md` (and sibling `.reviews/`). The command above records the original run path.
 ```
 
 Generated output:

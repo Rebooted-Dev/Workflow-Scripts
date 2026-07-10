@@ -1,4 +1,0 @@
-interface:
-  display_name: "Provider Plumbing Auditor"
-  short_description: "Trace AI generation settings through UI, API, and adapters."
-  default_prompt: "Use this skill to audit and fix end-to-end provider plumbing from user-facing controls through request schemas and provider adapters."

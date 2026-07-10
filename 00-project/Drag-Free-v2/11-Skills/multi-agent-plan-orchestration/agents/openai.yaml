@@ -1,4 +1,0 @@
-interface:
-  display_name: "Multi Agent Plan Orchestration"
-  short_description: "Use parallel agents and critique to synthesize plans."
-  default_prompt: "Use this skill to coordinate independent agent/model passes, critique outputs, and synthesize a coding-agent-ready implementation plan."

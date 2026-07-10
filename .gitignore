@@ -28,3 +28,10 @@ __pycache__/
 node_modules/
 dist/
 build/
+
+# Keep Workflow-Scripts meta build archives trackable (global build/ ignore above)
+!00-project/build/
+00-project/build/**
+!00-project/build/archive/
+!00-project/build/archive/**
+

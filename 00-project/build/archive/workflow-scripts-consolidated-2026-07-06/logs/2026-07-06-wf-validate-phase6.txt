@@ -1,0 +1,60 @@
+warning: RELEASE_NOTES_v1.0.0.md: stale path reference: 02-build-code
+warning: core/meta/agent-flexibility-review.md: stale path reference: 02-build-code
+warning: core/meta/agent-flexibility-review.md: stale path reference: 03-debug/
+warning: core/meta/agent-flexibility-review.md: stale path reference: 05-review-audit/
+warning: core/meta/filename-review.md: stale path reference: 02-build-code
+warning: core/meta/filename-review.md: stale path reference: 03-debug/
+warning: core/meta/filename-review.md: stale path reference: 05-review-audit/
+warning: core/meta/glossary.md: stale path reference: 02-build-code
+warning: core/meta/parallel-agents-review.md: stale path reference: 02-build-code
+warning: core/meta/parallel-agents-review.md: stale path reference: 03-debug/
+warning: core/meta/parallel-agents-review.md: stale path reference: 05-review-audit/
+warning: reference/api-integration/03-higgsfield-mcp/README.md: broken markdown link: ../../../../workflows/debugging/02-bug-fix-workflow.md
+warning: reference/api-integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md: broken markdown link: ../../../../workflows/debugging/02-bug-fix-workflow.md
+warning: reference/api-integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md: broken markdown link: ../../../../workflows/debugging/02-bug-fix-workflow.md
+warning: reference/api-integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md: broken markdown link: ../../../../workflows/debugging/02-bug-fix-workflow.md
+warning: reference/api-integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md: broken markdown link: ../../../../workflows/debugging/01-bug-description.md
+warning: reference/api-integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md: broken markdown link: ../../../../workflows/planning/00-research-and-plan.md
+warning: reference/api-integration/03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md: broken markdown link: ../../../../workflows/documentation/02-sync-documentation.md
+warning: reference/meta-workflow/docs/CODE-REVIEW-WORKFLOW-SCRIPTS-2026-02-28.md: stale path reference: 02-build-code
+warning: reference/meta-workflow/docs/WORKFLOW_TO_SKILLS_MAPPING_REPORT.md: stale path reference: 02-build-code
+warning: reference/meta-workflow/docs/WORKFLOW_TO_SKILLS_MAPPING_REPORT.md: stale path reference: 03-debug/
+warning: reference/meta-workflow/docs/WORKFLOW_TO_SKILLS_MAPPING_REPORT.md: stale path reference: 05-review-audit/
+warning: reference/meta-workflow/docs/v1-reconciliation-conflict-log-2026-04-01.md: ambiguous artifact default: changelog/plans/
+warning: workflows/deployment/02-ai-studio-to-desktop.md: broken markdown link: TROUBLESHOOTING.md
+warning: workflows/deployment/02-ai-studio-to-desktop.md: broken markdown link: TROUBLESHOOTING.md
+warning: workflows/deployment/02-ai-studio-to-desktop.md: broken markdown link: TROUBLESHOOTING.md
+warning: workflows/planning/00-research-and-plan.md: stale path reference: 02-build-code
+warning: workflows/planning/00-research-and-plan.md: ambiguous artifact default: project/build/
+warning: workflows/planning/00-research-and-plan.md: broken markdown link: ../../../core/meta/severity-priority-rubric.md
+warning: workflows/planning/README.md: broken markdown link: ../../../core/meta/severity-priority-rubric.md
+warning: workflows/planning/README.md: broken markdown link: ../../../core/meta/severity-priority-rubric.md
+warning: workflows/setup/01-setup-project.md: ambiguous artifact default: project/build/
+warning: workflows/setup/01-setup-project.md: ambiguous artifact default: changelog/plans/
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/changelog-and-troubleshooting.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/changelog-and-troubleshooting.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/project-structure.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/project-structure.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/development-workflow.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/coding-standards.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/testing-strategy.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/commit-workflow.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/documentation-workflow.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/security-guidelines.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/changelog-and-troubleshooting.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/project-structure.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/project-structure.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/development-workflow.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/coding-standards.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/testing-strategy.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/commit-workflow.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/documentation-workflow.md
+warning: workflows/setup/01-setup-project.md: broken markdown link: docs/agents/security-guidelines.md
+warning: workflows/setup/04-track-repos-and-agent-map.md: broken markdown link: docs/agents/repository-map.md
+warning: workflows/setup/07-migrate-project-structure.md: broken markdown link: fixed/2026-01-01-bug.md
+warning: workflows/setup/07-migrate-project-structure.md: broken markdown link: project/changelog/fixed/2026-01-01-bug.md
+validated 139 frontmatter records
+all active markdown files have v2 frontmatter
+all metadata entries have frontmatter
+no generated frontmatter found in skipped paths
+generated artifacts are fresh

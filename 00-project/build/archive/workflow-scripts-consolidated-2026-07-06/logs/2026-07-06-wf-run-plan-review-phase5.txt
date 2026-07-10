@@ -1,0 +1,32 @@
+[0;34m[INFO][0m Starting OpenCode Plan Review
+  Plan:       /Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/00-project/plans/Drag-Free-v2/2026-07-06-drag-free-v2-unified-implementation-plan.md
+  Model:      default (OpenCode configured model)
+  Focus:      general
+  Output:     /Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/00-project/build/phase5-smoke/plan-review.md
+  Status:     /Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/00-project/build/phase5-smoke/plan-review.json
+  Timeout:    1 minutes
+
+[0;34m[INFO][0m Launching OpenCode review process...
+[0;32m[SUCCESS][0m Review completed successfully
+
+==========================================
+Review Summary
+==========================================
+Status:       completed
+Duration:     0m 1s
+Exit Code:    0
+Output File:  /Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/00-project/build/phase5-smoke/plan-review.md
+Status File:  /Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/00-project/build/phase5-smoke/plan-review.json
+
+[0;32m[SUCCESS][0m Review output saved to: /Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/00-project/build/phase5-smoke/plan-review.md
+Output size:  22 bytes
+
+Preview (first 20 lines):
+---
+fake opencode invoked
+---
+
+Full output available at: /Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/00-project/build/phase5-smoke/plan-review.md
+
+[0;34m[INFO][0m Orchestrator review process finished
+00-project/build/phase5-smoke/_manifest.json

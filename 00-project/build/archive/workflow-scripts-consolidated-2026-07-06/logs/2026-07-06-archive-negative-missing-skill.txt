@@ -1,0 +1,2 @@
+workflow skill validation failed:
+- /private/tmp/wf-skill-missing.YNjFaK/repo/workflows/build/01-execution.md: referenced skill 'missing-skill-for-acceptance-test' is missing

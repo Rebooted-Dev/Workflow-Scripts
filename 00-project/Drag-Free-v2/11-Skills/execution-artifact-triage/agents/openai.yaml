@@ -1,4 +1,0 @@
-interface:
-  display_name: "Execution Artifact Triage"
-  short_description: "Classify saved runtime logs before changing code."
-  default_prompt: "Use this skill to inspect project execution artifacts, classify current versus stale failures, and decide whether a fix is warranted."

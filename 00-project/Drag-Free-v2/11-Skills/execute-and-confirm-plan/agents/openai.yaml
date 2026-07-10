@@ -1,4 +1,0 @@
-interface:
-  display_name: "Execute And Confirm Plan"
-  short_description: "Implement a filed plan end to end."
-  default_prompt: "Use this skill to implement an approved plan, run verification, update logs, and mark the plan accurately."

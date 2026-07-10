@@ -7,6 +7,10 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-10 | config | Retire 00-project/Drag-Free-v2 second tree | config/2026-07-10-config-retire-drag-free-v2-second-tree.md | Tarball + salvage logs; deleted DFV2; master remains workflows-drag-free |
+| 2026-07-10 | changed | Relocate Drag-Free-v2 plans to workflows-drag-free meta | changed/2026-07-10-changed-relocate-drag-free-v2-plans-to-workflows-drag-free.md | Moved plans/Drag-Free-v2 package to workflows-drag-free/00-project/ |
+| 2026-07-10 | docs | File single-master directory reconciliation plan | docs/2026-07-10-docs-file-single-master-reconciliation-plan.md | Detailed plan to make workflows-drag-free the only master and retire 00-project/Drag-Free-v2 after salvage. |
+| 2026-07-10 | docs | File Drag Free dual-tree comparison research | docs/2026-07-10-docs-file-drag-free-dual-tree-comparison.md | Compared workflows-drag-free (active, healthy redirects) vs 00-project/Drag-Free-v2 (archive of partial promote); SoT and cleanup recommendations. |
 | 2026-07-09 | changed | Number workflows-drag-free folders | changed/2026-07-09-changed-number-workflows-drag-free-folders.md | Finished aligning the consolidated v2 tree with numbered Workflow-Scripts folder names and regenerated routing. |
 | 2026-07-09 | changed | Move Drag-Free-v2 evidence under workflows-drag-free | changed/2026-07-09-changed-move-drag-free-v2-evidence-under-workflows-drag-free.md | Relocated the legacy planning and research evidence tree under the consolidated v2 root and excluded it from active scans. |
 | 2026-07-09 | changed | Consolidate v2 under workflows-drag-free | changed/2026-07-09-changed-consolidate-v2-under-workflows-drag-free.md | Moved active Drag-Free-v2 support files under workflows-drag-free and updated redirects, validators, generated routing, and current docs. |

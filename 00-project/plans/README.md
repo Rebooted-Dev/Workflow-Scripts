@@ -1,13 +1,15 @@
 # Plans – Map to Project Directory
 
-This directory holds the **map** to the `00-project/` structure and is the place for **active plan documents** for Drag-Free-v2 consolidation work. Completed plans are filed under **`plans-completed/<category>/`** (default) or **`changelog/plans/`** when explicitly requested — not here.
+This directory holds the **map** to the `00-project/` structure and is the place for **active plan documents** for **Workflow-Scripts system work** (live repo meta). Completed plans are filed under **`plans-completed/<category>/`** (default) or **`changelog/plans/`** when explicitly requested — not here.
+
+**Drag-Free / workflows-drag-free plans** live under `workflows-drag-free/00-project/` (not here). As of 2026-07-10, the former `plans/Drag-Free-v2/` package was moved to that meta.
 
 ## Project directory map
 
 - **KIV/** – Keep in view / backlog
 - **research/** – Research and discovery artifacts
 - **build/** – Build artifacts (optional; active plans can live here or in this directory)
-- **plans/** – **Active plan documents** (this directory). Put implementation plans, proposals, and in-progress plan docs here (e.g. `plans/Drag-Free-v2/yyyy-mm-dd-plan-name.md`). Also holds `README.md` (this file) and `TODO.md` (current task list).
+- **plans/** – **Active plan documents** (this directory). Put implementation plans, proposals, and in-progress plan docs here (e.g. `plans/yyyy-mm-dd-plan-name.md`). Also holds `README.md` (this file) and `TODO.md` (current task list).
 - **plans-completed/** – **Default** completed-plan archive: category folders + `index.md` (see `plans-completed/README.md`)
 - **changelog/** – Change entries (type folders) and optional **`changelog/plans/`** archive. One index: `changelog/index.md` (Type includes `plan` for any filed plan, including `../plans-completed/...` paths)
 - **troubleshooting/** – Troubleshooting entries by category and index
@@ -15,13 +17,14 @@ This directory holds the **map** to the `00-project/` structure and is the place
 
 ## Sibling workspace directories
 
-- **`../`** — Promoted Workflow-Scripts files at the Drag-Free-v2 root
-- **`../Workflow-Scripts-consolidated/ignored-generated/`** — Generated skill bundles (not tracked in main repo by default)
-- **`../Workflow-Scripts-consolidated/logs/`** — Drag-Free-v2 execution transcripts and validation output
+- **`../../workflows-drag-free/`** — Drag-Free workflow tree (consolidated v2)
+- **`../../workflows-drag-free/00-project/`** — Meta for workflows-drag-free (plans, research, changelog)
+- **`../`** — Live Workflow-Scripts tree root
 
 ## Where to put things
 
-- **Active plan or report** → **`plans/`** (this directory), e.g. `plans/Drag-Free-v2/2026-07-06-my-implementation-plan.md`. Or add a task to `plans/TODO.md`. Do **not** keep active plans under `plans-completed/` or `changelog/plans/`.
+- **Active plan or report (Workflow-Scripts system)** → **`plans/`** (this directory), e.g. `plans/2026-07-06-my-implementation-plan.md`. Or add a task to `plans/TODO.md`.
+- **Drag-Free / v2 tree plans** → `workflows-drag-free/00-project/plans/` (and related research under `workflows-drag-free/00-project/research/`)
 - **Change entry** → `changelog/<type>/` + row in `changelog/index.md`
 - **Completed plan ("file as completed")** → **move** from `plans/` or `build/` to **`plans-completed/<category>/`**, update **`plans-completed/index.md`**, add a row at the top of **`changelog/index.md`** with Type=plan and File `../plans-completed/<category>/<file>`. **Alternate:** archive under **`changelog/plans/`** if requested.
 - **Troubleshooting entry** → `troubleshooting/<category>/` + row in `troubleshooting/index.md`

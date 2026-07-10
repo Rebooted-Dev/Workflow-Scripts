@@ -1,6 +1,9 @@
-# Drag-Free-v2 Consolidation Project Meta (`00-project`)
+# Workflow-Scripts Project Meta (`00-project`)
 
-This directory is the **project meta workspace** for the Drag-Free-v2 Workflow-Scripts consolidation effort under `Drag-Free-v2/Workflow-Scripts-consolidated/`. It tracks operational records (changelog, plans, troubleshooting, docs) for this consolidation work — separate from Workflow-Scripts' own `00-project/` meta.
+This directory is the **project meta workspace** for the **Workflow-Scripts** repository itself (changelog, plans, troubleshooting, docs, build archives).
+
+**Active v2 workflow library:** `../workflows-drag-free/`  
+**Retired (2026-07-10):** the former nested tree `Drag-Free-v2/` under this meta — frozen as `build/archive/drag-free-v2-promotion-snapshot-2026-07-10.tar.gz` (see `build/archive/2026-07-10-drag-free-v2-salvage-inventory.md`).
 
 ## Layout
 
@@ -20,9 +23,7 @@ This directory is the **project meta workspace** for the Drag-Free-v2 Workflow-S
 └── build/                 # Build artifacts; active plans may also live here
 ```
 
-Promoted Workflow-Scripts files now live at the `Drag-Free-v2/` root (for example `README.md`, `scripts/`, and `workflows/`). `Workflow-Scripts-consolidated/` retains consolidation evidence, patches, logs, and ignored generated skill bundles. **Operational records** for this effort live directly under `00-project/`.
-
-The source Workflow-Scripts `00-project` archive has been merged into this metadata root. Imported source records are preserved in their matching directories: historical changelog entries under `changelog/`, source plans under `plans/`, completed deep-review records under `plans-completed/review/`, source proposals under `research/`, troubleshooting entries under `troubleshooting/`, and archived/generated artifacts under `build/`.
+**Operational records** for Workflow-Scripts system work live directly under this `00-project/`. Workflow content for the consolidated v2 package lives under `../workflows-drag-free/`. Root-level numbered directories (if present) may still be compatibility stubs into `workflows-drag-free/`.
 
 ## Documentation
 

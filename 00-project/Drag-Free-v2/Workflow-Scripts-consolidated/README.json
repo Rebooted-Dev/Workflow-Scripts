@@ -1,9 +1,0 @@
-{
-  "archive": "/Users/jesse/Development/Personal/Update-AI-Tools/Drag-Free-v2/Workflow-Scripts-consolidated",
-  "archived_evidence": "/Users/jesse/Development/Personal/Update-AI-Tools/Drag-Free-v2/00-project/build/archive/workflow-scripts-consolidated-2026-07-06",
-  "copied_current_files": 290,
-  "notes": "Tracked deletions/modifications, untracked-file lists, status snapshots, and logs were retained under 00-project/build/archive/workflow-scripts-consolidated-2026-07-06 after live Workflow-Scripts promotion and audit validation completed. Current contents for existing modified/untracked files were promoted to the Drag-Free-v2 root, except retained evidence now stored under the 00-project build archive.",
-  "source_repo": "/Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts",
-  "status_entries": 335,
-  "untracked_files": 194
-}

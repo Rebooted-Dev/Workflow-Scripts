@@ -55,8 +55,9 @@ git push
 **When working on consolidation meta** (`00-project/`):
 
 - Changelog, plans, troubleshooting, and docs live directly under `00-project/`.
-- Imported Workflow-Scripts `00-project` records now live directly under matching directories in this merged metadata root. Treat them as historical/source-system records unless the current task explicitly promotes them into active Drag-Free-v2 work.
-- Promoted Workflow-Scripts files live at the `Drag-Free-v2/` root. Consolidation evidence, ignored generated skill bundles, logs, and pre-promotion patch/status snapshots remain under `Workflow-Scripts-consolidated/`.
+- **Active v2 workflow library:** edit only under `workflows-drag-free/` (not a second library tree).
+- **`00-project/Drag-Free-v2/` was retired on 2026-07-10.** Do not recreate it. Frozen snapshot: `00-project/build/archive/drag-free-v2-promotion-snapshot-2026-07-10.tar.gz`. Salvage inventory: `00-project/build/archive/2026-07-10-drag-free-v2-salvage-inventory.md`.
+- Drag-Free design plans that were completed live under `workflows-drag-free/00-project/changelog/plans/`.
 
 ## Change Management
 

@@ -1,0 +1,13 @@
+{
+  "plan_path": "workflows-drag-free/00-project/changelog/plans/2026-07-06-workflow-system-v2-redesign-proposal.md",
+  "output_file": "/Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/workflows-drag-free/00-project/changelog/plans/2026-07-06-workflow-system-v2-redesign-proposal.reviews/2026-07-06-opencode-plan-review.md",
+  "model": "default",
+  "focus": "general",
+  "start_time": "2026-07-06 22:30:54",
+  "end_time": "2026-07-06 22:30:55",
+  "duration_seconds": 1,
+  "duration_formatted": "0m 1s",
+  "exit_code": 1,
+  "status": "failed",
+  "workflow_file": "/Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts/01-planning-and-organizing/01-plan-review.md"
+}
