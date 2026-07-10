@@ -5,6 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-10 | docs | Finalise ops-meta v2 docs migration plan | docs/2026-07-10-docs-finalise-ops-meta-v2-docs-migration-plan.md | Final plan narrows package evidence scope; execution pending |
+| 2026-07-10 | docs | File ops-meta v2 docs migration plan | docs/2026-07-10-docs-file-ops-meta-v2-docs-migration-plan.md | Active plan: Tier A evidence → WDF meta; ops changelog/archive stay |
 | 2026-07-10 | config | Second tree retired (00-project/Drag-Free-v2) | config/2026-07-10-config-second-tree-retired.md | Tarball+salvage under live 00-project/build/archive; WDF sole master |
 | 2026-07-10 | plan | Engineering quality survey rerun (gpt5) | plans/2026-07-06-workflow-engineering-quality-survey-rerun-260706-gpt5.md | Post-implementation survey re-run evidence |
 | 2026-07-10 | plan | Engineering quality survey (baseline) | plans/2026-07-06-workflow-engineering-quality-survey-260706-0137-gpt55.md | Baseline survey; Phase 3 recommendations implemented |

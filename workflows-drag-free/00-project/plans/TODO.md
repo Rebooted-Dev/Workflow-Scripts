@@ -12,6 +12,7 @@ When a plan is finished and should be archived, follow **`plans-completed/README
 
 ## Active
 
+- [ ] Execute ops-meta v2 docs migration: `plans/2026-07-10-ops-meta-v2-docs-migration-final-plan.md` (finalised scope: two research files, four required troubleshooting files, and separation evidence → WDF meta; consolidated review report and optional promotion-fallout troubleshooting remain live ops records)
 - [ ] Optional: Phase 5 smoke (`tools/wf validate` from `workflows-drag-free/`, redirect integrity) after second-tree retirement
 - [ ] Optional: Phase 7 skills nesting decision (later)
 - [ ] (Add current tasks here)

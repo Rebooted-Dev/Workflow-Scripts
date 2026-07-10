@@ -28,6 +28,11 @@ This directory holds the **map** to the `00-project/` structure and is the place
 - **Troubleshooting entry** → `troubleshooting/<category>/` + row in `troubleshooting/index.md`
 - **Agent documentation** → `docs/agents/`
 
+## Current migration plan
+
+- Final execution plan: `plans/2026-07-10-ops-meta-v2-docs-migration-final-plan.md`
+- Source draft and inline review addendum: `plans/2026-07-10-ops-meta-v2-docs-migration-plan.md`
+
 ## Current tasks
 
 See **plans/TODO.md** for the current task list. Keep it updated as tasks involving the project dir are completed.
