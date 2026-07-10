@@ -10,8 +10,8 @@ Reviewed and finalised the ops-meta v2 documentation migration plan. The final s
 
 ## Records
 
-- Source draft and inline review addendum: `workflows-drag-free/00-project/plans/2026-07-10-ops-meta-v2-docs-migration-plan.md`
-- Final execution plan: `workflows-drag-free/00-project/plans/2026-07-10-ops-meta-v2-docs-migration-final-plan.md`
+- Source draft and inline review addendum: `workflows-drag-free/00-project/plans-completed/migration/2026-07-10-ops-meta-v2-docs-migration-plan.md`
+- Final execution plan: `workflows-drag-free/00-project/plans-completed/migration/2026-07-10-ops-meta-v2-docs-migration-final-plan.md`
 
 ## Verification
 

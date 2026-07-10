@@ -58,10 +58,10 @@ For small T1 changes, record `N/A` in the plan quality sections instead of runni
 1. Define the decision scope: user goal, non-goals, changed boundaries, owners, interfaces, data stores, external dependencies, and deployment target.
 2. Read the relevant code, docs, and project map. For greenfield work, read the product brief and target deployment constraints instead.
 3. Apply the standards:
-   - `../../00-core/standards/code-design.md`
-   - `../../00-core/standards/error-handling.md`
-   - `../../00-core/standards/observability.md`
-   - `../../00-core/standards/security-baseline.md`
+   - `../00-core/standards/code-design.md`
+   - `../00-core/standards/error-handling.md`
+   - `../00-core/standards/observability.md`
+   - `../00-core/standards/security-baseline.md`
 4. Draft the design brief:
    - context and constraints;
    - proposed architecture;

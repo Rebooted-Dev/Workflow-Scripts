@@ -37,7 +37,7 @@ Execute implementation in phases with verification and documentation updates.
 
 **When to use:** When the user says "execute the plan" or "proceed with this plan."
 
-Implementation quality is judged against `../../00-core/standards/code-design.md`, `../../00-core/standards/error-handling.md`, `../../00-core/standards/observability.md`, and `../../00-core/standards/security-baseline.md` when those concerns are in scope.
+Implementation quality is judged against `../00-core/standards/code-design.md`, `../00-core/standards/error-handling.md`, `../00-core/standards/observability.md`, and `../00-core/standards/security-baseline.md` when those concerns are in scope.
 
 ## Inputs
 
@@ -60,9 +60,9 @@ Implementation quality is judged against `../../00-core/standards/code-design.md
 - Confirm goal + acceptance criteria (user-facing behavior, performance targets, "done" definition).
 - Check repo state (avoid clobbering unrelated work): `git status`.
 - Identify the plan: implementation plan in `<metadata-root>/plans/` (e.g. `<metadata-root>/plans/YYYY-MM-DD-*-implementation-plan.md`).
-- Load any design brief, ADRs, and open debt entries for touched areas. Use `../../00-core/debt-ledger.md` for debt entry shape and paydown rules.
+- Load any design brief, ADRs, and open debt entries for touched areas. Use `../00-core/debt-ledger.md` for debt entry shape and paydown rules.
 - Break work into phases; for each phase define scope, out-of-scope, and exit criteria.
-- Plan role usage for each phase from the frontmatter roles (`implementer`, `test-writer`, `security-scanner`, `docs-writer`) and `../../00-core/parallel-agents.md`.
+- Plan role usage for each phase from the frontmatter roles (`implementer`, `test-writer`, `security-scanner`, `docs-writer`) and `../00-core/parallel-agents.md`.
 
 ## For Each Phase (Implementation Loop)
 - Phase definition (before coding)
@@ -71,16 +71,16 @@ Implementation quality is judged against `../../00-core/standards/code-design.md
   - Exit criteria: concrete checks that must pass.
 - Implement
   - Make the smallest change that satisfies the phase scope.
-  - Use frontmatter role IDs and `../../00-core/parallel-agents.md` for implementation, risk review, testing, and documentation support.
+  - Use frontmatter role IDs and `../00-core/parallel-agents.md` for implementation, risk review, testing, and documentation support.
 - Verify (repeat until exit criteria met)
   - Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs; if none exists, state that explicitly. `npm run build` is only an example.
-  - Check lint/type/import structure, secrets/unintended diff, and acceptance criteria using `../../00-core/verification-gates.md`.
+  - Check lint/type/import structure, secrets/unintended diff, and acceptance criteria using `../00-core/verification-gates.md`.
   - If relevant and the project is trusted, run the local dev command from project docs and perform a quick smoke test of the affected flow.
   - If failures: fix, then re-run the same checks.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
-  - Record deliberate shortcuts, known gaps, deprecations, or accepted scope cuts in `<metadata-root>/debt/` using `../../00-core/debt-ledger.md` or `tools/wf debt add`.
-  - **Update logs** using `../../00-core/metadata-root.md` and `../../00-core/filing-and-logging.md`.
+  - Record deliberate shortcuts, known gaps, deprecations, or accepted scope cuts in `<metadata-root>/debt/` using `../00-core/debt-ledger.md` or `tools/wf debt add`.
+  - **Update logs** using `../00-core/metadata-root.md` and `../00-core/filing-and-logging.md`.
   - Provide a concise summary (1-3 bullets) describing what changed and why.
 
 ## Finalization (After All Phases)
@@ -88,7 +88,7 @@ Implementation quality is judged against `../../00-core/standards/code-design.md
 - Run the final project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs to confirm the repo is shippable; if none exists, state that explicitly.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
 - **Update the implementation plan:** Ensure task status and completion markers are consistent. **Then execute the full `03-mark-completed.md` workflow** to verify implementation, reconcile logs, and archive the plan properly. Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the complete process.
-- **If plan is fully completed, file it** using `../../00-core/filing-and-logging.md`.
+- **If plan is fully completed, file it** using `../00-core/filing-and-logging.md`.
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.
 
 ## Quick Checklist

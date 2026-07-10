@@ -287,8 +287,8 @@ Resurrecting the candidate-scan P0/P1 list, prioritised by daily-use frequency. 
 | `wf-repo-map` | `00-project-setup/04-track-repos-and-agent-map.md` | bootstrap |
 | `wf-mcp-setup` | `00-project-setup/05-mcp-and-config-setup.md` | bootstrap |
 | `wf-skills-install` | `00-project-setup/06-skills-setup.md` | bootstrap |
-| `wf-pre-deploy-security` | `07-deployment/08a-pre-deployment-security-check.md` | ship |
-| `wf-port-manager` | `07-deployment/08-port-relocation/port-management-guide.md`, `browser-auto-open.md` | ship |
+| `wf-pre-deploy-security` | `07-deployment/04-pre-deployment-security-check.md` | ship |
+| `wf-port-manager` | `07-deployment/03-port-relocation/port-management-guide.md`, `07-deployment/03-port-relocation/browser-auto-open.md` | ship |
 | `wf-electron-packaging` | `07-deployment/01a-MACOS_ELECTRON_GUIDE.md`, `01b-electron-vite.md` | ship |
 
 ### 8.3 Phase 3 — Rename existing 14 to `wf-` prefix (optional, debatable)

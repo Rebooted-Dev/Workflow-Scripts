@@ -130,7 +130,7 @@ Consolidate all research into a structured analysis:
 - Existing patterns that could be reused
 - Technical constraints or limitations
 - Areas that would be affected by the change
-- Open debt entries in touched areas from `<metadata-root>/debt/`, with paydown or acceptance implications from `../../00-core/debt-ledger.md`
+- Open debt entries in touched areas from `<metadata-root>/debt/`, with paydown or acceptance implications from `../00-core/debt-ledger.md`
 
 **External Options Analysis:**
 - Library options with pros/cons
@@ -307,7 +307,7 @@ Create the implementation plan in `plans/` directory:
 [How this reaches users; how it comes back out; migration reversibility.]
 
 ## Debt Budget
-[For T2/T3: if touched areas have open S1 debt, schedule paydown or explicitly accept the risk per `../../00-core/debt-ledger.md`.]
+[For T2/T3: if touched areas have open S1 debt, schedule paydown or explicitly accept the risk per `../00-core/debt-ledger.md`.]
 
 ## Risks and Mitigations
 | Risk | Likelihood | Impact | Mitigation |

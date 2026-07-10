@@ -48,7 +48,7 @@ Workflows should infer the metadata root instead of requiring the user to name o
 1. If the user gives an explicit output directory, use it.
 2. If the repository is Workflow-Scripts itself and contains `00-project/`, use `00-project/`.
 3. Otherwise, if the repository contains `project/`, use `project/`.
-4. If no metadata root exists, suggest running `00-project-setup/01-setup-project.md` before filing generated artifacts. Do not create ad hoc root-level `plans/`, `research/`, `changelog/`, or `troubleshooting/` directories as a substitute for setup.
+4. If no metadata root exists, suggest running `../../00-setup/01-setup-project.md` before filing generated artifacts. Do not create ad hoc root-level `plans/`, `research/`, `changelog/`, or `troubleshooting/` directories as a substitute for setup.
 
 ### Storage Location
 

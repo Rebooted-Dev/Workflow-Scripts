@@ -1,3 +1,15 @@
+---
+id: security-fix
+version: 2.0
+category: security
+kind: workflow
+triggers: ["security fix", "fix security finding", "remediate vulnerability"]
+requires: [metadata-root, filing-and-logging, verification-gates, security-baseline, error-handling, observability]
+agents: [security-scanner, implementer, test-writer]
+prev: [security-review]
+next: [confirm-execution]
+---
+
 # Workflow: Security Fix
 
 ## Purpose
@@ -11,7 +23,7 @@ Systematically identify, fix, and verify security vulnerabilities using a securi
 ## Prioritization Rule
 - Address security issues in priority order: P0 → P1 → P2 → P3.
 - Critical security vulnerabilities (P0/S0) must be fixed immediately.
-- Use the shared rubric: `../../00-core/meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-core/meta/severity-priority-rubric.md`.
 
 ## Steps
 
@@ -38,7 +50,7 @@ Use multiple parallel agents to investigate the security issue. Suggested agent 
 - Spawn 1 compliance agent if vulnerability exposes PII/PHI or violates regulatory requirements
 - Spawn 1 supply chain agent if vulnerability traced to third-party dependency or library
 
-**Agent Spawning Policy:** Follow `../../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
+**Agent Spawning Policy:** Follow `../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
 Agents should batch read files concurrently to maximize investigation speed.
 
 ### 3. Root Cause Identification
@@ -72,7 +84,7 @@ Use multiple parallel agents to implement the fix. Suggested agent roles (spawn 
 - Spawn 1 documentation agent if security fix changes API behavior or requires user awareness
 - Spawn 1 monitoring agent if vulnerability requires logging, alerting, or ongoing detection mechanisms
 
-**Agent Spawning Policy:** Follow `../../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
+**Agent Spawning Policy:** Follow `../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
 Each agent should read related files in parallel batches during implementation.
 
 ### 6. Verification
@@ -91,18 +103,16 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 - Spawn 1 integration agent if fix affects 3+ subsystems or external service integrations
 - Spawn 1 documentation agent if security fix requires updated security docs, runbooks, or user guides
 
-**Agent Spawning Policy:** Follow `../../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
+**Agent Spawning Policy:** Follow `../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
 After trust is established, run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs plus relevant security tests. If no command exists, state that explicitly. If failures occur, fix and re-run.
 
 ### 7. Documentation
 **Update logs (only for completed tasks that change or affect project code):**
-- Update the changelog with a dated entry: `- YYYY-MM-DD: Fix [vulnerability type] in [component]`.
-  - Preferred location: `docs/CHANGELOG.md`
-  - Fallback location: `CHANGELOG.md`
-- Add a troubleshooting entry (category `security`):
-   - Create a new file under `troubleshooting/security/` named `<yyyy-mm-dd>-security-<short-title>.md`
-  - Update `troubleshooting/index.md` (add the new entry at the top)
+- Create a typed entry under `<metadata-root>/changelog/<type>/` and add its row at the top of `<metadata-root>/changelog/index.md`.
+- Create a troubleshooting entry under `<metadata-root>/troubleshooting/security/` and add its row at the top of `<metadata-root>/troubleshooting/index.md`.
+  - Name it `<yyyy-mm-dd>-security-<short-title>.md`.
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
+- A security bug in Workflow-Scripts requires both records; use `00-project/` as `<metadata-root>`.
 - **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
 
 ### 8. Final Verification

@@ -1,3 +1,3 @@
 # Moved
 
-This file moved to `workflows-drag-free/07-deployment/07-seo-and-ai-search-phased-implementation-with-submission_1cca3e93.plan.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.
+This file moved to `workflows-drag-free/12-seo-geo/05-seo-and-ai-search-phased-implementation.md`. See `workflows-drag-free/MOVED.md` for the full redirect map.

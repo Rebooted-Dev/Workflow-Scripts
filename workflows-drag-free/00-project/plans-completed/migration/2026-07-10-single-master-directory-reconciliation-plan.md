@@ -1,6 +1,6 @@
 # 2026-07-10 - Single Master Directory Reconciliation Plan
 
-**Status:** Partially executed (2026-07-10) — Phases 1 + 4 done; remaining entry-doc polish optional  
+**Status:** ✅ COMPLETED / Executed (2026-07-10) — filed under `plans-completed/migration/`; Phase 7 skills nesting deferred by design
 **Scope:** Workflow-Scripts system work only. `<metadata-root>` resolves to `00-project/`.  
 **Branch (current):** `fix/v2.0a-separate-legacy-and-v2`  
 **Execution workspace:** `/Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts`  
@@ -13,7 +13,7 @@
 - [✅] Phase 2 - Deduplicate Design Plans and Pointers — design package filed under `workflows-drag-free/00-project/changelog/plans/`; ops `plans/Drag-Free-v2/` removed earlier
 - [✅] Phase 3 - Update Entry Docs to Name One Master — `00-project/AGENTS.md` + `README.md` updated; further root README polish optional
 - [✅] Phase 4 - Remove Second Tree (`00-project/Drag-Free-v2/`) — deleted after tarball verify 2026-07-10
-- [ ] Phase 5 - Validate Redirects, Package, and Smoke Paths (spot-check still recommended)
+- [✅] Phase 5 - Validate Redirects, Package, and Smoke Paths — `check-moved-targets.sh`, `check-active-markdown-links.sh`, `tools/wf validate` passed 2026-07-10
 - [✅] Phase 6 - Bookkeeping, Changelog, and Optional Stub Policy — salvage inventory + changelog entries filed
 - [ ] Phase 7 - (Optional / Later) Skills Nesting Decision
 
@@ -58,8 +58,8 @@ Read before executing. Do not re-discover from scratch.
 
 | Artifact | Path |
 |----------|------|
-| Dual-tree comparison (SoT analysis) | `00-project/research/2026-07-10-drag-free-v2-dual-tree-comparison.md` |
-| Migration problem statement | `00-project/research/2026-07-07-drag-free-v2-migration-problem-statement.md` |
+| Dual-tree comparison (SoT analysis) | `workflows-drag-free/00-project/research-completed/migration/2026-07-10-drag-free-v2-dual-tree-comparison.md` |
+| Migration problem statement | `workflows-drag-free/00-project/research-completed/migration/2026-07-07-drag-free-v2-migration-problem-statement.md` |
 | Unified v2 implementation plan (historical) | `workflows-drag-free/00-Drag-Free-v2/2026-07-06-drag-free-v2-unified-implementation-plan.md` |
 | Skill layer plan (historical) | `workflows-drag-free/00-Drag-Free-v2/2026-07-06-drag-free-v2-workflow-skill-layer-plan.md` |
 | Research proposals / surveys | `workflows-drag-free/00-Drag-Free-v2/research/` |
@@ -502,18 +502,18 @@ tar -xzf 00-project/build/archive/drag-free-v2-promotion-snapshot-YYYY-MM-DD.tar
 
 Copy this into the confirm-execution report when closing the plan.
 
-- [ ] `test ! -e 00-project/Drag-Free-v2`
-- [ ] `workflows-drag-free/` present with `MOVED.json`, `ROUTER.md`, `catalog.json`, `tools/wf`
-- [ ] All `MOVED.json` targets exist and are non-stub (script exit 0)
-- [ ] Critical WDF categories present: setup (9), deployment (full), seo-geo, reference/api, core/meta real content
-- [ ] Tarball under `00-project/build/archive/drag-free-v2-promotion-snapshot-*.tar.gz`
-- [ ] Unique consolidated logs under live `00-project/build/archive/` (or documented already present)
-- [ ] Salvage inventory markdown filed
-- [ ] Root README + AGENTS + SHARING_AND_SYNC name `workflows-drag-free/` as master
-- [ ] `11-Skills/` and `scripts/` still at repo root and functional
-- [ ] Changelog entry (+ plan filing if completed)
-- [ ] Stub policy recorded (A or B)
-- [ ] `./tools/wf validate` (or documented equivalent) run from master package
+- [✅] `test ! -e 00-project/Drag-Free-v2`
+- [✅] `workflows-drag-free/` present with `MOVED.json`, `ROUTER.md`, `catalog.json`, `tools/wf`
+- [✅] All `MOVED.json` targets exist and are non-stub (script exit 0)
+- [✅] Critical WDF categories present: setup (9), deployment (full), seo-geo, reference/api, core/meta real content
+- [✅] Tarball under `00-project/build/archive/drag-free-v2-promotion-snapshot-*.tar.gz`
+- [✅] Unique consolidated logs under live `00-project/build/archive/` (or documented already present)
+- [✅] Salvage inventory markdown filed
+- [✅] Root README + AGENTS + SHARING_AND_SYNC name `workflows-drag-free/` as master
+- [✅] `11-Skills/` and `scripts/` still at repo root and functional
+- [✅] Changelog entry (+ plan filing if completed)
+- [✅] Stub policy recorded (A — keep root numbered stubs one release)
+- [✅] `./tools/wf validate` (or documented equivalent) run from master package
 
 ---
 

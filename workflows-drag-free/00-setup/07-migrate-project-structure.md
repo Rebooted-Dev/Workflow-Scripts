@@ -1,3 +1,15 @@
+---
+id: migrate-project-structure
+version: 2.0
+category: setup
+kind: workflow
+triggers: ["migrate project structure"]
+requires: [metadata-root, filing-and-logging, verification-gates, artifact-contract]
+agents: [implementer, docs-writer]
+prev: []
+next: []
+---
+
 # Migrate Existing Project to Standard Structure
 
 This workflow helps you transition an existing project to the standardized `project/` directory structure defined in [01-setup-project.md](./01-setup-project.md). It handles migration from various starting states, including monolithic files and unorganized directories.

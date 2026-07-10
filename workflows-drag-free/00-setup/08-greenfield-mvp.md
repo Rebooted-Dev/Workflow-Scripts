@@ -43,4 +43,4 @@ Create a new project from idea to deployed walking skeleton before feature work 
 
 - The checklist in `../../templates/walking-skeleton-checklist.md` is complete or every unchecked item is filed as debt.
 - A trivial change can be tested, merged, deployed, observed, and rolled back.
-- All shortcuts taken during setup are recorded in `<metadata-root>/debt/` using `../../00-core/debt-ledger.md`.
+- All shortcuts taken during setup are recorded in `<metadata-root>/debt/` using `../00-core/debt-ledger.md`.

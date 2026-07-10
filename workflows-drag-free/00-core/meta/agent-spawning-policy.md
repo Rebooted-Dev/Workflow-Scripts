@@ -1,3 +1,9 @@
+---
+id: agent-spawning-policy
+kind: policy
+status: active
+---
+
 # Agent Spawning Policy
 
 Use this policy for review and audit workflows that delegate scans to parallel agents.

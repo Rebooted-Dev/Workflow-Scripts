@@ -1,11 +1,17 @@
 # Drag-Free v2 Separation Repair Evidence
 
-This directory records the v2.0a redirect-target repair performed after the Drag-Free v2 promotion. Root `workflows/`, `core/`, `reference/`, `tools/`, `MOVED.json`, `MOVED.md`, `catalog.json`, and `ROUTER.md` are the active v2.0a topology. `00-project/Drag-Free-v2/` is retained as archived promotion evidence, not a second live workflow tree.
+This directory records the v2.0a redirect-target repair performed after the Drag-Free v2 promotion.
+
+- **Active library:** `workflows-drag-free/` (numbered domains, `catalog.json`, `ROUTER.md`, `MOVED.json`, `MOVED.md`, `tools/wf`).
+- **Retired path:** `00-project/Drag-Free-v2/` must not be recreated.
+- **Restore source:** `00-project/build/archive/drag-free-v2-promotion-snapshot-2026-07-10.tar.gz` (with salvage inventory alongside it).
+
+Do not treat retired consolidation paths as a second live workflow tree.
 
 ## Audit Files
 
 - `moved-target-audit.csv` lists every `MOVED.json` row, its initial target state, chosen source, action, and final state.
-- `remediate_moved_targets.py` is the one-off repair utility used to produce the manifest and repairs.
+- `remediate_moved_targets.py` is the one-off repair utility used to produce the manifest and repairs. Output stays in this WDF package metadata path.
 
 ## Result Summary
 

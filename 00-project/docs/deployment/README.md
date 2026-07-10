@@ -104,8 +104,8 @@ These guides ship with Workflow-Scripts for host projects — not for deploying 
 | Deployment index | `07-deployment/README.md` |
 | Electron (macOS) | `07-deployment/01a-MACOS_ELECTRON_GUIDE.md` |
 | Electron + Vite | `07-deployment/01b-electron-vite.md` |
-| Port management | `07-deployment/08-port-relocation/` |
-| Pre-deploy security | `07-deployment/08a-pre-deployment-security-check.md` |
+| Port management | `07-deployment/03-port-relocation/` |
+| Pre-deploy security | `07-deployment/04-pre-deployment-security-check.md` |
 | Firebase setup | `08-API-Integration/10-firebase-setup.md` |
 | Nginx | `08-API-Integration/11-nginx.md` |
 | Next.js/React updates | `08-API-Integration/09-nextjs-react-update.md` |

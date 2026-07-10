@@ -1,3 +1,15 @@
+---
+id: bug-description
+version: 2.0
+category: debugging
+kind: workflow
+triggers: ["bug description"]
+requires: [metadata-root, artifact-contract, severity-priority-rubric]
+agents: [bug-hunter, docs-writer]
+prev: []
+next: [bug-fix-workflow]
+---
+
 # Workflow: Bug Description Report
 
 ## Purpose
@@ -33,7 +45,7 @@ Create a comprehensive, structured bug report when a bug persists after initial 
 - Recent changes documented in `docs/CHANGELOG.md` (preferred) or `CHANGELOG.md`.
 
 ## Prioritization Rule
-- Classify the bug using severity (S0–S3) and priority (P0–P3) per the shared rubric: `../../00-core/meta/severity-priority-rubric.md`.
+- Classify the bug using severity (S0–S3) and priority (P0–P3) per the shared rubric: `../00-core/meta/severity-priority-rubric.md`.
 - Present findings ordered by priority (P0 to P3), then severity within each priority.
 - Critical bugs (P0/S0) that cause data loss, security issues, or service outages must be documented immediately with highest detail.
 
@@ -238,7 +250,7 @@ Create a structured bug description report with the following sections:
 - **[`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md)** - Fix bugs (use this for initial bug investigation and fixes)
 - **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** - Create implementation plan for complex bug fixes
 - **[`../06-security/02-security-fix.md`](../06-security/02-security-fix.md)** - Fix security-related bugs
-- **[`../../00-core/meta/severity-priority-rubric.md`](../../00-core/meta/severity-priority-rubric.md)** - Reference for severity and priority classification
+- **[`../00-core/meta/severity-priority-rubric.md`](../00-core/meta/severity-priority-rubric.md)** - Reference for severity and priority classification
 
 ## Notes
 - This workflow is designed for bugs that persist after initial fix attempts. For initial bug investigation, use `02-bug-fix-workflow.md`.

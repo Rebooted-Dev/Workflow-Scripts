@@ -1,3 +1,9 @@
+---
+id: review-workflow-core
+kind: policy
+status: active
+---
+
 # Review Workflow Core
 
 Shared contract for active review workflows. Domain workflows keep their purpose, focus areas, and domain-specific finding fields, but they must follow this core unless a user explicitly supplies a stricter requirement.
@@ -9,7 +15,7 @@ Shared contract for active review workflows. Domain workflows keep their purpose
 
 ## Pre-Flight Checks
 - Identify the repository root before scanning.
-- Confirm the shared severity/priority rubric exists at `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
+- Confirm the shared severity/priority rubric exists at `severity-priority-rubric.md`.
 - Confirm the metadata root and `<metadata-root>/research/` exist or create the research directory when appropriate.
 - Confirm there is at least one in-scope implementation, configuration, or documentation file relevant to the requested review.
 - Abort if the rubric is missing or no in-scope files exist.

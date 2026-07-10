@@ -7,7 +7,7 @@
 ## Summary
 - Filed completely implemented Drag-Free-v2 plans and research evidence under `changelog/plans/` (explicit changelog archive).
 - Added Type=`plan` rows to `changelog/index.md`.
-- Left active: `plans/2026-07-10-single-master-directory-reconciliation-plan.md` (draft; phases incomplete).
+- Relocated (2026-07-10): `plans/2026-07-10-single-master-directory-reconciliation-plan.md` → `plans-completed/migration/` (executed).
 
 ## Filed (Type=plan)
 

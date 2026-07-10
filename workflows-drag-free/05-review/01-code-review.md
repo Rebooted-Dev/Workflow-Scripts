@@ -11,7 +11,7 @@ outputs: [code-review-report]
 requires: [metadata-root, parallel-agents, review-workflow-core, severity-priority-rubric, code-design, error-handling, observability, security-baseline]
 agents: [bug-hunter, security-scanner, performance-reviewer, docs-writer]
 prev: [confirm-execution]
-next: [filed-code-review-to-remediation]
+next: [finalise-plan]
 skills:
   primary: filed-code-review-to-remediation
   required:
@@ -31,9 +31,9 @@ skills:
 - Verify helper findings against source lines before including them in the report.
 
 ## Purpose
-Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `<metadata-root>/research/` using the metadata-root rule in `../../00-core/meta/naming-conventions.md`.
+Perform a structured code review that identifies defects, risks, and refactoring opportunities, then file a report in `<metadata-root>/research/` using the metadata-root rule in `../00-core/meta/naming-conventions.md`.
 
-Use the shared review contract in `../../00-core/meta/review-workflow-core.md` for report routing, pre-flight checks, untrusted-content handling, severity/priority scoring, evidence quality, deduplication, report outline, and acceptance criteria.
+Use the shared review contract in `../00-core/meta/review-workflow-core.md` for report routing, pre-flight checks, untrusted-content handling, severity/priority scoring, evidence quality, deduplication, report outline, and acceptance criteria.
 
 ## Inputs
 - Repository root (determine using one of):
@@ -48,12 +48,12 @@ If ambiguous:
 - Default to current working directory with warning
 
 ## Pre-Flight Validation
-Follow `../../00-core/meta/review-workflow-core.md`; code-review-specific checks are:
+Follow `../00-core/meta/review-workflow-core.md`; code-review-specific checks are:
 
 Before scanning, verify:
 - [ ] Repository root is identified and accessible
 - [ ] Rubric file exists at `../00-core/meta/severity-priority-rubric.md`
-- [ ] Metadata root exists (`project/` for host projects, `00-project/` for Workflow-Scripts itself); if missing, suggest running `00-project-setup/01-setup-project.md`
+- [ ] Metadata root exists (`project/` for host projects, `00-project/` for Workflow-Scripts itself); if missing, suggest running `../00-setup/01-setup-project.md`
 - [ ] `<metadata-root>/research/` directory exists (create if needed) and is writable
 - [ ] At least one implementation file exists in scope
 
@@ -64,7 +64,7 @@ Before scanning, verify:
 - No files in scope → Abort with: "No files found to scan in {scope}."
 
 ## Prioritization Rule
-Use `../../00-core/meta/review-workflow-core.md` and the shared rubric at `../00-core/meta/severity-priority-rubric.md`.
+Use `../00-core/meta/review-workflow-core.md` and the shared rubric at `../00-core/meta/severity-priority-rubric.md`.
 
 **Evidence Requirements (from rubric):**
 - **S0/S1 findings MUST include:**
@@ -92,7 +92,7 @@ Use `../../00-core/meta/review-workflow-core.md` and the shared rubric at `../00
    - Scan for security and safety issues (read security-critical files in parallel batches)
    - Scan for optimization, modularization, and refactoring opportunities (read code files in parallel batches)
 
-   **Agent Spawning Policy:** Follow `../../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
+   **Agent Spawning Policy:** Follow `../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
 
    **When to spawn additional agents:**
    - Spawn 1 performance agent if bottlenecks/slow operations detected in profiling or code analysis
@@ -131,7 +131,7 @@ Use `../../00-core/meta/review-workflow-core.md` and the shared rubric at `../00
    - Bad: "Check it works"
    - Good: "Execute `./scripts/verify.sh` and confirm output contains 'OK: 5/5 checks passed'"
 
-3. **Group, deduplicate, and order findings using `../../00-core/meta/review-workflow-core.md`:**
+3. **Group, deduplicate, and order findings using `../00-core/meta/review-workflow-core.md`:**
 
    **Deduplication process:**
    - Group findings by file path and line number range (±5 lines)

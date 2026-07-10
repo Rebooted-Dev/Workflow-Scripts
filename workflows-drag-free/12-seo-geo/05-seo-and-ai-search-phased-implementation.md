@@ -1,26 +1,19 @@
 ---
-name: seo-and-ai-search-phased-implementation-with-submission
-overview: Extended phased implementation plan for making a new website SEO-ready and AI-search/chatbot-friendly, including explicit steps for submitting the site to search engines and establishing an ongoing monitoring cadence.
-todos:
-  - id: phase6b-gsc
-    content: Set up Google Search Console, verify the site, submit sitemap.xml, and request indexing for key URLs.
-    status: pending
-  - id: phase6b-bing
-    content: Set up Bing Webmaster Tools (importing from GSC if possible), verify the site, and submit sitemap.xml and key URLs.
-    status: pending
-  - id: phase6b-indexnow
-    content: Optionally configure IndexNow (key file + deployment or server hook) to push new/updated URLs to participating engines.
-    status: pending
-  - id: phase6b-alt-engines
-    content: Confirm whether alternative or regional search engines are in scope and either plan their setup or explicitly mark them out of scope.
-    status: pending
-  - id: phase6c-local-directories
-    content: Complete local directory submissions (Google Business Profile + priority directories) using canonical NAP, then schedule quarterly consistency reviews.
-    status: pending
-  - id: phase9-ai-visibility
-    content: Add AI-oriented checks to the ongoing monitoring routine, spot-testing ChatGPT/Claude/Perplexity for branded and key non-branded queries once the site is indexed.
-    status: pending
-isProject: false
+id: seo-and-ai-search-phased-implementation
+version: 2.0
+category: seo-geo
+kind: workflow
+triggers:
+  - "prepare a site for SEO and AI search"
+  - "make a website SEO ready"
+  - "submit a site to search engines"
+  - "set up Google Search Console and Bing Webmaster Tools"
+inputs: [site-url, site-config]
+outputs: [seo-readiness-record, search-submission-record]
+requires: []
+agents: [docs-writer]
+prev: []
+next: []
 ---
 
 ## Phased Implementation Plan: SEO, AI Search Readiness & Submission
@@ -32,6 +25,13 @@ This plan is still **phased (0–9)**, but it’s rewritten as a **single checkl
 - **Fully automated**: should happen every build/deploy with no human action.
 
 Use the **Minimal launch-ready checklist** first, then work through the three grouped checklists.
+
+Use the focused companion modules when delegating or repeating work:
+
+- [Fully automated tasks](./01-fully-automated-tasks.md)
+- [Semi-automated tasks](./02-semi-automated-tasks.md)
+- [Manual human tasks](./03-manual-human-tasks.md)
+- [Routine monitoring tasks](./04-routine-monitoring-tasks.md)
 
 ---
 

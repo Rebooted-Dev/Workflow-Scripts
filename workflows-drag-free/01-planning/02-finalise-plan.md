@@ -1,3 +1,15 @@
+---
+id: finalise-plan
+version: 2.0
+category: planning
+kind: workflow
+triggers: ["finalise plan", "finalise the plan", "finalize the plan", "implementation plan"]
+requires: [metadata-root, artifact-contract, verification-gates]
+agents: [architecture-reviewer, test-strategist]
+prev: [plan-review]
+next: [execution]
+---
+
 # Workflow: Implementation Plan
 
 ## Purpose
@@ -13,7 +25,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 ## Prioritization Rule
 - Organize the implementation plan by priority, descending urgency/importance: P0, P1, P2, P3.
 - If you use phases, phase numbering must follow priority order (Phase 1 = P0 work).
-- Use the shared rubric: `../../00-core/meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-core/meta/severity-priority-rubric.md`.
 
 ## Steps
 1. Read the plan and all feedback sections; extract goals, constraints, and unresolved issues.
@@ -55,7 +67,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
    - P1: urgent, high user impact, likely failures
    - P2: important improvements, tech debt paydown with near-term value
    - P3: backlog, nice-to-have, long-term refactors
-   Apply the debt budget rule from `../../00-core/debt-ledger.md`: for T2/T3 plans, open S1 debt in touched areas must be scheduled for paydown or explicitly accepted with rationale.
+   Apply the debt budget rule from `../00-core/debt-ledger.md`: for T2/T3 plans, open S1 debt in touched areas must be scheduled for paydown or explicitly accepted with rationale.
 5. For each priority bucket (or phase), include:
    - scope and objectives
    - key tasks (ordered)
@@ -92,7 +104,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 - **[`01-plan-review.md`](./01-plan-review.md)** - Review plans for correctness before finalizing
 - **[`../02-build/01-execution.md`](../02-build/01-execution.md)** - Execute the finalized plan
 - **[`../02-build/02-confirm-execution.md`](../02-build/02-confirm-execution.md)** - Verify plan completion after execution
-- **[`../../00-core/meta/severity-priority-rubric.md`](../../00-core/meta/severity-priority-rubric.md)** - Reference for priority ordering
+- **[`../00-core/meta/severity-priority-rubric.md`](../00-core/meta/severity-priority-rubric.md)** - Reference for priority ordering
 
 ## Acceptance Criteria
 - Plan is ordered by priority (P0 to P3) with explicit rationale.
@@ -102,7 +114,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
   - P0/P1 items are concrete, directly supported by evidence, and sized to ship.
   - Larger redesigns are explicitly deferred to P3 unless required for a P0/P1 fix.
   - Avoid branching architecture decisions without selecting a default path for the current phase.
-- T2/T3 plans touching areas with open S1 debt either schedule paydown or record explicit risk acceptance per `../../00-core/debt-ledger.md`.
+- T2/T3 plans touching areas with open S1 debt either schedule paydown or record explicit risk acceptance per `../00-core/debt-ledger.md`.
 - No unresolved ambiguity remains about scope or execution order.
 - When a `PLAN.reviews/` subdirectory exists, its contents have been considered in the consolidation, and this is mentioned in the new plan’s header or summary.
 - A clear decision has been made about the fate of `PLAN.reviews/`:

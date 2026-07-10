@@ -15,9 +15,10 @@ This directory is the **project meta workspace** for **workflows-drag-free** (Dr
 │   └── agents/            # Agent-facing detailed guides
 ├── plans/                 # Active plans, README map, TODO
 ├── plans-completed/       # Filed completed plans by category
+├── research/              # Active research (README map; tracker)
+├── research-completed/    # Filed completed research by category
 ├── troubleshooting/       # Troubleshooting entries by category
 ├── KIV/                   # Keep in view / backlog
-├── research/              # Research and discovery
 └── build/                 # Build artifacts; active plans may also live here
 ```
 
@@ -37,6 +38,7 @@ Meta directories sit at the `00-project/` root (**flattened layout**, not nested
 
 - Agent conventions: **[`docs/agents/changelog-and-troubleshooting.md`](./docs/agents/changelog-and-troubleshooting.md)**
 - Repository map: **[`docs/agents/repository-map.md`](./docs/agents/repository-map.md)**
+- Completed `wf validate` warning remediation: **[`plans-completed/remediation/2026-07-10-wf-validate-warning-remediation-plan.md`](./plans-completed/remediation/2026-07-10-wf-validate-warning-remediation-plan.md)**
 
 ## Git operations
 

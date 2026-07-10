@@ -55,7 +55,7 @@ Both workflows cover OWASP Top 10 and common vulnerability categories:
 
 - Security review reports: `<metadata-root>/research/security-review-YYMMDD-HHMM-{model}.md`
 - Security fix documentation: `<metadata-root>/troubleshooting/security/` + `<metadata-root>/changelog/`
-- If no metadata root exists, run `00-project-setup/01-setup-project.md` before filing security artifacts.
+- If no metadata root exists, run `../00-setup/01-setup-project.md` before filing security artifacts.
 
 ## Related Workflows
 
@@ -65,4 +65,4 @@ Both workflows cover OWASP Top 10 and common vulnerability categories:
 
 ## Additional Resources
 
-- Security patch in deployment: [`../../reference/api-integration/09-nextjs-react-update.md`](../../reference/api-integration/09-nextjs-react-update.md) - React/Next.js RCE patch example
+- Security patch in deployment: [`../reference/08-api-integration/09-nextjs-react-update.md`](../reference/08-api-integration/09-nextjs-react-update.md) - React/Next.js RCE patch example

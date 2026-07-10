@@ -1,3 +1,15 @@
+---
+id: sync-documentation
+version: 2.0
+category: documentation
+kind: workflow
+triggers: ["sync documentation"]
+requires: [metadata-root, verification-gates]
+agents: [docs-writer]
+prev: []
+next: []
+---
+
 # Workflow: Sync Documentation
 
 ## Purpose
@@ -21,7 +33,7 @@ Template rules:
 
 ## Prioritization Rule
 - Organize doc work by priority, descending urgency/importance: P0, P1, P2, P3.
-- Use the shared rubric: `../../00-core/meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-core/meta/severity-priority-rubric.md`.
 
 ## Suggested Priority Buckets (docs)
 - P0: incorrect docs that could cause wrong usage, broken setup, or unsafe behavior.

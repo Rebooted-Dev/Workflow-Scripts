@@ -25,7 +25,7 @@ Provide a generic deployment path that routes to project-specific scripts and st
 - Implementation is verified and the repo is in a known state.
 - CI or local equivalent passes.
 - Required configuration and secrets exist in the target environment.
-- Security baseline checks from `../../00-core/standards/security-baseline.md` are complete or explicitly deferred with a debt entry.
+- Security baseline checks from `../00-core/standards/security-baseline.md` are complete or explicitly deferred with a debt entry.
 - Rollback command or procedure is written before deploy.
 
 ## Steps
@@ -42,4 +42,4 @@ Provide a generic deployment path that routes to project-specific scripts and st
 - Deployed version or artifact is identifiable.
 - Health/smoke verification passed.
 - Rollback path is documented and has been tested at least once for the environment, or the gap is recorded as debt.
-- Operators know where to find logs and error signals per `../../00-core/standards/observability.md`.
+- Operators know where to find logs and error signals per `../00-core/standards/observability.md`.

@@ -27,7 +27,7 @@ Common terms and conventions used across Workflow-Scripts documentation.
 | **00-Meta-Workflow/00-orchestrator/** | Launch non-interactive OpenCode processes to delegate workflows |
 | **00-project/** | Workflow-Scripts' own metadata root for changelog, plans, research, troubleshooting, and docs |
 | **00-project-setup/** | Set up new projects with dual repo management |
-| **00-Meta-Workflow/00-meta/** | Templates, rubrics, analysis documents about workflows |
+| **00-core/meta/** | Shared workflow policies, rubrics, naming rules, and glossary |
 | **00-Meta-Workflow/00-docs/** | Generated reports, archived reviews, analysis documents |
 | **01-planning-and-organizing/** | Create and review implementation plans |
 | **02-build-code/** | Execute implementation with verification |
@@ -107,4 +107,4 @@ When workflows generate reports or analysis documents, follow the convention def
 
 **See also:**
 - Severity & Priority Rubric: [`severity-priority-rubric.md`](./severity-priority-rubric.md)
-- Main README: [`../README.md`](../../../README.md)
+- Main documentation: [workflow package README](../../00-project/README.md)

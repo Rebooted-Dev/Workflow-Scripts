@@ -9,7 +9,7 @@ This directory is the **project meta workspace** for the **Workflow-Scripts** re
 
 ```text
 00-project/
-├── AGENTS.md              # Slim agent guidelines for consolidation meta work
+├── AGENTS.md              # Slim agent guidelines for Workflow-Scripts ops meta
 ├── README.md              # This file
 ├── 00-project-setup/      # Initial setup workflows (01–08)
 ├── changelog/             # Change entries (type folders + plans archive + index)

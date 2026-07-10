@@ -1,3 +1,13 @@
+---
+id: deployment-workflows-optimization-report
+version: 1.0
+category: history
+kind: reference
+title: "Deployment Workflows Optimization Report"
+date: 2026-01-18
+status: complete
+---
+
 # Deployment Workflows Optimization Report
 
 **Date**: 2026-01-18  
@@ -255,8 +265,8 @@ Two files contain documentation from different projects (RBC SRT Translator, RBC
 
 ## Related Documentation
 
-- [Deployment Index](./README.md) - Central guide selection
-- [Workflow Scripts README](README.md) - Complete workflow documentation
+- [Deployment Index](../../../07-deployment/README.md) - Central guide selection
+- [Workflow Scripts README](../../../../README.md) - Complete workflow documentation
 
 ---
 

@@ -1,3 +1,15 @@
+---
+id: track-repos-and-agent-map
+version: 2.0
+category: setup
+kind: workflow
+triggers: ["track repos and agent map"]
+requires: [artifact-contract]
+agents: [docs-writer]
+prev: []
+next: []
+---
+
 # Track Repositories and Agent-File Repo Map
 
 ## Purpose

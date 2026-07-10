@@ -5,7 +5,8 @@ This directory holds the **map** to the `00-project/` structure and is the place
 ## Project directory map
 
 - **KIV/** – Keep in view / backlog
-- **research/** – Research and discovery artifacts
+- **research/** – Active research documents (`README.md` map)
+- **research-completed/** – Filed completed research by category + `index.md`
 - **build/** – Build artifacts (optional; active plans can live here or in this directory)
 - **plans/** – **Active plan documents** (this directory). Put implementation plans, proposals, and in-progress plan docs here (e.g. `plans/yyyy-mm-dd-plan-name.md`). Also holds `README.md` (this file) and `TODO.md` (current task list).
 - **plans-completed/** – **Default** completed-plan archive: category folders + `index.md` (see `plans-completed/README.md`)
@@ -28,10 +29,19 @@ This directory holds the **map** to the `00-project/` structure and is the place
 - **Troubleshooting entry** → `troubleshooting/<category>/` + row in `troubleshooting/index.md`
 - **Agent documentation** → `docs/agents/`
 
-## Current migration plan
+## Completed plans (filed)
 
-- Final execution plan: `plans/2026-07-10-ops-meta-v2-docs-migration-final-plan.md`
-- Source draft and inline review addendum: `plans/2026-07-10-ops-meta-v2-docs-migration-plan.md`
+The `wf validate` warning remediation is filed under **`../plans-completed/remediation/`** after eliminating all 24 false-positive warnings and passing the full contract suite.
+
+The workflow contract and CLI remediation is filed under **`../plans-completed/remediation/`** after full validation.
+
+All active plans for 2026-07-10 reconciliation/migration work are filed under **`../plans-completed/migration/`**:
+
+- `2026-07-10-single-master-directory-reconciliation-plan.md` — second tree retired; WDF sole master
+- `2026-07-10-ops-meta-v2-docs-migration-final-plan.md` — package evidence → WDF meta (executed)
+- `2026-07-10-ops-meta-v2-docs-migration-plan.md` — source draft + Plan Review Addendum (audit trail)
+
+**Changelogs for WDF work:** only under `../changelog/` (not root `00-project/changelog/`).
 
 ## Current tasks
 

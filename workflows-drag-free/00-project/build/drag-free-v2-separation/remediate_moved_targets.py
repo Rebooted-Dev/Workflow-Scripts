@@ -9,15 +9,43 @@ import subprocess
 from pathlib import Path, PurePosixPath
 
 
-ROOT = Path(__file__).resolve().parents[3]
-OUT_DIR = ROOT / "00-project/build/drag-free-v2-separation"
+def discover_git_root(start: Path) -> Path:
+    """Resolve the Workflow-Scripts Git root from any path under it."""
+    try:
+        out = subprocess.check_output(
+            ["git", "rev-parse", "--show-toplevel"],
+            cwd=start,
+            stderr=subprocess.DEVNULL,
+            text=True,
+        )
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(f"unable to resolve git root from {start}") from exc
+    return Path(out.strip()).resolve()
+
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+ROOT = discover_git_root(SCRIPT_DIR)
+OUT_DIR = SCRIPT_DIR
 MANIFEST = OUT_DIR / "moved-target-audit.csv"
 SUMMARY = OUT_DIR / "README.md"
+MOVED_JSON_CANDIDATES = (
+    ROOT / "workflows-drag-free" / "MOVED.json",
+    ROOT / "MOVED.json",
+)
 V1_MISSING_ALLOWED = {
     "00-project-setup/08-greenfield-mvp.md",
     "01-planning-and-organizing/04-architecture-design.md",
     "07-deployment/00-deploy.md",
 }
+
+
+def resolve_moved_json() -> Path:
+    for candidate in MOVED_JSON_CANDIDATES:
+        if candidate.is_file():
+            return candidate
+    raise FileNotFoundError(
+        "MOVED.json not found at workflows-drag-free/MOVED.json or repository root"
+    )
 
 
 def is_safe_repo_path(path: str) -> bool:
@@ -72,7 +100,8 @@ def stub_for(target: str) -> str:
 
 
 def main() -> int:
-    moved = json.loads((ROOT / "MOVED.json").read_text(encoding="utf-8"))
+    moved_path = resolve_moved_json()
+    moved = json.loads(moved_path.read_text(encoding="utf-8"))
     rows: list[dict[str, str]] = []
     errors: list[str] = []
 
@@ -155,15 +184,19 @@ def main() -> int:
     SUMMARY.write_text(
         "# Drag-Free v2 Separation Repair Evidence\n\n"
         "This directory records the v2.0a redirect-target repair performed after the "
-        "Drag-Free v2 promotion. Root `workflows/`, `core/`, `reference/`, `tools/`, "
-        "`MOVED.json`, `MOVED.md`, `catalog.json`, and `ROUTER.md` are the active "
-        "v2.0a topology. `00-project/Drag-Free-v2/` is retained as archived promotion "
-        "evidence, not a second live workflow tree.\n\n"
+        "Drag-Free v2 promotion.\n\n"
+        "- **Active library:** `workflows-drag-free/` (numbered domains, "
+        "`catalog.json`, `ROUTER.md`, `MOVED.json`, `MOVED.md`, `tools/wf`).\n"
+        "- **Retired path:** `00-project/Drag-Free-v2/` must not be recreated.\n"
+        "- **Restore source:** "
+        "`00-project/build/archive/drag-free-v2-promotion-snapshot-2026-07-10.tar.gz` "
+        "(with salvage inventory alongside it).\n\n"
+        "Do not treat retired consolidation paths as a second live workflow tree.\n\n"
         "## Audit Files\n\n"
         "- `moved-target-audit.csv` lists every `MOVED.json` row, its initial target "
         "state, chosen source, action, and final state.\n"
         "- `remediate_moved_targets.py` is the one-off repair utility used to produce "
-        "the manifest and repairs.\n\n"
+        "the manifest and repairs. Output stays in this WDF package metadata path.\n\n"
         "## Result Summary\n\n"
         f"- Rows audited: {len(rows)}\n"
         + "".join(f"- Final `{key}` targets: {value}\n" for key, value in sorted(counts.items()))

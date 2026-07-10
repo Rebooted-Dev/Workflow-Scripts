@@ -1,3 +1,15 @@
+---
+id: electron-vite-migration
+version: 2.0
+category: deployment
+kind: workflow
+triggers: ["electron vite migration"]
+requires: [verification-gates, code-design, error-handling, observability, security-baseline]
+agents: [implementer, test-writer]
+prev: []
+next: [confirm-execution]
+---
+
 # Electron-Vite Migration Workflow
 
 A generalized workflow for migrating existing Electron apps or TypeScript apps to support **electron-vite** for macOS desktop builds, while maintaining support for web app builds.

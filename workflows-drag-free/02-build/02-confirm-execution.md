@@ -86,7 +86,7 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 1. Read the plan end-to-end; extract the list of claimed completed tasks and their acceptance criteria.
 
-2. Use the frontmatter role IDs, `../../00-core/parallel-agents.md`, and `../../00-core/verification-gates.md` to compare plan tasks to files, rerun required checks when needed, spot-check user-facing behavior, and find docs/log/security/test gaps.
+2. Use the frontmatter role IDs, `../00-core/parallel-agents.md`, and `../00-core/verification-gates.md` to compare plan tasks to files, rerun required checks when needed, spot-check user-facing behavior, and find docs/log/security/test gaps.
 
 3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3). Apply the marking convention: correct any misreporting (e.g. task marked `- [✅]` but code or verification is missing → change to `- [ ]` and add a note). Leave already-correct marking as-is, using `- [✅]` for completed. Add notes for incomplete or deferred tasks.
 

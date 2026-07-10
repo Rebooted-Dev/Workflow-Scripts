@@ -1,3 +1,15 @@
+---
+id: mark-completed
+version: 2.0
+category: documentation
+kind: workflow
+triggers: ["mark completed"]
+requires: [metadata-root, filing-and-logging, verification-gates]
+agents: [test-strategist, docs-writer]
+prev: [confirm-execution]
+next: []
+---
+
 # Workflow: Mark Completed and Verify Implementation
 
 ## Purpose
@@ -23,7 +35,7 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 - Relevant source files referenced in each task
 
 ## Prioritization and Ordering
-- Use the shared rubric: `../../00-core/meta/severity-priority-rubric.md`
+- Use the shared rubric: `../00-core/meta/severity-priority-rubric.md`
 - Order work and **flagged issues** by descending urgency/importance: **P0 → P1 → P2 → P3**
 - Within the same priority, order by severity: **S0 → S1 → S2 → S3**
 - **Output:** Display all flagged issues in **descending order of importance or urgency** (most critical first)
@@ -175,7 +187,7 @@ Display **all** flagged issues in **descending order of importance or urgency**,
 
 - **[`01-create-docs.md`](./01-create-docs.md)** — Create documentation from scratch
 - **[`02-sync-documentation.md`](./02-sync-documentation.md)** — Sync existing docs to code
-- **[`../../00-core/meta/severity-priority-rubric.md`](../../00-core/meta/severity-priority-rubric.md)** — Severity/priority for ordering flagged issues
+- **[`../00-core/meta/severity-priority-rubric.md`](../00-core/meta/severity-priority-rubric.md)** — Severity/priority for ordering flagged issues
 - **[`../01-planning/02-finalise-plan.md`](../01-planning/02-finalise-plan.md)** — Finalise plans before marking completed
 
 ## Notes

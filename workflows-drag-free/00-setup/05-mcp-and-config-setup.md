@@ -1,4 +1,16 @@
-  # MCP and Configuration Setup Task List
+---
+id: mcp-and-config-setup
+version: 2.0
+category: setup
+kind: workflow
+triggers: ["mcp and config setup"]
+requires: [verification-gates, security-baseline]
+agents: [implementer, security-scanner]
+prev: []
+next: []
+---
+
+# MCP and Configuration Setup Task List
 
 Checklist for configuring MCP (Model Context Protocol) servers and default model/provider in **Cursor** and **OpenCode**, including the Google Developer Knowledge (Gemini docs) MCP and GLM 5 default.
 

@@ -1,3 +1,9 @@
+---
+id: severity-priority-rubric
+kind: policy
+status: active
+---
+
 # Workflow: Severity & Priority Rubric
 
 ## Purpose

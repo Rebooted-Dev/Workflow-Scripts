@@ -31,4 +31,4 @@ Implemented Drag-Free-v2 design package (from former active `plans/` + `research
 | `2026-07-06-engineering-quality-and-lifecycle-proposal.md` | Engineering-quality companion proposal |
 | `2026-07-06-workflow-*-survey*.md` | Baseline and re-run surveys |
 
-Still active (not filed): `../plans/2026-07-10-single-master-directory-reconciliation-plan.md`.
+2026-07-10 reconciliation/migration plans filed under `../plans-completed/migration/` (single-master, ops-meta final + source draft). `plans/` holds tracker files only (`README.md`, `TODO.md`).

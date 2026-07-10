@@ -9,15 +9,33 @@ Use this compact index before reading the full workflow library.
 | `confirm-execution` | build | `02-build/02-confirm-execution.md` | confirm execution; verify this implementation plan | ['mark-completed'] |
 | `execute-and-confirm` | build | `02-build/03-execute-and-confirm.md` | execute and confirm; run execution then confirm | ['mark-completed'] |
 | `execution` | build | `02-build/01-execution.md` | execute the plan; proceed with this plan | ['confirm-execution'] |
+| `bug-description` | debugging | `03-debugging/01-bug-description.md` | bug description | ['bug-fix-workflow'] |
 | `bug-fix-workflow` | debugging | `03-debugging/02-bug-fix-workflow.md` | fix this bug; debug this issue | ['confirm-execution'] |
 | `deploy` | deployment | `07-deployment/00-deploy.md` | deploy; release | [] |
+| `electron-vite-migration` | deployment | `07-deployment/01b-electron-vite.md` | electron vite migration | ['confirm-execution'] |
+| `pre-deployment-security-check` | deployment | `07-deployment/04-pre-deployment-security-check.md` | pre deployment security check | ['deploy'] |
+| `create-docs` | documentation | `04-documentation/01-create-docs.md` | create docs | [] |
+| `mark-completed` | documentation | `04-documentation/03-mark-completed.md` | mark completed | [] |
+| `sync-documentation` | documentation | `04-documentation/02-sync-documentation.md` | sync documentation | [] |
 | `architecture-design` | planning | `01-planning/04-architecture-design.md` | architecture design; design brief; adr | ['plan-review'] |
+| `finalise-plan` | planning | `01-planning/02-finalise-plan.md` | finalise plan; finalise the plan; finalize the plan; implementation plan | ['execution'] |
 | `plan-review` | planning | `01-planning/01-plan-review.md` | review this plan; plan review | ['finalise-plan'] |
 | `plan-review-and-finalise` | planning | `01-planning/03-plan-review-and-finalise.md` | review and finalise this plan; finalize this plan after review | ['execution'] |
 | `research-and-plan` | planning | `01-planning/00-research-and-plan.md` | research and plan; create implementation plan | ['plan-review'] |
-| `code-review` | review | `05-review/01-code-review.md` | review this codebase; code review | ['filed-code-review-to-remediation'] |
+| `code-optimization` | review | `05-review/02-code-optimization.md` | code optimization | ['finalise-plan'] |
+| `code-refactoring` | review | `05-review/03-code-refactoring.md` | code refactoring | ['finalise-plan'] |
+| `code-review` | review | `05-review/01-code-review.md` | review this codebase; code review | ['finalise-plan'] |
 | `comprehensive-audit` | review | `05-review/05-comprehensive-audit.md` | comprehensive audit; audit this repo; full repository audit | ['finalise-plan'] |
 | `deep-review` | review | `05-review/06-deep-review.md` | deep review; comprehensive deep review; multi-lens review | ['finalise-plan'] |
 | `website-data-refactoring` | review | `05-review/04-website-data-refactoring.md` | website data refactor; refactor website content data; content model review | ['finalise-plan'] |
+| `security-fix` | security | `06-security/02-security-fix.md` | security fix; fix security finding; remediate vulnerability | ['confirm-execution'] |
 | `security-review` | security | `06-security/01-security-review.md` | security review; audit security | ['security-fix'] |
+| `seo-and-ai-search-phased-implementation` | seo-geo | `12-seo-geo/05-seo-and-ai-search-phased-implementation.md` | prepare a site for SEO and AI search; make a website SEO ready; submit a site to search engines; set up Google Search Console and Bing Webmaster Tools | [] |
+| `mcp-and-config-setup` | setup | `00-setup/05-mcp-and-config-setup.md` | mcp and config setup | [] |
+| `migrate-project-structure` | setup | `00-setup/07-migrate-project-structure.md` | migrate project structure | [] |
+| `optimize-workflow-scripts` | setup | `00-setup/02-optimize-workflow-scripts.md` | optimize workflow scripts | [] |
 | `setup-greenfield-mvp` | setup | `00-setup/08-greenfield-mvp.md` | start a new project; greenfield mvp; walking skeleton | ['research-and-plan', 'execution'] |
+| `setup-project` | setup | `00-setup/01-setup-project.md` | setup project | [] |
+| `skills-setup` | setup | `00-setup/06-skills-setup.md` | skills setup | [] |
+| `sync-workflow-scripts` | setup | `00-setup/03-sync-workflow-scripts.md` | sync workflow scripts | [] |
+| `track-repos-and-agent-map` | setup | `00-setup/04-track-repos-and-agent-map.md` | track repos and agent map | [] |

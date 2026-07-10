@@ -1,3 +1,15 @@
+---
+id: sync-workflow-scripts
+version: 2.0
+category: setup
+kind: workflow
+triggers: ["sync workflow scripts"]
+requires: [verification-gates]
+agents: [implementer]
+prev: []
+next: []
+---
+
 # Sync Workflow-Scripts Across Multiple Projects
 
 ## Purpose
@@ -478,7 +490,7 @@ For managing multiple projects, use the sync script:
 - Sync all projects: `./Workflow-Scripts/scripts/sync-workflow-scripts.sh`
 - Check status: `./Workflow-Scripts/scripts/sync-workflow-scripts.sh --status`
 
-See [00-project-setup/03-sync-workflow-scripts.md](../00-project-setup/03-sync-workflow-scripts.md) for setup instructions.
+See [03-sync-workflow-scripts.md](./03-sync-workflow-scripts.md) for setup instructions.
 ```
 
 ### 4.2 Add to Project Setup Workflow

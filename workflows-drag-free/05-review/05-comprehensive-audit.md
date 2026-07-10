@@ -28,7 +28,7 @@ skills:
 ## Purpose
 Run a broad repository audit that covers runtime behavior, security posture, maintainability, documentation, workflow hygiene, and verification gaps.
 
-Use `../../00-core/meta/review-workflow-core.md` for the shared review contract and `../../00-core/meta/severity-priority-rubric.md` for scoring.
+Use `../00-core/meta/review-workflow-core.md` for the shared review contract and `../00-core/meta/severity-priority-rubric.md` for scoring.
 
 ## Skill Hooks
 

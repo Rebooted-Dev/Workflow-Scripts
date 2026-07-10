@@ -1,3 +1,15 @@
+---
+id: setup-project
+version: 2.0
+category: setup
+kind: workflow
+triggers: ["setup project"]
+requires: [metadata-root, filing-and-logging, artifact-contract]
+agents: [docs-writer]
+prev: []
+next: []
+---
+
 # Project Initial Setup Workflow
 
 This workflow sets up a new project, migrates a project from an older structure, or **updates an existing project that already uses this system** (see [Updating an existing project that already uses this system](#updating-an-existing-project-that-already-uses-this-system)). It provides:
@@ -221,7 +233,7 @@ Before executing any commands with placeholders, verify all placeholders have be
 
 ```bash
 # Check for unreplaced placeholders in this workflow file
-grep -n '<PROJECT_NAME>\|<PROJECT_PATH>\|<WORKFLOWS_DIR>\|<GIT_REMOTE>\|<WORKFLOWS_REMOTE>' "<WORKFLOWS_DIR>/00-project-setup/01-setup-project.md" 2>/dev/null
+grep -n '<PROJECT_NAME>\|<PROJECT_PATH>\|<WORKFLOWS_DIR>\|<GIT_REMOTE>\|<WORKFLOWS_REMOTE>' "<WORKFLOWS_DIR>/00-setup/01-setup-project.md" 2>/dev/null
 
 # If the grep returns results, you have unreplaced placeholders
 if [ $? -eq 0 ]; then
@@ -955,7 +967,7 @@ When a plan is confirmed completed, or the user asks to **"file … as completed
 1. **Choose a category** under `project/plans-completed/`: `implementation/`, `investigation/`, `migration/`, `review/`, or `tooling/` (see `project/plans-completed/README.md`).
 2. **Move** (do not leave a duplicate) the plan from `project/plans/` or `project/build/` into **`project/plans-completed/<category>/`**. Use a `yyyy-mm-dd-` filename prefix if the name does not already have one.
 3. **Update `project/plans-completed/index.md`**: new row at the **top** — Date, Category, Title, File (relative to `project/plans-completed/`, e.g. `tooling/2026-04-02-my.plan.md`), Notes.
-4. **Update `project/changelog/index.md`**: new row at the **top** — Type=`plan`, same Date/Title/Notes, **File** relative to `project/changelog/`, e.g. `../plans-completed/tooling/2026-04-02-my.plan.md`.
+4. **Update `project/changelog/index.md`**: new row at the **top** — Type=`plan`, same Date/Title/Notes, **File** relative to `project/changelog/`, e.g. `<metadata-root>/plans-completed/tooling/2026-04-02-my.plan.md`.
 
 **Alternate:** If the user explicitly asks to file under **`project/changelog/plans/`**, move there instead and use File=`plans/...` in the changelog index.
 

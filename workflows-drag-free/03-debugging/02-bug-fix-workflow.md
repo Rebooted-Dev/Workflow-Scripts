@@ -42,7 +42,7 @@ Systematically identify, diagnose, and fix bugs using a structured debugging pro
 ## Prioritization Rule
 - Address bugs in priority order: P0 → P1 → P2 → P3.
 - Critical bugs (P0/S0) that cause data loss, security issues, or service outages must be fixed immediately.
-- Use the shared rubric: `../../00-core/meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-core/meta/severity-priority-rubric.md`.
 
 ## Steps
 
@@ -128,7 +128,7 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 - Spawn 1 integration testing agent per external system affected (database, API, third-party service)
 - Spawn 1 documentation review agent if bug fix changes documented behavior or requires user communication
 
-**Agent Spawning Policy:** Follow `../../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
+**Agent Spawning Policy:** Follow `../00-core/meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
 Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs plus relevant tests. If no command exists, state that explicitly. If failures occur, fix and re-run.
 
 ### 7. Documentation
@@ -165,7 +165,7 @@ Run the project verification command from `AGENTS.md`, package scripts, Makefile
 - **Add a regression test when it fits** – Add regression tests to prevent the bug from recurring
 - Test edge cases and similar scenarios
 - Verify the fix doesn't break existing functionality
-- **Agent file instruction:** Ensure the project's agent files (AGENTS.md, and optionally CLAUDE.md, GEMINI.md) include the line **Bugs: add regression test when it fits.** so that all coding agents (Codex, Cursor, Claude, etc.) add regression tests when fixing bugs. If the line is missing, add it to AGENTS.md (and optionally to CLAUDE.md, GEMINI.md) as part of the fix or in a follow-up. See [00-project-setup/01-setup-project.md](../00-setup/01-setup-project.md) Step 1.3 for setup instructions.
+- **Agent file instruction:** Ensure the project's agent files (AGENTS.md, and optionally CLAUDE.md, GEMINI.md) include the line **Bugs: add regression test when it fits.** so that all coding agents (Codex, Cursor, Claude, etc.) add regression tests when fixing bugs. If the line is missing, add it to AGENTS.md (and optionally to CLAUDE.md, GEMINI.md) as part of the fix or in a follow-up. See [setup-project](../00-setup/01-setup-project.md) Step 1.3 for setup instructions.
 
 ### Code Quality
 - Make minimal, focused changes that address the root cause

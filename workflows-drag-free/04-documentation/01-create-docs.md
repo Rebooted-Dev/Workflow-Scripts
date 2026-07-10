@@ -1,3 +1,15 @@
+---
+id: create-docs
+version: 2.0
+category: documentation
+kind: workflow
+triggers: ["create docs"]
+requires: [metadata-root, artifact-contract, verification-gates]
+agents: [docs-writer]
+prev: []
+next: []
+---
+
 # Workflow: Generate Comprehensive Documentation
 
 ## Purpose
@@ -46,7 +58,7 @@ When this comprehensive documentation effort is fully finished, clearly mark the
 
 ## Prioritization Rule
 - Organize doc generation by priority, descending urgency/importance: P0, P1, P2, P3.
-- Use the shared rubric: `../../00-core/meta/severity-priority-rubric.md`.
+- Use the shared rubric: `../00-core/meta/severity-priority-rubric.md`.
 
 ## Suggested Priority Buckets (docs)
 - P0: Critical user-facing docs (README.md, setup instructions, quick start guide).
@@ -446,7 +458,7 @@ docs/
 - For split documents, use numbered prefixes or descriptive suffixes (e.g., `api-01-authentication.md`, `api-02-endpoints.md`).
 
 #### Generated Reports
-When workflows generate reports or analysis documents, follow the naming convention defined in [`../../00-core/meta/naming-conventions.md`](../../00-core/meta/naming-conventions.md).
+When workflows generate reports or analysis documents, follow the naming convention defined in [`../00-core/meta/naming-conventions.md`](../00-core/meta/naming-conventions.md).
 
 **Format:** `{report-type}-YYMMDD-HHMM-{model}.md`
 

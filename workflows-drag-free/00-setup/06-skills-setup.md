@@ -1,3 +1,15 @@
+---
+id: skills-setup
+version: 2.0
+category: setup
+kind: workflow
+triggers: ["skills setup"]
+requires: [verification-gates]
+agents: [implementer]
+prev: []
+next: []
+---
+
 # Skills Setup Task List
 
 Checklist for configuring **Agent Skills** in **Cursor**, **Codex**, **Kilo Code CLI**, and **Gemini CLI**: where they live, how to add personal vs project skills, and how to install or create skills so the AI uses them in the right contexts.

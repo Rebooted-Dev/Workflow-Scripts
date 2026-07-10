@@ -27,7 +27,7 @@ skills:
 ## Purpose
 Review website content, configuration, and data-model files to identify duplication, stale structure, migration risk, and opportunities to move toward clearer source-of-truth boundaries.
 
-Use `../../00-core/meta/review-workflow-core.md` for report routing, evidence requirements, severity/priority scoring, and untrusted-content handling.
+Use `../00-core/meta/review-workflow-core.md` for report routing, evidence requirements, severity/priority scoring, and untrusted-content handling.
 
 ## Skill Hooks
 

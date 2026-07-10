@@ -1,3 +1,15 @@
+---
+id: pre-deployment-security-check
+version: 2.0
+category: deployment
+kind: workflow
+triggers: ["pre deployment security check"]
+requires: [verification-gates, security-baseline]
+agents: [security-scanner, dependency-reviewer]
+prev: [confirm-execution]
+next: [deploy]
+---
+
 # Pre-deployment security check
 
 A reusable, project-agnostic workflow to run before deploying an application. Adapt the steps and paths to your repo (monorepo packages, app directories, lockfiles).

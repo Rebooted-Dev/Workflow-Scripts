@@ -15,19 +15,19 @@ Are you migrating from AI Studio?
 └─ Yes → ./02-ai-studio-to-desktop.md
 
 Are you deploying to a cloud platform or server?
-├─ Firebase Hosting → ../09-11 Misc/10-firebase-setup.md
-├─ Nginx → ../09-11 Misc/11-nginx.md
+├─ Firebase Hosting → ../reference/08-api-integration/10-firebase-setup.md
+├─ Nginx → ../reference/08-api-integration/11-nginx.md
 └─ Other → Continue
 
 Do you need a deployment/security/SEO/GEO checklist?
 ├─ Full checklist → ../12-seo-geo/
-└─ Quick security check → ./08a-pre-deployment-security-check.md
+└─ Quick security check → ./04-pre-deployment-security-check.md
 
 Do you need to manage development server ports?
-└─ Yes → ./08-port-relocation/port-management-guide.md
+└─ Yes → ./03-port-relocation/port-management-guide.md
 
 Do you need to apply Next.js/React updates?
-└─ Yes → ../09-11 Misc/09-nextjs-react-update.md
+└─ Yes → ../reference/08-api-integration/09-nextjs-react-update.md
 ```
 
 ## Deployment Guides
@@ -47,18 +47,18 @@ Use when migrating projects from Google AI Studio or Colab to local desktop deve
 
 ### Development Tools
 
-#### [Port Management Guide](./08-port-relocation/port-management-guide.md)
+#### [Port Management Guide](./03-port-relocation/port-management-guide.md)
 Use when resolving port conflicts, managing multiple dev servers, or configuring browser auto-open.
 
-#### [Browser Auto-Open Guide](./08-port-relocation/browser-auto-open.md)
+#### [Browser Auto-Open Guide](./03-port-relocation/browser-auto-open.md)
 Use when setting up automatic browser opening for local development servers.
 
 ### Cloud Hosting
 
-#### [Firebase Hosting Setup](../../reference/api-integration/10-firebase-setup.md)
+#### [Firebase Hosting Setup](../reference/08-api-integration/10-firebase-setup.md)
 Use when deploying static sites or SPAs to Firebase Hosting.
 
-#### [Nginx Deployment Guide](../../reference/api-integration/11-nginx.md)
+#### [Nginx Deployment Guide](../reference/08-api-integration/11-nginx.md)
 Use when deploying applications with nginx on macOS, Linux, or a server.
 
 ### Pre-Deployment Checklists
@@ -66,12 +66,12 @@ Use when deploying applications with nginx on macOS, Linux, or a server.
 #### [SEO/GEO Checklist](../12-seo-geo/)
 Use before first production deployment, major releases, or recurring search/AI visibility audits.
 
-#### [Pre-deployment Security Check](./08a-pre-deployment-security-check.md)
+#### [Pre-deployment Security Check](./04-pre-deployment-security-check.md)
 Use for quick validation before deployment.
 
 ### Framework Updates
 
-#### [Next.js / React Update Guide](../../reference/api-integration/09-nextjs-react-update.md)
+#### [Next.js / React Update Guide](../reference/08-api-integration/09-nextjs-react-update.md)
 Use when applying React, React DOM, Next.js, or eslint-config-next updates.
 
 ## Common Scenarios
@@ -79,12 +79,12 @@ Use when applying React, React DOM, Next.js, or eslint-config-next updates.
 ### Static Site To Firebase
 
 1. Build your site: `npm run build`
-2. Follow [Firebase Hosting Setup](../../reference/api-integration/10-firebase-setup.md)
+2. Follow [Firebase Hosting Setup](../reference/08-api-integration/10-firebase-setup.md)
 3. Deploy: `firebase deploy --only hosting`
 
 ### Local Development With Port Conflicts
 
-1. Follow [Port Management Guide](./08-port-relocation/port-management-guide.md)
+1. Follow [Port Management Guide](./03-port-relocation/port-management-guide.md)
 2. Configure your dev server to use an available port.
 3. Run the project dev command.
 
@@ -104,7 +104,7 @@ Use when applying React, React DOM, Next.js, or eslint-config-next updates.
 ### Comprehensive Production Readiness
 
 1. Follow [SEO/GEO Checklist](../12-seo-geo/)
-2. Run [Pre-deployment Security Check](./08a-pre-deployment-security-check.md)
+2. Run [Pre-deployment Security Check](./04-pre-deployment-security-check.md)
 3. Deploy to production.
 4. Set up monitoring and repeat the routine review tasks.
 

@@ -1,3 +1,15 @@
+---
+id: optimize-workflow-scripts
+version: 2.0
+category: setup
+kind: workflow
+triggers: ["optimize workflow scripts"]
+requires: [verification-gates, artifact-contract]
+agents: [architecture-reviewer, test-strategist]
+prev: []
+next: []
+---
+
 # Workflow Scripts Optimization and Verification
 
 This workflow provides a systematic process for analyzing, optimizing, and verifying workflow scripts to eliminate redundancy, resolve contradictions, clarify ambiguities, and improve overall quality and usability.

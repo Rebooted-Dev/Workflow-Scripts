@@ -1,6 +1,6 @@
 # 2026-07-10 - Ops Meta v2 Docs Migration Plan
 
-**Status:** Draft — ready for plan review / execution  
+**Status:** ✅ COMPLETED / Executed (2026-07-10) — superseded by `2026-07-10-ops-meta-v2-docs-migration-final-plan.md`; retained as source draft + Plan Review Addendum audit trail
 **Scope:** Workflow-Scripts system meta only (no workflow prose rewrites).  
 **Branch (current):** `fix/v2.0a-separate-legacy-and-v2`  
 **Execution workspace:** `/Users/jesse/Development/Personal/Update-AI-Tools/Workflow-Scripts`  
@@ -10,7 +10,7 @@
 
 | Artifact | Path |
 |----------|------|
-| Single-master reconciliation (second tree retired) | `plans/2026-07-10-single-master-directory-reconciliation-plan.md` |
+| Single-master reconciliation (second tree retired) | `../plans-completed/migration/2026-07-10-single-master-directory-reconciliation-plan.md` |
 | Dual-tree comparison (still under live ops research) | `../../00-project/research/2026-07-10-drag-free-v2-dual-tree-comparison.md` |
 | Migration problem statement (still under live ops research) | `../../00-project/research/2026-07-07-drag-free-v2-migration-problem-statement.md` |
 | DFV2 promotion tarball (keep at live ops) | `../../00-project/build/archive/drag-free-v2-promotion-snapshot-2026-07-10.tar.gz` |

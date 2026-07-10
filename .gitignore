@@ -35,3 +35,8 @@ build/
 !00-project/build/archive/
 !00-project/build/archive/**
 
+# Keep WDF package separation-repair evidence trackable
+!workflows-drag-free/00-project/build/
+!workflows-drag-free/00-project/build/drag-free-v2-separation/
+!workflows-drag-free/00-project/build/drag-free-v2-separation/**
+

@@ -1,6 +1,6 @@
 # Plans Completed
 
-This directory contains completed or archived plans for Drag-Free-v2 consolidation work, organized by category.
+This directory contains completed or archived plans for **Workflow-Scripts**, organized by category. Categories include migration work (for example Drag-Free / WDF consolidation) as well as implementation, review, investigation, and tooling plans.
 
 ## Directory Structure
 
@@ -8,10 +8,10 @@ This directory contains completed or archived plans for Drag-Free-v2 consolidati
 plans-completed/
 ├── implementation/     # Feature implementation, code changes
 ├── investigation/      # Research, analysis, debugging
-├── migration/        # Structural changes, migrations
-├── review/           # Code reviews, audits
-├── tooling/          # Tool setup, configuration
-└── index.md          # Chronological index of all completed plans
+├── migration/          # Structural changes, migrations
+├── review/             # Code reviews, audits
+├── tooling/            # Tool setup, configuration
+└── index.md            # Chronological index of all completed plans
 ```
 
 ## Categories
@@ -20,7 +20,7 @@ plans-completed/
 |----------|-------------|----------|
 | `implementation/` | Plans that resulted in code or workflow changes | Feature additions, refactoring |
 | `investigation/` | Research and analysis work | Bug investigations, workflow audits |
-| `migration/` | Structural or organizational changes | Directory reorganization, migrations |
+| `migration/` | Structural or organizational changes | Directory reorganization, Drag-Free/WDF migrations |
 | `review/` | Review and audit work | Code reviews, documentation audits |
 | `tooling/` | Tool and configuration work | CI/CD setup, agent/MCP configuration |
 

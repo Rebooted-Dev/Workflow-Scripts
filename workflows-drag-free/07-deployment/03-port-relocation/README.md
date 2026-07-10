@@ -75,7 +75,7 @@ See: [Browser Auto-Open Guide](./browser-auto-open.md)
 ## File Structure
 
 ```
-08-port-relocation/
+03-port-relocation/
 ├── README.md                    # This file - overview and quick start
 ├── port-management-guide.md    # Comprehensive port management guide
 └── browser-auto-open.md        # Browser auto-open configuration
