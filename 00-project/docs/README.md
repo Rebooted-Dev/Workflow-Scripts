@@ -9,14 +9,14 @@ Central navigation for Workflow-Scripts — a reusable workflow instruction libr
 
 | Audience | Start with |
 |----------|------------|
-| **Host project developers** | [User Manual](./user-manual.md) — clone, pull updates, pick workflows |
+| **Host project developers** | [User Manual](../../User-Manual/README.md) — clone, set up, pull updates, and pick workflows |
 | **Workflow-Scripts maintainers** | [Deployment & Sync](./deployment/README.md) — publish changes, multi-project sync |
 | **AI agents** | [Agent conventions](./agents/changelog-and-troubleshooting.md) + `00-project/AGENTS.md` |
 | **New to the repo layout** | [File Map](./architecture/file-map.md) |
 
 ## For Users
 
-- [User Manual](./user-manual.md) — when to use each workflow, typical sequences, skills vs full workflows
+- [User Manual](../../User-Manual/README.md) — when to use each workflow, initial setup, typical sequences, and skills vs full workflows
 - [Tutorials](./tutorials/getting-started.md) — step-by-step first-run guide
 - Root [README.md](../../README.md) — category index and quick-start table
 - [SHARING_AND_SYNC.md](../../SHARING_AND_SYNC.md) — multi-repo clone model

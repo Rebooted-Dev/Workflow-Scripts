@@ -5,6 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-14 | docs | Expand Workflow-Scripts user manual | docs/2026-07-14-docs-expand-user-manual.md | Added conceptual folder-structure guidance and drag-and-prompt examples for common workflow tasks |
+| 2026-07-14 | docs | Add Workflow-Scripts user manual | docs/2026-07-14-docs-add-user-manual.md | Added the canonical User-Manual quick start, workflow map, setup guidance, artifact routing, maintenance commands, and troubleshooting reference |
 | 2026-07-14 | docs | Orchestrate comprehensive audit | docs/2026-07-14-docs-orchestrate-comprehensive-audit.md | Runs all five 05-review workflows from one shared evidence packet with bounded parallelism and deduplication |
 | 2026-07-14 | docs | Add dependency review workflow | docs/2026-07-14-docs-add-dependency-review-workflow.md | Integrated dependency catalog, version research, security review, and upgrade planning with the shared review contract |
 | 2026-07-04 | docs | Clarify project metadata routing | docs/2026-07-04-docs-clarify-project-meta-routing.md | Clarified `00-project/` applies only to Workflow-Scripts system work; consumer projects use root `project/` |

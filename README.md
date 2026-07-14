@@ -10,6 +10,8 @@
 
 This directory contains structured workflow instructions for common development tasks in the host project. These workflows provide consistent, repeatable processes for planning, reviewing, implementing, debugging, and documenting code changes.
 
+**User Manual:** Start with [`User-Manual/README.md`](./User-Manual/README.md) for initial setup, quick start, workflow selection, output locations, and maintenance commands.
+
 **Sharing Workflows Across Projects:** See [`SHARING_AND_SYNC.md`](./SHARING_AND_SYNC.md) for the supported sync models. The recommended approach is a **multi-repo** setup: this directory is a **local** clone inside each host project (e.g. `Workflow-Scripts/` or `workflows/`), as its own git repository. The host project has **multiple repositories** (main app repo + this workflows repo); the main project's `.gitignore` must list this directory so the main repo does not track it.
 
 **Why Workflows?**  
