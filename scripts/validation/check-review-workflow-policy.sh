@@ -4,9 +4,11 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 files=(
+  "$ROOT_DIR/05-review/00-dependencies.md"
   "$ROOT_DIR/05-review/01-code-review.md"
   "$ROOT_DIR/05-review/02-code-optimization.md"
   "$ROOT_DIR/05-review/03-code-refactoring.md"
+  "$ROOT_DIR/05-review/05-comprehensive-audit.md"
   "$ROOT_DIR/06-security/01-security-review.md"
 )
 

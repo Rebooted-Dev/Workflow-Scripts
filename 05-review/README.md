@@ -6,16 +6,20 @@ This directory contains workflows for reviewing code quality, performance, and m
 
 | File | Purpose | When to Use |
 |------|---------|-------------|
+| [`00-dependencies.md`](./00-dependencies.md) | Dependency inventory, version research, security review, and upgrade planning | Before dependency upgrades or on a maintenance cadence |
 | [`01-code-review.md`](./01-code-review.md) | General code review for defects and risks | Before merging, periodic audits |
 | [`02-code-optimization.md`](./02-code-optimization.md) | Performance-focused analysis | When performance issues suspected |
 | [`03-code-refactoring.md`](./03-code-refactoring.md) | Code quality and technical debt | When code is hard to maintain |
 | [`04-website-data-refactoring.md`](./04-website-data-refactoring.md) | Website content/data organization | When data is scattered or untyped |
-| [`05-comprehensive-audit.md`](./05-comprehensive-audit.md) | Deep repo audit and improvement plan | When you need a broad evidence-backed assessment |
+| [`05-comprehensive-audit.md`](./05-comprehensive-audit.md) | Orchestrated full audit using all applicable review workflows | When you need one deduplicated, evidence-backed assessment |
 
 ## Quick Decision Guide
 
 ```
 What are you looking for?
+         │
+         ├── Dependency versions, supply-chain risk, or upgrade sequencing
+         │   └── Use 00-dependencies.md
          │
          ├── Bugs, defects, security risks
          │   └── Use 01-code-review.md
@@ -37,6 +41,7 @@ What are you looking for?
 
 | Workflow | Focus | Typical Severity | When to Run |
 |----------|-------|------------------|-------------|
+| **00-dependencies** | Packages, repositories, hosted services, and upgrade risk | S0-S3, P0-P3 | Before upgrades, releases, or on a maintenance cadence |
 | **01-code-review** | Bugs, risks, defects | S0-S2, P0-P2 | Before merge, regular audits |
 | **02-code-optimization** | Performance | S1-S2, P1-P2 | Performance issues, scaling |
 | **03-code-refactoring** | Maintainability | S2-S3, P2-P3 | Tech debt, before new features |
@@ -57,8 +62,8 @@ See [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workf
 
 You can run multiple workflows on the same codebase:
 
-1. **Comprehensive audit**: Run all four sequentially
-2. **Pre-release**: Run 01-code-review (required) + 02-optimization (if applicable)
+1. **Comprehensive audit**: Use 05-comprehensive-audit; it performs shared discovery, bounded parallel domain reviews, reconciliation, and one consolidated report
+2. **Pre-release**: Run 01-code-review (required), 00-dependencies when dependencies changed, and 02-optimization when applicable
 3. **Tech debt sprint**: Run 03-code-refactoring first, then plan implementation
 4. **Content cleanup**: Run 04-website-data-refactoring before CMS integration
 
@@ -72,6 +77,9 @@ When running multiple reviews:
 All workflows save reports to `<metadata-root>/research/` using the metadata-root and naming convention defined in [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md). In host projects this is normally `project/research/`; in Workflow-Scripts itself this is `00-project/research/`. If no metadata root exists, run `00-project-setup/01-setup-project.md` before filing reports.
 
 - `<metadata-root>/research/code-review-YYMMDD-HHMM-{model}.md`
+- `<metadata-root>/research/dependency-review-YYMMDD-HHMM-{model}.md`
+- `<metadata-root>/research/dependency-update-research-YYMMDD-HHMM-{model}.md`
+- `<metadata-root>/research/dependency-security-review-YYMMDD-HHMM-{model}.md`
 - `<metadata-root>/research/code-optimization-YYMMDD-HHMM-{model}.md`
 - `<metadata-root>/research/code-refactoring-YYMMDD-HHMM-{model}.md`
 - `<metadata-root>/research/website-data-refactoring-YYMMDD-HHMM-{model}.md`

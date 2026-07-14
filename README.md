@@ -49,6 +49,7 @@ The workflows are organized into eleven categories:
 | **Researching & creating plan** | **Research & Plan** | **`01-planning-and-organizing/00-research-and-plan.md`** ← START HERE |
 | Starting a new feature | Implementation Plan | `01-planning-and-organizing/02-finalise-plan.md` |
 | Reviewing a plan | Plan Review | `01-planning-and-organizing/01-plan-review.md` |
+| Reviewing dependencies or planning upgrades | Dependency Review | `05-review/00-dependencies.md` |
 | Optimizing code performance | Code Optimization | `05-review/02-code-optimization.md` |
 | Refactoring code | Code Refactoring | `05-review/03-code-refactoring.md` |
 | Security audit | Security Review | `06-security/01-security-review.md` |
@@ -905,6 +906,7 @@ Workflow-Scripts/
 │   └── 02-sync-documentation.md
 ├── 05-review/
 │   ├── README.md (directory index)
+│   ├── 00-dependencies.md
 │   ├── 01-code-review.md
 │   ├── 02-code-optimization.md
 │   └── 03-code-refactoring.md

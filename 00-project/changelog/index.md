@@ -5,6 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-14 | docs | Orchestrate comprehensive audit | docs/2026-07-14-docs-orchestrate-comprehensive-audit.md | Runs all five 05-review workflows from one shared evidence packet with bounded parallelism and deduplication |
+| 2026-07-14 | docs | Add dependency review workflow | docs/2026-07-14-docs-add-dependency-review-workflow.md | Integrated dependency catalog, version research, security review, and upgrade planning with the shared review contract |
 | 2026-07-04 | docs | Clarify project metadata routing | docs/2026-07-04-docs-clarify-project-meta-routing.md | Clarified `00-project/` applies only to Workflow-Scripts system work; consumer projects use root `project/` |
 | 2026-07-04 | docs | Route adversarial workflow artifacts under project metadata | docs/2026-07-04-docs-route-adversarial-workflow-artifacts.md | Kept generated workflow artifacts under `00-project/` and added harness concept-test plan |
 | 2026-07-04 | docs | Factor adversarial multi-model workflow plan | docs/2026-07-04-docs-factor-adversarial-multi-model-workflow-plan.md | Expanded plan from review-only to shared research, planning, and review orchestration |
