@@ -7,6 +7,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-13 | docs | File Pi updater hang investigation | docs/2026-07-13-docs-file-pi-updater-hang-investigation.md | Proved hidden `/dev/tty` prompt deadlock in Pi's background parallel curl worker; recorded live evidence and remediation plan. |
 | 2026-07-10 | config | Retire 00-project/Drag-Free-v2 second tree | config/2026-07-10-config-retire-drag-free-v2-second-tree.md | Tarball + salvage logs; deleted DFV2; master remains workflows-drag-free |
 | 2026-07-10 | changed | Relocate Drag-Free-v2 plans to workflows-drag-free meta | changed/2026-07-10-changed-relocate-drag-free-v2-plans-to-workflows-drag-free.md | Moved plans/Drag-Free-v2 package to workflows-drag-free/00-project/ |
 | 2026-07-10 | docs | File single-master directory reconciliation plan | docs/2026-07-10-docs-file-single-master-reconciliation-plan.md | Detailed plan to make workflows-drag-free the only master and retire 00-project/Drag-Free-v2 after salvage. |
