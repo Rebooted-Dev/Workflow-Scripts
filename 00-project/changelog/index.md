@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-07-19 | docs | Score System 2 stack plan | docs/2026-07-19-docs-score-system-2-stack-plan.md | Ordered implementation work from lowest to highest combined risk and difficulty |
 | 2026-07-14 | docs | Expand Workflow-Scripts user manual | docs/2026-07-14-docs-expand-user-manual.md | Added conceptual folder-structure guidance and drag-and-prompt examples for common workflow tasks |
 | 2026-07-14 | docs | Add Workflow-Scripts user manual | docs/2026-07-14-docs-add-user-manual.md | Added the canonical User-Manual quick start, workflow map, setup guidance, artifact routing, maintenance commands, and troubleshooting reference |
 | 2026-07-14 | docs | Orchestrate comprehensive audit | docs/2026-07-14-docs-orchestrate-comprehensive-audit.md | Runs all five 05-review workflows from one shared evidence packet with bounded parallelism and deduplication |
