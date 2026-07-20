@@ -77,9 +77,8 @@ Key files:
 - `01-planning-and-organizing/03-plan-review-and-finalise.md`
   - A wrapper: run `01-plan-review.md`, then `02-finalise-plan.md`, then verify final plan acceptance criteria.
 
-- `01-planning-and-organizing/fable-like.md`
-  - Outlier. This is a long Claude-style system prompt, not a planning workflow.
-  - Covers behavior, tools, search, safety, artifact handling, and skill reminders.
+- A third-party system prompt was previously stored in the planning directory.
+  - It was an outlier rather than a planning workflow and has since been removed from maintained branch tips.
   - It does not match the repo’s workflow-file structure.
 
 Common pattern:
@@ -162,7 +161,7 @@ Key files:
   - Optional docs guidance; lower operational weight.
 
 - `04-documentation/ascii-art-prompts.md`
-  - Prompt/template content for ASCII art. Like `fable-like.md`, this is not structurally similar to the main workflows.
+  - Prompt/template content for ASCII art. It is not structurally similar to the main workflows.
 
 Common pattern:
 - Inputs: code changes, plan, completed work, or docs request.
@@ -394,7 +393,7 @@ Concrete inconsistencies:
   - `00-project-setup/01-setup-project.md` allows `project/changelog/plans/` only when explicitly requested, but some build docs still present it as normal.
 
 - Non-workflow content is mixed into workflow categories:
-  - `01-planning-and-organizing/fable-like.md` is a system prompt.
+  - A third-party system prompt previously occupied the planning category and has since been removed.
   - `04-documentation/ascii-art-prompts.md` is prompt/template material.
   - These may be useful, but they weaken category clarity.
 
@@ -412,7 +411,7 @@ Concrete inconsistencies:
 - Trigger clarity varies:
   - `11-Skills/*/SKILL.md` files have strong trigger descriptions.
   - Long workflow docs often have “When to Use” sections, but some docs are reference manuals rather than workflows.
-  - `fable-like.md` and `ascii-art-prompts.md` have unclear trigger semantics inside their categories.
+  - Prompt/reference documents such as `ascii-art-prompts.md` have unclear trigger semantics inside their categories.
 
 - Path conventions are brittle:
   - Several workflows depend on resolving whether this is Workflow-Scripts itself or a host project.
@@ -612,12 +611,10 @@ Limitation:
 4. Add a validator for stale path names:
    - Catch `02-build-code`, root `plans/`, root `plans-completed/`, old `changelog/plans` defaults, and inconsistent `project/build` references.
 
-5. Move or clearly label non-workflow prompt/reference files:
-   - `01-planning-and-organizing/fable-like.md`
+5. Move or clearly label remaining non-workflow prompt/reference files:
    - `04-documentation/ascii-art-prompts.md`
 
 6. Make `04-documentation/03-mark-completed.md` the single canonical completion/filing authority and have build/debug/planning workflows link to it instead of restating filing rules.
 
 7. Add a compact workflow-to-skill mapping table so agents know when to use the short `11-Skills/*` version versus the long workflow file.
-
 
