@@ -1,5 +1,7 @@
 # Workflow-Scripts v1.0.0 Release Notes
 
+> **Historical status (2026-07-19):** Archived release record for the v1.0.0 reconciliation baseline. Branch names, paths, and migration guidance below describe that release and are not current operating instructions.
+
 Release Date: 2026-04-01
 Release Branch: `main`
 v1 Maintenance Branch: `v1`
@@ -21,7 +23,7 @@ This release consolidates historical work from `beta` and `master` into `main` f
 - Added API integration index docs under `08-API-Integration/`.
 - Added glossary and additional meta/documentation support files.
 - Added explicit conflict resolution log:
-  - `00-docs/v1-reconciliation-conflict-log-2026-04-01.md`
+  - [`v1-reconciliation-conflict-log-2026-04-01.md`](./v1-reconciliation-conflict-log-2026-04-01.md)
 
 ## Behavioral / Structural Notes
 
@@ -36,4 +38,3 @@ This release consolidates historical work from `beta` and `master` into `main` f
 - If your local scripts or docs reference `00-orchestrator/`, update to `01a-orchestrator/`.
 - If your local scripts or docs reference `01-planning-and-organizing/`, update to `01b-planning/`.
 - Re-run any internal automation that depends on old path names.
-

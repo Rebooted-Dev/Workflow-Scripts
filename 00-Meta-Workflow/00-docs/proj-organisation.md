@@ -1,5 +1,7 @@
 # Project Root Organisation Runbook
 
+> **Historical status (2026-07-19):** Archived generic runbook retained for reference. It is not a current Workflow-Scripts entry point; use the repository README and `00-project-setup/` workflows for active guidance.
+
 Use this when a project root has accumulated application source code, build files, tests, generated app artifacts, docs, and project tracking at the top level, and you want to move only the runnable app/code workspace into a dedicated subdirectory while leaving repository governance, documentation, and project-management files at the root.
 
 ## Goal

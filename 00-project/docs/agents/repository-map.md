@@ -2,15 +2,34 @@
 
 ## Tracked Repositories
 
-| # | Name | Directory | Remote URL | Branch |
-|---|------|-----------|------------|--------|
-| 1 | Workflow-Scripts | `.` (repository root) | `https://github.com/Rebooted-Dev/Workflow-Scripts` | `main` / `v1.5` / `v1.6` / `v1.7` |
+| # | Name | Directory | Remote URL | Active branch |
+|---|------|-----------|------------|---------------|
+| 1 | Workflow-Scripts | `.` (repository root) | `https://github.com/Rebooted-Dev/Workflow-Scripts` | `v1.8` |
 
 ## Purpose
 
 - **Workflow-Scripts (root)** — Shared workflow instructions, templates, scripts, and `00-project/` meta for this repository.
 
 `00-project/` is **not** a separate git repository. It is a tracked subdirectory within Workflow-Scripts.
+
+## Branch matrix and disposition
+
+Observed on 2026-07-19 before remediation commits. Commit IDs are evidence of the observed state, not permanent branch pins.
+
+| Branch | Observed state | Disposition |
+|--------|----------------|-------------|
+| `v1.8` / `origin/v1.8` | Local and remote at `3b42700` | Active remediation line and the only implementation target for this run. |
+| `v1.7` / `origin/v1.7` | Local and remote at `3b42700` | Frozen prior-stable line; do not fold v1.8 remediation into it. |
+| `main` / `origin/main` | Local `1e06571`, 27 commits behind remote `26e5a9b` | Stale locally. After v1.8 is fully remediated and verified, fast-forward the maintained v1.x result to `main`; do not rewrite history. |
+| `v1.5` / `origin/v1.5` | Local `a6aa8f6`, one commit behind remote `1b7b7af` | Historical maintenance line; frozen and outside this remediation. |
+| `v1.6` / `origin/v1.6` | Local `370560f`, four commits behind remote `cba598b` | Historical maintenance line; frozen and outside this remediation. |
+| `beta` | Local `5f521e4`; configured upstream `origin/beta` is gone | Stale local historical branch. Retain for now; no deletion is authorized by this plan. |
+| `origin/1.0-deprecated` | Remote-only at `6325bde` | Deprecated historical reference; retain, with no deletion in this plan. |
+| `origin/v2-alpha` | Remote-only at `2d3f599` | Legacy v2 prerelease reference; outside the v1.8 remediation and retained. |
+| `origin/v2.0a` | Remote-only at `1c1050b` | Legacy v2 prerelease reference; outside the v1.8 remediation and retained. |
+| `origin/v2.0` | Remote-only at `b2a5ad6` | Out of scope and may be abandoned. No merge, deletion, or history rewrite is part of this plan. |
+
+No branch was deleted and no history was rewritten while recording this matrix.
 
 ## Sync instructions
 

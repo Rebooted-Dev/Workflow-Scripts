@@ -42,7 +42,7 @@ git push
 
 The Workflow-Scripts development environment tracks **1 repository**:
 
-1. **Workflow-Scripts** (Primary, repository root) — `main` / `v1.6` branch
+1. **Workflow-Scripts** (Primary, repository root) — active remediation branch `v1.8`; `v1.7` is frozen prior-stable and local `main` is a follow-on fast-forward target.
 
 See **[Repository Map](docs/agents/repository-map.md)** for paths, remotes, and sync instructions.
 

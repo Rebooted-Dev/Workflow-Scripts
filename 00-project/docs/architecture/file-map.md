@@ -14,8 +14,6 @@
 Workflow-Scripts/
 ├── README.md                          # Main hub
 ├── SHARING_AND_SYNC.md                # Multi-repo clone model
-├── RELEASE_NOTES_v1.0.0.md
-├── proj-organisation.md               # App vs repo-root layout runbook
 ├── media/                             # Assets (hero banner)
 │
 ├── scripts/
@@ -32,7 +30,9 @@ Workflow-Scripts/
 ├── 00-Meta-Workflow/
 │   ├── 00-orchestrator/               # Delegated review (shell + workflow)
 │   ├── 00-meta/                       # Rubrics, glossary, naming, agent policy
-│   ├── 00-docs/                       # Generated reports, archived reviews
+│   ├── 00-docs/                       # Generated reports and archived references
+│   │   ├── RELEASE_NOTES_v1.0.0.md   # Historical release record
+│   │   └── proj-organisation.md      # Historical generic runbook
 │   ├── 00-plans/                      # Legacy active plans index
 │   └── 00-plans-completed/            # Legacy completed plans index
 │
@@ -75,6 +75,8 @@ Workflow-Scripts/
 | `00-project-setup/03-sync-workflow-scripts.md` | Multi-project sync guide |
 | `00-project/AGENTS.md` | Agent rules for Workflow-Scripts meta work |
 | `00-project/docs/agents/changelog-and-troubleshooting.md` | Logging conventions |
+| `00-project/docs/architecture/2026-07-19-repository-license-decision.md` | Current root-license decision and follow-up trigger |
+| `00-project/docs/architecture/2026-07-19-embedded-image-library-maintenance.md` | Embedded package maintenance and compatibility decision |
 
 ## Consumer Path Mapping
 
