@@ -31,7 +31,15 @@ From **this repo** (maintainer):
 |--------|---------|
 | [`validation/check-active-markdown-links.sh`](./validation/check-active-markdown-links.sh) | Active Markdown link checks |
 | [`validation/check-orchestrator-review.sh`](./validation/check-orchestrator-review.sh) | Orchestrator review checks |
+| [`validation/check-review-workflow-policy.sh`](./validation/check-review-workflow-policy.sh) | Shared review-workflow policy checks |
+| [`validation/check-sync-workflow-scripts.sh`](./validation/check-sync-workflow-scripts.sh) | Sync helper behavior checks |
 | [`validation/check-update-workflows.sh`](./validation/check-update-workflows.sh) | Update helper dirty-tree and staged-commit checks |
+
+### Prerequisites
+
+The validation suite requires `bash`, `git`, and `node`. `jq`, `opencode`, and GNU `timeout`/macOS `gtimeout` are optional: relevant scripts use their documented fallbacks when those tools are unavailable.
+
+Run the same five gates automatically on pushes and pull requests through [`.github/workflows/validation.yml`](../.github/workflows/validation.yml).
 
 Setup and behaviour for sync: [`../00-project-setup/03-sync-workflow-scripts.md`](../00-project-setup/03-sync-workflow-scripts.md).  
 Sharing model: [`../SHARING_AND_SYNC.md`](../SHARING_AND_SYNC.md).

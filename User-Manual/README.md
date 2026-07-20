@@ -510,6 +510,8 @@ Run the relevant checks, or the full local validation set:
 ./scripts/validation/check-review-workflow-policy.sh
 ~~~
 
+The same five checks run automatically for pushes and pull requests through [`.github/workflows/validation.yml`](../.github/workflows/validation.yml).
+
 ## Optional capabilities
 
 ### Delegated plan review

@@ -1,0 +1,42 @@
+name: Validation
+
+on:
+  push:
+    branches:
+      - main
+      - v1.8
+  pull_request:
+    branches:
+      - main
+      - v1.8
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check active Markdown links
+        run: bash scripts/validation/check-active-markdown-links.sh
+
+      - name: Check review workflow policy
+        run: bash scripts/validation/check-review-workflow-policy.sh
+
+      - name: Check orchestrator review
+        run: bash scripts/validation/check-orchestrator-review.sh
+
+      - name: Check Workflow-Scripts sync
+        run: bash scripts/validation/check-sync-workflow-scripts.sh
+
+      - name: Check update helper
+        run: bash scripts/validation/check-update-workflows.sh

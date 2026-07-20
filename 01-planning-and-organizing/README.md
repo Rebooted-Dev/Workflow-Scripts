@@ -9,6 +9,7 @@ This directory contains workflows for creating and reviewing implementation plan
 | [`00-research-and-plan.md`](./00-research-and-plan.md) | **START HERE** - Deep research and create initial implementation plan | When you have a goal but no plan yet |
 | [`01-plan-review.md`](./01-plan-review.md) | Review and validate implementation plans | Before starting implementation |
 | [`02-finalise-plan.md`](./02-finalise-plan.md) | Convert approved scope into detailed implementation plan | After plan review feedback |
+| [`03-plan-review-and-finalise.md`](./03-plan-review-and-finalise.md) | Review and finalise a plan in one workflow | When both steps should run in one pass |
 
 ## Workflow Sequence
 
@@ -46,6 +47,9 @@ START HERE
 
 **Need to create implementation plan from approved scope?**
 - Yes → Use [`02-finalise-plan.md`](./02-finalise-plan.md)
+
+**Want to review and finalise an existing plan in one pass?**
+- Yes → Use [`03-plan-review-and-finalise.md`](./03-plan-review-and-finalise.md)
 
 **Ready to start implementing?**
 - Yes → Use [`02-code-build/01-execution.md`](../02-code-build/01-execution.md)

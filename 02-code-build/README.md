@@ -40,7 +40,7 @@ This directory contains workflows for implementing code changes with verificatio
 
 To keep completion rules consistent across workflows, use the single source of truth:
 
-- **[`../04-documentation/02-sync-documentation.md`](../04-documentation/02-sync-documentation.md)** — task checkbox conventions (✅ vs `[ ]`), completion markers, and how to archive completed plans into the project changelog system.
+- **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** — task checkbox conventions (✅ vs `[ ]`), completion markers, and how to archive completed plans into the project changelog system.
 
 ### Phase-Based Implementation
 
