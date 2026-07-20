@@ -2,7 +2,7 @@
  * Main image generator class
  */
 
-import { experimental_generateImage as generateImage } from 'ai';
+import { generateImage } from 'ai';
 import type {
   ImageGenerationRequest,
   ImageGenerationResult,
@@ -127,14 +127,9 @@ export class ImageGenerator {
       maxDelay: 30000
     });
 
-    let attemptCount = 0;
-
     try {
       const result = await withRetryAndTimeout(
-        async () => {
-          attemptCount++;
-          return await this.generateSingleAttempt(request);
-        },
+        async () => await this.generateSingleAttempt(request),
         retryPolicy,
         this.config.timeout ?? 60000,
         (error, attempt, delay) => {

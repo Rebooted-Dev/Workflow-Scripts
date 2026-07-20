@@ -8,10 +8,10 @@ import { registry } from '../../../src/core/registry.js';
 
 // Mock the AI SDK
 vi.mock('ai', () => ({
-  experimental_generateImage: vi.fn()
+  generateImage: vi.fn()
 }));
 
-import { experimental_generateImage as mockGenerateImage } from 'ai';
+import { generateImage as mockGenerateImage } from 'ai';
 import { createProviderManager as mockCreateProviderManager } from '../../../src/providers/factory.js';
 
 // Mock providers

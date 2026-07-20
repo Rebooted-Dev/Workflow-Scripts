@@ -13,8 +13,7 @@
   },
   "files": [
     "dist",
-    "README.md",
-    "LICENSE"
+    "README.md"
   ],
   "keywords": [
     "ai",
@@ -30,23 +29,15 @@
     "stable-diffusion"
   ],
   "author": "Jesse Ng",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-repo/ai-sdk-image-generation"
-  },
-  "bugs": {
-    "url": "https://github.com/your-repo/ai-sdk-image-generation/issues"
-  },
-  "homepage": "https://github.com/your-repo/ai-sdk-image-generation#readme",
+  "license": "UNLICENSED",
   "peerDependencies": {
-    "@ai-sdk/fal": "^1.0.18",
-    "@ai-sdk/google": "^2.0.17",
-    "@ai-sdk/openai": "^2.0.42",
-    "@ai-sdk/xai": "^2.0.23",
-    "@fal-ai/client": "^1.7.0",
-    "ai": "^5.0.60",
-    "zod": "^4.1.11"
+    "@ai-sdk/fal": "^3.0.12",
+    "@ai-sdk/google": "^4.0.18",
+    "@ai-sdk/openai": "^4.0.16",
+    "@ai-sdk/xai": "^4.0.16",
+    "@fal-ai/client": "^1.10.1",
+    "ai": "^7.0.31",
+    "zod": "^4.4.3"
   },
   "peerDependenciesMeta": {
     "@ai-sdk/openai": {
@@ -66,18 +57,22 @@
     }
   },
   "devDependencies": {
-    "@ai-sdk/google": "2.0.74",
-    "@ai-sdk/openai": "2.0.106",
-    "@ai-sdk/xai": "2.0.73",
+    "@ai-sdk/fal": "3.0.12",
+    "@ai-sdk/google": "4.0.18",
+    "@ai-sdk/openai": "4.0.16",
+    "@ai-sdk/xai": "4.0.16",
+    "@eslint/js": "10.0.1",
     "@fal-ai/client": "1.10.1",
-    "@types/node": "^22.14.0",
-    "@typescript-eslint/eslint-plugin": "^8.19.1",
-    "@typescript-eslint/parser": "^8.19.1",
-    "eslint": "^9.17.0",
-    "prettier": "^3.4.2",
-    "typescript": "~5.7.2",
-    "vite": "^6.2.0",
-    "vitest": "^3.2.4"
+    "@types/node": "26.1.1",
+    "@typescript-eslint/eslint-plugin": "8.64.0",
+    "@typescript-eslint/parser": "8.64.0",
+    "ai": "7.0.31",
+    "eslint": "10.7.0",
+    "prettier": "3.9.5",
+    "typescript": "5.9.3",
+    "vite": "8.1.5",
+    "vitest": "4.1.10",
+    "zod": "4.4.3"
   },
   "scripts": {
     "build": "vite build",
@@ -92,9 +87,9 @@
     "prepublishOnly": "npm run build && npm run test:run"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   },
   "dependencies": {
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.4.2"
   }
 }

@@ -6,37 +6,6 @@ import type { ImageProviderConfig } from '../core/types.js';
 import { BaseImageProvider, ProviderFactory, providerFactories } from './base.js';
 
 /**
- * Remove the legacy AI SDK response_format flag from OpenAI image requests.
- */
-export function stripOpenAIImageResponseFormat(input: unknown, init?: RequestInit): RequestInit | undefined {
-  try {
-    const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : (input as any)?.url;
-    if (init?.method !== 'POST' || !url || !url.includes('/images/generations')) {
-      return init;
-    }
-
-    const headers = new Headers(init.headers as any);
-    const contentType = headers.get('content-type') || headers.get('Content-Type');
-    if (!contentType || !contentType.includes('application/json') || typeof init.body !== 'string') {
-      return init;
-    }
-
-    const body = JSON.parse(init.body);
-    if (!body || !Object.prototype.hasOwnProperty.call(body, 'response_format')) {
-      return init;
-    }
-
-    delete (body as any).response_format;
-    return {
-      ...init,
-      body: JSON.stringify(body),
-    };
-  } catch {
-    return init;
-  }
-}
-
-/**
  * OpenAI image provider
  */
 export class OpenAIProvider extends BaseImageProvider {
@@ -52,27 +21,9 @@ export class OpenAIProvider extends BaseImageProvider {
     if (!this.client) {
       // Lazy import to avoid bundling unused providers
       const { createOpenAI } = await import('@ai-sdk/openai');
-      const { hasDefaultResponseFormat } = await import('@ai-sdk/openai/internal');
-
-      // OpenAI's latest Images API rejects the legacy `response_format` flag. The AI SDK
-      // (v2.0.42) still adds it for models not marked as having a default response format.
-      // 1) Try to mark all OpenAI image models as default-response-format in the internal set
-      //    (helps internal-only flows), and
-      // 2) Add a fetch shim that strips `response_format` on /images/generations calls to
-      //    cover the provider's public bundle as well.
-      const imageModels = ['gpt-image-1', 'gpt-image-1-mini', 'dall-e-3', 'dall-e-2'];
-      imageModels.forEach((modelId) => {
-        hasDefaultResponseFormat.add(modelId);
-      });
-
-      const originalFetch = globalThis.fetch.bind(globalThis);
-      const safeFetch: typeof fetch = async (input: any, init?: RequestInit) => {
-        return originalFetch(input as any, stripOpenAIImageResponseFormat(input, init) as any);
-      };
 
       this.client = createOpenAI({
         apiKey: this.apiKey,
-        fetch: safeFetch,
       });
     }
 

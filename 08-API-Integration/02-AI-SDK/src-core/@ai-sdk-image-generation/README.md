@@ -353,7 +353,8 @@ This library is extracted from a production codebase and includes battle-tested 
 
 ## License
 
-MIT License - see LICENSE file for details.
+No license is currently granted for this embedded library. See the repository's
+license decision record before redistribution or publication.
 
 ## Changelog
 
