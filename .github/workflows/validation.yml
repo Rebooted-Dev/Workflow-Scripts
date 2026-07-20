@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - v1.8
+      - 'ci-validation-fixture/**'
   pull_request:
     branches:
       - main
