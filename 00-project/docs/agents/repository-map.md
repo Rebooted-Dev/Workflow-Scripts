@@ -31,6 +31,10 @@ Observed on 2026-07-19 before remediation commits. Commit IDs are evidence of th
 
 No branch was deleted and no history was rewritten while recording this matrix.
 
+## Remediation outcome
+
+On 2026-07-20, the verified `v1.8` head `23f43bf` was published and `main` was fast-forwarded to the same commit. `v1.7` and the historical/v2 branches above were left unchanged.
+
 ## Sync instructions
 
 ```bash
