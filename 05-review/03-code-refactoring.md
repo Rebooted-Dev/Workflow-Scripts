@@ -5,6 +5,8 @@ Perform a structured analysis to identify code quality issues, technical debt, a
 
 Use the shared review contract in `../00-Meta-Workflow/00-meta/review-workflow-core.md` for report routing, pre-flight checks, untrusted-content handling, severity/priority scoring, evidence quality, deduplication, report outline, and acceptance criteria.
 
+> **Heavier variant:** For a deep, implementation-ready assessment that turns refactoring opportunities into scored candidates with readiness gates and dependency-keyed work packages, use the review brief [`briefs/identify-refactor-candidates.md`](./briefs/identify-refactor-candidates.md) together with this workflow. The brief specializes (does not replace) this workflow.
+
 ## Inputs
 - Repository root.
 - Any user-specified focus areas (optional).

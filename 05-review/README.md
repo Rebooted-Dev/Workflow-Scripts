@@ -13,6 +13,14 @@ This directory contains workflows for reviewing code quality, performance, and m
 | [`04-website-data-refactoring.md`](./04-website-data-refactoring.md) | Website content/data organization | When data is scattered or untyped |
 | [`05-comprehensive-audit.md`](./05-comprehensive-audit.md) | Orchestrated full audit using all applicable review workflows | When you need one deduplicated, evidence-backed assessment |
 
+## Review Briefs
+
+Review briefs are heavyweight, reusable *companion contracts* that specialize one of the workflows above for a deeper, evidence-backed assessment. Unlike the numbered workflows, a brief is not a standalone procedure — it is used **together with** the workflow it specializes, and it produces a more rigorous report (e.g. scored candidates, readiness gates, dependency-keyed work packages).
+
+| Brief | Specializes | When to use |
+|-------|-------------|-------------|
+| [`briefs/identify-refactor-candidates.md`](./briefs/identify-refactor-candidates.md) | [`03-code-refactoring.md`](./03-code-refactoring.md) | When you need an implementation-ready restructuring/refactoring roadmap (six-way disposition taxonomy, viability scores, non-compensating readiness gates, work packages) rather than a standard refactoring findings report |
+
 ## Quick Decision Guide
 
 ```
