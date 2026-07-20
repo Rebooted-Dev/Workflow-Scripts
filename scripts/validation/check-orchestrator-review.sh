@@ -117,12 +117,14 @@ EOF
 main() {
   local temp_dir
   temp_dir="$(mktemp -d)"
-  trap "rm -rf '$temp_dir'" EXIT
+  trap 'rm -rf "$temp_dir"' EXIT
 
   run_case 42 failed "$temp_dir"
   run_case 124 timeout "$temp_dir"
   run_default_output_case "$temp_dir"
 
+  rm -rf "$temp_dir"
+  trap - EXIT
   echo "Orchestrator review checks OK"
 }
 

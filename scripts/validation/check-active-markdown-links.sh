@@ -50,7 +50,14 @@ for (const file of walk(root)) {
     if (/^[a-z][a-z0-9+.-]*:/i.test(raw) || raw.startsWith('mailto:')) continue;
     const targetNoAnchor = raw.split('#')[0];
     if (!targetNoAnchor) continue;
-    const decoded = decodeURIComponent(targetNoAnchor);
+    let decoded;
+    try {
+      decoded = decodeURIComponent(targetNoAnchor);
+    } catch {
+      const line = text.slice(0, match.index).split('\n').length;
+      problems.push(`${relFile}:${line} -> ${raw} (malformed percent-encoding)`);
+      continue;
+    }
     const target = path.resolve(path.dirname(file), decoded);
     if (!target.startsWith(root)) continue;
     if (!fs.existsSync(target)) {

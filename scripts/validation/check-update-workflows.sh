@@ -5,7 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SCRIPT="$ROOT_DIR/scripts/update-workflows.sh"
 
 temp_dir="$(mktemp -d)"
-trap "rm -rf '$temp_dir'" EXIT
+trap 'rm -rf "$temp_dir"' EXIT
 
 repo="$temp_dir/Workflow-Scripts"
 mkdir -p "$repo/scripts"

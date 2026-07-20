@@ -26,7 +26,7 @@ if ! grep -q 'git@github.com:Rebooted-Dev/Workflow-Scripts' "$SCRIPT"; then
 fi
 
 temp_dir="$(mktemp -d)"
-trap "rm -rf '$temp_dir'" EXIT
+trap 'rm -rf "$temp_dir"' EXIT
 
 empty_base="$temp_dir/empty"
 mkdir -p "$empty_base"
