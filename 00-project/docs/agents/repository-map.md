@@ -33,7 +33,7 @@ No branch was deleted and no history was rewritten while recording this matrix.
 
 ## Remediation outcome
 
-On 2026-07-20, `v1.8` was published, `main` was fast-forwarded, and final documentation reconciliation placed both local and remote maintained heads at `f2b78a1`. `v1.7` and the historical/v2 branches above were left unchanged.
+On 2026-07-20, `v1.8` was published and `main` was fast-forwarded so both local and remote maintained branches share the same current head. `v1.7` and the historical/v2 branches above were left unchanged.
 
 ## Sync instructions
 
