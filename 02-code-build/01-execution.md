@@ -18,7 +18,23 @@ Execute implementation in phases with verification and documentation updates.
 - Updated changelog (`changelog/` per AGENTS.md, or `docs/CHANGELOG.md` / `CHANGELOG.md` if the project uses a single file)
 - Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
 - Implementation plan in `plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open)
+- Verification evidence: commands run, tests run, smoke/acceptance checks performed (or explicit blockers if something could not be run)
 - **If plan is fully completed:** File the completed plan in `project/plans-completed/<category>/` and update both `project/plans-completed/index.md` and `project/changelog/index.md` (see Filing Completed Plans below)
+
+---
+
+## Verification Bar (required)
+
+A phase or plan is **not complete** because the code was written or a single build command passed. **Done** means the change works as defined by acceptance criteria and phase exit criteria.
+
+Apply this bar for every phase and again at finalization (shared with [`README.md`](./README.md) and [`02-confirm-execution.md`](./02-confirm-execution.md)):
+
+1. **Project verify command** — Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs. Prefer the project's full verify path when one exists (e.g. build + lint + typecheck). If none exists, state that explicitly. `npm run build` is only an example, not a universal bar.
+2. **Automated tests when present** — If the repo has a test script or suite that covers (or should cover) this change, **run it**. Do not treat "test execution" as optional side work. For bug fixes, add a regression test when practical.
+3. **Acceptance / smoke for user-facing or runtime behavior** — When the phase changes user-facing flows, APIs, IPC, providers, export/render, or other runtime behavior: smoke the affected path (dev server, CLI, or packaged path per project docs). Unit tests alone are not enough when the plan depends on real runtime behavior.
+4. **Static hygiene** — TypeScript/ESLint (when configured), imports/structure, and `git diff` review for unintended changes or secrets.
+5. **Skipped or blocked checks are not success** — If a required check cannot run (missing secrets, no display, env blocked), record it as **unresolved evidence** with what was blocked and residual risk. Do **not** mark the task `- [✅]` as if verification passed.
+6. **Evidence** — In the phase report (and plan notes when useful), name the commands/checks run and pass/fail. Prefer concrete evidence over "verified."
 
 ---
 
@@ -27,7 +43,7 @@ Execute implementation in phases with verification and documentation updates.
 - Confirm goal + acceptance criteria (user-facing behavior, performance targets, "done" definition).
 - Check repo state (avoid clobbering unrelated work): `git status`.
 - Identify the plan: implementation plan in `plans/` (e.g. `plans/implementation-plan-*.md` or `plans/YYYY-MM-DD-*-implementation-plan.md`).
-- Break work into phases; for each phase define scope, out-of-scope, and exit criteria.
+- Break work into phases; for each phase define scope, out-of-scope, and **exit criteria that include how success will be verified** (commands, tests, and/or smoke of acceptance criteria—not only "code exists").
 - Plan parallel agents for each phase. Suggested agent roles (adapt as needed):
   - Implement core functionality
   - Review for security/risk issues and side effects
@@ -44,7 +60,7 @@ Execute implementation in phases with verification and documentation updates.
 - Phase definition (before coding)
   - Scope: what changes in this phase; what is out-of-scope.
   - Expected touch points: key files/areas likely to change.
-  - Exit criteria: concrete checks that must pass.
+  - Exit criteria: concrete checks that must pass (map each criterion to the Verification Bar: verify command, tests, smoke, and/or static hygiene).
 - Implement
   - Make the smallest change that satisfies the phase scope.
   - Use parallel agents. Suggested agent roles (spawn additional agents as needed):
@@ -59,32 +75,31 @@ Execute implementation in phases with verification and documentation updates.
       - Related code cleanup
       - Security hardening]
 - Verify (repeat until exit criteria met)
-  - Use parallel agents to run checks concurrently. Suggested agent roles (spawn additional agents as needed):
-    - Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs; if none exists, state that explicitly. `npm run build` is only an example.
-    - Check for TypeScript/ESLint errors and warnings
-    - Validate file structure and imports are correct
-    - Review git diff for unintended changes or secrets
-    - [Spawn additional agents if other verification needs are discovered, such as:
-      - Test execution and coverage
-      - Performance benchmarking
-      - Security scanning
-      - Documentation validation
-      - Integration testing]
-  - If relevant and the project is trusted, run the local dev command from project docs and perform a quick smoke test of the affected flow.
-  - If failures: fix, then re-run the same checks.
+  - **Meet the Verification Bar above** before marking the phase complete. Build/lint alone is insufficient when tests or acceptance smoke apply.
+  - Use parallel agents to run checks concurrently. Required agent roles when applicable:
+    - Run the project verification command (build/lint/typecheck as defined by the project)
+    - Run automated tests for this change when a suite/script exists; report results
+    - Smoke acceptance criteria / affected user-facing or runtime flows when the phase touches them
+    - Check TypeScript/ESLint errors and warnings (when configured)
+    - Validate file structure and imports; review git diff for unintended changes or secrets
+  - Spawn additional agents when needed (performance, security scan, docs validation, integration tests).
+  - Prefer the local dev (or project-documented) command for smoke tests when the project is trusted and the change is user-facing or runtime-dependent.
+  - If failures: fix, then re-run the **same** checks until exit criteria pass—or leave the task incomplete with evidence of the failure/blocker.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
+  - **Do not mark `- [✅]` unless Verification Bar items that apply to this phase passed** (or the user explicitly accepts residual risk for a documented blocker).
+  - Include brief verification evidence in the phase summary (commands/tests/smoke + result).
   - **Update logs (only for completed tasks that change or affect project code):**
     - **Changelog:** Add a dated entry for this phase's work. Prefer `changelog/` directory per AGENTS.md when the project uses it; otherwise use `docs/CHANGELOG.md` or `CHANGELOG.md`. File into appropriate type subfolder (`added/`, `changed/`, `fixed/`, `improved/`, `docs/`, `refactor/`, `config/`) and add a row at the **top** of `changelog/index.md`.
     - **Troubleshooting (only when applicable):** Add a troubleshooting entry **only** when this phase involved one of the following (see AGENTS.md and `troubleshooting/README.md` for full conventions):
       - **Add an entry when:** You fixed a **bug** (incorrect behavior or crash), resolved an **issue** that required debugging or a workaround, or solved a **non-trivial problem** (significant investigation, multiple steps, or lessons worth preserving — e.g. complex config, unexpected framework behavior, tricky debugging).
       - **Do not add an entry when:** The work was a simple code change, routine refactor, or straightforward feature addition with no real problem-solving. Changelog is enough.
       - When you do add an entry: create a file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`, update `troubleshooting/index.md` (new row at top), and include Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons.
-  - Provide a concise summary (1-3 bullets) describing what changed and why.
+  - Provide a concise summary (1-3 bullets) describing what changed and why, plus verification outcome.
 
 ## Finalization (After All Phases)
 
-- Run the final project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs to confirm the repo is shippable; if none exists, state that explicitly.
+- Re-run the Verification Bar for the whole change set: project verify command, automated tests when present, and acceptance/smoke for user-facing or runtime behavior. Confirm the repo is shippable against the plan's acceptance criteria; if no verify/test command exists, state that explicitly.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
 - **Update the implementation plan:** Ensure task status and completion markers are consistent. **Then execute the full `03-mark-completed.md` workflow** to verify implementation, reconcile logs, and archive the plan properly. Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the complete process.
 - **If plan is fully completed, file it in `project/plans-completed/`:**
@@ -92,15 +107,16 @@ Execute implementation in phases with verification and documentation updates.
   2. Move the plan from `project/plans/` or `project/build/` to `project/plans-completed/<category>/`
   3. Add a row at the **top** of `project/plans-completed/index.md` with columns: Date, Category, Title, File path, Notes
   4. Add a Type=`plan` entry at the **top** of `project/changelog/index.md` referencing the completed plan
-- Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan.
+- Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan (recommended when using this workflow alone without `03-execute-and-confirm`).
 
 ## Quick Checklist
 
 - [ ] Goal and acceptance criteria confirmed
 - [ ] Repo state checked (`git status`)
 - [ ] Plan identified in `plans/`
-- [ ] Each phase: implement → verify with the project-specific build/lint/test/smoke command → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
-- [ ] Final build passes; no secrets in diff
+- [ ] Each phase: implement → **Verification Bar** (verify command + tests when present + smoke when user-facing/runtime) → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
+- [ ] Phase exit criteria include how success is verified; skipped checks recorded as blockers, not success
+- [ ] Final Verification Bar passes for the full change set; no secrets in diff
 - [ ] Plan fully marked; completion marker added when done
 - [ ] (Optional) Confirm execution run for verification addendum
 

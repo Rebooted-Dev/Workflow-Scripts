@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-08-03 | improved | Strengthen 02-code-build Verification Bar | improved/2026-08-03-improved-code-build-verification-bar.md | Tests + acceptance smoke first-class; skipped checks ≠ success; skill aligned |
 | 2026-07-20 | docs | Add identify-refactor-candidates review brief | docs/2026-07-20-docs-add-identify-refactor-candidates-brief.md | Reusable heavyweight brief companion to 03-code-refactoring; new `05-review/briefs/` subdirectory for review briefs |
 | 2026-07-19 | docs | Score System 2 stack plan | docs/2026-07-19-docs-score-system-2-stack-plan.md | Ordered implementation work from lowest to highest combined risk and difficulty |
 | 2026-07-14 | docs | Expand Workflow-Scripts user manual | docs/2026-07-14-docs-expand-user-manual.md | Added conceptual folder-structure guidance and drag-and-prompt examples for common workflow tasks |

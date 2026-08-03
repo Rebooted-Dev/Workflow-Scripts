@@ -26,11 +26,12 @@ Use this skill after the user has explicitly moved from planning into implementa
    - Prefer existing repo patterns, helpers, and architecture.
    - Update the active plan as phases complete or blockers appear.
 
-3. Verify.
-   - Run the plan's specified tests/builds first.
-   - Add targeted verification when the plan depends on runtime behavior not covered by tests.
-   - Treat skipped or blocked verification as unresolved evidence, not success.
-   - For frontend, export, provider, or live webhook behavior, verify the real rendered/runtime path when feasible, not only unit tests.
+3. Verify (match `02-code-build` Verification Bar).
+   - Run the plan's specified tests/builds first; prefer the project verify path from `AGENTS.md`, package scripts, Makefile, or test docs over a single generic build.
+   - When a test suite/script exists for the change, run it. For bug fixes, add a regression test when practical.
+   - Add targeted smoke when the plan depends on user-facing or runtime behavior not covered by tests (frontend, export/render, provider, IPC, live webhook, CLI).
+   - Treat skipped or blocked verification as unresolved evidence, not success—do not mark tasks complete as if checks passed.
+   - Name commands/smoke run and pass/fail in the summary (and plan addendum when using confirm workflows).
 
 4. Reconcile plan status.
    - If complete, mark completion according to the repo workflow and move/archive the plan when appropriate.
@@ -45,4 +46,4 @@ Use this skill after the user has explicitly moved from planning into implementa
 
 ## Completion Bar
 
-Finish with a concise summary of changed files, verification run, documentation/logging updates, and any residual risk. If a command failed, report the command and why it matters.
+Finish with a concise summary of changed files, verification run (verify command, tests, smoke), documentation/logging updates, and any residual risk. If a command failed or was blocked, report it and why it matters. Build-only green is not enough when tests or acceptance smoke apply.

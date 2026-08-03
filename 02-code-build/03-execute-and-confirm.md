@@ -12,16 +12,26 @@ Run implementation (Execution) followed by validation (Confirm Execution) in one
 
 ## Output
 
-- Everything from **[`01-execution.md`](./01-execution.md):** implemented code, updated changelog and (when applicable) troubleshooting, implementation plan updated with task status and completion marker.
+- Everything from **[`01-execution.md`](./01-execution.md):** implemented code, updated changelog and (when applicable) troubleshooting, implementation plan updated with task status and completion marker, verification evidence.
 - Plus everything from **[`02-confirm-execution.md`](./02-confirm-execution.md):** plan updated with any corrected marking, verification addendum (what was checked, any misreporting, next steps for incomplete items).
+
+## Completion Bar
+
+This workflow is **not finished** when code is written. It is finished when:
+
+1. **01** met the shared **Verification Bar** per phase and at finalization (project verify, automated tests when present, acceptance/smoke when user-facing or runtime-dependent; skipped checks are blockers, not success). See **[`01-execution.md`](./01-execution.md)**.
+2. **02** audited every claimed completion against code **and** verification evidence; misreporting corrected; addendum lists commands, tests, smoke, and residual risk.
+3. Only then: mark-completed / archive when fully verified complete.
+
+Do not treat "build green" as a substitute for tests or acceptance smoke when those apply. Prefer the plan's named verify/test commands and acceptance criteria over generic checks alone.
 
 ## Steps
 
 1. **Execute the plan** – Follow **[`01-execution.md`](./01-execution.md)** in full:
-   - Preparation, phase definition, implementation loop (implement → verify → phase report), finalization.
+   - Preparation, phase definition, implementation loop (implement → **Verification Bar** → phase report), finalization.
    - Do **not** treat the optional "run 02-confirm-execution" at the end of 01 as optional in this workflow; step 2 replaces it.
 
-2. **Confirm execution** – Follow **[`02-confirm-execution.md`](./02-confirm-execution.md)** in full to audit the plan and add the verification addendum.
+2. **Confirm execution** – Follow **[`02-confirm-execution.md`](./02-confirm-execution.md)** in full to audit the plan and add the verification addendum (re-run or confirm verify/tests/smoke when evidence is missing or unconvincing).
   - **Then, when the plan is fully verified complete:** Execute the full **`03-mark-completed.md` workflow** to:
     - Verify implementation with parallel agents
     - Reconcile changelog, troubleshooting, and documentation
@@ -31,8 +41,9 @@ Run implementation (Execution) followed by validation (Confirm Execution) in one
 ## Quick Checklist
 
 - [ ] Goal and acceptance criteria confirmed; plan identified (e.g. in `project/build/` or per `plans/README.md`)
-- [ ] **01** run in full: phases implemented, verified, plan and logs updated, final build passes
-- [ ] **02** run in full: plan audited, addendum added, marking corrected if needed, completion marker if done
+- [ ] **01** run in full: phases implemented; **Verification Bar** met (verify command + tests when present + smoke when user-facing/runtime); plan and logs updated; residual blockers documented if any
+- [ ] **02** run in full: plan audited against code **and** verification evidence; addendum lists commands/tests/smoke; marking corrected if needed; completion marker only if fully verified
+- [ ] Mark-completed / archive only after full verification (not after implementation alone)
 
 ## Related Workflows
 
