@@ -42,7 +42,7 @@ git push
 
 The Workflow-Scripts development environment tracks **1 repository**:
 
-1. **Workflow-Scripts** (Primary, repository root) — `main` / `v1.7` branch
+1. **Workflow-Scripts** (Primary, repository root) — `main` / `v1.71` branch
 
 See **[Repository Map](docs/agents/repository-map.md)** for paths, remotes, and sync instructions.
 

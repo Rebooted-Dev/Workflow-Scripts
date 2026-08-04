@@ -79,7 +79,7 @@ Guide: `00-project-setup/03-sync-workflow-scripts.md`
 | Branch | Role |
 |--------|------|
 | `main` | Primary integration branch |
-| `v1.5`, `v1.6`, `v1.7` | Versioned release lines |
+| `v1.5`, `v1.6`, `v1.7`, `v1.71` | Versioned release lines |
 
 Override with `WORKFLOWS_BRANCH` env var in sync scripts.
 

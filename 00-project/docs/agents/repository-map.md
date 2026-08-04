@@ -4,7 +4,7 @@
 
 | # | Name | Directory | Remote URL | Branch |
 |---|------|-----------|------------|--------|
-| 1 | Workflow-Scripts | `.` (repository root) | `https://github.com/Rebooted-Dev/Workflow-Scripts` | `main` / `v1.5` / `v1.6` / `v1.7` |
+| 1 | Workflow-Scripts | `.` (repository root) | `https://github.com/Rebooted-Dev/Workflow-Scripts` | `main` / `v1.5` / `v1.6` / `v1.7` / `v1.71` |
 
 ## Purpose
 

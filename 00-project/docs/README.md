@@ -56,7 +56,7 @@ These are consumer-oriented guides bundled with Workflow-Scripts, not meta docs 
 - Five validation scripts under `scripts/validation/` (pre-push suite)
 - `agent-spawning-policy.md` — 3–6 parallel agents per review session
 - `05-review/05-comprehensive-audit.md` (renamed from `fable-review.md`)
-- Branch `v1.7` active; `migrate-changelog.py` archived to `00-project/build/archive/`
+- Branch `v1.71` active; `migrate-changelog.py` archived to `00-project/build/archive/`
 
 ## Glossary
 
