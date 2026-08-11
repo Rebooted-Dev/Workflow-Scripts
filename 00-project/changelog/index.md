@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-08-11 | docs | Declare v1.72 as the active Workflow-Scripts branch | docs/2026-08-11-docs-declare-v1-72-active-branch.md | Meta AGENTS, repository map, deployment branch table, and docs hub now mark `v1.72` active |
 | 2026-08-11 | plan | Workflow Completion-Chain Remediation | ../plans-completed/implementation/2026-08-08-workflow-completion-chain-remediation.md | Enforced single terminal-gate owner; host-policy archive routing; deterministic discovery; added `check-completion-chain-policy.sh`. Branch `v1.72`, commit `ea76fb5` |
 | 2026-08-11 | changed | Enforce single terminal-gate owner in completion chain | changed/2026-08-11-changed-completion-chain-terminal-gate.md | `03-mark-completed` is sole terminal owner; mandatory `Verified Complete`/`Not Eligible` handoff; host-policy archive; new validator |
 | 2026-08-03 | improved | Strengthen 02-code-build Verification Bar | improved/2026-08-03-improved-code-build-verification-bar.md | Tests + acceptance smoke first-class; skipped checks ≠ success; skill aligned |

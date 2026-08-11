@@ -1,7 +1,7 @@
 # Workflow-Scripts Documentation
 
 **Status:** ✅ COMPLETED
-**Last verified:** 2026-07-03 (synced with v1.7 deep review remediation)
+**Last verified:** 2026-08-11 (active branch `v1.72`; prior v1.7 deep review remediation retained)
 
 Central navigation for Workflow-Scripts — a reusable workflow instruction library for AI-assisted development, maintained as its own git repository and cloned into host projects.
 
@@ -56,7 +56,8 @@ These are consumer-oriented guides bundled with Workflow-Scripts, not meta docs 
 - Five validation scripts under `scripts/validation/` (pre-push suite)
 - `agent-spawning-policy.md` — 3–6 parallel agents per review session
 - `05-review/05-comprehensive-audit.md` (renamed from `fable-review.md`)
-- Branch `v1.71` active; `migrate-changelog.py` archived to `00-project/build/archive/`
+- Branch **`v1.72` active** (from `v1.71`); completion-chain terminal-gate remediation shipped on this line
+- `migrate-changelog.py` archived to `00-project/build/archive/`
 
 ## Glossary
 
