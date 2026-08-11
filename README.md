@@ -59,6 +59,7 @@ The workflows are organized into eleven categories:
 | Fixing a bug | Bug Fix | `03-debugging/02-bug-fix-workflow.md` |
 | Fixing security issues | Security Fix | `06-security/02-security-fix.md` |
 | Updating docs | Sync Documentation | `04-documentation/02-sync-documentation.md` |
+| **Marking a plan complete / archiving** | **Mark Completed (terminal gate)** | **`04-documentation/03-mark-completed.md`** |
 | Reusing repeated agent workflows | Skill Bundles | `11-Skills/` |
 
 **Code Review vs Security Review:**
@@ -905,7 +906,8 @@ Workflow-Scripts/
 │   └── 02-bug-fix-workflow.md
 ├── 04-documentation/
 │   ├── README.md (directory index)
-│   └── 02-sync-documentation.md
+│   ├── 02-sync-documentation.md
+│   └── 03-mark-completed.md (terminal gate: sole ✅/marker/archive owner)
 ├── 05-review/
 │   ├── README.md (directory index)
 │   ├── 00-dependencies.md

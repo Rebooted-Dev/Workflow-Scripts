@@ -19,7 +19,7 @@ Execute implementation in phases with verification and documentation updates.
 - Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
 - Implementation plan in `plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open)
 - Verification evidence: commands run, tests run, smoke/acceptance checks performed (or explicit blockers if something could not be run)
-- **If plan is fully completed:** File the completed plan in `project/plans-completed/<category>/` and update both `project/plans-completed/index.md` and `project/changelog/index.md` (see Filing Completed Plans below)
+- **Finalization/archive is not done in this workflow.** Only the terminal gate **[`03-mark-completed.md`](../04-documentation/03-mark-completed.md)** may apply the completion marker and archive a plan, and it resolves the archive destination from the host repository's policy (see Finalization). This workflow reports verification per phase and at finalization; it does not independently finalize or archive.
 
 ---
 
@@ -101,13 +101,8 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 
 - Re-run the Verification Bar for the whole change set: project verify command, automated tests when present, and acceptance/smoke for user-facing or runtime behavior. Confirm the repo is shippable against the plan's acceptance criteria; if no verify/test command exists, state that explicitly.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
-- **Update the implementation plan:** Ensure task status and completion markers are consistent. **Then execute the full `03-mark-completed.md` workflow** to verify implementation, reconcile logs, and archive the plan properly. Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the complete process.
-- **If plan is fully completed, file it in `project/plans-completed/`:**
-  1. Determine the appropriate category subfolder (`implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`). If none fit, create a descriptive kebab-case folder (e.g., `performance-optimization/`).
-  2. Move the plan from `project/plans/` or `project/build/` to `project/plans-completed/<category>/`
-  3. Add a row at the **top** of `project/plans-completed/index.md` with columns: Date, Category, Title, File path, Notes
-  4. Add a Type=`plan` entry at the **top** of `project/changelog/index.md` referencing the completed plan
-- Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to validate completion against the plan (recommended when using this workflow alone without `03-execute-and-confirm`).
+- **This workflow reports verification; it does not finalize or archive.** To mark the plan complete and archive it, **run the terminal gate** [`03-mark-completed.md`](../04-documentation/03-mark-completed.md). The gate is the **only** workflow that applies the completion marker, reconciles changelog/troubleshooting/docs, and archives the plan (resolving the destination from the host repository's policy — see [`03-mark-completed.md`](../04-documentation/03-mark-completed.md)).
+- Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to audit completion against the plan **before** the gate (recommended when using this workflow alone without [`03-execute-and-confirm.md`](./03-execute-and-confirm.md)). Confirmation may downgrade false claims and append evidence; it does not finalize or archive.
 
 ## Quick Checklist
 
@@ -117,7 +112,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 - [ ] Each phase: implement → **Verification Bar** (verify command + tests when present + smoke when user-facing/runtime) → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
 - [ ] Phase exit criteria include how success is verified; skipped checks recorded as blockers, not success
 - [ ] Final Verification Bar passes for the full change set; no secrets in diff
-- [ ] Plan fully marked; completion marker added when done
+- [ ] Plan fully marked per the terminal gate; completion marker/archive only via [`03-mark-completed.md`](../04-documentation/03-mark-completed.md)
 - [ ] (Optional) Confirm execution run for verification addendum
 
 ## Related Workflows

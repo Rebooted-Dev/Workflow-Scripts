@@ -15,13 +15,24 @@ This directory contains workflows for implementing code changes with verificatio
 ```
 ┌─────────────────────┐      ┌──────────────────────────┐
 │  01-execution.md    │ ───▶ │  02-confirm-execution.md │
-│  (Implement code)   │      │  (Validate completion)   │
-└─────────────────────┘      └──────────────────────────┘
-         │                              ▲
-         │    ┌─────────────────────────┴─────────────────────────┐
-         └───▶│  03-execute-and-confirm.md (01 then 02 in one)    │
-              └───────────────────────────────────────────────────┘
+│  (Implement + verify)│     │  (Audit vs code/evidence)│
+└─────────────────────┘      └─────────────┬────────────┘
+         │                                  │
+         └──▶ 03-execute-and-confirm ───────┘  (01 then 02 in one)
+                                   │
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │ 04-documentation/            │
+                    │ 03-mark-completed.md         │
+                    │ (TERMINAL GATE — sole        │
+                    │  ✅ / marker / archive owner) │
+                    └──────────────┬───────────────┘
+                  Verified Complete │ Not Eligible
+                  (archive via host │ (plan stays active,
+                   policy)          no marker / archive)
 ```
+
+**The terminal gate is mandatory.** Only [`03-mark-completed`](../04-documentation/03-mark-completed.md) applies terminal `✅` task marks, the completion marker, and archive routing (resolved from the host repository's policy). `01` and `02` report verification and may downgrade false claims; they never finalize or archive independently. A `Verified Complete` plan must invoke the gate; a `Not Eligible` plan must not.
 
 ## Quick Decision Guide
 

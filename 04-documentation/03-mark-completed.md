@@ -3,6 +3,8 @@
 ## Purpose
 Inspect the codebase and verify that all reported completed tasks were actually implemented. Mark truly completed tasks and sub-tasks with green check marks (✅). Flag instances of false reporting (incomplete or not done) so the developer can decide what to do. Reconcile and update related documentation, changelog, and troubleshooting logs.
 
+> **Sole terminal authority.** This is the **only** workflow in the chain that may apply terminal `✅` task marks, create a completion marker, reconcile changelog/troubleshooting/docs, and archive a plan. `01-execution` and `02-confirm-execution` report verification and may **downgrade** false claims; they must **not** independently finalize or archive. The combined workflow reaches this gate only on a `Verified Complete` outcome (see [`../02-code-build/03-execute-and-confirm.md`](../02-code-build/03-execute-and-confirm.md)). Archive routing is resolved from the **host repository's** policy, not a global default (Phase 4 below).
+
 ## When to Use This Workflow
 
 **Use this workflow when:**
@@ -17,7 +19,7 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 
 ## Inputs
 - Repository root
-- Plan or report files that declare completed tasks (e.g. `project/build/*.md`, `project/changelog/plans/*.md`)
+- Plan or report files that declare completed tasks (resolved via active-plan discovery in Phase 1: named target first, then `<metadata-root>/plans/**` and `<metadata-root>/build/**` — never archived plans by default)
 - Changelog index and entries (`project/changelog/index.md`, `project/changelog/<type>/*.md`, `project/changelog/plans/` for completed plans)
 - Troubleshooting index and entries (`project/troubleshooting/index.md`, `project/troubleshooting/<category>/*.md`)
 - Relevant source files referenced in each task
@@ -85,9 +87,12 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 ```
 
 ### Phase 1: Identify Sources of "Completed" Claims
-1. **Locate plan and report files** that declare completed tasks:
-   - Scan `project/build/` and `project/changelog/plans/` for markdown files with checkboxes, "Complete", "✅" (green check mark), or "Implementation Verified"
-   - Note file paths and section headings that list tasks and sub-tasks
+1. **Locate the plan/report file** that declares completed tasks, using deterministic active-plan discovery:
+   - **Named target first** — if a plan path/name was supplied, use it.
+   - Otherwise search **only** `<metadata-root>/plans/**` and `<metadata-root>/build/**`.
+   - **Never scan archived plans by default** (e.g. `plans-completed/`, `changelog/plans/`); archives are historical, not active claims.
+   - Exclude `README.md`, `TODO.md`, review artifacts, and other navigation/report-only files unless explicitly named.
+   - If multiple candidates remain, report them and ask for a named target rather than guessing.
 2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[✅]`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note). **Use only ✅ (green check mark) for marking completed items—not "x", ✓, or other symbols—for consistency.**
 
 ### Phase 2: Verify Implementation in Code (Parallel Agents)
@@ -124,11 +129,13 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 
 1. **Changelog:** For each verified completion that is not yet reflected in `project/changelog/`, add or update an entry per project conventions (e.g. `project/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and a row in `project/changelog/index.md`). For false completions, do not add a changelog entry claiming the fix; optionally add an entry only when the developer actually implements the fix.
 2. **Troubleshooting:** If a task was about a bug or incident, ensure `project/troubleshooting/` has an entry that matches the fix (or a note that it is still open). Update or add entries only for **verified** fixes. File into the appropriate category subfolder (`build/`, `runtime/`, `data/`, `environment/`, `security/`) and add a row at the **top** of `project/troubleshooting/index.md`.
-3. **Plans-Completed:** If a plan or implementation document is fully completed and should be archived:
-   - Move the plan from `project/plans/` or `project/build/` to the appropriate category subfolder in `project/plans-completed/` (`implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`)
-   - If no appropriate subfolder exists, create one with a descriptive name (kebab-case)
-   - Add a row at the **top** of `project/plans-completed/index.md` with: Date, Category, Title, File path, Notes
-   - Add a Type=`plan` row at the **top** of `project/changelog/index.md` referencing the completed plan file
+3. **Plans-Completed (host-policy archive routing):** This workflow is the **only** one that archives a completed plan. Resolve the destination from the **host repository's** policy — do **not** impose a global default:
+   - Read the host repository's `AGENTS.md` and relevant project docs for the documented completed-plan destination. Observed host policies differ (e.g. `project/plans-completed/<category>/`, root-level `plans-completed/`, or `project/changelog/plans/`).
+   - Apply the host's documented default, and honor an explicit alternate request **only** when the host policy documents/allows that override.
+   - Move the plan from its active location to the host-policy destination (into the appropriate category subfolder where the host uses them: `implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`, or a descriptive kebab-case folder).
+   - Add a row at the **top** of the host's completed-plans index with: Date, Category, Title, File path, Notes.
+   - Add a Type=`plan` row at the **top** of the host's changelog index referencing the completed plan file.
+   - **If the host policy is absent, unreadable, or contradictory:** report **`Not Eligible` / policy unresolved** and leave the plan active. Do not guess, migrate records, or invent a destination.
 4. **Related docs:** Update `docs/` (e.g. ARCHITECTURE, USER_MANUAL, OVERVIEW, TROUBLESHOOTING) so they do not contradict the verified state. Remove or correct any doc text that claims something is done when it is flagged as not done.
 5. **plans/TODO.md:** When tasks are completed, update `plans/TODO.md` (check off items or add follow-ups as needed).
 6. **Plan/report file:** Write back into the plan/report file:

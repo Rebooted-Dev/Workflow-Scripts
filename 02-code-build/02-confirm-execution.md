@@ -35,9 +35,10 @@ Validate that an implementation plan has actually been completed (in code and ve
 ## Output
 
 - The original plan document updated with:
-  - Completed vs incomplete items marked consistently
+  - Completed vs incomplete items marked consistently (audit/downgrade only; **no** completion marker or archive from this workflow)
   - A short verification addendum (what was checked and what passed/failed)
   - Misreporting called out explicitly with evidence
+- A hand-off note: when fully verified complete, route to the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md); when not, leave the plan active. This workflow does not finalize or archive.
 
 ## Verification Bar (required for audit)
 
@@ -92,14 +93,11 @@ If the plan does not use task list syntax, add an addendum section instead of re
    - Blocked or skipped checks and residual risk (if any)
    - Next steps (only for incomplete items)
 
-5. **When the plan is fully verified complete:** If a completion marker is not already present, add one (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions." Do **not** add a completion marker while required Verification Bar items are blocked or failed.
+5. **Do not add a completion marker here.** A completion marker (e.g. `**Status:** ✅ COMPLETED` or `## Implementation Status ✅`) is applied **only** by the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) once the plan is fully verified complete. This workflow may only **downgrade** false claims (to `- [ ]` or flagged) and append the addendum; it must not add `✅` terminal marks or a completion marker. See the Workflow-Scripts main README, "Completion Status Conventions."
 
-6. **Mark completed + archive consistently:** **Then execute the full `03-mark-completed.md` workflow** to:
-  - Verify implementation with parallel agents
-  - Reconcile changelog, troubleshooting, and documentation
-  - Mark tasks with ✅ consistently
-  - Archive the plan into `project/changelog/plans/` and update `project/changelog/index.md` (Type=`plan`).
-  Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the complete process.
+6. **Hand off to the terminal gate — do not finalize here.** This workflow **audits and appends evidence; it does not apply a completion marker or archive.** When the plan is fully verified complete, the **mandatory** next step is the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md), which is the **only** workflow that marks tasks `✅` as a terminal act, creates the completion marker, reconciles changelog/troubleshooting/docs, and archives the plan. Archive routing is resolved from the **host repository's policy** (not a global default) inside the gate.
+
+   - If verification is blocked, skipped, failed, partial, or under-evidenced, the outcome is **`Not Eligible`**: leave the plan active, record the blocker in the addendum, and apply **no** completion marker or archive. Do **not** treat this workflow as the owner of completion marking or archive routing.
 
 ## Related Workflows
 
