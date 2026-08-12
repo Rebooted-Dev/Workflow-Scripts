@@ -4,19 +4,13 @@ A reusable, project-agnostic workflow to run before deploying an application. Ad
 
 ---
 
-## 1. Dependency vulnerabilities
+## 1. Existing dependency findings
 
-**Goal:** Ensure known vulnerable dependencies are identified and addressed.
+**Goal:** Confirm existing dependency findings are reviewed and no unresolved policy violation is released. Run the canonical [dependency review](../05-review/00-dependencies.md) before this gate; use its optional [dependency security scan brief](../05-review/briefs/dependency-security-scan.md) when applicable.
 
-- From each directory that contains a `package.json` (root and/or each app/package):
-  - Run: `npm audit`
-  - If exit code is non-zero, review the report:
-    - Note **severity** (critical, high, moderate, low) and **dependency chain** (which top-level package pulls in the vulnerability).
-    - Prefer **safe fixes** first: `npm audit fix` (no `--force`). Re-run `npm audit` after.
-    - If vulnerabilities remain and the fix requires `npm audit fix --force` or a major upgrade:
-      - Prefer **upgrading the minimal set of packages** (e.g. the top-level package that brings in the vulnerable transitive dependency) so peer dependencies and breaking changes are manageable.
-      - Re-run `npm install` and `npm audit` after changes.
-  - Record outcome: **pass** (0 vulnerabilities or only accepted/low risk) or **fail** (unaddressed high/critical), and any deferred items.
+- Read the current dependency report/findings and record their disposition.
+- Block release for unresolved findings that violate the project's security policy.
+- Do not initiate a broad audit, dependency upgrade, lockfile change, or automatic remediation here.
 
 **Notes:**
 
@@ -25,21 +19,16 @@ A reusable, project-agnostic workflow to run before deploying an application. Ad
 
 ---
 
-## 2. Outdated dependencies
+## 2. Bounded release-freshness check
 
-**Goal:** Surface outdated packages so you can decide what to upgrade and when.
+**Goal:** Check release freshness only within the already identified dependency scope; this is not a new inventory or upgrade exercise.
 
-- From each directory that contains a `package.json`:
-  - Run: `npm outdated` (or equivalent for your package manager).
-  - Review output:
-    - **Patch/minor** updates: usually safe to apply in a pre-deployment pass if CI and tests are green.
-    - **Major** updates: plan separately; may require config or code changes and regression testing.
-  - Optional: apply non-breaking updates (e.g. `npm update` or targeted `npm install <pkg>@latest` for minor/patch), then re-run tests and lint.
-  - Record: list any outdated packages left intentionally for later (e.g. “ESLint 9 upgrade deferred”) so the next deploy or audit doesn’t re-open the same question.
+- Compare the release's recorded dependency versions with the existing dependency findings or approved baseline.
+- Record only release-blocking freshness issues and their disposition; defer broader outdated-package research to [Dependency Review](../05-review/00-dependencies.md).
 
 **Notes:**
 
-- Pinning major versions (e.g. `~x.y.0`) is reasonable; document why a major is deferred if it blocks vulnerability fixes.
+- No package updates or automatic remediation are performed by this check.
 
 ---
 
@@ -94,10 +83,10 @@ Before each deployment, complete at least:
 
 | Step | Action | Pass/Fail / Deferred |
 |------|--------|----------------------|
-| 1 | Run `npm audit` (per package root); fix or document vulnerabilities | |
-| 2 | Run `npm outdated`; apply or document updates | |
+| 1 | Review existing dependency findings and block unresolved policy violations | |
+| 2 | Run the bounded release-freshness check; document release-blocking issues | |
 | 3 | Confirm no hardcoded production secrets; .env in .gitignore; prod env source known | |
 | 4 | Production build and lint (and typecheck if applicable) succeed | |
 | 5 | (Optional) Static/runtime security checks run and findings addressed or waived | |
 
-**Sign-off:** Only deploy when steps 1–4 pass (and 5 if adopted). Record any deferred items (e.g. “ESLint 9 upgrade in backlog”) in your changelog or runbook so the next pre-deployment pass can revisit them.
+**Sign-off:** Only deploy when steps 1–4 pass (and 5 if adopted). Record deferred items in the dependency review or release runbook. This gate does not perform automatic remediation.

@@ -67,7 +67,7 @@ Use when deploying applications with nginx on macOS, Linux, or a server.
 Use before first production deployment, major releases, or recurring search/AI visibility audits.
 
 #### [Pre-deployment Security Check](./08a-pre-deployment-security-check.md)
-Use for quick validation before deployment.
+Use as the final gate after existing dependency findings have been reviewed. For dependency inventory and upgrades, use [Dependency Review](../05-review/00-dependencies.md) and, when needed, its [dependency security scan brief](../05-review/briefs/dependency-security-scan.md).
 
 ### Framework Updates
 
@@ -105,13 +105,14 @@ Use when applying React, React DOM, Next.js, or eslint-config-next updates.
 
 1. Follow [SEO/GEO Checklist](../12-SEO-GEO-checklist/)
 2. Run [Pre-deployment Security Check](./08a-pre-deployment-security-check.md)
-3. Deploy to production.
-4. Set up monitoring and repeat the routine review tasks.
+3. Resolve or disposition dependency findings through [Dependency Review](../05-review/00-dependencies.md).
+4. Deploy to production.
+5. Set up monitoring and repeat the routine review tasks.
 
 ## Best Practices
 
 1. Test locally before deployment.
 2. Run the project build, lint, and type-check commands.
-3. Verify dependency and security status.
+3. Verify dependency and security status using [Dependency Review](../05-review/00-dependencies.md) and [Pre-deployment Security Check](./08a-pre-deployment-security-check.md).
 4. Validate environment variables without printing secret values.
 5. Update project-specific deployment notes after any non-trivial deployment issue.

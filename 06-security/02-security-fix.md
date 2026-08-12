@@ -8,6 +8,8 @@ Systematically identify, fix, and verify security vulnerabilities using a securi
 - Repository root.
 - Any additional context: logs, attack vectors, affected systems.
 
+For findings in packages, lockfiles, or dependency versions, use the canonical [`../05-review/00-dependencies.md`](../05-review/00-dependencies.md) remediation and upgrade-planning flow; the optional [`../05-review/briefs/dependency-security-scan.md`](../05-review/briefs/dependency-security-scan.md) can provide focused evidence.
+
 ## Prioritization Rule
 - Address security issues in priority order: P0 → P1 → P2 → P3.
 - Critical security vulnerabilities (P0/S0) must be fixed immediately.
@@ -132,10 +134,7 @@ After trust is established, run the project verification command from `AGENTS.md
 - Use strong, unique secrets for each environment
 
 ### Dependencies
-- Keep dependencies up to date
-- Scan for known vulnerabilities
-- Remove unused dependencies
-- Use dependency pinning and lock files
+- Follow the [canonical dependency review and upgrade workflow](../05-review/00-dependencies.md) for inventory, findings, upgrades, removal, pinning, and lockfile changes.
 
 ### Defense in Depth
 - Implement multiple layers of security controls
