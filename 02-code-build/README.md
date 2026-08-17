@@ -9,6 +9,7 @@ This directory contains workflows for implementing code changes with verificatio
 | [`01-execution.md`](./01-execution.md) | Execute implementation in phases with verification | Implementing features from a plan |
 | [`02-confirm-execution.md`](./02-confirm-execution.md) | Validate that implementation matches the plan | After completing implementation |
 | [`03-execute-and-confirm.md`](./03-execute-and-confirm.md) | Run 01 then 02 in one workflow | Execute plan and confirm completion in one go |
+| [`04-review-finalise-commit-execute.md`](./04-review-finalise-commit-execute.md) | Review + finalise a plan, commit the planning artifacts, then run 03 | Full plan-to-code pipeline in one workflow |
 
 ## Workflow Sequence
 
@@ -44,6 +45,9 @@ This directory contains workflows for implementing code changes with verificatio
 
 **Do you want to execute the plan and then confirm in a single workflow?**
 - Yes → Use [`03-execute-and-confirm.md`](./03-execute-and-confirm.md)
+
+**Do you want to review and finalise a plan, commit it, then execute and confirm — all in one workflow?**
+- Yes → Use [`04-review-finalise-commit-execute.md`](./04-review-finalise-commit-execute.md) (starts from [`../01-planning-and-organizing/03-plan-review-and-finalise.md`](../01-planning-and-organizing/03-plan-review-and-finalise.md))
 
 ## Key Concepts
 
