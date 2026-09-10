@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-10 | plan | Workflow-Scripts Instruction Remediation | ../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md | Phases 1–4 Verified Complete on `v1.81` (`846caef`, `5f87cc9`): v1.72 repairs, host-convention changelog + single-source completion contracts, template/discovery hardening, agent files repaired across 4 repos, escaped-root link validator + fixture. Phase 5 split to `plans/2026-09-10-astra-instruction-evaluation-plan.md`; 5 residual flags recorded |
 | 2026-09-10 | docs | Instruction remediation Phases 2–5 on v1.81 | docs/2026-09-10-docs-instruction-remediation-phases-2-5.md | Contracts, templates, validator hardening, Astra eval protocol |
 | 2026-09-10 | fixed | Apply v1.72 improvement repairs on v1.81 | fixed/2026-09-10-fixed-v1-72-improvement-repairs-on-v1-81.md | Executed Plans 01–09 against live workflows; merge had plans but not repairs |
 | 2026-09-10 | docs | Publish v1.81 combined Workflow-Scripts line | docs/2026-09-10-docs-publish-v1-81-combined-line.md | Merged frozen `v1.8` + `v1.72` onto `v1.81`; union-resolved conflicts; parents not rewritten; live master and workspace consumers retargeted to `v1.81` |

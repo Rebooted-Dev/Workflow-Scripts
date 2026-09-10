@@ -14,6 +14,8 @@ When a plan is finished and should be archived, follow **`plans-completed/README
 
 ## Active
 
+- [ ] Execute `2026-09-10-astra-instruction-evaluation-plan.md` (Phase 5 split from the instruction remediation plan): build the corpus/harness, fix the baseline pin to `64acb75`, smoke-test, then run the pilot before the full matrix. No Astra improvement claim until the adoption gate passes.
+- [ ] Tidy `00-Meta-Workflow/00-meta/agent-flexibility-review.md`: it is still `Status: Active` while carrying `02-build-code/...` references (lines 211, 390, 407). Mark historical like `parallel-agents-review.md` or correct the refs.
 - [ ] Review `2026-07-06-workflow-system-v2-redesign-proposal.md` (full-autonomy v2 redesign: frontmatter+catalog, core partials, `wf` CLI, harness compiler, CI enforcement; drafted 2026-07-06). Run `01-plan-review.md` with a different model, then finalise.
 - [ ] Execute `2026-07-03-multi-model-plan-review-pass-system-implementation-plan.md` (multi-model plan-review fan-out + reconciler; finalised 2026-07-03 from the 2026-06-03 research proposal + its review addendum). Start with Phase 1 (schema/conventions spec).
 - [ ] Migrate legacy meta content from `00-Meta-Workflow/` into `00-project/` (optional follow-up)

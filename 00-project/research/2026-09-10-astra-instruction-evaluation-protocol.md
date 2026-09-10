@@ -1,7 +1,7 @@
 # Astra Instruction Evaluation Protocol
 
 **Date:** 2026-09-10  
-**Status:** Protocol ready; baseline/revised runs pending pinned Astra access  
+**Status:** Protocol ready; baseline/revised runs pending — owned by [`../plans/2026-09-10-astra-instruction-evaluation-plan.md`](../plans/2026-09-10-astra-instruction-evaluation-plan.md)  
 **Related:** Instruction remediation Phases 1–4 on `v1.81`
 
 ## Purpose
@@ -23,9 +23,10 @@ Measure whether repaired workflow and AGENTS instructions improve GPT-6 Astra (a
 
 ## Runs
 
-1. **Baseline:** representative commit or branch before Phases 2–4 repairs (or frozen `v1.72` parent snapshot).
-2. **Revised:** `v1.81` after remediation Phases 2–4.
-3. **Repetitions:** minimum 3 per task per instruction set under identical model/runtime settings.
+1. **Baseline (primary):** `64acb75` (`846caef^`) — v1.81 post-merge, before the v1.72 repairs and Phases 2–4. Isolates the remediation as the only instruction delta.
+2. **Baseline (secondary, optional cross-check):** `origin/v1.72` @ `af9860b` — the frozen parent. Confounds instruction repair with branch composition; do not use for the headline result.
+3. **Revised:** `5f87cc9` — v1.81 with the Phase 1 repairs (`846caef`) and Phases 2–4 (`5f87cc9`).
+4. **Repetitions:** minimum 3 per task per instruction set under identical model/runtime settings; run the pilot on tasks 3, 4, 7, and 8 before committing to the full matrix.
 
 ## Metrics
 
