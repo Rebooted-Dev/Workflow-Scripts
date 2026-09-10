@@ -43,20 +43,26 @@ All generated reports should include this header:
 
 ### Metadata Root Resolution
 
-Workflows should infer the metadata root instead of requiring the user to name output directories in every prompt:
+Workflows should infer the metadata root instead of requiring the user to name output directories in every prompt. Resolve in this order:
 
 1. If the user gives an explicit output directory, use it.
-2. If the repository is Workflow-Scripts itself and contains `00-project/`, use `00-project/`.
-3. Otherwise, if the repository contains `project/`, use `project/`.
-4. If no metadata root exists, suggest running `00-project-setup/01-setup-project.md` before filing generated artifacts. Do not create ad hoc root-level `plans/`, `research/`, `changelog/`, or `troubleshooting/` directories as a substitute for setup.
+2. If an explicit host policy names the metadata root — check the host repository's root `AGENTS.md`, root `README.md`, `User-Manual/`, root `plans/README.md`, or equivalent project documentation — use that documented location.
+3. If the repository is Workflow-Scripts itself and contains `00-project/`, use `00-project/`.
+4. Otherwise, if the repository contains `project/`, use `project/`.
+5. If no metadata root exists, suggest running `00-project-setup/01-setup-project.md` before filing generated artifacts. Do not create ad hoc root-level `plans/`, `research/`, `changelog/`, or `troubleshooting/` directories as a substitute for setup.
+
+A root-level host location (for example a repository-root `plans/` directory) may be used **only** when the host policy explicitly designates it. Do not infer a root-level `plans/` or `research/` directory merely because such a folder exists on disk.
 
 ### Storage Location
 
 - Review, audit, research, and findings reports: `<metadata-root>/research/{report-type}-YYMMDD-HHMM-{model}.md`
-- Active implementation plans: `<metadata-root>/plans/{plan-name}.md`
+- Active implementation plans: `<metadata-root>/plans/YYYY-MM-DD-{plan-name}.md` (or the host's explicit filename convention when documented)
+- Optional active-plan location: `<metadata-root>/build/` — only when the host's policy or `plans/README.md` explicitly permits it; never the universal default
 - Completed/filed plans: `<metadata-root>/plans-completed/<category>/{plan-name}.md`
 - Changelog entries: `<metadata-root>/changelog/<type>/<YYYY-MM-DD>-<type>-<short-title>.md`
 - Troubleshooting entries: `<metadata-root>/troubleshooting/<category>/<YYYY-MM-DD>-<category>-<short-title>.md`
+
+Authoritative policy for this section: this file. Planning and review workflows must link here rather than invent competing destinations.
 
 ---
 

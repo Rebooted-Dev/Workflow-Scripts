@@ -4,13 +4,13 @@
 Review a user-supplied plan for correctness, risk, feasibility, and completeness. Provide concrete, actionable feedback and append it to the plan document.
 
 ## Inputs
-- Plan document path (user-supplied). Plan paths are typically under `project/build/` or as specified in the project's `plans/README.md`.
+- Plan document path (user-supplied). Plan paths are typically under `<metadata-root>/plans/` (or host-optional `<metadata-root>/build/` when the host policy permits it). Resolve via [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md).
 - Any prior feedback or context referenced by the plan.
 
 ## Prioritization Rule
 - Order all findings and recommendations by priority, descending urgency/importance: P0, P1, P2, P3.
 - Within the same priority, order by severity: S0, S1, S2, S3.
-- Use the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
+- Use the shared rubric: [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md).
 
 ## Steps
 1. Read the plan end-to-end and list its explicit goals, scope, and assumptions.
@@ -65,7 +65,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
     - Example: `2026-03-02-consolidated-refactoring-implementation-plan.review.gpt-5.1.2026-03-02-20-15.md`
   - Later, use `02-finalise-plan.md` (or a dedicated consolidation pass) to:
     - Read `PLAN.md` and all files under `PLAN.reviews/`
-    - Produce the next-version plan in `project/plans/` (or as directed) that integrates all reviews.
+    - Produce the next-version plan in `<metadata-root>/plans/` (or as directed by host policy; see [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md)) that integrates all reviews.
 
 - **Running multiple models via an orchestrator (mixed pattern):**
   - Orchestrator still uses the single-writer rule.
@@ -106,6 +106,6 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 ## Related Workflows
 
 - **[`02-finalise-plan.md`](./02-finalise-plan.md)** - Create or refine implementation plans after review
-- **[`../02-build-code/01-execution.md`](../../02-build-code/01-execution.md)** - Execute plans after they've been reviewed
+- **[`../02-code-build/01-execution.md`](../02-code-build/01-execution.md)** - Execute plans after they've been reviewed
 - **[`../05-review/01-code-review.md`](../05-review/01-code-review.md)** - Review code after implementation
-- **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for scoring issues
+- **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for scoring issues

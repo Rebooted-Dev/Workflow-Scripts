@@ -44,8 +44,7 @@ Use multiple parallel agents to investigate the bug. Suggested agent roles (spaw
 - Spawn 1 integration agent per external service/API affected by the bug (database, third-party services)
 - Spawn 1 test coverage agent if bug reveals untested critical paths or missing edge case tests
 
-**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
-Agents should batch read files concurrently to maximize investigation speed.
+Follow the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md) for bounded role selection and session limits.
 
 ### 3. Root Cause Identification
 - Determine the exact cause of the bug.
@@ -79,8 +78,7 @@ Use multiple parallel agents to implement the fix. Suggested agent roles (spawn 
 - Spawn 1 cleanup agent if fixing bug requires refactoring 3+ related files or removing dead code
 - Spawn 1 security agent if bug fix involves authentication, authorization, or data validation
 
-**Maximum recommended:** 3-5 additional agents to avoid coordination overhead
-Each agent should read related files in parallel batches during implementation.
+Follow the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md) for bounded role selection and session limits.
 
 ### 6. Verification
 Use parallel agents to verify the fix. Suggested agent roles (spawn additional agents as needed):
@@ -97,7 +95,7 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 - Spawn 1 integration testing agent per external system affected (database, API, third-party service)
 - Spawn 1 documentation review agent if bug fix changes documented behavior or requires user communication
 
-**Agent Spawning Policy:** Follow `../00-Meta-Workflow/00-meta/agent-spawning-policy.md`: use 3-6 total agents, start with 2-3 core roles, add triggered specialist roles only when evidence justifies them, and split into sessions if more roles are needed.
+**Agent Spawning Policy:** Follow the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md); it is authoritative for the total-session cap and evidence-based role selection.
 Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs plus relevant tests. If no command exists, state that explicitly. If failures occur, fix and re-run.
 
 ### 7. Documentation

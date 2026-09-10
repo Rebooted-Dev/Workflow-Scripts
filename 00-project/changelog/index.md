@@ -6,6 +6,7 @@ Chronological index of changelog entries and completed plans.
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
 | 2026-09-10 | plan | Workflow-Scripts v1.81 Merge Plan | ../plans-completed/tooling/2026-09-10-workflow-scripts-v1-81-merge-plan.md | Filed completed plan: merged frozen `v1.8` + `v1.72` onto `v1.81` with union conflict resolution; all six todos verified complete |
+| 2026-09-10 | fixed | Apply v1.72 improvement repairs on v1.81 | fixed/2026-09-10-fixed-v1-72-improvement-repairs-on-v1-81.md | Executed Plans 01–09 against live workflows; merge had plans but not repairs |
 | 2026-09-10 | docs | Publish v1.81 combined Workflow-Scripts line | docs/2026-09-10-docs-publish-v1-81-combined-line.md | Merged frozen `v1.8` + `v1.72` onto `v1.81`; union-resolved conflicts; parents not rewritten; live master and workspace consumers retargeted to `v1.81` |
 | 2026-09-10 | docs | Document umbrella-workspace symlink consumption pattern | docs/2026-09-10-docs-umbrella-symlink-consumption-pattern.md | SHARING_AND_SYNC.md symlink section amended; first consumer: Image-Generation-Apps workspace (stale v1.7 clones → symlinks to this master) |
 | 2026-08-18 | changed | Hold unfinished workflow skill bundles outside the active repository | changed/2026-08-18-changed-hold-unimplemented-workflow-skills.md | Moved 14 bundles to the Core-Knowledge holding area; updated active navigation and installation guidance; no runtime installation |

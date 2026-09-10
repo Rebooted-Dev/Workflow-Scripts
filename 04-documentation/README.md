@@ -32,43 +32,54 @@ Use the **mark completed and verify** workflow when:
 - Before closing a milestone or marking a plan finished
 - Reconciling plans with changelog, troubleshooting, and docs (flag false reporting; display issues in descending order of importance/urgency)
 
-## Priority Buckets (Documentation-Specific)
+## Priority Buckets
+
+### Create Documentation
+
+| Priority | Description |
+|----------|-------------|
+| **P0** | Critical user-facing documentation |
+| **P1** | Core technical documentation |
+| **P2** | Detailed technical documentation |
+| **P3** | Enhanced documentation |
+
+### Synchronise Documentation
 
 | Priority | Description | Examples |
 |----------|-------------|----------|
-| **P0** | Incorrect docs causing wrong usage | Wrong API examples, broken setup instructions |
-| **P1** | Missing docs for critical flows | No setup guide, missing architecture docs |
-| **P2** | Reorganization and consolidation | Duplicate content, poor structure |
-| **P3** | Diagrams and polish | Missing visuals, formatting improvements |
+| **P0** | Incorrect docs causing wrong usage, broken setup, or unsafe behavior | Wrong API examples, broken setup instructions |
+| **P1** | Missing documentation for critical flows | No setup guide, missing architecture documentation |
+| **P2** | Reorganisation, consolidation, cross-links, and reference completeness | Duplicate content, poor structure |
+| **P3** | Nice-to-have diagrams, polish, and deep examples | Missing visuals, formatting improvements |
 
 ## Workflow Overview
 
 ### Documentation Hub Structure
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                  DOCUMENTATION WORKFLOWS                    │
-├─────────────────────────────────────────────────────────────┤
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
-│  │ 00-templates │  │ 01-create    │  │ 02-sync      │       │
-│  │              │  │              │  │              │       │
-│  │   [P0-P3]    │  │  from scratch │  │  existing    │     │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘      │
-│         │                 │                 │              │
-│         └─────────────────┼─────────────────┘              │
-│                           ▼                                │
-│              ┌──────────────────────┐                     │
-│              │  03-mark-completed   │                     │
-│              │   (verify tasks)     │                     │
-│              └──────────┬───────────┘                     │
-│                         │                                │
-│              ┌──────────┴───────────┐                    │
-│              ▼                      ▼                    │
-│    ┌─────────────────┐  ┌─────────────────┐           │
-│    │ 09-optional      │  │ ascii-art-prompts│           │
-│    │ (add-ons checklist)│  │ (diagram guide) │           │
-│    └─────────────────┘  └─────────────────┘           │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────┐   ┌──────────────────────┐
+│ 00-doc-templates     │   │ 09-optional          │
+│ shared templates     │   │ optional checklist   │
+└──────────┬───────────┘   └──────────┬───────────┘
+           │                          │
+           └──────────────┬───────────┘
+                          ▼
+             ┌────────────────────────┐
+             │ 01-create / 02-sync    │
+             │ documentation workflows│
+             └────────────┬───────────┘
+                          │
+                          ▼
+             Need completion verification/archive?
+                    │ yes           │ no
+                    ▼               ▼
+       ┌──────────────────────┐  Documentation work ends
+       │ 03-mark-completed    │
+       │ conditional terminal │
+       │ verification/archive │
+       └──────────────────────┘
+
+ascii-art-prompts.md is a shared reference for both workflows.
 ```
 
 ### Generate Comprehensive Documentation (`01-create-docs.md`)

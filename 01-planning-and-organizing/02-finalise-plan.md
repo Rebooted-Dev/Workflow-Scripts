@@ -62,7 +62,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
    - risks and mitigations
    - validation/verification steps and exit criteria
 6. Add effort level labels per task (Small/Medium/Large).
-7. Write the new plan to the `plans/` directory (project root) with a dated filename.
+7. Write the new plan to `<metadata-root>/plans/` with a dated filename per [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md). Use `<metadata-root>/build/` only when the host policy explicitly permits it.
    - Clearly indicate in the new plan’s header that it was consolidated from:
      - The original plan
      - Any inline addenda in the original file
@@ -71,7 +71,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
    - If a `PLAN.reviews/` subdirectory exists:
      - Decide whether the raw per-agent reports are still needed as an audit trail.
      - If they are **not** needed:
-       - Delete the `PLAN.reviews/` directory after confirming the new plan has been saved and, if applicable, logged in `project/changelog/`.
+       - Delete the `PLAN.reviews/` directory after confirming the new plan has been saved and, if applicable, logged in `<metadata-root>/changelog/`.
      - If they **are** needed:
        - Optionally archive them (for example, compress or move to an archive directory) and record that location in the new plan or changelog entry.
 
@@ -84,14 +84,14 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
   - The review directory path used for consolidation.
 - If `PLAN.reviews/` is deleted or archived as part of cleanup, that decision and (if archived) destination should be mentioned in either:
   - The new plan’s header/notes, or
-  - The corresponding changelog entry in `project/changelog/`.
+  - The corresponding changelog entry in `<metadata-root>/changelog/`.
 
 ## Related Workflows
 
 - **[`01-plan-review.md`](./01-plan-review.md)** - Review plans for correctness before finalizing
-- **[`../02-build-code/01-execution.md`](../../02-build-code/01-execution.md)** - Execute the finalized plan
-- **[`../02-build-code/02-confirm-execution.md`](../../02-build-code/02-confirm-execution.md)** - Verify plan completion after execution
-- **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for priority ordering
+- **[`../02-code-build/01-execution.md`](../02-code-build/01-execution.md)** - Execute the finalized plan
+- **[`../02-code-build/02-confirm-execution.md`](../02-code-build/02-confirm-execution.md)** - Verify plan completion after execution
+- **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for priority ordering
 
 ## Acceptance Criteria
 - Plan is ordered by priority (P0 to P3) with explicit rationale.

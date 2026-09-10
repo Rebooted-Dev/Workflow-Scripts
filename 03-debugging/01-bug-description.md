@@ -29,8 +29,8 @@ Create a comprehensive, structured bug report when a bug persists after initial 
 - Bug report or issue description (user-supplied).
 - Repository root.
 - Additional context: error logs, stack traces, screenshots, reproduction steps, affected users/systems.
-- Previous troubleshooting entries in `troubleshooting/`.
-- Recent changes documented in `docs/CHANGELOG.md` (preferred) or `CHANGELOG.md`.
+- Previous troubleshooting entries under `<metadata-root>/troubleshooting/`.
+- Recent changes documented under `<metadata-root>/changelog/` (directory-first), or the host's documented single-file changelog fallback.
 
 ## Prioritization Rule
 - Classify the bug using severity (S0–S3) and priority (P0–P3) per the shared rubric: `../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
@@ -40,17 +40,17 @@ Create a comprehensive, structured bug report when a bug persists after initial 
 ## Steps
 
 ### 1. Information Gathering
-Use multiple parallel agents to gather comprehensive information about the bug. Each agent should read relevant files in parallel batches (read multiple files concurrently, not sequentially):
+Use multiple parallel agents to gather comprehensive information about the bug. Resolve `<metadata-root>` using [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md), then have each agent read relevant files in parallel batches (read multiple files concurrently, not sequentially):
 
 - **Agent 1: Review Troubleshooting History**
-  - Read all entries in `troubleshooting/` directory (read index.md and category files in parallel)
+  - Read `<metadata-root>/troubleshooting/index.md` and relevant `<metadata-root>/troubleshooting/<category>/` entries first
   - Identify related or similar issues that were previously encountered
   - Extract patterns, attempted fixes, and lessons learned
   - Note any recurring issues or unresolved problems
 
 - **Agent 2: Analyze Changelog and Recent Changes**
-  - Read `docs/CHANGELOG.md` if present; otherwise read `CHANGELOG.md`
-  - Check `plans-completed/` directory for similar past issues and resolution patterns
+  - Read `<metadata-root>/changelog/index.md` and recent `<metadata-root>/changelog/<type>/` entries first
+  - Check the host-policy completed-plan location for similar past issues and resolution patterns
   - Identify recent changes that might have introduced or affected the bug
   - Map timeline of changes to bug occurrence
   - Extract context about related features or fixes
@@ -73,6 +73,8 @@ Use multiple parallel agents to gather comprehensive information about the bug. 
   - Identify potential systemic issues
   - Review error handling and validation logic
 
+Agent selection and total-session limits follow the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md); use evidence-triggered roles without restating a local numeric cap.
+
 Agents should batch read files concurrently to maximize investigation speed.
 
 ### 2. Problem Analysis
@@ -91,7 +93,7 @@ Synthesize information from all agents to create a comprehensive understanding:
 
 - **Attempted Solutions**
   - List all fixes, workarounds, or mitigations that were tried
-  - Check `plans-completed/` for similar past issues and their resolutions
+  - Check the host-policy completed-plan location for similar past issues and their resolutions
   - Document why each attempt failed or was insufficient
   - Reference troubleshooting entries and changelog entries
   - Note any partial successes or temporary fixes
@@ -145,7 +147,7 @@ Create a structured bug description report with the following sections:
 - **Investigation History**
   - Timeline of when bug was discovered
   - Related troubleshooting entries (with links/references)
-  - Related completed plans in `plans-completed/` that may provide context
+  - Related completed plans in the host-policy completed-plan location that may provide context
   - Recent changes from changelog that might be relevant
   - Investigation steps taken
 
@@ -182,14 +184,13 @@ Create a structured bug description report with the following sections:
   - Related issues or bugs
 
 ### 5. Report Storage
-- Save the report to `plans/` (project root) with a dated filename:
-  - Format: `bug-description-<YYYY-MM-DD>-<HH-MM>-<short-title>.md`
-  - Example: `bug-description-2026-01-20-14-30-image-generation-failure.md`
+- Save the report to `<metadata-root>/research/bug-description-YYMMDD-HHMM-{model}.md`, following [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md).
 - Ensure the report is self-contained and includes all necessary context
 - Cross-reference related troubleshooting entries and changelog entries
+- If a related troubleshooting entry exists, link to the report from that entry and add the reciprocal link from the report. If the entry is not writable, record the reason rather than silently omitting the backlink.
 
 ## Output Requirements
-- Comprehensive bug description report saved to `plans/` (project root) with dated filename
+- Comprehensive bug description report saved to `<metadata-root>/research/bug-description-YYMMDD-HHMM-{model}.md`
 - Report includes all sections listed in Step 4
 - Evidence and references are properly documented
 - Severity and priority classification with rationale
@@ -204,7 +205,7 @@ Create a structured bug description report with the following sections:
 - Impact is assessed with severity and priority classification
 - Recommended next steps are actionable and prioritized
 - Evidence is properly referenced and accessible
-- Report is saved to plans directory with proper date
+- Report is saved to the metadata-root research directory with the standard filename
 - Report is self-contained and understandable without additional context
 
 ## Bug Description Best Practices

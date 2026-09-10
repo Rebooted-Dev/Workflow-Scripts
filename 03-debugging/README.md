@@ -6,25 +6,49 @@ This directory contains workflows for debugging and fixing bugs.
 
 | File | Purpose | When to Use |
 |------|---------|-------------|
-| [`01-bug-description.md`](./01-bug-description.md) | Structure and document bug reports | When receiving or creating bug reports |
-| [`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md) | Systematically identify and fix bugs | When debugging issues or fixing bugs |
+| [`01-bug-description.md`](./01-bug-description.md) | Comprehensive escalation and evidence handoff | When a bug persists, is non-straightforward, or needs team review |
+| [`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md) | Systematically identify and fix bugs | First-time bug investigation and remediation |
 
 ## Workflow Sequence
 
 ```
-┌─────────────────────┐      ┌──────────────────────────┐
-│  01-bug-description │ ───▶ │  02-bug-fix-workflow.md  │
-│  (Document the bug) │      │  (Fix the bug)           │
-└─────────────────────┘      └──────────────────────────┘
+┌──────────────────────────┐
+│ Bug discovered           │
+└────────────┬─────────────┘
+             ▼
+┌──────────────────────────┐
+│ 02-bug-fix-workflow.md   │
+│ (Investigate and fix)    │
+└────────────┬─────────────┘
+             │ persists / needs escalation
+             ▼
+┌──────────────────────────┐
+│ 01-bug-description.md    │
+│ (Document comprehensively)│
+└────────────┬─────────────┘
+             │ evidence handoff
+             ▼
+┌──────────────────────────┐
+│ 02-bug-fix-workflow.md   │
+│ (Re-enter with report)   │
+└──────────────────────────┘
+
+P0/S0: enter 02 immediately for containment/remediation;
+01 may document or escalate in parallel and is never a gate.
 ```
 
 ## Quick Decision Guide
 
-**Received or discovered a bug that needs documentation?**
-- Yes → Use [`01-bug-description.md`](./01-bug-description.md)
+**First-time P0/S0 incident?**
+- Enter [`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md) immediately for containment/remediation. Use [`01-bug-description.md`](./01-bug-description.md) in parallel only when comprehensive escalation or team review is needed.
 
-**Need to systematically fix a bug?**
-- Yes → Use [`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md)
+**First-time, straightforward P1–P3 bug?**
+- Use [`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md) for investigation and remediation.
+
+**Persistent, non-straightforward, or escalation/team-review case?**
+- Capture the available initial 02 evidence, then use [`01-bug-description.md`](./01-bug-description.md) and re-enter [`02-bug-fix-workflow.md`](./02-bug-fix-workflow.md) with the report.
+
+Initial 02 work produces troubleshooting and changelog evidence that 01 consumes; P0/S0 containment must not wait for report generation.
 
 ## Key Concepts
 

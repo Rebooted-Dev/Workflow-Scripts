@@ -112,7 +112,7 @@ Workflow-Scripts/
 │   ├── 00-orchestrator/          # Optional delegated plan-review launcher
 │   └── 00-docs/                  # Generated reports and archived workflow reviews
 ├── 00-project-setup/             # Bootstrap, migration, repo-map, sync, MCP, skills
-├── 01-planning-and-organizing/   # Research, plan review, and plan finalisation
+├── 01-planning-and-organizing/   # Research, review, finalise, or combine planning workflows
 ├── 02-code-build/                # Execute plans and confirm implementation
 ├── 03-debugging/                 # Describe and fix non-security bugs
 ├── 04-documentation/             # Create, sync, and verify documentation
@@ -177,6 +177,7 @@ This separation prevents a review report for one application from appearing in e
 | Research and plan work | [01-planning-and-organizing/00-research-and-plan.md](../01-planning-and-organizing/00-research-and-plan.md) | Initial implementation plan |
 | Validate an existing plan | [01-planning-and-organizing/01-plan-review.md](../01-planning-and-organizing/01-plan-review.md) | Priority-ordered review feedback |
 | Turn reviewed scope into an implementation plan | [01-planning-and-organizing/02-finalise-plan.md](../01-planning-and-organizing/02-finalise-plan.md) | Detailed, phased plan with exit criteria |
+| Review then finalise in one pass | [01-planning-and-organizing/03-plan-review-and-finalise.md](../01-planning-and-organizing/03-plan-review-and-finalise.md) | Combined review followed by finalisation |
 | Implement a plan | [02-code-build/01-execution.md](../02-code-build/01-execution.md) | Implemented changes and verification evidence |
 | Confirm implementation completeness | [02-code-build/02-confirm-execution.md](../02-code-build/02-confirm-execution.md) | Plan-to-code completion check |
 | Execute and confirm in one run | [02-code-build/03-execute-and-confirm.md](../02-code-build/03-execute-and-confirm.md) | Implementation followed by confirmation |

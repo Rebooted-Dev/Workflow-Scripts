@@ -98,14 +98,16 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 ### Phase 2: Verify Implementation in Code (Parallel Agents)
 Use **multiple parallel agents** to verify implementation. Each agent should read the **actual source files** referenced in the task (file paths, line numbers) and confirm that the described fix or feature exists.
 
-**Suggested agent roles (spawn additional agents as needed). Each agent verifies a subset of tasks by reading code in parallel batches:**
+**Suggested verification domains (select only those justified by the named plan; assign one responsible agent per task):**
 
-- **Agent A (P0 / critical):** Verify all P0 and S0/S1 tasks — read the cited files, confirm the described code (e.g. `structuredClone`, ErrorBoundary usage, API key handling) is present and matches the claim
-- **Agent B (P1 security / Electron):** Verify security and Electron-related tasks — read `desktop/main.ts`, `desktop/preload.ts`, `vite.config.ts`, and any IPC/context-bridge usage; confirm removal or presence of handlers as claimed
-- **Agent C (P1 bugs / hooks):** Verify hook and concurrency fixes — read `hooks/useSessions.ts`, `hooks/useHistory.ts`, `hooks/usePersistence.ts`, `hooks/useGeminiClient.ts` at cited lines; confirm functional updates, batched reads, clone behavior
-- **Agent D (P1 UX / components):** Verify component-level fixes — read `components/ErrorBoundary.tsx`, `ArtifactCard.tsx`, `SideDrawer.tsx`, `SessionHistory.tsx`, `CodeEditor.tsx` at cited lines; confirm scroll logic, keyboard handlers, error boundaries
-- **Agent E (P2 / refactors):** Verify P2 and P3 items — read any files cited for "extract logic", "schema validation", "useMemo", regex consolidation; confirm implementation or document absence
-- **Agent F (Docs / logs):** Verify documentation and log claims — check `project/changelog/`, `project/troubleshooting/`, `docs/` for entries that the plan says were updated; confirm they exist and match the described changes
+- **Critical path and data integrity:** Verify P0/P1 claims affecting the primary execution path, persistence, migrations, or data correctness using the plan-derived files and line ranges.
+- **Security and platform boundaries:** Verify authentication, authorization, secrets, permissions, deployment, runtime, or platform-integration claims using the plan-derived files and line ranges.
+- **Bugs, state, and concurrency:** Verify behavioral fixes, state transitions, asynchronous work, error handling, and regression claims using the plan-derived files and line ranges.
+- **UX and integration:** Verify user-facing behavior, accessibility, API contracts, and external-service integration claims using the plan-derived files and line ranges.
+- **Maintainability and performance:** Verify lower-priority refactors, complexity, performance, testability, and cleanup claims using the plan-derived files and line ranges.
+- **Documentation and logs:** Verify documentation, changelog, troubleshooting, plan, and archive claims against the plan-derived files and line ranges.
+
+Role allocation is bounded by evidence and follows the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md). For every selected plan, create a task-to-agent coverage matrix mapping each task/sub-task to one responsible domain/agent, the plan-derived files and line ranges, and verification evidence or a flag; no in-scope task may be left unmapped.
 
 Agents should **batch-read files concurrently** (e.g. read all files for their task subset in parallel) to maximize speed. Output per agent:
 - **Task ID / heading** and **Claim** (what the plan says is done)
@@ -114,13 +116,15 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 - **Evidence** (exact code or doc snippet that confirms or contradicts)
 - **Flag** (if not done: "False completion", "Incomplete", "Not implemented", or "Docs not updated")
 
+Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follow the [shared agent-spawning policy](../../../00-Meta-Workflow/00-meta/agent-spawning-policy.md) and its total-session cap.
+
 ### Phase 3: Mark Completed vs Flag False Reporting
 1. **For each task/sub-task:**
    - If verification shows the implementation **is present and correct**: mark with **✅** (green check mark) in the plan/report. Ensure checkboxes are `[✅]` and any "Implementation Verified" or "Verification" section reflects reality.
    - If verification shows the implementation **is missing, partial, or incorrect**: do **not** add a green check mark. Instead **flag** the item for the developer.
 2. **Flagging convention:**
    - **False completion:** Plan says complete but code/docs show no implementation
-   - **Incomplete:** Only part of the task was done (e.g. proxy handlers added but IPC key handler still exposed)
+   - **Incomplete:** Only part of the task was done (for example, implementation evidence covers only part of the claimed task)
    - **Not implemented:** Task marked done but cited file/line does not contain the described change
    - **Docs not updated:** Plan says "documentation updated" but changelog/troubleshooting/docs have no corresponding entry or the entry is wrong
 3. **Collect all flagged issues** and list them in **descending order of importance/urgency** (see Output Requirements).
@@ -156,13 +160,13 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 ### Flagged issues list (descending order)
 Display **all** flagged issues in **descending order of importance or urgency**, for example:
 
+Illustrative example only (hypothetical consumer project; do not treat paths or findings as required):
+
 ```markdown
 ## Flagged issues (descending order of importance/urgency)
 
-1. **P0 / S1** — P1-1: Remove IPC API Key Exposure — **Incomplete.** Plan says "proxy handlers present" but `get-api-key` handler still exposed in `desktop/main.ts:292-294`. Renderer can still obtain raw key.
-2. **P1 / S2** — Phase 2 Exit Criteria: "Documentation updated for web deployment" — **Docs not updated.** No changelog or docs entry found for web deployment requirements.
-3. **P2 / S2** — P2-1: Schema Validation — **False completion.** Marked deferred but checklist item "Update docs" was checked; no doc change found.
-…
+1. **P1 / S2** — Task-1: Validate the primary flow — **Incomplete.** The claim is only partially supported by evidence in `src/entrypoint.ext:10-20`; record the missing verification and next step.
+2. **P2 / S3** — Task-2: Update documentation — **Docs not updated.** No matching entry was found in the plan-derived documentation files.
 ```
 
 ### Reconciled artifacts
