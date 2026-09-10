@@ -20,6 +20,7 @@ Run from Workflow-Scripts root:
 ./scripts/validation/check-sync-workflow-scripts.sh
 ./scripts/validation/check-update-workflows.sh
 ./scripts/validation/check-review-workflow-policy.sh
+./scripts/validation/check-completion-chain-policy.sh
 ```
 
 | Script | Scope |
@@ -29,8 +30,9 @@ Run from Workflow-Scripts root:
 | `check-sync-workflow-scripts.sh` | Sync script portability (bash 3.2, `git -C`, SSH remote, env vars) |
 | `check-update-workflows.sh` | Staged-only commit contract; rejects unstaged/untracked files |
 | `check-review-workflow-policy.sh` | Agent policy refs, research output routing, no stale agent caps |
+| `check-completion-chain-policy.sh` | Terminal-gate ownership, host-policy archive routing, completion-chain navigation |
 
-Run all five before maintainer push (added in 2026-07-03 deep review remediation).
+Run all six before maintainer push. GitHub Actions runs the same suite via `.github/workflows/validation.yml`.
 
 ## Package Unit Tests
 
