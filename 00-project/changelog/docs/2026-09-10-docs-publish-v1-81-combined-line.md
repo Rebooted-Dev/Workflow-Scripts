@@ -28,4 +28,4 @@ Published `v1.81` as the active combined line by merging frozen parent branches 
 - Seven content conflicts union-resolved (AGENTS, repository map, changelog index, planning/code-build/review READMEs, root README)
 - Active branch guidance now points to `v1.81`; `v1.8` and `v1.72` documented as frozen parents
 - `main` not moved in this work
-- Live Shared-Common-Library master checkout left on `v1.72` until an explicit consumer retarget
+- Live Shared-Common-Library master checkout retargeted to `v1.81` on 2026-09-10; workspace agent/map pins updated
