@@ -37,7 +37,7 @@ On 2026-07-20, `v1.8` was published and `main` was fast-forwarded so both local 
 
 ## Combined-line outcome (September 2026)
 
-On 2026-09-10, `v1.81` was published as the active combined line merging `v1.8` (July remediation, CI, security, SDK) and `v1.72` (Aug–Sep active workflows, completion-chain gate, dependency workflows). `v1.8` and `v1.72` were not rewritten. `main` was not moved in this work.
+On 2026-09-10, `v1.81` was published as the active combined line merging `v1.8` (July remediation, CI, security, SDK) and `v1.72` (Aug–Sep active workflows, completion-chain gate, dependency workflows). `v1.8` and `v1.72` were not rewritten. Later the same day, `main` was fast-forwarded to `v1.81` (`a166a1e`).
 
 ## Sync instructions
 
