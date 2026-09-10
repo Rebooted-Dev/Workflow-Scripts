@@ -112,7 +112,14 @@ Avoid using `git submodule update --remote` as the default because it advances t
 
 ### Symlinks
 
-Symlinks can work locally but are not portable and are awkward with git (git tracks the symlink, not the content).
+Symlinks are **not recommended as the default model** for standalone projects: they are not portable and are awkward with git (git tracks the symlink, not the content).
+
+**Sanctioned exception — umbrella workspaces:** when multiple projects live under one workspace that already exposes this repository through a shared link root (e.g. `Shared-Links/Workflow-Scripts` → the single master checkout), each nested app may consume the master via a **gitignored relative symlink** (`ln -s ../Shared-Links/Workflow-Scripts Workflow-Scripts`). Properties of this pattern:
+
+- Exactly **one live copy** per workspace; updates are immediate — no per-project `git pull` needed.
+- The app repo ignores the symlink (`.gitignore` entry **without** a trailing slash — `Workflow-Scripts/` matches directories only and will *not* ignore a symlink).
+- Git operations (pull/commit/push) run **only in the master checkout**, never inside a symlink.
+- If an app is later extracted to standalone, replace the symlink with a per-project clone (initial setup above).
 
 ### Git Subtree / Copy-Vendoring
 

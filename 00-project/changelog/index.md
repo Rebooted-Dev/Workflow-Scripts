@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-10 | docs | Document umbrella-workspace symlink consumption pattern | docs/2026-09-10-docs-umbrella-symlink-consumption-pattern.md | SHARING_AND_SYNC.md symlink section amended; first consumer: Image-Generation-Apps workspace (stale v1.7 clones → symlinks to this master) |
 | 2026-08-18 | changed | Hold unfinished workflow skill bundles outside the active repository | changed/2026-08-18-changed-hold-unimplemented-workflow-skills.md | Moved 14 bundles to the Core-Knowledge holding area; updated active navigation and installation guidance; no runtime installation |
 | 2026-08-12 | docs | Add safe dependency remediation handoff | docs/2026-08-12-docs-add-safe-dependency-remediation-handoff.md | Added report disposition, human approval, supply-chain preflight, staged remediation, and compromise-response gates |
 | 2026-08-12 | docs | Consolidate dependency workflows | docs/2026-08-12-docs-consolidate-dependency-workflows.md | Made 05-review the canonical dependency owner; added the security companion and updated security/deployment handoffs |
