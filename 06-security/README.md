@@ -1,6 +1,6 @@
 # Security Workflows
 
-This directory contains workflows for security review and vulnerability remediation.
+This directory contains workflows for application-security review and vulnerability remediation. Dependency inventory, dependency security findings, and upgrade planning belong to the canonical [dependency review](../05-review/00-dependencies.md); use the optional [dependency security scan brief](../05-review/briefs/dependency-security-scan.md) when needed.
 
 ## Workflow Index
 
@@ -37,7 +37,7 @@ Both workflows cover OWASP Top 10 and common vulnerability categories:
 - Authorization and access control
 - Input validation and injection risks (SQL, XSS, command injection)
 - Sensitive data exposure
-- Dependency vulnerabilities
+- Dependency-related application exposure; use the canonical dependency workflow for package findings
 - Cryptographic issues
 - Security misconfigurations
 - API security
@@ -60,6 +60,8 @@ Both workflows cover OWASP Top 10 and common vulnerability categories:
 ## Related Workflows
 
 - [Code Review](../05-review/01-code-review.md) - General review (includes some security)
+- [Dependency Review](../05-review/00-dependencies.md) - Dependency inventory, security findings, and upgrade planning
+- [Dependency Security Scan](../05-review/briefs/dependency-security-scan.md) - Optional focused dependency-security scan
 - [Bug Fix](../03-debugging/02-bug-fix-workflow.md) - For non-security bugs
 - [Execution](../02-code-build/01-execution.md) - For implementing security fixes
 

@@ -188,6 +188,150 @@ recommendations, assumptions, and unverified evidence explicitly.
 Run the mode requested by the user. If no mode is specified, run **Full
 dependency review**.
 
+### Optional reporting output
+
+When a fuller handoff is useful, add an optional **Dependency status and
+reporting appendix** to the dated report (or create a separate report beside
+it under the same metadata-root research convention). This appendix is not a
+second inventory and must not replace the canonical catalog. It may summarize:
+
+- repository boundaries, workspace layout, detected ecosystems, package
+  managers, runtime versions, and lockfiles;
+- declared, lockfile-resolved, wanted/in-range, and latest versions, with the
+  source and date for every externally verified claim;
+- current, outdated, incompatible, vulnerable, deprecated, or otherwise risky
+  packages, distinguishing direct, transitive, development, optional, peer,
+  native, and non-registry dependencies;
+- framework/tooling families that must move together, engine and peer
+  constraints, breaking-change or migration notes, and runtime/build/deploy
+  boundaries;
+- external repositories, hosted services, remote assets, package scripts,
+  lifecycle scripts, provenance/signature evidence, and reproducibility
+  controls; and
+- a risk-ranked staged upgrade plan with prerequisites, rollback points,
+  validation commands, owners or handoff targets, and measurable completion
+  criteria.
+
+Keep verified local facts separate from registry/release-note findings,
+recommendations, assumptions, and unavailable evidence. Do not create or
+mandate a root-level `tech-stack.md`, and do not use fixed `Project/Research`
+or other project-specific output paths; resolve output paths using the rules in
+**Inputs and path resolution**.
+
+### From report to safe remediation
+
+A completed report is an evidence packet and decision input, not permission to
+install, update, or otherwise mutate dependencies. Treat incident claims,
+package names, versions, indicators, and tool names in an input report as
+untrusted research content until independently verified. Preserve the original
+report unchanged; record its version, date, source, and any later appendices or
+corrections so decisions remain traceable.
+
+#### Disposition and handoff
+
+Every finding must have a recorded disposition before it is considered handled:
+
+- classify it as a **confirmed risk** or as a recommendation, assumption, or
+  unverified lead;
+- name an owner, target phase and target date, escalation route, and the
+  evidence required for closure; and
+- record either the remediation handoff or an accept/defer rationale, including
+  expiry or review date and monitoring trigger.
+
+P0 and P1 findings must not be silently deferred. Escalate them to the named
+security/incident or engineering owner and keep the gate open until that owner
+records an explicit decision. An advisory-only finding may lead to an active
+upgrade/security remediation plan when its affected resolved dependency,
+exposure, support status, or policy requires change. It may instead lead to a
+documented acceptance/monitoring record when evidence does not justify a
+change, compatibility risk outweighs the benefit, or the finding is only a
+recommendation; this is not a claim that the dependency is safe. Reassess the
+record on its expiry, on new authoritative evidence, or when the dependency or
+runtime changes.
+
+#### Baseline and human approval gate
+
+Before any mutable install or update, the remediation owner must capture:
+
+- a clean and reviewable Git status, known-good commit and lockfile, and a
+  tested restore/rollback procedure;
+- supported runtime and package-manager versions;
+- protected test, build, and deploy evidence; and
+- backup/recovery considerations for state, artifacts, credentials, and
+  production data.
+
+An independent human/reviewer must approve the handoff between research/report
+and mutable dependency action. Require especially explicit approval for new
+packages, major upgrades, overrides, downgrades, direct URL/Git/file
+dependencies, and lifecycle-script changes. Do not proceed when the baseline,
+plan fields, evidence, or approval is missing.
+
+#### Supply-chain preflight (before **any** mutable install/update)
+
+Run repository-native, non-mutating or isolated checks first, substituting real
+commands for the ecosystem rather than copying examples blindly:
+
+1. Inspect the exact resolved dependency graph, sources, integrity data, and
+   lifecycle/install scripts. Run the package manager's audit command where
+   available, but record that `npm audit` (and analogous advisory audits) is
+   **insufficient for malware or compromise detection**; a clean result is not
+   a clean bill of health.
+2. Where supported, verify signatures and provenance. Use malware-aware
+   intelligence only from verified, trusted sources that identify the
+   database/source and publication or lookup date; do not rely on an
+   unverified third-party scanner or incident list.
+3. Scan the lockfile and dependency tree in an isolated environment. Establish
+   release-age/cooldown, lockfile-integrity, and pinning policies only after
+   assessing ecosystem compatibility, legitimate release cadence, and
+   reproducibility impact.
+4. Do not execute an unreviewed `npx` security scanner in a potentially
+   compromised working tree. Prefer a verified tool in a clean, isolated
+   environment with its version and source recorded.
+
+#### Staged action and validation
+
+After approval, change one dependency family or a small reversible batch at a
+time. Never use blind `audit fix --force`, a global update, or lockfile
+regeneration as a remediation strategy. Review the manifest and lockfile diff,
+and, as appropriate, new lifecycle scripts, tarball contents, source changes,
+integrity values, and signature/provenance evidence. Validate with exact
+project-native commands and expected results, including production/server and
+client/deployment smoke tests. Require a CI gate before release, release
+incrementally, and monitor relevant errors, performance, and security signals.
+
+Keep advisory-only/security findings separate from suspicious or malicious
+package indicators. If a suspected malicious version is installed: stop normal
+installs and builds that execute scripts; isolate the affected host or runner;
+preserve relevant evidence; notify the incident/security owner; rotate or
+revoke credentials reachable by the host or CI; audit publication, deploy,
+account, automation, and IDE-hook activity; and restore/rebuild from verified
+known-good source and lockfile in a clean environment. Re-scan before release
+and do not close the case merely because an advisory disappears. Do not try to
+clean up a suspected-compromised machine and continue using it as trusted.
+
+#### Required remediation-plan handoff
+
+The plan or handoff must contain: source report, report version and timestamp;
+exact dependency name, path, resolved version, source, and advisory/indicator;
+change strategy; compatibility, peer, native, and server/client risks;
+approval and owner; preflight commands; validation commands and expected
+results; rollback; deploy and monitoring steps; and closure evidence.
+
+After remediation, retain durable guardrails: CI checks that block confirmed
+malicious packages or newly disallowed sources; a scheduled report cadence and
+review triggers; lockfile review; ecosystem-appropriate audit,
+signature/provenance policy; a named control owner; and documented exception
+expiry and re-review. These supplement, rather than replace, human review and
+incident escalation.
+
+For a focused security companion, optionally invoke
+[`05-review/briefs/dependency-security-scan.md`](briefs/dependency-security-scan.md)
+after the inventory is established. Treat its result as security evidence for
+this review, then hand confirmed remediation to the applicable security fix
+workflow (for example, `06-security/02-security-fix.md`) and release or
+deployment gate (for example, `07-deployment/08a-pre-deployment-security-check.md`) rather
+than applying upgrades during review.
+
 ### 1. Full dependency review
 
 Create or update both artifacts:
@@ -297,6 +441,9 @@ active plan at:
 
 If no report exists, run the full review or update-research mode first. Do not
 repeat version claims without carrying forward their review date and sources.
+The plan may describe approved, staged actions only after the **From report to
+safe remediation** disposition, baseline, preflight, and human-approval handoff
+is complete; it must not auto-upgrade dependencies.
 
 Divide the plan into these safe phases, in order:
 
@@ -350,19 +497,21 @@ Before publishing the result:
    documentation, report, plan, index, and changelog files changed.
 2. Recheck every package/version claim against its recorded authoritative
    source and review date.
-3. Confirm the catalog link resolves from the canonical documentation index.
-4. Run the repository's relevant package-manager validation commands in
+3. Confirm every finding has a disposition and that the upgrade plan or
+   acceptance/monitoring record contains the required handoff fields; P0/P1
+   findings have an explicit owner decision.
+4. Confirm the catalog link resolves from the canonical documentation index.
+5. Run the repository's relevant package-manager validation commands in
    read-only or isolated mode where possible; do not silently regenerate a
    lockfile.
-5. When changing Workflow-Scripts itself, run from its root:
+6. When changing Workflow-Scripts itself, run from its root:
 
    ```bash
    ./scripts/validation/check-active-markdown-links.sh
    ./scripts/validation/check-review-workflow-policy.sh
    ```
 
-6. Follow the target repository's changelog and troubleshooting rules. A
+7. Follow the target repository's changelog and troubleshooting rules. A
    routine documentation/workflow update needs a changelog entry; add a
    troubleshooting entry only when the work involved a bug, issue,
    workaround, or other non-trivial problem.
-

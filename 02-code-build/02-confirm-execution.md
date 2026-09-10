@@ -20,11 +20,12 @@ Validate that an implementation plan has actually been completed (in code and ve
 **This workflow will:**
 - Read the plan document and extract claimed completions
 - Verify code changes exist in the repository
-- Check that verification criteria were met (or re-run build/checks if needed)
+- Apply the same **Verification Bar** as execution: project verify, tests when present, acceptance/smoke when user-facing or runtime-dependent
+- Check that verification criteria were met (or re-run checks when evidence is missing, stale, or unconvincing)
 - Correct any misreporting in the plan; leave correct marking as-is
 - Add a verification addendum documenting what was checked
 
-**Relationship to 01:** This is an audit. If [`01-execution.md`](./01-execution.md) was followed, the plan is already marked and build/checks were run. You do not re-do those steps; you verify and add the addendum. Only run build/checks again if you are auditing without a prior execution, or to re-verify. Only change task checkboxes when you find misreporting (e.g. task marked complete but code or verification is missing).
+**Relationship to 01:** This is an audit of claims vs reality. If [`01-execution.md`](./01-execution.md) was followed, the plan is already marked and checks were run—but you still **confirm** that code exists **and** that applicable Verification Bar items passed (or re-run them when evidence is absent, contradictory, or only "build green"). You do not blindly re-implement; you validate. Only change task checkboxes when you find misreporting (e.g. task marked complete but code, tests, or acceptance checks are missing/failed).
 
 ## Inputs
 
@@ -34,9 +35,24 @@ Validate that an implementation plan has actually been completed (in code and ve
 ## Output
 
 - The original plan document updated with:
-  - Completed vs incomplete items marked consistently
+  - Completed vs incomplete items marked consistently (audit/downgrade only; **no** completion marker or archive from this workflow)
   - A short verification addendum (what was checked and what passed/failed)
   - Misreporting called out explicitly with evidence
+- A hand-off note: when fully verified complete, route to the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md); when not, leave the plan active. This workflow does not finalize or archive.
+
+## Verification Bar (required for audit)
+
+Use the same bar as **[`01-execution.md`](./01-execution.md)** (and [`README.md`](./README.md)). A task is **not** verified complete solely because code exists in the tree.
+
+| Claim can stand only if… | Incomplete / misreported if… |
+|--------------------------|------------------------------|
+| Code change exists **and** matches the task | Code missing, partial, or wrong files |
+| Project verify command passed (when one exists) | Only claimed; build/lint/typecheck not run or failed |
+| Automated tests for the change ran when a suite/script exists | Tests skipped without a documented blocker, or failed |
+| User-facing / runtime acceptance criteria smoked when applicable | Only unit tests or static review for a runtime-dependent change |
+| Docs/logs updated when required by the plan or project conventions | Changelog/troubleshooting/docs obligations missing |
+
+**Skipped or blocked checks are not success.** Record residual risk; keep `- [ ]` until fixed or the user accepts the blocker.
 
 ## Marking Convention
 
@@ -44,8 +60,8 @@ Use the single source of truth for marking and completion conventions: **[`../04
 
 In this workflow you are **auditing**: only mark or change tasks based on what you have verified. Use **✅ (green check mark) only** for completed tasks—not "x", ✓, or other symbols—so status is consistent and easy to see at a glance.
 
-- **Completed:** `- [✅]` only if both the code change exists and verification/exit criteria were met. If the plan already has `- [✅]` and that is correct, leave it; otherwise normalize to `- [✅]`.
-- **Incomplete / open:** `- [ ]` for not started, in progress, missing code or verification, or deferred; add a note for partial or deferred tasks.
+- **Completed:** `- [✅]` only if the code change exists **and** applicable Verification Bar items / exit criteria were met. If the plan already has `- [✅]` and that is correct, leave it; otherwise normalize to `- [✅]`.
+- **Incomplete / open:** `- [ ]` for not started, in progress, missing code, missing or failed verification, or deferred; add a note for partial or deferred tasks.
 - **Parent tasks:** `- [✅]` only when all sub-tasks are complete (same as 01).
 - **Systematic review:** Check every task in the plan; correct any misreporting.
 
@@ -53,15 +69,16 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 ## Steps
 
-1. Read the plan end-to-end; extract the list of claimed completed tasks and their acceptance criteria.
+1. Read the plan end-to-end; extract the list of claimed completed tasks and their acceptance criteria / exit criteria.
 
-2. Use parallel agents to verify completion against the repo. Suggested agent roles (spawn additional agents as needed):
-   - Compare plan tasks to `git diff` / relevant files; confirm the code changes exist.
-   - If build/checks were not already run (e.g. audit without prior 01 run), run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs; if none exists, state that explicitly. `npm run build` is only an example.
-   - Spot-check user-facing behavior (if applicable) and confirm key flows still work.
-   - Look for gaps: missing docs/log updates, missing edge-case handling, broken imports.
+2. Use parallel agents to verify completion against the repo. Agent roles (spawn additional agents as needed):
+   - Compare plan tasks to `git diff` / relevant files; confirm the code changes exist and match intent.
+   - **Re-run or confirm** the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs when prior evidence is missing, stale, or only partial. If none exists, state that explicitly. `npm run build` is only an example.
+   - **Run automated tests** when a suite/script exists for the change; do not treat tests as optional during confirm.
+   - **Spot-check user-facing or runtime behavior** when the plan's acceptance criteria depend on it (dev server, CLI, IPC, provider path, export/render, etc.)—not only static review.
+   - Look for gaps: missing docs/log updates, missing edge-case handling, broken imports, false "complete" marks without verification evidence.
    - [Spawn additional agents if you discover other verification needs, such as:
-     - Test coverage validation
+     - Test coverage gaps
      - Performance impact checks
      - Security validation
      - Documentation completeness]
@@ -70,19 +87,17 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 4. Add a verification addendum to the plan containing:
    - Timestamp: `YYYY-MM-DD HH:MM`
-   - Commands run (for example, the project-specific build/test command)
-   - What was verified manually (if any)
+   - Commands run (project verify, test suite, and any other checks—with pass/fail)
+   - What was smoke-tested or verified manually against acceptance criteria (if any)
    - Any misreporting or mismatches (with file paths / evidence)
+   - Blocked or skipped checks and residual risk (if any)
    - Next steps (only for incomplete items)
 
-5. **When the plan is fully verified complete:** If a completion marker is not already present, add one (e.g. `**Status:** ✅ COMPLETED` at the top or `## Implementation Status ✅`). See the Workflow-Scripts main README, "Completion Status Conventions."
+5. **Do not add a completion marker here.** A completion marker (e.g. `**Status:** ✅ COMPLETED` or `## Implementation Status ✅`) is applied **only** by the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) once the plan is fully verified complete. This workflow may only **downgrade** false claims (to `- [ ]` or flagged) and append the addendum; it must not add `✅` terminal marks or a completion marker. See the Workflow-Scripts main README, "Completion Status Conventions."
 
-6. **Mark completed + archive consistently:** **Then execute the full `03-mark-completed.md` workflow** to:
-  - Verify implementation with parallel agents
-  - Reconcile changelog, troubleshooting, and documentation
-  - Mark tasks with ✅ consistently
-  - Archive the plan into `project/changelog/plans/` and update `project/changelog/index.md` (Type=`plan`).
-  Follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)** for the complete process.
+6. **Hand off to the terminal gate — do not finalize here.** This workflow **audits and appends evidence; it does not apply a completion marker or archive.** When the plan is fully verified complete, the **mandatory** next step is the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md), which is the **only** workflow that marks tasks `✅` as a terminal act, creates the completion marker, reconciles changelog/troubleshooting/docs, and archives the plan. Archive routing is resolved from the **host repository's policy** (not a global default) inside the gate.
+
+   - If verification is blocked, skipped, failed, partial, or under-evidenced, the outcome is **`Not Eligible`**: leave the plan active, record the blocker in the addendum, and apply **no** completion marker or archive. Do **not** treat this workflow as the owner of completion marking or archive routing.
 
 ## Related Workflows
 

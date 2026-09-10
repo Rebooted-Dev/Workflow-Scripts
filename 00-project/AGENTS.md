@@ -42,7 +42,7 @@ git push
 
 The Workflow-Scripts development environment tracks **1 repository**:
 
-1. **Workflow-Scripts** (Primary, repository root) — `v1.8` and `main` share the published remediation head; `v1.7` is frozen prior-stable.
+1. **Workflow-Scripts** (Primary, repository root) — active line `v1.81` (combined from frozen `v1.8` and `v1.72`; `main` and older `v1.x` lines remain available)
 
 See **[Repository Map](docs/agents/repository-map.md)** for paths, remotes, and sync instructions.
 

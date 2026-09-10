@@ -1,7 +1,9 @@
 # Workflow: Security Review
 
 ## Purpose
-Perform a structured security review that identifies vulnerabilities, security risks, and compliance issues, then file a report in `<metadata-root>/research/` using the metadata-root rule in `../00-Meta-Workflow/00-meta/naming-conventions.md`.
+Perform a structured application-security review that identifies vulnerabilities, security risks, and compliance issues, then file a report in `<metadata-root>/research/` using the metadata-root rule in `../00-Meta-Workflow/00-meta/naming-conventions.md`.
+
+For dependency inventory, package findings, or upgrade planning, use [`../05-review/00-dependencies.md`](../05-review/00-dependencies.md); optionally pair it with [`../05-review/briefs/dependency-security-scan.md`](../05-review/briefs/dependency-security-scan.md).
 
 Use the shared review contract in `../00-Meta-Workflow/00-meta/review-workflow-core.md` for report routing, pre-flight checks, untrusted-content handling, severity/priority scoring, evidence quality, deduplication, report outline, and acceptance criteria.
 
@@ -37,7 +39,7 @@ Before scanning, verify:
    - Scan for authentication and authorization vulnerabilities (read auth files, middleware, route handlers in parallel batches)
    - Scan for input validation and injection risks (read API endpoints, form handlers, data processing files in parallel batches)
    - Scan for sensitive data exposure and secrets management (read config files, env handling, data storage files in parallel batches)
-   - Scan for dependency vulnerabilities and outdated packages (read package.json, lock files, dependency files in parallel batches)
+   - Scan dependency-related application exposure and integrations; route package findings through `../05-review/00-dependencies.md`
    - Scan for cryptographic issues and weak implementations (read encryption, hashing, token files in parallel batches)
    - Scan for security misconfigurations and exposed endpoints (read server config, API definitions, deployment files in parallel batches)
    
@@ -46,7 +48,7 @@ Before scanning, verify:
    - Spawn 1 frontend security agent if client-side code handles sensitive data or authentication
    - Spawn 1 infrastructure agent if cloud configs (AWS, GCP, Azure) or container files (Docker, K8s) found
    - Spawn 1 compliance agent if PII/PHI handling detected or regulatory requirements (GDPR, HIPAA) apply
-   - Spawn 1 supply chain agent if 20+ dependencies or outdated packages found in package.json/lock files
+   - Spawn 1 supply chain agent only for an application-facing integration or provenance risk; route package findings through `../05-review/00-dependencies.md`
    - Spawn 1 session management agent if custom session handling or token management implemented
    - Spawn 1 injection prevention agent if user inputs processed in 10+ locations (SQL, XSS, command injection)
    
@@ -98,7 +100,7 @@ Before scanning, verify:
 - Command injection and code injection
 - Insecure deserialization
 - Sensitive data exposure (secrets, PII, credentials)
-- Insecure dependencies and supply chain risks
+- Dependency-related application exposure and supply-chain integration risks
 - Security misconfigurations
 - Insufficient logging and monitoring
 - Cryptographic weaknesses

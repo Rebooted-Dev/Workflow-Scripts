@@ -79,13 +79,15 @@ Guide: `00-project-setup/03-sync-workflow-scripts.md`
 | Branch | Role |
 |--------|------|
 | `main` | Primary integration branch |
-| `v1.5`, `v1.6`, `v1.7` | Versioned release lines |
+| **`v1.81`** | **Active combined line (use this)** |
+| `v1.8`, `v1.72` | Frozen parent lines (July remediation and Aug–Sep active work, merged into `v1.81`) |
+| `v1.5`, `v1.6`, `v1.7`, `v1.71` | Older versioned release lines |
 
 Override with `WORKFLOWS_BRANCH` env var in sync scripts.
 
 ## CI/CD
 
-No CI pipeline ships with Workflow-Scripts. Recommended local checks before publish:
+GitHub Actions runs the validation suite on pushes and pull requests via [`.github/workflows/validation.yml`](../../../.github/workflows/validation.yml). Run the same checks locally before publish:
 
 ```bash
 ./scripts/validation/check-active-markdown-links.sh
@@ -93,6 +95,7 @@ No CI pipeline ships with Workflow-Scripts. Recommended local checks before publ
 ./scripts/validation/check-sync-workflow-scripts.sh
 ./scripts/validation/check-update-workflows.sh
 ./scripts/validation/check-review-workflow-policy.sh
+./scripts/validation/check-completion-chain-policy.sh
 ```
 
 ## Consumer Deployment Guides (Reference Library)

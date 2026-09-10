@@ -121,7 +121,7 @@ Workflow-Scripts/
 ├── 07-deployment/                # Deployment, ports, Electron, and pre-deploy checks
 ├── 08-API-Integration/           # Genkit, AI SDK, providers, and MCP references
 ├── 10-technical-docs/            # Offline technical reference library
-├── 11-Skills/                    # Optional reusable agent skill bundles
+├── 11-Skills/                    # Former bundles held outside this repository for review
 ├── 12-SEO-GEO-checklist/         # SEO/GEO task checklists and plans
 ├── scripts/                      # Pull, publish, sync, and validation helpers
 ├── media/                        # Repository documentation assets
@@ -139,7 +139,7 @@ The numbering makes the main path easy to scan: setup, plan, build, debug, docum
 | 01-planning-and-organizing through 06-security | Lifecycle tasks have different inputs, evidence requirements, and completion criteria. |
 | 07-deployment and 08-API-Integration | Deployment and external-service work is specialist work; it is used when relevant, not on every feature. |
 | 10-technical-docs and 12-SEO-GEO-checklist | Reference material and recurring checklists should remain available without being confused with executable workflow stages. |
-| 11-Skills | Skills are compact, reusable agent triggers; full workflows remain the detailed source of process. |
+| Former 11-Skills bundles | Held outside this repository for review; not an active runtime skill source. |
 | scripts | Repetitive repository maintenance is safer and more consistent when provided as reviewed helpers. |
 | 00-project | Workflow-Scripts needs its own project records, but those records must not be mixed with a host application's records. |
 | User-Manual | Users need an entry point that explains how to choose and apply workflows without reading the entire repository first. |
@@ -195,7 +195,7 @@ This separation prevents a review report for one application from appearing in e
 | Prepare a deployment | [07-deployment/README.md](../07-deployment/README.md) | Platform-specific deployment guidance and checklists |
 | Integrate Genkit, AI SDK, or MCP | [08-API-Integration/README.md](../08-API-Integration/README.md) | Service-specific integration guidance |
 
-The 10-technical-docs/ and 12-SEO-GEO-checklist/ directories are reference libraries and checklists. The 11-Skills/ directory contains optional reusable skill bundles. The 00-Meta-Workflow/ directory contains rubrics, naming conventions, agent policies, and delegated-review tooling.
+The 10-technical-docs/ and 12-SEO-GEO-checklist/ directories are reference libraries and checklists. The former 11-Skills/ bundles are held outside this repository for review and are not an active runtime skill source. The 00-Meta-Workflow/ directory contains rubrics, naming conventions, agent policies, and delegated-review tooling.
 
 ## Common workflow sequences
 
@@ -528,7 +528,7 @@ Use it when a plan needs an independent model review or when reviews should run 
 
 ### Skills
 
-Full workflows are detailed, multi-phase instructions. Skills under 11-Skills/ are smaller reusable bundles for agents that support skill discovery. Use [00-project-setup/06-skills-setup.md](../00-project-setup/06-skills-setup.md) to install or track them. Skills complement the full workflows; they do not replace the project-specific paths, tests, or verification commands in the host repository.
+Full workflows are detailed, multi-phase instructions. The former skills under 11-Skills/ are currently held outside this repository for review and should not be installed automatically. Use [00-project-setup/06-skills-setup.md](../00-project-setup/06-skills-setup.md) for the current status and installation guidance.
 
 ### API and deployment references
 

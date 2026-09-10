@@ -93,9 +93,9 @@ This workflow updates existing documentation to match code:
 5. **Add diagrams** - Text-based ASCII art diagrams using `./ascii-art-prompts.md`
 6. **Cross-link** - Remove redundancy, add references between related docs
 
-### Mark Completed and Verify (`03-mark-completed.md`)
+### Mark Completed and Verify (`03-mark-completed.md`) — terminal gate
 
-This workflow verifies that reported completed tasks were actually implemented:
+This workflow is the **sole terminal authority** in the completion chain: the only workflow that applies terminal `✅` marks, the completion marker, and archive routing (resolved from the host repository's policy). `01-execution` and `02-confirm-execution` report verification and may downgrade false claims; they never finalize or archive. This workflow verifies that reported completed tasks were actually implemented:
 
 1. **Identify sources** - Locate plan/report files that declare completed tasks
 2. **Verify in code** - Use parallel agents to read cited files and confirm implementation (P0→P3)

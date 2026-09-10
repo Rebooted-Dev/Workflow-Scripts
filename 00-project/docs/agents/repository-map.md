@@ -2,9 +2,9 @@
 
 ## Tracked Repositories
 
-| # | Name | Directory | Remote URL | Active branch |
-|---|------|-----------|------------|---------------|
-| 1 | Workflow-Scripts | `.` (repository root) | `https://github.com/Rebooted-Dev/Workflow-Scripts` | `v1.8` |
+| # | Name | Directory | Remote URL | Branch |
+|---|------|-----------|------------|--------|
+| 1 | Workflow-Scripts | `.` (repository root) | `https://github.com/Rebooted-Dev/Workflow-Scripts` | **`v1.81` (active)** / frozen `v1.8` / frozen `v1.72` / `main` / `v1.5` / `v1.6` / `v1.7` / `v1.71` |
 
 ## Purpose
 
@@ -12,7 +12,7 @@
 
 `00-project/` is **not** a separate git repository. It is a tracked subdirectory within Workflow-Scripts.
 
-## Branch matrix and disposition
+## Branch matrix and disposition (historical — July 2026)
 
 Observed on 2026-07-19 before remediation commits. Commit IDs are evidence of the observed state, not permanent branch pins.
 
@@ -31,9 +31,13 @@ Observed on 2026-07-19 before remediation commits. Commit IDs are evidence of th
 
 No branch was deleted and no history was rewritten while recording this matrix.
 
-## Remediation outcome
+## Remediation outcome (July 2026)
 
 On 2026-07-20, `v1.8` was published and `main` was fast-forwarded so both local and remote maintained branches share the same current head. `v1.7` and the historical/v2 branches above were left unchanged.
+
+## Combined-line outcome (September 2026)
+
+On 2026-09-10, `v1.81` was published as the active combined line merging `v1.8` (July remediation, CI, security, SDK) and `v1.72` (Aug–Sep active workflows, completion-chain gate, dependency workflows). `v1.8` and `v1.72` were not rewritten. `main` was not moved in this work.
 
 ## Sync instructions
 

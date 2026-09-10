@@ -115,7 +115,7 @@ You typically set up **MCP** for capabilities (search, DB, deploy); you set up *
 
 ## Workflow-Scripts: tracked skills and installation
 
-These are the skills **tracked for Workflow-Scripts** use (frontend, React, React Native, and UI/UX guidance). Tracking and installation are documented here; the former `09-skills/` folder (symlinks into `.agents/skills/`) is **no longer used** — you can remove it. Install the skills below so your agent has them when working with Workflow-Scripts or related workflows.
+The former Workflow-Scripts skill bundles were moved to `../Core-Knowledge/Tech-notes/Workflow-Scripts/11-Skills/` for review because they were not fully implemented or activated. The former `09-skills/` folder (symlinks into `.agents/skills/`) is **no longer used** — you can remove it. The upstream Vercel skills below remain reference material for agents working with Workflow-Scripts; this repository is not an active OpenCode skill-discovery root.
 
 | Skill | Purpose | How to install |
 |-------|---------|----------------|

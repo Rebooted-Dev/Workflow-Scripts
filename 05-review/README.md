@@ -20,6 +20,7 @@ Review briefs are heavyweight, reusable *companion contracts* that specialize on
 | Brief | Specializes | When to use |
 |-------|-------------|-------------|
 | [`briefs/identify-refactor-candidates.md`](./briefs/identify-refactor-candidates.md) | [`03-code-refactoring.md`](./03-code-refactoring.md) | When you need an implementation-ready restructuring/refactoring roadmap (six-way disposition taxonomy, viability scores, non-compensating readiness gates, work packages) rather than a standard refactoring findings report |
+| [`briefs/dependency-security-scan.md`](./briefs/dependency-security-scan.md) | [`00-dependencies.md`](./00-dependencies.md) | When you need a focused, read-only dependency security assessment covering advisories, malicious-package intelligence, provenance, lifecycle scripts, non-registry dependencies, and reproducibility; use it with the canonical dependency inventory and route confirmed remediation to security and release/deployment gates |
 
 ## Quick Decision Guide
 

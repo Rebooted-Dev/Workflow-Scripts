@@ -1,7 +1,7 @@
 # Workflow-Scripts Documentation
 
 **Status:** ✅ COMPLETED
-**Last verified:** 2026-07-03 (synced with v1.7 deep review remediation)
+**Last verified:** 2026-09-10 (active branch `v1.81`; combines frozen `v1.8` and `v1.72`; prior v1.7 deep review remediation retained)
 
 Central navigation for Workflow-Scripts — a reusable workflow instruction library for AI-assisted development, maintained as its own git repository and cloned into host projects.
 
@@ -28,7 +28,7 @@ Central navigation for Workflow-Scripts — a reusable workflow instruction libr
 - [File Map](./architecture/file-map.md) — annotated directory tree
 - [Modules](./code/modules.md) — scripts, orchestrator, skills, `@ai-sdk/image-generation`
 - [API / Interfaces](./api/README.md) — CLI scripts, orchestrator, library exports (no HTTP API)
-- [Testing](./testing/README.md) — five validation scripts and package unit tests
+- [Testing](./testing/README.md) — six validation scripts and package unit tests
 
 ## For Maintainers
 
@@ -48,7 +48,7 @@ These are consumer-oriented guides bundled with Workflow-Scripts, not meta docs 
 | `08-API-Integration/` | Genkit, AI SDK, Higgsfield MCP, service provider reference |
 | `10-technical-docs/Gemini/` | Offline Gemini API reference |
 | `12-SEO-GEO-checklist/` | SEO/GEO automation and monitoring tasks |
-| `11-Skills/` | Codex skill bundles wrapping recurring workflows |
+| `11-Skills/` | Skill bundles retained for review; see `11-Skills/README.md` (held — not active for agent skill discovery) |
 
 ## Recent Changes (2026-07-03)
 
@@ -56,7 +56,8 @@ These are consumer-oriented guides bundled with Workflow-Scripts, not meta docs 
 - Five validation scripts under `scripts/validation/` (pre-push suite)
 - `agent-spawning-policy.md` — 3–6 parallel agents per review session
 - `05-review/05-comprehensive-audit.md` (renamed from `fable-review.md`)
-- Branch `v1.7` active; `migrate-changelog.py` archived to `00-project/build/archive/`
+- Branch **`v1.81` active** (combined from frozen `v1.8` + `v1.72`); completion-chain terminal-gate remediation and July CI/security remediation both present
+- `migrate-changelog.py` archived to `00-project/build/archive/`
 
 ## Glossary
 

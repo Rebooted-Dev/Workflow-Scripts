@@ -34,6 +34,7 @@ From **this repo** (maintainer):
 | [`validation/check-review-workflow-policy.sh`](./validation/check-review-workflow-policy.sh) | Shared review-workflow policy checks |
 | [`validation/check-sync-workflow-scripts.sh`](./validation/check-sync-workflow-scripts.sh) | Sync helper behavior checks |
 | [`validation/check-update-workflows.sh`](./validation/check-update-workflows.sh) | Update helper dirty-tree and staged-commit checks |
+| [`validation/check-completion-chain-policy.sh`](./validation/check-completion-chain-policy.sh) | Completion-chain policy checks (terminal-gate ownership, host-policy archive routing, deterministic discovery, navigation) |
 
 ### Prerequisites
 

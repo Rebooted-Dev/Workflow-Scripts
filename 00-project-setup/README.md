@@ -12,6 +12,7 @@ This directory contains workflows for setting up new projects and optimizing exi
 | [`04-track-repos-and-agent-map.md`](./04-track-repos-and-agent-map.md) | Discover repos in the project and set up agent files (AGENTS.md, CLAUDE.md, GEMINI.md) with a repo map and sync/push/pull instructions | New projects with multiple repos, onboarding agents, or when adding a new nested repo |
 | [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md) | MCP and config setup: Google Developer Knowledge MCP (Cursor + OpenCode), fix Cursor stdio PATH, OpenCode default model, oh-my-opencode overrides | Setting up or fixing MCP servers, adding Gemini docs MCP, or setting default model (e.g. GLM 5) |
 | [`06-skills-setup.md`](./06-skills-setup.md) | Skills setup: install and configure agent skills in Cursor/Codex (personal vs project skills, storage locations, top recommended skills) | Setting up agent skills, onboarding to skills-based workflows, troubleshooting skill loading |
+| [`09-seo-skill-setup.md`](./09-seo-skill-setup.md) | SEO skill setup: install the `seo` CLI + agent skill + MCP across Cursor/Claude Code/Codex/OpenCode/pi, guided Google/Search Console wiring, verification checklist | Setting up the iannuttall/seo toolchain, SEO evidence reports, or troubleshooting the seo skill/MCP |
 
 ## Quick Decision Guide
 

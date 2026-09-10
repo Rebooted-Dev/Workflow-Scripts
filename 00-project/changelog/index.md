@@ -5,6 +5,15 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-10 | docs | Document umbrella-workspace symlink consumption pattern | docs/2026-09-10-docs-umbrella-symlink-consumption-pattern.md | SHARING_AND_SYNC.md symlink section amended; first consumer: Image-Generation-Apps workspace (stale v1.7 clones → symlinks to this master) |
+| 2026-08-18 | changed | Hold unfinished workflow skill bundles outside the active repository | changed/2026-08-18-changed-hold-unimplemented-workflow-skills.md | Moved 14 bundles to the Core-Knowledge holding area; updated active navigation and installation guidance; no runtime installation |
+| 2026-08-12 | docs | Add safe dependency remediation handoff | docs/2026-08-12-docs-add-safe-dependency-remediation-handoff.md | Added report disposition, human approval, supply-chain preflight, staged remediation, and compromise-response gates |
+| 2026-08-12 | docs | Consolidate dependency workflows | docs/2026-08-12-docs-consolidate-dependency-workflows.md | Made 05-review the canonical dependency owner; added the security companion and updated security/deployment handoffs |
+| 2026-08-11 | docs | Finalise v1.72 Workflow Improvement Plans | docs/2026-08-11-docs-finalise-v1-72-improvement-plans.md | Updated overview and Plans 01–09 in place; integrated gpt-5.6-terra review corrections; no troubleshooting entry |
+| 2026-08-11 | docs | Declare v1.72 as the active Workflow-Scripts branch | docs/2026-08-11-docs-declare-v1-72-active-branch.md | Meta AGENTS, repository map, deployment branch table, and docs hub now mark `v1.72` active |
+| 2026-08-11 | plan | Workflow Completion-Chain Remediation | ../plans-completed/implementation/2026-08-08-workflow-completion-chain-remediation.md | Enforced single terminal-gate owner; host-policy archive routing; deterministic discovery; added `check-completion-chain-policy.sh`. Branch `v1.72`, commit `ea76fb5` |
+| 2026-08-11 | changed | Enforce single terminal-gate owner in completion chain | changed/2026-08-11-changed-completion-chain-terminal-gate.md | `03-mark-completed` is sole terminal owner; mandatory `Verified Complete`/`Not Eligible` handoff; host-policy archive; new validator |
+| 2026-08-03 | improved | Strengthen 02-code-build Verification Bar | improved/2026-08-03-improved-code-build-verification-bar.md | Tests + acceptance smoke first-class; skipped checks ≠ success; skill aligned |
 | 2026-07-20 | docs | Add identify-refactor-candidates review brief | docs/2026-07-20-docs-add-identify-refactor-candidates-brief.md | Reusable heavyweight brief companion to 03-code-refactoring; new `05-review/briefs/` subdirectory for review briefs |
 | 2026-07-19 | fixed | Comprehensive audit remediation | fixed/2026-07-19-fixed-comprehensive-audit-remediation.md | Removed prompt exposure, cleared dependency advisories, added CI, hardened validators, and reconciled repository docs |
 | 2026-07-19 | docs | Score System 2 stack plan | docs/2026-07-19-docs-score-system-2-stack-plan.md | Ordered implementation work from lowest to highest combined risk and difficulty |
