@@ -15,11 +15,11 @@ Execute implementation in phases with verification and documentation updates.
 ## Output
 
 - Implemented code changes
-- Updated changelog (`changelog/` per AGENTS.md, or `docs/CHANGELOG.md` / `CHANGELOG.md` if the project uses a single file)
+- Updated changelog per the **host repository's documented changelog convention** (see host AGENTS.md or `project/changelog/README.md`)
 - Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
 - Implementation plan in `plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open)
 - Verification evidence: commands run, tests run, smoke/acceptance checks performed (or explicit blockers if something could not be run)
-- **Finalization/archive is not done in this workflow.** Only the terminal gate **[`03-mark-completed.md`](../04-documentation/03-mark-completed.md)** may apply the completion marker and archive a plan, and it resolves the archive destination from the host repository's policy (see Finalization). This workflow reports verification per phase and at finalization; it does not independently finalize or archive.
+- **Phase checkboxes vs terminal completion:** This workflow may mark **phase** task checkboxes (`- [✅]`) only after applicable Verification Bar evidence passes. **Plan-level** completion marker, log reconciliation, and archive are owned solely by **[`03-mark-completed.md`](../04-documentation/03-mark-completed.md)** (see Finalization).
 
 ---
 
@@ -44,7 +44,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 - Check repo state (avoid clobbering unrelated work): `git status`.
 - Identify the plan: implementation plan in `plans/` (e.g. `plans/implementation-plan-*.md` or `plans/YYYY-MM-DD-*-implementation-plan.md`).
 - Break work into phases; for each phase define scope, out-of-scope, and **exit criteria that include how success will be verified** (commands, tests, and/or smoke of acceptance criteria—not only "code exists").
-- Plan parallel agents for each phase. Suggested agent roles (adapt as needed):
+- Plan delegation per [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md) and [`agent-spawning-policy.md`](../00-Meta-Workflow/00-meta/agent-spawning-policy.md). Suggested agent roles when scope warrants (adapt as needed):
   - Implement core functionality
   - Review for security/risk issues and side effects
   - Check for breaking changes or unintended impacts
@@ -84,13 +84,13 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
     - Validate file structure and imports; review git diff for unintended changes or secrets
   - Spawn additional agents when needed (performance, security scan, docs validation, integration tests).
   - Prefer the local dev (or project-documented) command for smoke tests when the project is trusted and the change is user-facing or runtime-dependent.
-  - If failures: fix, then re-run the **same** checks until exit criteria pass—or leave the task incomplete with evidence of the failure/blocker.
+  - If failures: fix, then re-run the **same** checks only after a meaningful corrective change or new hypothesis. If no evidence-backed next step remains, record the blocker and leave the task incomplete.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
   - **Do not mark `- [✅]` unless Verification Bar items that apply to this phase passed** (or the user explicitly accepts residual risk for a documented blocker).
   - Include brief verification evidence in the phase summary (commands/tests/smoke + result).
   - **Update logs (only for completed tasks that change or affect project code):**
-    - **Changelog:** Add a dated entry for this phase's work. Prefer `changelog/` directory per AGENTS.md when the project uses it; otherwise use `docs/CHANGELOG.md` or `CHANGELOG.md`. File into appropriate type subfolder (`added/`, `changed/`, `fixed/`, `improved/`, `docs/`, `refactor/`, `config/`) and add a row at the **top** of `changelog/index.md`.
+    - **Changelog:** Add a dated entry for this phase's work per the host repository's documented changelog convention (see host AGENTS.md or `project/changelog/README.md`).
     - **Troubleshooting (only when applicable):** Add a troubleshooting entry **only** when this phase involved one of the following (see AGENTS.md and `troubleshooting/README.md` for full conventions):
       - **Add an entry when:** You fixed a **bug** (incorrect behavior or crash), resolved an **issue** that required debugging or a workaround, or solved a **non-trivial problem** (significant investigation, multiple steps, or lessons worth preserving — e.g. complex config, unexpected framework behavior, tricky debugging).
       - **Do not add an entry when:** The work was a simple code change, routine refactor, or straightforward feature addition with no real problem-solving. Changelog is enough.
@@ -101,7 +101,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 
 - Re-run the Verification Bar for the whole change set: project verify command, automated tests when present, and acceptance/smoke for user-facing or runtime behavior. Confirm the repo is shippable against the plan's acceptance criteria; if no verify/test command exists, state that explicitly.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
-- **This workflow reports verification; it does not finalize or archive.** To mark the plan complete and archive it, **run the terminal gate** [`03-mark-completed.md`](../04-documentation/03-mark-completed.md). The gate is the **only** workflow that applies the completion marker, reconciles changelog/troubleshooting/docs, and archives the plan (resolving the destination from the host repository's policy — see [`03-mark-completed.md`](../04-documentation/03-mark-completed.md)).
+- **Terminal completion:** Run the mandatory terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) when the whole plan is verified complete (sole owner of plan-level marker and archive).
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to audit completion against the plan **before** the gate (recommended when using this workflow alone without [`03-execute-and-confirm.md`](./03-execute-and-confirm.md)). Confirmation may downgrade false claims and append evidence; it does not finalize or archive.
 
 ## Quick Checklist

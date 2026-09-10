@@ -30,7 +30,7 @@ Common terms and conventions used across Workflow-Scripts documentation.
 | **00-Meta-Workflow/00-meta/** | Templates, rubrics, analysis documents about workflows |
 | **00-Meta-Workflow/00-docs/** | Generated reports, archived reviews, analysis documents |
 | **01-planning-and-organizing/** | Create and review implementation plans |
-| **02-build-code/** | Execute implementation with verification |
+| **02-code-build/** | Execute implementation with verification |
 | **03-debugging/** | Systematically identify and fix bugs |
 | **04-documentation/** | Keep documentation in sync with code |
 | **05-review/** | Review code and plans for quality |
@@ -45,9 +45,11 @@ Common terms and conventions used across Workflow-Scripts documentation.
 
 | Symbol | Meaning |
 |--------|---------|
-| `- [✅]` | Completed task — mark immediately after completion and verification |
+| `- [✅]` | **Phase checkbox** — `01-execution` may mark after applicable Verification Bar evidence passes |
 | `- [ ]` | Pending or in-progress task |
-| `**Status:** ✅ COMPLETED` | Plan or document fully complete |
+| `**Status:** ✅ COMPLETED` | **Plan-level marker** — only [`03-mark-completed.md`](../../04-documentation/03-mark-completed.md) may apply after whole-plan verification |
+
+Phase checkboxes and plan-level completion are distinct artifacts. See [`01-execution.md`](../../02-code-build/01-execution.md) (Verification Bar) and [`03-mark-completed.md`](../../04-documentation/03-mark-completed.md) (terminal gate).
 
 The `- [✅]` marker is intentional. Do not replace it with `- [x]`; the visual checkmark is easier to scan for users who have difficulty distinguishing red/green state markers.
 

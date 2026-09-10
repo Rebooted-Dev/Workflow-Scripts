@@ -4,7 +4,7 @@ Agent instructions for work scoped to the Workflow-Scripts repository and its `0
 
 ## Execution
 
-- Where possible, make clever and appropriate use of multiple parallel agents to orchestrate and execute tasks for better efficiency.
+- Use parallel agents only for independent scopes where doing so materially reduces latency or improves confidence. Keep dependent work sequential. Verify returned findings before changing code. Handle small localized work directly. See [`00-Meta-Workflow/00-meta/workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md).
 - Parallel agents can be used for scanning workflows, reviewing documentation, testing hypotheses during debugging, and validating changes across multiple files concurrently.
 - Always verify findings from parallel agents before acting on them.
 - **Bugs:** add regression test when it fits.

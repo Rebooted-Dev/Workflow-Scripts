@@ -238,7 +238,7 @@ For Each Phase (Implementation Loop)
 
 - Verify (repeat until exit criteria met)
   - Use parallel agents to run checks concurrently:
-    - Run `npm run build` and check for build errors
+    - Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs (e.g. build/lint/typecheck as defined by the project)
     - Check for TypeScript/ESLint errors and warnings
     - Validate file structure and imports are correct
     - Review git diff for unintended changes or secrets

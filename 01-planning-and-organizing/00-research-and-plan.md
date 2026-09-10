@@ -58,22 +58,13 @@ Conduct deep research and analysis to create a comprehensive initial implementat
 
 ### 1.2 Codebase Context Gathering
 
-Use **multiple parallel agents** to deeply understand the current codebase. Suggested agent roles (spawn additional agents as needed):
+Size the research effort per [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md) and [`agent-spawning-policy.md`](../00-Meta-Workflow/00-meta/agent-spawning-policy.md):
 
-- **Architecture agent:** Map the overall system architecture, identify where changes would fit
-- **Code patterns agent:** Find existing implementations of similar features or patterns
-- **Dependencies agent:** Map current dependencies and identify potential conflicts
-- **Data flow agent:** Trace data flow through the system for relevant features
-- **Tech stack agent:** Document current technologies, versions, and conventions
+- **Localized task:** inspect relevant files directly; produce a short plan.
+- **Bounded task:** use 2–3 focused roles (e.g. architecture, dependencies, tests) with non-overlapping ownership.
+- **Broad/high-risk task:** up to 6 roles per session; add specialists only when repository evidence justifies them (API, database, UI, performance).
 
-**When to spawn additional agents:**
-- Spawn 1 API analysis agent if integrating with external services
-- Spawn 1 database agent if data model changes are likely
-- Spawn 1 UI/UX agent if user interface changes are involved
-- Spawn 1 testing agent to understand current test coverage and patterns
-- Spawn 1 performance agent if latency/throughput are concerns
-
-**Agents should batch-read files concurrently** to maximize research speed.
+Batch-read files concurrently within each role. Do not treat a large default roster as required for every plan.
 
 ### 1.3 External Research
 

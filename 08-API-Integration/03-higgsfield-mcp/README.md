@@ -26,4 +26,4 @@ Operator runbook: `docs/configuration/README.md` — “Higgsfield MCP Auth Pref
 ## Related
 
 - Parent: [`../README.md`](../README.md)
-- Debugging: [`../../../03-debugging/02-bug-fix-workflow.md`](../../../03-debugging/02-bug-fix-workflow.md)
+- Debugging: [`../../03-debugging/02-bug-fix-workflow.md`](../../03-debugging/02-bug-fix-workflow.md)

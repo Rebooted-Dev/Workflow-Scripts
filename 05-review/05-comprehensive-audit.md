@@ -40,12 +40,12 @@ for report routing, pre-flight checks, untrusted-content handling,
 severity/priority scoring, evidence quality, deduplication, report outline, and
 acceptance criteria.
 
-Follow the agent policy in
-[`../00-Meta-Workflow/00-meta/agent-spawning-policy.md`](../00-Meta-Workflow/00-meta/agent-spawning-policy.md):
-use 3–6 total agents, start with 2–3 core roles, add specialists only when
-evidence justifies them, and split work into sessions if more roles are needed.
-The child workflows' suggestions to spawn several scanning agents are role
-descriptions in a combined run, not permission to create nested agent trees.
+Follow [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md)
+and [`agent-spawning-policy.md`](../00-Meta-Workflow/00-meta/agent-spawning-policy.md):
+use 3–6 total agents per session, start with 2–3 core roles, add specialists
+only when evidence justifies them, and split work into sessions if more roles
+are needed. Child workflow agent examples are role descriptions in a combined
+run — **no nested agent trees**.
 
 Use the shared rubric in
 [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md).

@@ -241,7 +241,7 @@ flowchart TD
 
 ### Operator runbook
 
-- [docs/configuration/README.md](../../docs/configuration/README.md) — “Higgsfield MCP Auth Preflight and Stale Cache Recovery”
+- Host operator runbook: `docs/configuration/README.md` — section “Higgsfield MCP Auth Preflight and Stale Cache Recovery”; workflow copy: [`03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md`](./03-higgsfield-mcp/higgsfield-mcp-connect-auth-reconnect.md)
 
 ### Troubleshooting (runtime)
 

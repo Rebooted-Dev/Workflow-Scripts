@@ -116,7 +116,7 @@ Agents should **batch-read files concurrently** (e.g. read all files for their t
 - **Evidence** (exact code or doc snippet that confirms or contradicts)
 - **Flag** (if not done: "False completion", "Incomplete", "Not implemented", or "Docs not updated")
 
-Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follow the [shared agent-spawning policy](../../../00-Meta-Workflow/00-meta/agent-spawning-policy.md) and its total-session cap.
+Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follow the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md) and its total-session cap.
 
 ### Phase 3: Mark Completed vs Flag False Reporting
 1. **For each task/sub-task:**

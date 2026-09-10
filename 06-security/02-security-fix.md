@@ -98,9 +98,7 @@ After trust is established, run the project verification command from `AGENTS.md
 
 ### 7. Documentation
 **Update logs (only for completed tasks that change or affect project code):**
-- Update the changelog with a dated entry: `- YYYY-MM-DD: Fix [vulnerability type] in [component]`.
-  - Preferred location: `docs/CHANGELOG.md`
-  - Fallback location: `CHANGELOG.md`
+- Update the changelog with a dated entry for the fix. Follow the **host repository's documented changelog convention** (see host AGENTS.md or `project/changelog/README.md`): use `project/changelog/` with typed entry and index row when the host uses that system; otherwise use its documented single-file changelog.
 - Add a troubleshooting entry (category `security`):
    - Create a new file under `troubleshooting/security/` named `<yyyy-mm-dd>-security-<short-title>.md`
   - Update `troubleshooting/index.md` (add the new entry at the top)

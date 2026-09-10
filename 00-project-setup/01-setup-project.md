@@ -161,7 +161,7 @@ If you use the `project/` pattern, make sure:
 
 For consistent checklist marking (✅ vs `[ ]`), completion markers, and archiving completed plans, follow the single source of truth:
 
-- **[`../../04-documentation/03-mark-completed.md`](../../04-documentation/03-mark-completed.md)**
+- **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**
 
 ### Quick update checklist (existing project)
 
@@ -250,19 +250,17 @@ If `AGENTS.md` exists, review it to see if dual repo instructions are already pr
 
 **Slim architecture (standard):** Root AGENTS.md should stay slim: essentials only (Execution 1.2, Repository Management 1.3), plus a slim Change Management section and a "Detailed Documentation" section linking to `docs/agents/`. Step 2.6 puts Changelog & Troubleshooting conventions in `docs/agents/changelog-and-troubleshooting.md` and only a short pointer in AGENTS.md; Step 2.9 creates `docs/` and `docs/agents/` and Step 2.9.3 instructs relocating other long sections into topical files in `docs/agents/`.
 
+**Update checklist:** When the Workflow-Scripts consumption model or a canonical source of truth changes, **delete superseded blocks** in generated agent files — do not append a competing block. Re-run repository discovery and path checks before marking setup complete.
+
 ### 1.2 Add Execution Guidelines Section
 
 Add or update the execution guidelines section in `AGENTS.md`:
 
 ```markdown
 ## Execution
-- Where possible, make clever and appropriate use of multiple parallel agents to orchestrate and execute tasks for better efficiency.
-- Parallel agents can be used for:
-  - Scanning codebases across different directories simultaneously
-  - Reviewing different aspects of code (security, performance, style) in parallel
-  - Testing multiple hypotheses during debugging
-  - Validating changes across multiple files concurrently
-- Always verify findings from parallel agents before acting on them
+- Use parallel agents only for independent scopes where doing so materially reduces latency or improves confidence. Keep dependent work sequential. Assign non-overlapping write ownership, verify returned findings before changing code, and handle small localized work directly. Follow the task-specific workflow only when it was selected for the request.
+- Always verify findings from parallel agents before acting on them.
+- **Bugs:** add regression test when it fits.
 ```
 
 ### 1.3 Add bugs/regression-test instruction to agent files
@@ -331,9 +329,7 @@ git push
 - Work from the project root (this local directory).
 - Focus on application code, components, services
 - Update project-specific documentation in `docs/` (if it exists)
-- Always update the changelog for any code change (features, fixes, refactors): create an entry in `project/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `project/changelog/index.md`. See `project/changelog/README.md` for the template.
-- **Completed plans filing rule:** When a plan is completed or when asked to "file" it as completed, **move** it from `project/plans/` or `project/build/` to **`project/plans-completed/<category>/`**, update **`project/plans-completed/index.md`**, and add a row at the top of `project/changelog/index.md` with Type=plan and File `../plans-completed/<category>/<filename>`. If the user explicitly asks for **`project/changelog/plans/`**, use File `plans/...` instead. See `docs/agents/changelog-and-troubleshooting.md` (§ Plans completed).
-- Update `project/troubleshooting/` only when the work involved a bug, an issue that required debugging/workarounds, or a non-trivial problem worth documenting. Do not add troubleshooting entries for simple code changes, routine refactors, or straightforward feature additions — changelog only for those. See AGENTS.md "Changelog & Troubleshooting Updates."
+- After in-scope changes, follow the host changelog and troubleshooting convention. See **[Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md)** for paths, indexes, and completed-plan filing.
 - The `<WORKFLOWS_DIR>/` directory is **ignored** by the main repo (in `.gitignore`), so it won't be included in main-repo commits.
 - Standard operations: `git add .`, `git commit`, `git push` - workflows will NOT be included
 
@@ -1042,14 +1038,14 @@ Create `CLAUDE.md` as part of standard setup. If the file does not exist, create
 
 ## Essential Standards
 
-- **Coding**: 2 spaces, single quotes, semicolons; PascalCase components, camelCase functions/variables; types in `types.ts`, constants in `constants.ts`.
+- **Coding**: Match discovered project standards (formatter/linter config, `package.json` scripts, and existing code style). Document the result in `docs/agents/coding-standards.md`.
 - **Commits**: Conventional Commits (`feat:`, `fix:`, `docs:`, etc.).
 - **Docs**: Update changelog (`project/changelog/` directory) and troubleshooting (`project/troubleshooting/`) when applicable (see AGENTS.md).
 - **Plans**: See `project/plans/README.md` and `project/plans/TODO.md`. Active plans in `project/plans/` or `project/build/`. **Completed plans filing rule:** When the user asks to file a plan as completed, move it to **`project/plans-completed/<category>/`**, update **`project/plans-completed/index.md`**, and add a Type=plan row to **`project/changelog/index.md`** (File `../plans-completed/...`). See [Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md) § Plans completed.
 
 ## Quick Reference
 
-- **Build**: `npm run dev` (development), `npm run build` (production).
+- **Build/dev**: Use scripts discovered from `package.json` and document them in `docs/agents/development-workflow.md`.
 - **Project structure**: See [Project Structure](docs/agents/project-structure.md).
 - **Changelog, troubleshooting, docs, plans**: See AGENTS.md (project/changelog/ and project/troubleshooting/; plans/README and TODO).
 
@@ -1084,14 +1080,14 @@ Create `GEMINI.md` as part of standard setup. If the file does not exist, create
 
 ## Essential Standards
 
-- **Coding**: 2 spaces, single quotes, semicolons; PascalCase components, camelCase functions/variables; types in `types.ts`, constants in `constants.ts`.
+- **Coding**: Match discovered project standards (formatter/linter config, `package.json` scripts, and existing code style). Document the result in `docs/agents/coding-standards.md`.
 - **Commits**: Conventional Commits (`feat:`, `fix:`, `docs:`, etc.).
 - **Docs**: Update changelog (`project/changelog/` directory) and troubleshooting (`project/troubleshooting/`) when applicable (see AGENTS.md).
 - **Plans**: See `project/plans/README.md` and `project/plans/TODO.md`. Active plans in `project/plans/` or `project/build/`. **Completed plans filing rule:** When the user asks to file a plan as completed, move it to **`project/plans-completed/<category>/`**, update **`project/plans-completed/index.md`**, and add a Type=plan row to **`project/changelog/index.md`** (File `../plans-completed/...`). See [Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md) § Plans completed.
 
 ## Quick Reference
 
-- **Build**: `npm run dev` (development), `npm run build` (production).
+- **Build/dev**: Use scripts discovered from `package.json` and document them in `docs/agents/development-workflow.md`.
 - **Project structure**: See [Project Structure](docs/agents/project-structure.md).
 - **Changelog, troubleshooting, docs, plans**: See AGENTS.md (project/changelog/ and project/troubleshooting/; plans/README and TODO).
 

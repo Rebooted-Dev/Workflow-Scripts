@@ -10,6 +10,8 @@ This directory contains templates, rubrics, and analysis documents about the wor
 | [`glossary.md`](./glossary.md) | Reference | **Active** | Common terminology and conventions used across workflows |
 | [`naming-conventions.md`](./naming-conventions.md) | Reference | **Active** | Standardized naming for generated reports and documents |
 | [`sync-summary-template.md`](./sync-summary-template.md) | Template | **Active** | Template for documentation sync summary reports |
+| [`workflow-applicability.md`](./workflow-applicability.md) | Reference | **Active** | Task sizing, delegation, applicability, and stop conditions |
+| [`agent-spawning-policy.md`](./agent-spawning-policy.md) | Reference | **Active** | Session caps and review agent roles |
 | [`agent-flexibility-review.md`](./agent-flexibility-review.md) | Analysis | **Active** | Guidelines for flexible agent spawning patterns |
 | [`filename-review.md`](./filename-review.md) | Analysis | Historical | Review of filename conventions (completed 2026-01) |
 | [`parallel-agents-review.md`](./parallel-agents-review.md) | Analysis | Historical | Analysis of parallel agent usage across workflows |

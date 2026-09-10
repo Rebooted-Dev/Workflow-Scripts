@@ -6,7 +6,7 @@ This workflow helps you:
 
 1. **Discover and track** all Git repositories in the current project (root repo + any nested repos, e.g. Workflow-Scripts, submodules, or other nested checkouts).
 2. **Set up agent files** (AGENTS.md, CLAUDE.md, GEMINI.md) with a clear **repository map**: directory path → remote URL, purpose, and status, so AI agents and humans know which directories are which repo and how to sync them.
-3. **Keep AGENTS.md, CLAUDE.md, and GEMINI.md in sync** with the repo mapping—when the repo map changes, update all three files (or the single canonical source they reference) so every agent sees the same directories and remotes.
+3. **Keep AGENTS.md and harness-specific agent files in sync** with the repo mapping—when the repo map changes, update every file the project actually uses (at minimum `AGENTS.md`, plus `CLAUDE.md`, `GEMINI.md`, or others as discovered) or the single canonical source they reference.
 4. **Document sync, pull, and push** procedures for each repo and when to run them.
 
 ---
@@ -83,7 +83,9 @@ Use the discovery output to fill this table. You will copy this structure into A
 
 ## Step 2: Set Up Agent Files with the Repository Map
 
-Agent files (AGENTS.md, CLAUDE.md, GEMINI.md) should each contain a **Tracked Repositories** (or **Repository Map**) section so that:
+**Discovery is the only permitted source for repo maps.** Run Step 1 before writing agent files. Do not copy stale paths from another project.
+
+Agent files (`AGENTS.md` plus whichever harness files the project uses) should each contain a **Tracked Repositories** (or **Repository Map**) section so that:
 
 - AI agents know which directories are separate repos and their remotes.
 - Everyone knows where to run `git pull` / `git push` and which repo is “primary” vs nested.

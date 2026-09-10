@@ -37,7 +37,7 @@ Read the technical note when you need historical context, code touchpoints, or t
 
 - **P1** when image batch is blocked or repeated `/api/image 401` after reconnect.
 - Use shared rubric: `../../00-Meta-Workflow/00-meta/severity-priority-rubric.md`.
-- Pair with **[`../../../03-debugging/02-bug-fix-workflow.md`](../../../03-debugging/02-bug-fix-workflow.md)** when the root cause is a code defect, not stale OAuth.
+- Pair with **[`../../03-debugging/02-bug-fix-workflow.md`](../../03-debugging/02-bug-fix-workflow.md)** when the root cause is a code defect, not stale OAuth.
 
 ---
 
@@ -161,7 +161,7 @@ Document separately; do not file Higgsfield auth troubleshooting for Gemini-only
 
 If stale auth is ruled out but status/preconnect behavior is incorrect:
 
-1. Follow **[`../../../03-debugging/02-bug-fix-workflow.md`](../../../03-debugging/02-bug-fix-workflow.md)**.
+1. Follow **[`../../03-debugging/02-bug-fix-workflow.md`](../../03-debugging/02-bug-fix-workflow.md)**.
 2. Primary code: `lib/server/higgsfield-mcp/authRecovery.ts`, `higgsfieldMcpProvider.ts`, status/reconnect routes, `mediaGenerationController.ts`, `SettingsPanel.tsx`.
 3. Preserve: default probe = list-only; auth boundary = opt-in `--auth-check` or status API.
 4. Add regression tests when fixing auth classification or cache move behavior.
@@ -219,10 +219,10 @@ Report: Higgsfield / MCP / image auth issue
 
 ## Related workflows
 
-- **[`../../../03-debugging/02-bug-fix-workflow.md`](../../../03-debugging/02-bug-fix-workflow.md)** — code defects in preflight/reconnect/guards
-- **[`../../../03-debugging/01-bug-description.md`](../../../03-debugging/01-bug-description.md)** — structured report for persistent auth issues
-- **[`../../../01-planning-and-organizing/00-research-and-plan.md`](../../../01-planning-and-organizing/00-research-and-plan.md)** — auth recovery implementation planning
-- **[`../../../04-documentation/02-sync-documentation.md`](../../../04-documentation/02-sync-documentation.md)** — sync `docs/configuration/README.md` after runbook changes
+- **[`../../03-debugging/02-bug-fix-workflow.md`](../../03-debugging/02-bug-fix-workflow.md)** — code defects in preflight/reconnect/guards
+- **[`../../03-debugging/01-bug-description.md`](../../03-debugging/01-bug-description.md)** — structured report for persistent auth issues
+- **[`../../01-planning-and-organizing/00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md)** — auth recovery implementation planning
+- **[`../../04-documentation/02-sync-documentation.md`](../../04-documentation/02-sync-documentation.md)** — sync `docs/configuration/README.md` after runbook changes
 
 ## Key principles (summary)
 

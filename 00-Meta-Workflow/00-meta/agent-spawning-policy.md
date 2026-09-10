@@ -1,6 +1,10 @@
 # Agent Spawning Policy
 
-Use this policy for review and audit workflows that delegate scans to parallel agents.
+Use this policy for review, audit, planning, debugging, and build workflows that delegate work to parallel agents. See also [`workflow-applicability.md`](./workflow-applicability.md) for task sizing and stop conditions.
+
+## No nested agent trees
+
+Child workflow agent examples describe **roles in a combined run**, not permission to spawn agents from agents. The primary executor verifies findings directly before mutation.
 
 ## Default Rule
 - Use 3-6 total agents for a complete review session.

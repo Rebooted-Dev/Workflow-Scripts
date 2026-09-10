@@ -41,20 +41,24 @@ Provide a shared rubric for scoring issues across reviews and plans.
 - Present work items in descending urgency/importance: P0, P1, P2, P3.
 - Within the same priority, order by severity: S0, S1, S2, S3.
 
-## Workflow Steps
-1. Intake: capture issue details, affected users, and reproduction evidence.
-2. Classify: apply severity rubric with impact and likelihood.
-3. Prioritize: map to priority using the matrix.
-4. Validate: reviewer confirms scores or escalates.
-5. Publish: record scores with scorer, date, and rationale.
-6. Revisit: re-score on new evidence or milestone changes.
-7. Close: confirm final severity/priority and archive rationale.
+## Per-finding requirements (normative)
 
-## Acceptance Criteria
-- Definitions and thresholds are documented and consistently applied.
-- Each item records severity, priority, scorer, date, and rationale.
-- Disputes follow an escalation path with resolution SLA.
-- Reports show score distribution and changes over time.
+For each finding or work item in an active workflow report:
+
+1. Classify impact and likelihood; assign S and P using the rubric above.
+2. Include evidence per the Evidence Requirements section.
+3. Add a one-line customer impact summary for S0–S2 when applicable.
+
+## Optional organizational governance (human-run)
+
+The following are **not** required unless a team explicitly adopts them outside these workflows:
+
+- Scorer name, audit date, and formal rationale fields on every item
+- Dispute escalation paths with resolution SLAs
+- Score distribution or trend reporting across milestones
+- Close/archive ceremonies for rubric records
+
+Active review workflows must not fabricate SLA, trend, or escalation records to satisfy this rubric.
 
 ## Notes
 - If uncertain, default to higher likelihood and justify.

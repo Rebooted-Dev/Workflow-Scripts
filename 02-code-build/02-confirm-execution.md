@@ -93,11 +93,9 @@ If the plan does not use task list syntax, add an addendum section instead of re
    - Blocked or skipped checks and residual risk (if any)
    - Next steps (only for incomplete items)
 
-5. **Do not add a completion marker here.** A completion marker (e.g. `**Status:** ✅ COMPLETED` or `## Implementation Status ✅`) is applied **only** by the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) once the plan is fully verified complete. This workflow may only **downgrade** false claims (to `- [ ]` or flagged) and append the addendum; it must not add `✅` terminal marks or a completion marker. See the Workflow-Scripts main README, "Completion Status Conventions."
+5. **No terminal completion here.** This workflow audits and may downgrade false claims; it does not apply a plan-level completion marker or archive. See [`03-mark-completed.md`](../04-documentation/03-mark-completed.md).
 
-6. **Hand off to the terminal gate — do not finalize here.** This workflow **audits and appends evidence; it does not apply a completion marker or archive.** When the plan is fully verified complete, the **mandatory** next step is the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md), which is the **only** workflow that marks tasks `✅` as a terminal act, creates the completion marker, reconciles changelog/troubleshooting/docs, and archives the plan. Archive routing is resolved from the **host repository's policy** (not a global default) inside the gate.
-
-   - If verification is blocked, skipped, failed, partial, or under-evidenced, the outcome is **`Not Eligible`**: leave the plan active, record the blocker in the addendum, and apply **no** completion marker or archive. Do **not** treat this workflow as the owner of completion marking or archive routing.
+6. **Hand off:** When fully verified complete → mandatory terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md). When blocked, partial, or under-evidenced → **`Not Eligible`**: plan stays active; no marker or archive.
 
 ## Related Workflows
 

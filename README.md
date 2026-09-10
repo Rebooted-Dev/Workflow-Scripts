@@ -365,7 +365,7 @@ Workflow will:
 - Implement Phase 1 changes
 - Run the project-specific verification command
 - Test in a dev server when relevant and trusted
-- Update the changelog (`docs/CHANGELOG.md` preferred)
+- Update the changelog per the host repository's documented convention
 - Update task list with checkboxes (`- [✅]` for completed, `- [ ]` for pending)
 - Proceed to next phase
 ```
@@ -381,7 +381,7 @@ Workflow will:
 - `- [ ]` Pending items (not yet started or in progress)
 
 **Documentation Updates:**
-- Changelog: update `docs/CHANGELOG.md` (preferred) or `CHANGELOG.md` with `- YYYY-MM-DD: Description`
+- Changelog: follow the host repository's documented changelog convention (see host AGENTS.md or `project/changelog/README.md`)
 - Troubleshooting: add an entry under `troubleshooting/` and update `troubleshooting/index.md`
 
 ---
@@ -654,7 +654,7 @@ Step 3: Refine Plan
 Step 4: Development
 → Use "Execution" workflow
 → Input: Refined plan
-→ Output: Implemented code, updated `docs/CHANGELOG.md` (preferred)
+→ Output: Implemented code, updated changelog per host convention
 
 Step 5: Code Review
 → Use "Code Review" workflow
@@ -750,7 +750,7 @@ Step 2: Planning
 Step 3: Implementation
 → Use "Execution" workflow
 → Input: Optimization plan
-→ Output: Optimized code, updated `docs/CHANGELOG.md` (preferred)
+→ Output: Optimized code, updated changelog per host convention
 
 Step 4: Code Refactoring Review
 → Use "Code Refactoring" workflow
@@ -765,7 +765,7 @@ Step 5: Planning
 Step 6: Implementation
 → Use "Execution" workflow
 → Input: Refactoring plan
-→ Output: Refactored code, updated `docs/CHANGELOG.md` (preferred)
+→ Output: Refactored code, updated changelog per host convention
 
 Step 7: Code Review
 → Use "Code Review" workflow
@@ -788,7 +788,7 @@ Step 7: Code Review
 - Don't skip verification steps
 
 ### 3. Document as You Go
-- Update the changelog after each phase (`docs/CHANGELOG.md` preferred)
+- Update the changelog after each phase per the host repository's documented convention
 - Add a `troubleshooting/` entry for bug fixes and update `troubleshooting/index.md`
 - **Update the implementation plan after each code build or bug fix:** Use the single source of truth for marking, completion markers, and archiving completed plans: **[`04-documentation/03-mark-completed.md`](./04-documentation/03-mark-completed.md)**.
 - Keep documentation in sync with code
