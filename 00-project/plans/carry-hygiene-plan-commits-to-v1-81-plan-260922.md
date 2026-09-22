@@ -1,7 +1,7 @@
 # Carry Update-AI-Tools Hygiene-Plan Commits to v1.81 — Implementation Plan
 
 **2026-09-22 13:08**  
-**Status:** Active (ready to execute)  
+**Status:** Executed 2026-09-22 (v1.81 commits 00fa092, feaaffd)  
 **Target branch:** `v1.81` (`origin/v1.81`) — Workflow-Scripts companion repo, canonical checkout `Shared-Links/Workflow-Scripts`  
 **Filed in:** Core-Learning `Tech-notes/Workflow-Scripts/plans/` (deliberately outside Workflow-Scripts' own `00-project/plans/` so the active line's plan directory stays clean of self-referential meta-work)  
 **Priority:** P1 / S2 (completion record of executed work stranded on a frozen branch; discoverability gap on the active line, no workflow-behavior risk)
@@ -103,3 +103,18 @@ Carry the two stranded commits `f5fd73a` (plan filing) and `694add5` (plan compl
 ## Completion
 
 On success, update this plan's **Status** to `Executed 2026-09-22 (v1.81 commits <new-SHA-1>, <new-SHA-2>)` and append the execution notes. This plan stays filed in Core-Learning (it documents work on another repository); no Workflow-Scripts `plans-completed/` archive is created for it — the cherry-picked rows in Workflow-Scripts' own indexes are the durable record there.
+
+## Execution and Confirmation Addendum (2026-09-22)
+
+- Preflight anchor: `55aaa5f`; the plan was committed first at the user's direction.
+- Cherry-picks: `f5fd73a` → `00fa092` and `694add5` → `feaaffd`; both retain their `-x` trailers.
+- Phase-2 diff from `55aaa5f`: exactly three files and 117 insertions (the archived plan with addendum plus the two index rows). `git diff --check` passed.
+- Validator results:
+  - `check-completion-chain-policy.sh` → `completion chain policy checks OK`
+  - `check-active-markdown-links.sh` → `Active markdown links OK`
+  - `check-sync-workflow-scripts.sh` → `sync-workflow-scripts checks OK`
+  - `check-update-workflows.sh` → `update-workflows checks OK`
+- Push: `470eee6..feaaffd v1.81 -> v1.81`; subsequent status was in sync.
+- `origin/main` was not pushed and trails `v1.81` by 5 commits. `origin/v1.72` remains `694add5`.
+- Filing correction: although the original plan said it was filed outside the repo in Core-Learning, the user instructed its commit into `00-project/plans/` (`55aaa5f`), so it will follow this host repo's normal terminal completion policy.
+- No blockers or residual risks remain for carrying the records.
