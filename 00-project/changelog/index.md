@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-22 | plan | v1.72-Improvements Plan Set Filed Complete | ../plans-completed/tooling/v1.72-Improvements/ | Independent review verified all nine plans implemented on `v1.81` (`846caef` + 2026-09-22 residual batch); validators passed; directory filed from Core-Learning reference copy |
 | 2026-09-22 | changed | Size Debugging Delegation | changed/2026-09-22-changed-size-debugging-delegation.md | Sized bug investigation, implementation, and verification by scope; evidence triggers, policy authority, regression guidance, and verification requirements retained |
 | 2026-09-22 | changed | Index Combined Planning Workflow | changed/2026-09-22-changed-index-combined-planning-workflow.md | Indexed the one-pass planning route across planning README, root README, User Manual, and reciprocal links; separate 01 → 02 route retained |
 | 2026-09-22 | docs | Complete Plan 09 Documentation Coherence | docs/2026-09-22-docs-complete-plan-09-documentation-coherence.md | Completed Phase 1–2 optional-document and ASCII-art coherence work; selection flow and README/02-sync work retained |
