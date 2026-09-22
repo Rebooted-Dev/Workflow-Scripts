@@ -89,6 +89,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 ## Related Workflows
 
 - **[`01-plan-review.md`](./01-plan-review.md)** - Review plans for correctness before finalizing
+- **[`03-plan-review-and-finalise.md`](./03-plan-review-and-finalise.md)** - One-pass orchestrated review followed by finalisation.
 - **[`../02-code-build/01-execution.md`](../02-code-build/01-execution.md)** - Execute the finalized plan
 - **[`../02-code-build/02-confirm-execution.md`](../02-code-build/02-confirm-execution.md)** - Verify plan completion after execution
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for priority ordering

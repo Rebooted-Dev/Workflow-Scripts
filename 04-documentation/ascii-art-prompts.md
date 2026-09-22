@@ -24,10 +24,6 @@ This guide provides clear and precise prompts for generating ASCII art diagrams 
 - Best practices and formatting guidelines
 - Quality checklist for diagram generation
 
----
-
-This guide provides clear and precise prompts for generating ASCII art diagrams that effectively illustrate documentation content.
-
 ## Architecture & System Diagrams
 
 ### System Architecture Overview
@@ -543,4 +539,3 @@ project/
 
 **File Location**: `Workflow-Scripts/04-documentation/ascii-art-prompts.md`  
 **Purpose**: Standardized prompts for generating consistent ASCII art diagrams across documentation  
-**Last Updated**: 2026-01-21

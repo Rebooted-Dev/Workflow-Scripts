@@ -1,7 +1,7 @@
 # Workflow: Mark Completed and Verify Implementation
 
 ## Purpose
-Inspect the codebase and verify that all reported completed tasks were actually implemented. Mark truly completed tasks and sub-tasks with green check marks (✅). Flag instances of false reporting (incomplete or not done) so the developer can decide what to do. Reconcile and update related documentation, changelog, and troubleshooting logs.
+Inspect the codebase and verify that all reported completed tasks were actually implemented. Mark truly completed tasks and sub-tasks with green check marks (✅). Flag instances of false reporting (incomplete or not done) so the developer can decide what to do. Reconcile and update related documentation, changelog, and troubleshooting logs at locations resolved from the host repository's metadata policy.
 
 > **Sole terminal authority.** This is the **only** workflow in the chain that may apply terminal `✅` task marks, create a completion marker, reconcile changelog/troubleshooting/docs, and archive a plan. `01-execution` and `02-confirm-execution` report verification and may **downgrade** false claims; they must **not** independently finalize or archive. The combined workflow reaches this gate only on a `Verified Complete` outcome (see [`../02-code-build/03-execute-and-confirm.md`](../02-code-build/03-execute-and-confirm.md)). Archive routing is resolved from the **host repository's** policy, not a global default (Phase 4 below).
 
@@ -11,7 +11,7 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 - A plan or implementation report claims tasks are "complete" and you need to confirm they were actually done
 - Before closing a milestone or marking a plan as finished
 - After a code review or refactor to ensure checklist items match reality
-- When reconciling plans (e.g. `project/build/*.md`) with `project/changelog/`, `project/troubleshooting/`, and `docs/`
+- When reconciling active plans under the host-resolved `<metadata-root>` with its changelog, troubleshooting, and documentation locations
 
 **Use [`02-sync-documentation.md`](./02-sync-documentation.md) instead when:**
 - Documentation is outdated but there is no "completed task" verification focus
@@ -19,9 +19,10 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 
 ## Inputs
 - Repository root
-- Plan or report files that declare completed tasks (resolved via active-plan discovery in Phase 1: named target first, then `<metadata-root>/plans/**` and `<metadata-root>/build/**` — never archived plans by default)
-- Changelog index and entries (`project/changelog/index.md`, `project/changelog/<type>/*.md`, `project/changelog/plans/` for completed plans)
-- Troubleshooting index and entries (`project/troubleshooting/index.md`, `project/troubleshooting/<category>/*.md`)
+- Plan or report files that declare completed tasks (resolved via active-plan discovery in Phase 1: named target first, then `<metadata-root>/plans/**` and the host-permitted `<metadata-root>/build/**` location — never archived plans by default)
+- Changelog index and entries under the host-resolved `<metadata-root>/changelog/`, using the authoritative [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy; honor a host-documented single-file changelog fallback
+- Troubleshooting index and entries under the host-resolved `<metadata-root>/troubleshooting/`, honoring the host's existing troubleshooting categories and any documented single-file troubleshooting fallback
+- A host-maintained TODO file, when present, resolved as `<metadata-root>/plans/TODO.md` through the same metadata-root and host-policy rules
 - Relevant source files referenced in each task
 
 ## Prioritization and Ordering
@@ -35,70 +36,75 @@ Inspect the codebase and verify that all reported completed tasks were actually 
 ### Verification Workflow
 
 ```
-         ┌─────────────────┐
-         │  Identify plan  │
+          ┌─────────────────┐
+          │  Identify plan  │
          │  files with     │
          │  "complete"     │
          └────────┬────────┘
-                  │
-                  ▼
+                   │
+                   ▼
 ┌───────────────────────────────────────────────┐
-│         PARALLEL VERIFICATION AGENTS          │
+│          SIZE VERIFICATION SCOPE               │
 ├───────────────────────────────────────────────┤
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐     │
-│  │ Agent A  │  │ Agent B  │  │ Agent C  │     │
-│  │ (P0/S0)  │  │ (P1 sec) │  │ (P1 bug) │     │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘     │
-│       │             │             │           │
-│       │             │             │           │
-│       ▼             ▼             ▼           │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐     │
-│  │ Agent D  │  │ Agent E  │  │ Agent F  │     │
-│  │ (P1 UX)  │  │ (P2/3)   │  │ (docs)   │     │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘     │
-│       │             │             │           │
-│       └─────────────┼─────────────┘           │
-│                     │                         │
-│                     ▼                         │
-│         ┌──────────────────┐                  │
-│         │    Collect       │                  │
-│         │    results       │                  │
-│         └────────┬─────────┘                  │
-└───────────────────────────────────────────────┘
-                    │
-                    ▼
-       ┌────────────────────┐
-       │  Mark ✅ vs Flag ⚠️ │
-       │ (descending prior) │
-       └──────────┬─────────┘
-                  │
-                  ▼
-       ┌────────────────────┐
-       │ Reconcile logs &   │
-       │ docs (changelog,   │
-       │ troubleshooting)   │
-       └──────────┬─────────┘
-                  │
-                  ▼
-       ┌────────────────────┐
-       │ Output flagged     │
-       │ issues (P0→P3)     │
-       └────────────────────┘
+│ Localized: one primary verifier, no fan-out   │
+│ Bounded: 2–3 focused, non-overlapping roles   │
+│ Broad/high-risk: evidence-justified domain    │
+│ roles in parallel under the shared policy     │
+└────────────────────────┬──────────────────────┘
+                         │
+                         ▼
+┌───────────────────────────────────────────────┐
+│       DIRECT OR SIZED DOMAIN VERIFICATION      │
+│ Batch reads are possible; concurrency is not   │
+│ required. Domains converge on collected        │
+│ evidence and the task coverage matrix.         │
+└────────────────────────┬──────────────────────┘
+                         │
+                         ▼
+               ┌──────────────────┐
+               │ Collect results  │
+               │ and reconcile    │
+               └────────┬─────────┘
+                        │
+                        ▼
+               ┌────────────────────┐
+               │  Mark ✅ vs Flag ⚠️ │
+               │ (descending prior) │
+               └──────────┬─────────┘
+                          │
+                          ▼
+               ┌────────────────────┐
+               │ Reconcile logs &   │
+               │ docs (changelog,   │
+               │ troubleshooting)   │
+               └──────────┬─────────┘
+                          │
+                          ▼
+               ┌────────────────────┐
+               │ Output flagged     │
+               │ issues (P0→P3)     │
+               └────────────────────┘
 ```
 
 ### Phase 1: Identify Sources of "Completed" Claims
 1. **Locate the plan/report file** that declares completed tasks, using deterministic active-plan discovery:
    - **Named target first** — if a plan path/name was supplied, use it.
-   - Otherwise search **only** `<metadata-root>/plans/**` and `<metadata-root>/build/**`.
-   - **Never scan archived plans by default** (e.g. `plans-completed/`, `changelog/plans/`); archives are historical, not active claims.
+   - Otherwise search **only** `<metadata-root>/plans/**`; search `<metadata-root>/build/**` only when the host policy or `plans/README.md` explicitly permits that location.
+   - **Never scan host-policy archive locations by default**; archives are historical, not active claims.
    - Exclude `README.md`, `TODO.md`, review artifacts, and other navigation/report-only files unless explicitly named.
    - If multiple candidates remain, report them and ask for a named target rather than guessing.
 2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[✅]`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note). **Use only ✅ (green check mark) for marking completed items—not "x", ✓, or other symbols—for consistency.**
 
-### Phase 2: Verify Implementation in Code (Parallel Agents)
-Use **multiple parallel agents** to verify implementation. Each agent should read the **actual source files** referenced in the task (file paths, line numbers) and confirm that the described fix or feature exists.
+### Phase 2: Verify Implementation in Code (Sized Verification)
+Size the named plan before assigning verification. Use the smallest approach that provides complete evidence:
 
-**Suggested verification domains (select only those justified by the named plan; assign one responsible agent per task):**
+- **Localized plans:** verify directly with one primary verifier; no fan-out is required.
+- **Bounded plans:** use 2–3 focused, non-overlapping roles when the plan has independent evidence areas.
+- **Broad/high-risk plans:** use parallel, evidence-justified domain roles under the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md).
+
+Domains are coverage categories, not an agent-count mandate. For a localized plan, one verifier may cover several or all domains. Each verifier should read the **actual source files** referenced in the task (file paths, line numbers) and confirm that the described fix or feature exists.
+
+**Suggested verification domains (select only those justified by the named plan; assign one responsible domain/verifier per task):**
 
 - **Critical path and data integrity:** Verify P0/P1 claims affecting the primary execution path, persistence, migrations, or data correctness using the plan-derived files and line ranges.
 - **Security and platform boundaries:** Verify authentication, authorization, secrets, permissions, deployment, runtime, or platform-integration claims using the plan-derived files and line ranges.
@@ -107,9 +113,9 @@ Use **multiple parallel agents** to verify implementation. Each agent should rea
 - **Maintainability and performance:** Verify lower-priority refactors, complexity, performance, testability, and cleanup claims using the plan-derived files and line ranges.
 - **Documentation and logs:** Verify documentation, changelog, troubleshooting, plan, and archive claims against the plan-derived files and line ranges.
 
-Role allocation is bounded by evidence and follows the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md). For every selected plan, create a task-to-agent coverage matrix mapping each task/sub-task to one responsible domain/agent, the plan-derived files and line ranges, and verification evidence or a flag; no in-scope task may be left unmapped.
+Role allocation is bounded by evidence and follows the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md). For every selected plan, create a task-to-verifier coverage matrix mapping every in-scope task/sub-task to one responsible domain/verifier, the plan-derived files and line ranges, and verification evidence or a flag. One verifier may own multiple rows; no in-scope task/sub-task may be left unmapped.
 
-Agents should **batch-read files concurrently** (e.g. read all files for their task subset in parallel) to maximize speed. Output per agent:
+Verifiers may **batch-read files** (e.g. read all files for their task subset together) to maximize speed, but concurrency is not required. Output per verifier:
 - **Task ID / heading** and **Claim** (what the plan says is done)
 - **Files read** (paths and line ranges)
 - **Verified?** Yes / No / Partial
@@ -131,17 +137,17 @@ Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follo
 
 ### Phase 4: Reconcile and Update Documentation and Logs
 
-1. **Changelog:** For each verified completion that is not yet reflected in `project/changelog/`, add or update an entry per project conventions (e.g. `project/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and a row in `project/changelog/index.md`). For false completions, do not add a changelog entry claiming the fix; optionally add an entry only when the developer actually implements the fix.
-2. **Troubleshooting:** If a task was about a bug or incident, ensure `project/troubleshooting/` has an entry that matches the fix (or a note that it is still open). Update or add entries only for **verified** fixes. File into the appropriate category subfolder (`build/`, `runtime/`, `data/`, `environment/`, `security/`) and add a row at the **top** of `project/troubleshooting/index.md`.
-3. **Plans-Completed (host-policy archive routing):** This workflow is the **only** one that archives a completed plan. Resolve the destination from the **host repository's** policy — do **not** impose a global default:
-   - Read the host repository's `AGENTS.md` and relevant project docs for the documented completed-plan destination. Observed host policies differ (e.g. `project/plans-completed/<category>/`, root-level `plans-completed/`, or `project/changelog/plans/`).
-   - Apply the host's documented default, and honor an explicit alternate request **only** when the host policy documents/allows that override.
-   - Move the plan from its active location to the host-policy destination (into the appropriate category subfolder where the host uses them: `implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`, or a descriptive kebab-case folder).
-   - Add a row at the **top** of the host's completed-plans index with: Date, Category, Title, File path, Notes.
-   - Add a Type=`plan` row at the **top** of the host's changelog index referencing the completed plan file.
-   - **If the host policy is absent, unreadable, or contradictory:** report **`Not Eligible` / policy unresolved** and leave the plan active. Do not guess, migrate records, or invent a destination.
+1. **Changelog:** For each verified completion that is not yet reflected in the host-resolved changelog, add or update an entry using `<metadata-root>/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and its index, unless the host documents a single-file changelog fallback. Resolve the location through [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy. For false completions, do not add a changelog entry claiming the fix; optionally add an entry only when the developer actually implements the fix.
+2. **Troubleshooting:** If a task was about a bug or incident, ensure the host-resolved troubleshooting location has an entry that matches the fix (or a note that it is still open). Resolve the location through [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy. Update or add entries only for **verified** fixes. Honor host-existing troubleshooting categories, or a host-documented single-file troubleshooting fallback, and add a row at the **top** of the applicable index.
+3. **Plans-Completed (host-policy archive routing):** This workflow is the **only** one that archives a completed plan. Resolve the destination from the host repository's policy — do **not** impose a global default:
+    - Read the host repository's `AGENTS.md` and relevant project docs for the documented completed-plan destination. Host policies may use a metadata-root location or another explicitly documented location; do not infer or create a new archive default.
+    - Apply the host's documented default, and honor an explicit alternate request **only** when the host policy documents/allows that override.
+    - Move the plan from its active location to the host-policy destination (into the appropriate category subfolder where the host uses them: `implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`, or a descriptive kebab-case folder).
+    - Add a row at the **top** of the host's completed-plans index with: Date, Category, Title, File path, Notes.
+    - Add a Type=`plan` row at the **top** of the host's changelog index referencing the completed plan file.
+    - **If the host policy is absent, unreadable, or contradictory:** report **`Not Eligible` / policy unresolved** and leave the plan active. Do not guess, migrate records, or invent a destination.
 4. **Related docs:** Update `docs/` (e.g. ARCHITECTURE, USER_MANUAL, OVERVIEW, TROUBLESHOOTING) so they do not contradict the verified state. Remove or correct any doc text that claims something is done when it is flagged as not done.
-5. **plans/TODO.md:** When tasks are completed, update `plans/TODO.md` (check off items or add follow-ups as needed).
+5. **TODO:** When tasks are completed, update `<metadata-root>/plans/TODO.md` only if the host maintains that file; otherwise record any follow-up in the host-documented task location. Resolve the location through [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy.
 6. **Plan/report file:** Write back into the plan/report file:
    - **✅** on tasks and sub-tasks that were verified complete
    - **Remove** or **replace** completion markers from tasks that were flagged (leave as unchecked `[ ]` or add a "⚠ False completion" / "⚠ Incomplete" note). Do not use "x" or ✓ for completed; use **✅ (green check mark)** only for consistency.
@@ -180,17 +186,19 @@ Illustrative example only (hypothetical consumer project; do not treat paths or 
 - Verified completions are marked with ✅ (and `[✅]` where applicable); false or incomplete claims are flagged and not marked complete.
 - All flagged issues are listed in **descending order of importance or urgency** (P0→P3, S0→S3).
 - Changelog, troubleshooting, and related docs are reconciled with the verified state (no false claims in docs).
-- Parallel agents were used to verify implementation (multiple agents reading code in parallel batches).
+- Verification is sized to the plan: one primary verifier for localized work, 2–3 focused non-overlapping roles for bounded work, or parallel evidence-justified domain roles for broad/high-risk work under the shared policy.
+- The task-to-verifier coverage matrix maps every in-scope task/sub-task to a responsible domain/verifier and evidence or a flag; evidence citations support every Verified or Flagged conclusion.
 
 ## Related Workflows
 
 - **[`01-create-docs.md`](./01-create-docs.md)** — Create documentation from scratch
 - **[`02-sync-documentation.md`](./02-sync-documentation.md)** — Sync existing docs to code
+- **[`../00-Meta-Workflow/00-meta/workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md)** — Size verification and delegation by scope
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** — Severity/priority for ordering flagged issues
 - **[`../01-planning-and-organizing/02-finalise-plan.md`](../01-planning-and-organizing/02-finalise-plan.md)** — Finalise plans before marking completed
 
 ## Notes
-- **Parallel agents:** Use as many agents as needed to cover P0–P3 and different areas (security, hooks, components, docs) so verification runs in parallel and finishes faster.
+- **Sizing:** Use the smallest verification approach that provides complete, evidence-backed coverage; parallel roles are for independent, evidence-justified scopes rather than a fixed count.
 - **Evidence:** Every "Verified" or "Flagged" conclusion must cite the actual file path and, where useful, line number or snippet.
 - **Developer decides:** Flagging an item does not mean you change the code; it means you surface it so the developer can decide to implement, defer, or re-scope.
 - **One source of truth:** After this workflow, the plan/report and the changelog/troubleshooting/docs should agree on what is actually done.

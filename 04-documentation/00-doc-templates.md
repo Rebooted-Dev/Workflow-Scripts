@@ -525,38 +525,4 @@ Need a diagram?
 └────────┘ └────────┘
 ```
 
-### When to Use ASCII Art Diagrams
-
-- **Architecture diagrams**: System overview, component relationships
-- **Flowcharts and process flows**: Workflows, data flows
-- **Hierarchy diagrams**: File structure, class inheritance
-- **Network diagrams**: API relationships, microservices
-- **UI/UX flow diagrams**: User journeys, state machines
-
-### Character Reference
-
-```
-Boxes and Lines:
-┌─────┐   ───   │    ┬    ┴   ├   ┤   └   ┘
-│ Box │   →    ↑    ↓    ↔   ═   ║   ╗   ╝
-└─────┘   ◄    ↔    ◐    ◑   └─┘  ╓   ╖
-
-Arrows:
-→ ← ↑ ↓ ↔ ↕ ↖ ↗ ↘ ↙ 
-===> <=== =>> <<= ► ◄
-
-Special:
-★ * • ○ ● ◇ ◆ □ ■ △ ▽
-```
-
-### Best Practices
-
-- **Use monospaced characters**: ─ │ ┌ ┐ └ ┘ ┬ ┴ ├ ┤
-- **Keep diagrams compact**: max 20-25 lines
-- **Use consistent spacing** and alignment
-- **Label all components** clearly
-- **Reference**: See `./ascii-art-prompts.md` for:
-  - Standardized prompt templates for different diagram types
-  - Character reference for box-drawing and arrows
-  - Best practices and formatting guidelines
-  - Quality checklist for diagram generation
+For diagram prompts, character reference, best practices, and the quality checklist, see `./ascii-art-prompts.md`.

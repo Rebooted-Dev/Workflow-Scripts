@@ -65,28 +65,7 @@ Optional additions (recommended when relevant):
 - If the project has no deployment automation, `docs/deployment/README.md` should describe how it is run in practice (local only, manual runbook) or explicitly state "No deployment process." 
 
 ## Optional / Conditional Doc Types (recommend as applicable)
-Use this as a checklist during discovery. Do not attempt to create everything; recommend and implement only the smallest set that reduces real confusion/risk (often 1-3 items). Create these only when they match the repo's reality; otherwise omit them (or create a short README that explicitly states "Not applicable" when the folder is part of a standardized docs layout).
-
-Recommended add-ons (often valuable):
-- Contributing guidelines: `CONTRIBUTING.md` or `docs/contributing.md`.
-- Changelog: `CHANGELOG.md` or `docs/CHANGELOG.md`.
-- Configuration reference: `docs/configuration/` (include environment variables, config files, defaults).
-- Security docs: `docs/security/` (policies, vuln reporting, authn/authz notes, secrets handling).
-- Error reference: `docs/errors/` (error taxonomy, codes/messages, recovery guidance).
-- Migrations / upgrades: `docs/migrations/` (breaking changes, upgrade steps, data migrations).
-
-Nice-to-haves (when the project warrants it):
-- Performance notes: `docs/performance/` (benchmarks, tuning, resource requirements).
-- Monitoring and observability: `docs/monitoring/` (metrics, dashboards, alerting, health checks).
-- Backup and recovery: `docs/backup-recovery/` (backup/restore, retention, DR runbook).
-- FAQ: `docs/faq.md`.
-- Glossary: `docs/glossary.md`.
-- Known issues: `docs/known-issues.md`.
-- Integration guides: `docs/integrations/`.
-- Support matrix: `docs/support/` (browsers/platforms, system requirements).
-- Dependency rationale: `docs/dependencies/` (major deps, update policy, licenses).
-- Roadmap: `docs/roadmap.md`.
-- Release notes: `docs/releases/`.
+For optional additions, use [`09-optional.md`](./09-optional.md). Select only the smallest useful set, usually 1–3 items, based on the repo's applicability; when a standardized docs layout includes an inapplicable folder, create a short README stating "Not applicable" rather than inventing content.
 
 ## Document Templates (required)
 Use the shared templates in `./00-doc-templates.md`.
@@ -352,24 +331,8 @@ If you have fewer agents available, merge adjacent responsibilities (e.g., Agent
      - Add "See also" sections where relevant.
 
 22. **Add diagrams and visual aids (Agents C/D/E/F/I as applicable; Agent M validates):**
-     - Create text-based diagrams where they clarify complex systems.
-     - **ASCII art diagrams**: Use prompts from `./ascii-art-prompts.md` to generate ASCII art diagrams for:
-       - Architecture diagrams (system overview, component relationships)
-       - Flowcharts and process flows (workflows, data flows)
-       - Hierarchy diagrams (file structure, class inheritance)
-       - Network and integration diagrams (API relationships, microservices)
-       - UI/UX flow diagrams (user journeys, state machines)
-       - Documentation-specific diagrams (hub structure, learning paths)
-     - Architecture diagrams.
-     - Data flow diagrams.
-     - Sequence diagrams for key workflows.
-     - Component interaction diagrams.
-     - Class diagrams.
-     - **Reference**: See `./ascii-art-prompts.md` for:
-       - Standardized prompt templates for different diagram types
-       - Character reference for box-drawing and arrows
-       - Best practices and formatting guidelines
-       - Quality checklist for diagram generation
+      - Create text-based diagrams where they clarify complex systems.
+      - **ASCII art diagrams**: See `./ascii-art-prompts.md` for prompts, character reference, and the quality checklist.
 
 23. **Verification pass (required; Agent M):**
     - Spot-check every doc for non-speculative claims.

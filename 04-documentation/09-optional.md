@@ -3,9 +3,10 @@
 ## Purpose
 This file provides a checklist of optional documentation types that can improve project onboarding and maintainability. Use this as a reference when deciding what additional documentation to create beyond the core documentation set.
 
+**Use this checklist when creating or reviewing documentation.** Select only optional additions that remove real confusion or risk; default to the smallest high-leverage set, usually 1–3 items. Apply it after (or during) the core documentation work, and skip items that do not fit the project.
+
 ## When to Use This Checklist
 
-**Use this checklist:**
 - After running [`01-create-docs.md`](./01-create-docs.md) or [`02-sync-documentation.md`](./02-sync-documentation.md)
 - When evaluating what additional documentation would be valuable
 - During documentation planning to identify gaps
@@ -14,18 +15,13 @@ This file provides a checklist of optional documentation types that can improve 
 **How to use:**
 1. Review the recommended add-ons section first (high leverage items)
 2. Consider nice-to-haves only if they match real operational needs
-3. Default to the smallest set that removes real confusion/risk
-4. Only create documentation you can write truthfully from the repo
+3. Only create documentation you can write truthfully from the repo
 
 **Important:** This is a reference checklist, not a workflow. Use it to inform decisions during documentation creation workflows.
 
 ---
 
-Use this checklist after (or during) `./01-create-docs.md` or `./02-sync-documentation.md` to recommend extra docs that often improve onboarding and maintainability.
-
 Guardrails (avoid over-documenting):
-- Default to the smallest set that removes real confusion/risk. If you are unsure, ship 1-3 items max.
-- Do not create a doc just because it is on a list; only create it if you can write it truthfully from the repo.
 - Prefer a single, scoped page over a new directory tree.
 - If your docs layout standardizes on certain folders, it is okay to create a short README that explicitly states "Not applicable".
 

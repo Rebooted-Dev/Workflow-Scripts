@@ -24,17 +24,30 @@ START HERE
 └──────────┬───────────────┘
            │
            ▼
-┌──────────────────────┐      ┌──────────────────────────┐
-│  01-plan-review.md   │ ───▶ │  02-finalise-plan.md     │
-│  (Review & validate) │      │  (Create detailed plan)  │
-└──────────────────────┘      └──────────┬───────────────┘
-                                         │
-                                         ▼
-                               ┌──────────────────────┐
-                               │  02-code-build/        │
-                               │  01-execution.md     │
-                               │  (Implement code)    │
-                               └──────────────────────┘
+┌──────────────────────────────────────┐
+│ Choose separate or one-pass route    │
+└──────────────────┬───────────────────┘
+                   │
+         ┌─────────┴─────────┐
+         ▼                   ▼
+┌──────────────────────┐  ┌───────────────────────────────────┐
+│  01-plan-review.md   │  │  03-plan-review-and-finalise.md   │
+│  (Review & validate) │  │  (Run 01 review → 02 finalise)    │
+└──────────┬───────────┘  └─────────────────┬─────────────────┘
+           │                             │
+           ▼                             │
+┌──────────────────────┐                 │
+│  02-finalise-plan.md │                 │
+│  (Create detailed    │                 │
+│   plan)              │                 │
+└──────────┬───────────┘                 │
+           └─────────────────┬───────────┘
+                             ▼
+                   ┌──────────────────────┐
+                   │  02-code-build/      │
+                   │  01-execution.md     │
+                   │  (Implement code)    │
+                   └──────────────────────┘
 ```
 
 ## Quick Decision Guide
@@ -91,9 +104,12 @@ Review feedback is appended to the plan document with:
 - Actionable fixes or alternatives
 - File/line references when applicable
 
+The sibling `PLAN.reviews/` directory is an optional per-model alternative to inline addenda; this guidance does not create that directory.
+
 ## Related Workflows
 
 - [Execution](../02-code-build/01-execution.md) - Implement the plan
 - [Confirm Execution](../02-code-build/02-confirm-execution.md) - Verify implementation matches plan
+- [03-plan-review-and-finalise.md](./03-plan-review-and-finalise.md) - One-pass orchestrated review followed by finalisation.
 - [Code Review](../05-review/01-code-review.md) - Review code after implementation
 - [Severity & Priority Rubric](../00-Meta-Workflow/00-meta/severity-priority-rubric.md) - Shared scoring standard

@@ -106,6 +106,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 ## Related Workflows
 
 - **[`02-finalise-plan.md`](./02-finalise-plan.md)** - Create or refine implementation plans after review
+- **[`03-plan-review-and-finalise.md`](./03-plan-review-and-finalise.md)** - One-pass orchestrated review followed by finalisation.
 - **[`../02-code-build/01-execution.md`](../02-code-build/01-execution.md)** - Execute plans after they've been reviewed
 - **[`../05-review/01-code-review.md`](../05-review/01-code-review.md)** - Review code after implementation
 - **[`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)** - Reference for scoring issues

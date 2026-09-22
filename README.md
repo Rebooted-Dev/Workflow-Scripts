@@ -162,6 +162,14 @@ Workflow will:
 - Clear exit criteria per phase
 - Uses shared rubric from `00-Meta-Workflow/00-meta/severity-priority-rubric.md`
 
+#### Plan Review and Finalise (`01-planning-and-organizing/03-plan-review-and-finalise.md`)
+
+> **Source:** [`03-plan-review-and-finalise.md`](01-planning-and-organizing/03-plan-review-and-finalise.md)
+
+**Purpose:** Run plan review and finalisation as one orchestrated planning pass.
+**When to use:** When an existing plan needs both review and finalisation without switching workflows.
+**How it runs:** Executes `01-plan-review.md` first, then `02-finalise-plan.md` using the review output.
+
 ---
 
 ### 2. Review Workflows

@@ -212,6 +212,8 @@ The 10-technical-docs/ and 12-SEO-GEO-checklist/ directories are reference libra
   -> 04-documentation/02-sync-documentation
 ~~~
 
+As an optional one-pass planning alternative, use [03-plan-review-and-finalise.md](../01-planning-and-organizing/03-plan-review-and-finalise.md) after `00-research-and-plan`; it runs `01-plan-review` then `02-finalise-plan` before execution. Retain the separate `01` → `02` route when you want an explicit handoff between review and finalisation.
+
 Use 02-code-build/03-execute-and-confirm.md when the execution and confirmation steps should be handled together.
 
 ### Bug fix
@@ -311,6 +313,8 @@ project/plans/. Do not modify application code during the planning phase.
 ~~~
 
 ### Example 3: Review and finalise a plan
+
+For an optional one-pass alternative, attach [01-planning-and-organizing/03-plan-review-and-finalise.md](../01-planning-and-organizing/03-plan-review-and-finalise.md); it runs the review workflow and then finalisation in one pass. The separate review-then-finalise route remains available below.
 
 First attach the plan, then drag [01-planning-and-organizing/01-plan-review.md](../01-planning-and-organizing/01-plan-review.md) into the same chat and send:
 

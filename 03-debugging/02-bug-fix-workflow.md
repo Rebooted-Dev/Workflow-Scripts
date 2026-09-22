@@ -28,7 +28,12 @@ Systematically identify, diagnose, and fix bugs using a structured debugging pro
 - Formulate initial hypotheses about potential root causes.
 
 ### 2. Investigation
-Use multiple parallel agents to investigate the bug. Suggested agent roles (spawn additional agents as needed):
+Size investigation to the bug scope and independent evidence needs:
+- **Localized bugs:** work directly with no fan-out.
+- **Bounded bugs:** use 2–3 focused, non-overlapping roles when independent work justifies it.
+- **Broad/high-risk bugs:** use evidence-justified parallel roles under the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md).
+
+Suggested investigation responsibilities; assign only roles justified by evidence, and allow one investigator to cover several responsibilities:
 - Trace the bug through the codebase (read affected files, entry points, and related code in parallel batches)
 - Analyze error logs and stack traces (read logging files, error handlers, and exception handling code in parallel batches)
 - Check for similar bugs or related issues in the codebase (read similar patterns/files in parallel batches)
@@ -37,12 +42,12 @@ Use multiple parallel agents to investigate the bug. Suggested agent roles (spaw
 - Examine data flow and state management around the bug (read data processing, state files, and API handlers in parallel batches)
 
 
-**When to spawn additional agents:**
-- Spawn 1 performance agent if bug causes slow operations, memory leaks, or resource exhaustion
-- Spawn 1 security agent if bug exposes sensitive data, bypasses authentication, or creates vulnerabilities
-- Spawn 1 pattern analysis agent if similar code patterns found in 5+ files that may have the same bug
-- Spawn 1 integration agent per external service/API affected by the bug (database, third-party services)
-- Spawn 1 test coverage agent if bug reveals untested critical paths or missing edge case tests
+**Evidence that may justify a focused role:**
+- A performance-focused role may be justified if the bug causes slow operations, memory leaks, or resource exhaustion.
+- A security-focused role may be justified if the bug exposes sensitive data, bypasses authentication, or creates vulnerabilities.
+- A pattern-analysis role may be justified if similar code patterns are found in 5+ files that may have the same bug.
+- An integration-focused role may be justified per external service/API affected by the bug (database, third-party services).
+- A test-coverage role may be justified if the bug reveals untested critical paths or missing edge case tests.
 
 Follow the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md) for bounded role selection and session limits.
 
@@ -63,7 +68,12 @@ Create a detailed fix plan:
 - Consider edge cases and similar code that might need updates
 
 ### 5. Implementation
-Use multiple parallel agents to implement the fix. Suggested agent roles (spawn additional agents as needed):
+Size implementation work to the bug scope and independent evidence needs:
+- **Localized bugs:** work directly with no fan-out.
+- **Bounded bugs:** use 2–3 focused, non-overlapping roles when independent work justifies it.
+- **Broad/high-risk bugs:** use evidence-justified parallel roles under the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md).
+
+Suggested implementation responsibilities; assign only roles justified by evidence, and allow one implementer to cover several responsibilities:
 - Implement the primary bug fix
 - **Add a regression test when it fits** – Add or update tests to verify the fix and prevent regression
 - Review for unintended side effects or new bugs introduced
@@ -71,17 +81,22 @@ Use multiple parallel agents to implement the fix. Suggested agent roles (spawn 
 - Update related documentation if the fix changes behavior
 
 
-**When to spawn additional agents:**
-- Spawn 1 optimization agent if bug fix reveals performance issues or inefficient algorithms
-- Spawn 1 test agent if fix requires 5+ new test cases or complex test scenarios
-- Spawn 1 documentation agent if bug fix changes API behavior or user-facing functionality
-- Spawn 1 cleanup agent if fixing bug requires refactoring 3+ related files or removing dead code
-- Spawn 1 security agent if bug fix involves authentication, authorization, or data validation
+**Evidence that may justify a focused role:**
+- An optimization-focused role may be justified if the bug fix reveals performance issues or inefficient algorithms.
+- A test-focused role may be justified if the fix requires 5+ new test cases or complex test scenarios.
+- A documentation-focused role may be justified if the bug fix changes API behavior or user-facing functionality.
+- A cleanup-focused role may be justified if fixing the bug requires refactoring 3+ related files or removing dead code.
+- A security-focused role may be justified if the bug fix involves authentication, authorization, or data validation.
 
 Follow the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md) for bounded role selection and session limits.
 
 ### 6. Verification
-Use parallel agents to verify the fix. Suggested agent roles (spawn additional agents as needed):
+Size verification to the bug scope and independent evidence needs:
+- **Localized bugs:** work directly with no fan-out.
+- **Bounded bugs:** use 2–3 focused, non-overlapping roles when independent work justifies it.
+- **Broad/high-risk bugs:** use evidence-justified parallel roles under the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md).
+
+Suggested verification responsibilities; assign only roles justified by evidence, and allow one verifier to cover several responsibilities:
 - Run the reproduction steps to confirm the bug is fixed
 - Run existing tests and check for regressions
 - Test edge cases and similar scenarios
@@ -89,11 +104,11 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 - Review code changes for quality and adherence to project conventions
 
 
-**When to spawn additional agents:**
-- Spawn 1 performance testing agent if bug fix may impact latency, throughput, or resource usage
-- Spawn 1 security validation agent if bug involved authentication, data exposure, or input handling
-- Spawn 1 integration testing agent per external system affected (database, API, third-party service)
-- Spawn 1 documentation review agent if bug fix changes documented behavior or requires user communication
+**Evidence that may justify a focused role:**
+- A performance-testing role may be justified if the bug fix may impact latency, throughput, or resource usage.
+- A security-validation role may be justified if the bug involved authentication, data exposure, or input handling.
+- An integration-testing role may be justified per external system affected (database, API, third-party service).
+- A documentation-review role may be justified if the bug fix changes documented behavior or requires user communication.
 
 **Agent Spawning Policy:** Follow the [shared agent-spawning policy](../00-Meta-Workflow/00-meta/agent-spawning-policy.md); it is authoritative for the total-session cap and evidence-based role selection.
 Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs plus relevant tests. If no command exists, state that explicitly. If failures occur, fix and re-run.
@@ -171,7 +186,7 @@ Run the project verification command from `AGENTS.md`, package scripts, Makefile
 
 ## Notes
 - Critical bugs (P0/S0) should be fixed immediately; consider temporary mitigation if full fix requires more time.
-- When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.
+- When reading files, batch reads are useful for speed, but concurrency is not mandatory; the primary verifier remains responsible for direct verification, and the shared agent-spawning policy is authoritative for role selection and session limits.
 - If a bug cannot be reproduced, document the investigation steps and ask for more information.
 - For intermittent bugs, add logging or monitoring to help diagnose when they occur.
 - Consider if the bug indicates a broader architectural issue that should be addressed separately.

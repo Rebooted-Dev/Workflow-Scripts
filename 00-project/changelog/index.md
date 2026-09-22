@@ -5,6 +5,10 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-22 | changed | Size Debugging Delegation | changed/2026-09-22-changed-size-debugging-delegation.md | Sized bug investigation, implementation, and verification by scope; evidence triggers, policy authority, regression guidance, and verification requirements retained |
+| 2026-09-22 | changed | Index Combined Planning Workflow | changed/2026-09-22-changed-index-combined-planning-workflow.md | Indexed the one-pass planning route across planning README, root README, User Manual, and reciprocal links; separate 01 → 02 route retained |
+| 2026-09-22 | docs | Complete Plan 09 Documentation Coherence | docs/2026-09-22-docs-complete-plan-09-documentation-coherence.md | Completed Phase 1–2 optional-document and ASCII-art coherence work; selection flow and README/02-sync work retained |
+| 2026-09-22 | changed | Size completion verification and route metadata | changed/2026-09-22-changed-size-completion-verification-and-route-metadata.md | Sized verification by scope and routed metadata locations through `<metadata-root>` and host policy; archive authority unchanged |
 | 2026-09-22 | plan | Carry Update-AI-Tools Hygiene-Plan Commits to v1.81 | ../plans-completed/migration/2026-09-22-carry-hygiene-plan-commits-to-v1-81.md | Verified Complete; terminal-gated after v1.81 push and validator confirmation |
 | 2026-09-22 | docs | Relocate v1.72-Improvements Plans to Core-Learning | docs/2026-09-22-docs-relocate-v1-72-improvements-plans.md | Ten-file set moved to `Rebooted-Dev/Core-Learning` `Tech-notes/Workflow-Scripts/proposed-plans/` as reference; implementation record stays in `plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md` |
 | 2026-09-18 | plan | Update-AI-Tools Repo Sync, Relocation Docs, and Git Hygiene | ../plans-completed/implementation/2026-09-18-update-ai-tools-repo-sync-and-hygiene-plan.md | Completed via execute-and-confirm; canonical companion path documented, relocation issue RESOLVED, git hygiene done |
