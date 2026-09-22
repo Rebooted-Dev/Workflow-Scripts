@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-22 | plan | Carry Update-AI-Tools Hygiene-Plan Commits to v1.81 | ../plans-completed/migration/2026-09-22-carry-hygiene-plan-commits-to-v1-81.md | Verified Complete; terminal-gated after v1.81 push and validator confirmation |
 | 2026-09-22 | docs | Relocate v1.72-Improvements Plans to Core-Learning | docs/2026-09-22-docs-relocate-v1-72-improvements-plans.md | Ten-file set moved to `Rebooted-Dev/Core-Learning` `Tech-notes/Workflow-Scripts/proposed-plans/` as reference; implementation record stays in `plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md` |
 | 2026-09-18 | plan | Update-AI-Tools Repo Sync, Relocation Docs, and Git Hygiene | ../plans-completed/implementation/2026-09-18-update-ai-tools-repo-sync-and-hygiene-plan.md | Completed via execute-and-confirm; canonical companion path documented, relocation issue RESOLVED, git hygiene done |
 | 2026-09-10 | plan | Workflow-Scripts Instruction Remediation | ../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md | Phases 1–4 Verified Complete on `v1.81` (`846caef`, `5f87cc9`): v1.72 repairs, host-convention changelog + single-source completion contracts, template/discovery hardening, agent files repaired across 4 repos, escaped-root link validator + fixture. Phase 5 split to `plans/2026-09-10-astra-instruction-evaluation-plan.md`; 5 residual flags recorded |

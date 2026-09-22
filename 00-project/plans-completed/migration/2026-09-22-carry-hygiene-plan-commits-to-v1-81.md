@@ -1,7 +1,8 @@
 # Carry Update-AI-Tools Hygiene-Plan Commits to v1.81 — Implementation Plan
 
 **2026-09-22 13:08**  
-**Status:** Executed 2026-09-22 (v1.81 commits 00fa092, feaaffd)  
+**Status:** ✅ VERIFIED COMPLETE (2026-09-22; v1.81 commits 00fa092, feaaffd)
+**Terminal completion:** ✅ Verified via `04-documentation/03-mark-completed.md` on 2026-09-22.
 **Target branch:** `v1.81` (`origin/v1.81`) — Workflow-Scripts companion repo, canonical checkout `Shared-Links/Workflow-Scripts`  
 **Filed in:** Core-Learning `Tech-notes/Workflow-Scripts/plans/` (deliberately outside Workflow-Scripts' own `00-project/plans/` so the active line's plan directory stays clean of self-referential meta-work)  
 **Priority:** P1 / S2 (completion record of executed work stranded on a frozen branch; discoverability gap on the active line, no workflow-behavior risk)
@@ -94,11 +95,11 @@ Carry the two stranded commits `f5fd73a` (plan filing) and `694add5` (plan compl
 
 ## Acceptance criteria
 
-- [ ] Both commits carried to `v1.81` with `-x` trailers; net diff = archived plan + 2 index rows + 1 addendum line, nothing else
-- [ ] Index rows in correct newest-first position in both files; no other rows altered
-- [ ] `check-completion-chain-policy.sh` and `check-active-markdown-links.sh` pass, output recorded
-- [ ] Pushed to `origin/v1.81` only; `origin/main` untouched; `v1.72` untouched
-- [ ] Execution notes (hashes, validator output, verification) appended to this plan and Status updated
+- [✅] Both commits carried to `v1.81` with `-x` trailers; net diff = archived plan + 2 index rows + 1 addendum line, nothing else
+- [✅] Index rows in correct newest-first position in both files; no other rows altered
+- [✅] `check-completion-chain-policy.sh` and `check-active-markdown-links.sh` pass, output recorded
+- [✅] Pushed to `origin/v1.81` only; `origin/main` untouched; `v1.72` untouched
+- [✅] Execution notes (hashes, validator output, verification) appended to this plan and Status updated
 
 ## Completion
 
@@ -118,3 +119,8 @@ On success, update this plan's **Status** to `Executed 2026-09-22 (v1.81 commits
 - `origin/main` was not pushed and trails `v1.81` by 5 commits. `origin/v1.72` remains `694add5`.
 - Filing correction: although the original plan said it was filed outside the repo in Core-Learning, the user instructed its commit into `00-project/plans/` (`55aaa5f`), so it will follow this host repo's normal terminal completion policy.
 - No blockers or residual risks remain for carrying the records.
+
+## Terminal Gate Addendum (2026-09-22)
+
+- Terminal audit verified all five acceptance criteria; validators passed and the remote push succeeded. No blockers or residual risks remain.
+- The plan was committed locally by direct user instruction, so this host repository's archive policy superseded the stale external-filing statement above; it is archived under `00-project/plans-completed/migration/`.
