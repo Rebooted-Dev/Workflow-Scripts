@@ -5,6 +5,12 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-22 | docs | Strengthen Astra Instruction Evaluation | docs/2026-09-22-docs-strengthen-astra-instruction-evaluation.md | Expanded Plan 05 and added a first-party/local setup audit; documentation-only, with no live instruction changes or model runs |
+| 2026-09-22 | docs | Correct v1.82 Roadmap Completion State | docs/2026-09-22-docs-correct-v1-82-roadmap-completion-state.md | Corrected roadmap status: Plan 02 is filed Verified Complete; remaining lanes remain active or KIV; tasks and dependencies unchanged |
+| 2026-09-22 | plan | Validate Completion-Chain Current State | ../plans-completed/review/2026-09-22-validate-completion-chain-current-state.md | Verified Complete; parent-accepted read-only audit; validator exit 0 and five static contract scenarios passed; no workflow/validator changes |
+| 2026-09-22 | docs | Audit v1.82 Completion Chain Current State | docs/2026-09-22-docs-audit-v1-82-completion-chain.md | Read-only audit; validator passed exit 0; five static contract scenarios passed; one documentation ambiguity recorded, with no workflow/validator changes |
+| 2026-09-22 | docs | Defer v1.82 Skills Adoption Plan | docs/2026-09-22-docs-defer-v1-82-skills-plan.md | Plan 06 is KIV/deferred by user; no skills investigation, installation, pilot, global, updater, or Update-AI-Tools work performed |
+| 2026-09-22 | docs | Create v1.82-Fixes Active Plan Set | docs/2026-09-22-docs-file-v1-82-fixes-plan-set.md | Seven reviewed, implementation-ready active plans; planning/documentation only, not completed work |
 | 2026-09-22 | plan | v1.72-Improvements Plan Set Filed Complete | ../plans-completed/tooling/v1.72-Improvements/ | Independent review verified all nine plans implemented on `v1.81` (`846caef` + 2026-09-22 residual batch); validators passed; directory filed from Core-Learning reference copy |
 | 2026-09-22 | changed | Size Debugging Delegation | changed/2026-09-22-changed-size-debugging-delegation.md | Sized bug investigation, implementation, and verification by scope; evidence triggers, policy authority, regression guidance, and verification requirements retained |
 | 2026-09-22 | changed | Index Combined Planning Workflow | changed/2026-09-22-changed-index-combined-planning-workflow.md | Indexed the one-pass planning route across planning README, root README, User Manual, and reciprocal links; separate 01 → 02 route retained |

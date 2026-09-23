@@ -14,6 +14,7 @@ When a plan is finished and should be archived, follow **`plans-completed/README
 
 ## Active
 
+- [ ] [v1.82-fixes plan set](v1.82-fixes/00-meta-v1-82-fixes-roadmap.md): Plan 02 completion-chain audit filed Verified Complete; reconcile source integrity first; continue harness discovery; keep Astra evaluation blocked until protocol/arm gates pass; behavior-rule work remains approval-gated; skills adoption is KIV/deferred by user and not active without a new explicit request.
 - [ ] Execute `2026-09-10-astra-instruction-evaluation-plan.md` (Phase 5 split from the instruction remediation plan): build the corpus/harness, fix the baseline pin to `64acb75`, smoke-test, then run the pilot before the full matrix. No Astra improvement claim until the adoption gate passes.
 - [ ] Tidy `00-Meta-Workflow/00-meta/agent-flexibility-review.md`: it is still `Status: Active` while carrying `02-build-code/...` references (lines 211, 390, 407). Mark historical like `parallel-agents-review.md` or correct the refs.
 - [ ] Review `2026-07-06-workflow-system-v2-redesign-proposal.md` (full-autonomy v2 redesign: frontmatter+catalog, core partials, `wf` CLI, harness compiler, CI enforcement; drafted 2026-07-06). Run `01-plan-review.md` with a different model, then finalise.
