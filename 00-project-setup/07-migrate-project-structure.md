@@ -67,15 +67,15 @@ echo "Workflow-Scripts/" >> .gitignore
 echo "workflows/" >> .gitignore  # If you use this naming
 ```
 
-### 1.3 Create or Update AGENTS.md
+### 1.3 Set Up the Agent Files (AGENTS.md, PROJECT.md)
 
-Follow [01-setup-project.md Step 1](./01-setup-project.md#step-1-set-up-dual-repository-management-in-agentsmd):
+Follow [01-setup-project.md Step 1](./01-setup-project.md#step-1-set-up-the-agent-files-agentsmd-projectmd-harness-files):
 
-- Add Execution section
-- Add Repository Management section (critical for multi-repo)
-- Add slim Change Management section linking to `project/docs/agents/`
+- `AGENTS.md` gets the Execution section, the slim Change Management section (linking to `project/docs/agents/`), a pointer to `PROJECT.md`, and Detailed Documentation links — no project facts and no repo map.
+- `PROJECT.md` gets the project description, the Repositories table and repo management bullets (critical for multi-repo), Layout, and Project Constraints.
+- `CLAUDE.md` / `GEMINI.md` import `@AGENTS.md` and `@PROJECT.md`, then keep only harness-only instructions.
 
-**Key**: Update all paths to use `project/` prefix for changelog, troubleshooting, and docs.
+**Key**: Update all paths to use `project/` prefix for changelog, troubleshooting, and docs — in `AGENTS.md`, `PROJECT.md`, and `docs/agents/` as applicable.
 
 ---
 
@@ -325,9 +325,9 @@ Use the full conventions template from [01-setup-project.md Step 2.6.1](./01-set
 
 ## Step 7: Update Agent Files
 
-### 7.1 Update AGENTS.md
+### 7.1 Update AGENTS.md, PROJECT.md, and docs/agents/
 
-Ensure all paths are updated to use `project/` prefix:
+Ensure all paths are updated to use `project/` prefix, wherever they appear — `AGENTS.md`'s Detailed Documentation links, `PROJECT.md`'s Layout section, and any references inside `docs/agents/`:
 
 | Old Path | New Path |
 |----------|----------|
@@ -339,17 +339,17 @@ Ensure all paths are updated to use `project/` prefix:
 
 ### 7.2 Update CLAUDE.md and GEMINI.md (if present)
 
-Apply the same path updates.
+`CLAUDE.md` and `GEMINI.md` import `@AGENTS.md` and `@PROJECT.md`, so they inherit these path updates automatically. Edit them directly only if their own harness-only sections (01 §2.10) reference one of these paths.
 
-### 7.3 Verify Branch Information
+### 7.3 Verify Repository Information
 
-Ensure tracked repository branches are accurate:
+Ensure `PROJECT.md`'s Repositories table is accurate (path, repository, remote, purpose — see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md)):
 
 ```markdown
-## Tracked Repositories
-
-1. **Your-Project** (Primary, `.` root) - `main` branch
-2. **Workflow-Scripts** (Companion, `Workflow-Scripts/`) - `main` branch
+| Path | Repository | Remote | Purpose |
+|------|------------|--------|---------|
+| `.` (project root) | Your-Project | <remote> | Primary application |
+| `Workflow-Scripts/` | Workflow-Scripts | <remote> | Shared workflow instructions |
 ```
 
 ---
@@ -435,7 +435,7 @@ git status
 You should see:
 - New `project/` directory with all contents
 - Deleted old root-level directories (if removed)
-- Modified `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` (if updated)
+- Modified `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, `GEMINI.md` (if updated)
 - Modified `.gitignore` (if updated)
 
 ### 9.3 Test Links
@@ -479,7 +479,7 @@ Then manually add entries to `project/changelog/index.md` as needed.
 If you want to migrate gradually:
 
 1. **Phase 1**: Create `project/` structure, keep old directories
-2. **Phase 2**: Update AGENTS.md to reference new paths
+2. **Phase 2**: Update PROJECT.md to reference new paths
 3. **Phase 3**: Start using new structure for new entries
 4. **Phase 4**: Migrate existing entries over time
 5. **Phase 5**: Remove old directories when confident
@@ -490,9 +490,9 @@ If you prefer keeping some items at root:
 
 - Keep `docs/` at root (user-facing documentation)
 - Move `changelog/` and `troubleshooting/` to `project/`
-- Update AGENTS.md to reference correct paths for each
+- Update PROJECT.md (Layout section) to reference correct paths for each
 
-**Note**: The workflow assumes centralized `project/` structure. Hybrid approaches require careful documentation in AGENTS.md.
+**Note**: The workflow assumes centralized `project/` structure. Hybrid approaches require careful documentation in PROJECT.md.
 
 ### Scenario D: Existing Index Data
 
@@ -515,7 +515,7 @@ git commit -m "refactor: migrate to standardized project structure
 
 - Consolidate changelog, troubleshooting, plans under project/
 - Add dual-repo management documentation
-- Update AGENTS.md, CLAUDE.md, GEMINI.md with new paths
+- Update AGENTS.md, PROJECT.md, CLAUDE.md, GEMINI.md with new paths
 - Add README and TODO files for project organization"
 ```
 

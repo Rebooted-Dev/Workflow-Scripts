@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-23 | docs | Agent files: single source of truth with PROJECT.md | docs/2026-09-23-docs-agent-files-single-source-project-md.md | AGENTS.md rules only; PROJECT.md facts + repo map; thin CLAUDE.md/GEMINI.md imports |
 | 2026-09-22 | docs | Strengthen Astra Instruction Evaluation | docs/2026-09-22-docs-strengthen-astra-instruction-evaluation.md | Expanded Plan 05 and added a first-party/local setup audit; documentation-only, with no live instruction changes or model runs |
 | 2026-09-22 | docs | Correct v1.82 Roadmap Completion State | docs/2026-09-22-docs-correct-v1-82-roadmap-completion-state.md | Corrected roadmap status: Plan 02 is filed Verified Complete; remaining lanes remain active or KIV; tasks and dependencies unchanged |
 | 2026-09-22 | plan | Validate Completion-Chain Current State | ../plans-completed/review/2026-09-22-validate-completion-chain-current-state.md | Verified Complete; parent-accepted read-only audit; validator exit 0 and five static contract scenarios passed; no workflow/validator changes |

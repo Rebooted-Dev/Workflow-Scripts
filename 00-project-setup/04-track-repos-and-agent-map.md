@@ -1,12 +1,12 @@
-# Track Repositories and Agent-File Repo Map
+# Track Repositories and Update PROJECT.md
 
 ## Purpose
 
 This workflow helps you:
 
 1. **Discover and track** all Git repositories in the current project (root repo + any nested repos, e.g. Workflow-Scripts, submodules, or other nested checkouts).
-2. **Set up agent files** (AGENTS.md, CLAUDE.md, GEMINI.md) with a clear **repository map**: directory path → remote URL, purpose, and status, so AI agents and humans know which directories are which repo and how to sync them.
-3. **Keep AGENTS.md and harness-specific agent files in sync** with the repo mapping—when the repo map changes, update every file the project actually uses (at minimum `AGENTS.md`, plus `CLAUDE.md`, `GEMINI.md`, or others as discovered) or the single canonical source they reference.
+2. **Write the repository map to `PROJECT.md`** — under the agent-file scheme in [01-setup-project.md §1](./01-setup-project.md#step-1-set-up-the-agent-files-agentsmd-projectmd-harness-files), the repo map lives **only** in `PROJECT.md`'s `## Repositories` section, not duplicated into `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`.
+3. **Verify** `AGENTS.md` still points to `PROJECT.md` and `CLAUDE.md`/`GEMINI.md` still import it.
 4. **Document sync, pull, and push** procedures for each repo and when to run them.
 
 ---
@@ -70,104 +70,37 @@ done
 
 ### 1.2 Record the Repo Map
 
-Create a simple list for your own reference before editing agent files. Example:
+Create a simple list for your own reference before editing `PROJECT.md`. Example:
 
 | Directory        | Remote URL                                      | Branch | Purpose / notes        |
 |-----------------|--------------------------------------------------|--------|------------------------|
 | `.` (project root) | `https://github.com/org/main-project`         | main   | Primary application    |
 | `Workflow-Scripts/` | `https://github.com/Rebooted-Dev/Workflow-Scripts` | main | Shared workflow docs   |
 
-Use the discovery output to fill this table. You will copy this structure into AGENTS.md, CLAUDE.md, and GEMINI.md in Step 2.
+Use the discovery output to fill this table. You will use it to populate `PROJECT.md`'s Repositories section in Step 2.
 
 ---
 
-## Step 2: Set Up Agent Files with the Repository Map
+## Step 2: Write the Repository Map to PROJECT.md
 
-**Discovery is the only permitted source for repo maps.** Run Step 1 before writing agent files. Do not copy stale paths from another project.
+**Discovery is the only permitted source for repo maps.** Run Step 1 before editing `PROJECT.md`. Do not copy stale paths from another project.
 
-Agent files (`AGENTS.md` plus whichever harness files the project uses) should each contain a **Tracked Repositories** (or **Repository Map**) section so that:
+The repo map lives **only** in `PROJECT.md`'s `## Repositories` section — a table (Path | Repository | Remote | Purpose) plus the three standing bullets about multi-repo behavior. Format and full template: [01-setup-project.md §1.4](./01-setup-project.md#14-create-projectmd-project-facts-and-repositories).
 
-- AI agents know which directories are separate repos and their remotes.
-- Everyone knows where to run `git pull` / `git push` and which repo is “primary” vs nested.
+### 2.1 Update PROJECT.md
 
-### 2.1 Section to Add
+Open `PROJECT.md` at the project root and update the `## Repositories` section (template in [01-setup-project.md §1.4](./01-setup-project.md#14-create-projectmd-project-facts-and-repositories)) with the discovered repos. Add one row per repo found in Step 1. Do not invent rows for repos discovery didn't find.
 
-Add or update a section like this in **AGENTS.md**, **CLAUDE.md**, and **GEMINI.md**. The repo map content (or the link to the canonical doc) must be **identical across all three files** so that every agent (AGENTS, Claude, Gemini) sees the same directory → repo mapping. See §2.4 for how to keep them in sync.
+**Optional — long per-repo detail:** if a repo needs more than the table can hold (extended notes, a project-specific sync script, per-repo branch policy), put that detail in `docs/agents/repository-map.md` and link it from this section in `PROJECT.md`. The table stays the source of truth for path → remote → purpose either way.
 
-**Template:**
+### 2.2 Verify AGENTS.md, CLAUDE.md, and GEMINI.md Are Still Correct
 
-```markdown
-## Tracked Repositories
+This workflow does not write a repo map into any of these files. It only verifies the pointers set up by [01-setup-project.md §1](./01-setup-project.md#step-1-set-up-the-agent-files-agentsmd-projectmd-harness-files) are intact:
 
-The development environment tracks the following repositories in this project:
+- **AGENTS.md** — confirm it contains the "Read `PROJECT.md` before starting work" pointer. It should **not** contain a repo map, a "Tracked Repositories" section, or a "Repository Management" section. If it does (e.g. from an older version of this workflow), delete that block — don't leave a competing copy alongside the one in `PROJECT.md`.
+- **CLAUDE.md / GEMINI.md** — confirm each still imports `@AGENTS.md` and `@PROJECT.md`. They should not restate the repo map or repository management instructions; delete any that snuck in.
 
-### 1. <REPO_DISPLAY_NAME> (Primary)
-- **Path**: `<ABSOLUTE_OR_RELATIVE_PATH>`
-- **Purpose**: <Short description>
-- **URL**: <remote URL, e.g. https://github.com/org/repo>
-- **Status**: <e.g. Active development, Companion, Optional>
-
-### 2. <REPO_DISPLAY_NAME> (Nested / Companion)
-- **Path**: `<PROJECT_PATH>/<SUBDIR>/`
-- **Purpose**: <Short description>
-- **URL**: <remote URL>
-- **Status**: <e.g. Shared across projects>
-- **Note**: This directory is a separate git repository and may be ignored by the main repo (see `.gitignore`).
-
-(Add more numbered subsections for each repo you discovered.)
-```
-
-**Slim variant:** If you use a slim root file and put long content in `docs/agents/`, you can:
-
-- Keep a **short** “Tracked Repositories” block in AGENTS.md (and CLAUDE.md / GEMINI.md) listing only: name, path, URL, one-line purpose.
-- Put the full **Repository Map** (table + sync/push/pull details) in e.g. `docs/agents/repository-map.md` and link to it:
-
-```markdown
-## Tracked Repositories
-
-See [Repository Map](docs/agents/repository-map.md) for paths, remotes, and sync instructions.
-```
-
-### 2.2 Map Table (Optional)
-
-In AGENTS.md or `docs/agents/repository-map.md` you can add a quick-reference table:
-
-```markdown
-| # | Name           | Directory        | Remote URL                    | Branch |
-|---|----------------|------------------|-------------------------------|--------|
-| 1 | Primary        | `.` (project root) | https://github.com/org/repo   | main   |
-| 2 | Workflow-Scripts | Workflow-Scripts/ | https://github.com/.../Workflow-Scripts | main |
-```
-
-### 2.3 Which Files to Update
-
-- **AGENTS.md** – Always include the repository map (or link to `docs/agents/repository-map.md`) so all agents see it.
-- **CLAUDE.md** – Include the **same** repo map content or the **same** link so Claude Code has the map in context.
-- **GEMINI.md** – Include the **same** repo map content or the **same** link for Gemini-focused workflows.
-
-Run the discovery in Step 1, then paste the resulting structure into **all three files** so paths and URLs match your project. Whenever you add, remove, or change a repo in the map, update all three files so they stay in sync (see §2.4).
-
-### 2.4 Keep AGENTS.md, CLAUDE.md, and GEMINI.md in Sync with the Repo Map
-
-The directory → repo mapping must be consistent across AGENTS.md, CLAUDE.md, and GEMINI.md. Otherwise different agents (or the same agent reading different files) may see different repo lists or remotes.
-
-**Rules:**
-
-1. **Single source of truth** – Choose one of:
-   - **Inline** – The full “Tracked Repositories” (and optional “Repository Management”) content lives in all three files; when you change the repo map, update the same section in AGENTS.md, CLAUDE.md, and GEMINI.md.
-   - **Canonical doc** – The full map lives in one place (e.g. `docs/agents/repository-map.md` or AGENTS.md); AGENTS.md, CLAUDE.md, and GEMINI.md each contain the **same** short “Tracked Repositories” block that links to that doc. When the repo map changes, update only the canonical doc (and ensure all three still point to it).
-
-2. **When the repo map changes** (new repo, removed repo, new remote, path or purpose change):
-   - If using **inline**: update the Tracked Repositories (and Repository Management, if present) in **AGENTS.md**, **CLAUDE.md**, and **GEMINI.md** with the same content.
-   - If using a **canonical doc**: update that doc only; verify AGENTS.md, CLAUDE.md, and GEMINI.md still link to it and that the link path is correct.
-
-3. **Sync checklist** – After any change to the repo map, confirm:
-   - [ ] AGENTS.md has the current repo list (or the correct link to the canonical map).
-   - [ ] CLAUDE.md has the same repo list or the same link.
-   - [ ] GEMINI.md has the same repo list or the same link.
-   - [ ] No file references a repo that no longer exists or an outdated path/URL.
-
-**When to refresh:** Re-run this workflow (discovery + update of agent files) whenever you add or remove a nested repo, change a remote URL, or rename a repo directory, so all three agent files stay aligned with the actual repos in the project.
+Whenever the repo map changes, you only ever edit `PROJECT.md`. There is nothing else to keep "in sync."
 
 ---
 
@@ -183,7 +116,7 @@ Document and follow clear rules so the project stays in sync and agents know whe
 
 ### 3.2 Per-Repository Commands
 
-For **each** tracked repo, run Git commands from that repo’s directory.
+For **each** tracked repo, run Git commands from that repo's directory.
 
 **Primary repo (project root):**
 
@@ -216,7 +149,7 @@ git commit -m "docs: update workflow description"
 git push
 ```
 
-Repeat for every repo you listed in the agent-file map (each has its own directory).
+Repeat for every repo you listed in `PROJECT.md`'s Repositories table (each has its own directory).
 
 ### 3.3 If the Project Has a Sync Script
 
@@ -232,61 +165,31 @@ cd <PROJECT_PATH>
 ./scripts/utilities/sync-repo.sh --auto-pull
 ```
 
-**Document in the repo map** that the primary repo supports this script and where it lives, so agents and users know to run it before install/update steps.
+**Note the script in `PROJECT.md`'s Repositories section** (or in `docs/agents/repository-map.md` if you use that optional doc) so agents and users know to run it before install/update steps.
 
 ### 3.4 Syncing Workflow-Scripts Across Multiple Projects
 
 If you use the same Workflow-Scripts repo in **multiple projects**, use the multi-project sync workflow instead of pulling in each project by hand:
 
-- See [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md) for a script that finds all projects and runs `git pull` in each project’s `<WORKFLOWS_DIR>`.
+- See [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md) for a script that finds all projects and runs `git pull` in each project's `<WORKFLOWS_DIR>`.
 
 ### 3.5 Push and Pull Best Practices
 
 - **Pull before work** – Reduces merge conflicts and keeps you on latest.
 - **Push after meaningful changes** – So other machines and collaborators see updates.
-- **One repo per directory** – Always `cd` to the repo directory before `git pull` or `git push`; don’t assume one command updates all repos.
+- **One repo per directory** – Always `cd` to the repo directory before `git pull` or `git push`; don't assume one command updates all repos.
 - **Main vs nested** – Pushing from project root does **not** push nested repos; push each repo from its own directory.
 
 ---
 
-## Step 4: Add “Repository Management” to Agent Files (Optional but Recommended)
-
-In addition to the **Tracked Repositories** map, add a **Repository Management** section that spells out:
-
-- That the project has multiple repos and they are independent.
-- Where to run Git commands for the main repo vs nested repos.
-- That the workflows directory (if present) is ignored by the main repo and has its own Git history.
-
-Example (customize paths and names):
-
-```markdown
-## Repository Management
-
-This project uses multiple repositories that must be managed independently.
-
-### Primary Repo (Project Root)
-- **Location**: `<PROJECT_PATH>`
-- **Git Remote**: <URL>
-- Run `git status`, `git pull`, `git add`, `git commit`, `git push` from `<PROJECT_PATH>`.
-
-### Workflow-Scripts (Nested)
-- **Location**: `<PROJECT_PATH>/<WORKFLOWS_DIR>/`
-- **Git Remote**: <URL>
-- Run all Git commands from `<PROJECT_PATH>/<WORKFLOWS_DIR>/`. The main repo’s `.gitignore` excludes this directory.
-```
-
-You can reuse the same structure you added in Step 2 (Tracked Repositories) and expand it with the exact commands from Step 3.
-
----
-
-## Step 5: Quick Reference for Agents and Humans
+## Step 4: Quick Reference for Agents and Humans
 
 After completing this workflow, you should have:
 
 1. **Discovery** – A list of all Git repos under the project (path, remote, branch).
-2. **Agent files** – AGENTS.md, CLAUDE.md, and GEMINI.md each contain (or link to) the **same** **Tracked Repositories** map: directory → URL, purpose, status. All three files are kept in sync with the repo mapping (§2.4).
-3. **Sync/push/pull** – Documented when to sync, and per-repo commands (and any project-specific sync script for the primary repo).
-4. **Repository Management** – A short section in agent files explaining multiple repos and where to run Git.
+2. **PROJECT.md** – The `## Repositories` table updated with every discovered repo: Path, Repository, Remote, Purpose, plus the three standing bullets. This is the single canonical copy.
+3. **Verified pointers** – `AGENTS.md` still has the "Read `PROJECT.md`" line; `CLAUDE.md`/`GEMINI.md` still import `@AGENTS.md` and `@PROJECT.md`; none of the three restate the repo map.
+4. **Sync/push/pull** – Documented when to sync, and per-repo commands (and any project-specific sync script for the primary repo).
 
 ---
 
@@ -299,28 +202,26 @@ After completing this workflow, you should have:
 
 ### Wrong remote or branch in the map
 
-- Re-run the discovery commands (Step 1) and fix the paths/URLs in **all three** agent files (AGENTS.md, CLAUDE.md, GEMINI.md)—or in the single canonical doc if you use that pattern—so they stay in sync.
-- If a repo uses a different remote name (e.g. `upstream`), use `git remote get-url upstream` (or the appropriate name) in the discovery script and document it in the map.
+- Re-run the discovery commands (Step 1) and fix the paths/URLs in `PROJECT.md`'s Repositories table.
 
-### Agent files (AGENTS.md, CLAUDE.md, GEMINI.md) out of sync with repo map
+### PROJECT.md is out of date with the actual repos
 
-- If one file lists different repos or URLs than another, re-run discovery (Step 1), then update **all three** files with the same Tracked Repositories content (or the same link to `docs/agents/repository-map.md`). Use the sync checklist in §2.4.
+- Re-run discovery (Step 1), then update `PROJECT.md`'s Repositories table to match. There's no second copy to reconcile — if `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` still contain their own repo list, that's leftover from before this workflow moved to the single-source scheme; delete it (see 2.2).
 
 ### Push/pull from wrong directory
 
-- Always `cd` to the repo’s path before running `git push` or `git pull`. The map in the agent files is the source of truth for “which directory is which repo.”
+- Always `cd` to the repo's path before running `git push` or `git pull`. `PROJECT.md`'s Repositories table is the source of truth for "which directory is which repo."
 
 ### Nested repo ignored by main repo
 
-- This is expected for directories like Workflow-Scripts that are in `.gitignore`. Document it in the repo map and in Repository Management so agents don’t try to commit the nested repo from the main repo root.
+- This is expected for directories like Workflow-Scripts that are in `.gitignore`. Document it in `PROJECT.md`'s Repositories section so agents don't try to commit the nested repo from the main repo root.
 
 ---
 
 ## For AI Agents Executing This Workflow
 
 1. **Discover first** – Run the `find` + `git remote get-url` / `git branch --show-current` commands from the project root and collect the list of directories and their remotes/branches.
-2. **Update agent files** – Add or update the “Tracked Repositories” (and optionally “Repository Management”) section using the discovered list. Use the project’s actual paths and remote URLs; do not leave placeholders like `<PROJECT_PATH>` unless the user has not provided them.
-3. **Keep all three in sync** – Apply the **same** repo map content (or the **same** link to the canonical map) to **AGENTS.md**, **CLAUDE.md**, and **GEMINI.md**. When you change the repo map in one file, update the other two so the directory → repo mapping is identical everywhere. See §2.4.
-4. **Document sync/push/pull** – Include the when-to-sync rules and the per-repo commands (and any project-specific sync script) in the same section or in the linked doc.
-5. **One source of truth** – Either put the full map in all three files (and keep them identical when editing) or put it in one canonical doc (e.g. `docs/agents/repository-map.md`) and have all three agent files link to it with the same link.
-6. **Do not invent repos** – Only list repositories that the discovery step actually found; do not add placeholder “Repo 2” entries without corresponding directories.
+2. **Update PROJECT.md only** – Write the discovered repos into `PROJECT.md`'s `## Repositories` table (path, repository, remote, purpose) plus the three standing bullets. Use the project's actual paths and remote URLs; do not leave placeholders like `<PROJECT_PATH>` unless the user has not provided them.
+3. **Verify, don't duplicate** – Check that `AGENTS.md` has the "Read `PROJECT.md`" pointer and that `CLAUDE.md`/`GEMINI.md` import `@AGENTS.md` and `@PROJECT.md`. Delete any repo map or "Tracked Repositories"/"Repository Management" section you find inline in those files instead of updating it in place.
+4. **Document sync/push/pull** – Include the when-to-sync rules and the per-repo commands (and any project-specific sync script) in Step 3, referenced from `PROJECT.md` if useful.
+5. **Do not invent repos** – Only list repositories that the discovery step actually found; do not add placeholder "Repo 2" entries without corresponding directories.
