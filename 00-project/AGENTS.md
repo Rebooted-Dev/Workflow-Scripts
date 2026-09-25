@@ -36,7 +36,12 @@ git push
 ## Change Management
 
 - Unless instructed by the developer, do not make code changes to consumer-project application code from this repo.
-- **After changes to Workflow-Scripts or `00-project/`:** Update the changelog and/or troubleshooting using `00-project/changelog/` and `00-project/troubleshooting/` (one file per entry, update the relevant index). Add a **troubleshooting** entry only when the work involved a bug, an issue that required debugging/workarounds, or a non-trivial problem; use changelog only for simple doc or workflow updates. For bug/issue/non-trivial fixes, create **both** a troubleshooting entry and a changelog entry. See **[Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md)**.
+- **After changes to Workflow-Scripts or `00-project/`:** Log them in `00-project/changelog/` and `00-project/troubleshooting/` (one file per entry, update the relevant index). This applies even when the session started in a host project that contains this repository.
+  - **Changelog:** every change outside `00-project/`.
+  - **Troubleshooting:** every fix. Workflows are this repo's product, so a workflow defect is a bug: a contradiction, a broken handoff, a rule agents follow wrongly, a script failure, or a wrong or broken reference. Every `changelog/fixed/` entry needs a matching troubleshooting entry.
+  - **Waiver:** skip troubleshooting only for a typo or formatting fix that involved no investigation. Record the skip with the line `**Troubleshooting:** not needed — <reason>` in the `fixed/` entry.
+  - **Changelog only:** new content, rewording, or restructuring that fixes no defect.
+  - `scripts/validation/check-meta-logs.sh` enforces these rules. See **[Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md)**.
 
 ## Tracked Repositories
 

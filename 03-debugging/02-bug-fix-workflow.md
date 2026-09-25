@@ -114,18 +114,22 @@ Suggested verification responsibilities; assign only roles justified by evidence
 Run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs plus relevant tests. If no command exists, state that explicitly. If failures occur, fix and re-run.
 
 ### 7. Documentation
-**Update logs (only for completed tasks that change or affect project code). For every completed bug fix, update BOTH changelog and troubleshooting (skip troubleshooting only for truly trivial mechanical fixes with no investigation).**
+**Every bug fix gets BOTH a changelog entry and a troubleshooting entry.** This holds whatever the fix touches: code, config, prompts, scripts, or workflow/Markdown instructions. It also holds when the fix is only partly done: log the landed work and mark the troubleshooting status `OPEN` or `WORKAROUND`.
 
-- **Changelog** (required for every bug fix):
-  - Create a new file in `changelog/fixed/` named `YYYY-MM-DD-fixed-<short-title>.md` (see project `changelog/README.md` for template).
-  - Add a row at the top of `changelog/index.md` with Date, Type, Title, File.
-  - If the project uses a single-file changelog instead of `changelog/`, use that: e.g. `docs/CHANGELOG.md` or `CHANGELOG.md` with a dated line `- YYYY-MM-DD: Bug fix: [bug description]`.
-  - Cross-reference relevant entries in `plans-completed/` if the bug relates to a completed plan.
-- **Troubleshooting** (required for every bug fix unless truly trivial):
-  - Create a new file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`.
-  - Update `troubleshooting/index.md` (add the new entry at the top).
-  - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons (see project `troubleshooting/README.md`).
-  - Reference related entries in `plans-completed/` for historical context if applicable.
+**Where:** resolve `<metadata-root>` per [Metadata Root Resolution](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution) for the **repository that owns the changed files**. A host project usually uses `project/`; Workflow-Scripts uses `00-project/`, even when the session started in a host project. If the fix changed files in two repositories, each one gets its own entries.
+
+**Waiver:** skip troubleshooting only for a typo or formatting fix that involved no investigation. Write the line `**Troubleshooting:** not needed — <reason>` in the changelog entry so the skip is recorded rather than silent. "Small diff" or "only a doc change" is not a waiver.
+
+- **Changelog** (required):
+  - Create `<metadata-root>/changelog/fixed/YYYY-MM-DD-fixed-<short-title>.md` (see the host's `changelog/README.md` for the template).
+  - Add a row at the top of `<metadata-root>/changelog/index.md` with Date, Type, Title, File.
+  - If the host documents a single-file changelog instead of `changelog/`, use that: e.g. `docs/CHANGELOG.md` or `CHANGELOG.md` with a dated line `- YYYY-MM-DD: Bug fix: [bug description]`.
+  - Link the troubleshooting entry, and any related completed plan.
+- **Troubleshooting** (required unless waived as above):
+  - Create `<metadata-root>/troubleshooting/<category>/YYYY-MM-DD-<category>-<short-title>.md`, using an existing category folder where one fits.
+  - Add a row at the top of `<metadata-root>/troubleshooting/index.md`.
+  - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons (see the host's `troubleshooting/README.md`). The Root Cause is the one found in Step 3.
+  - Reference related completed plans or earlier troubleshooting entries if applicable.
 - **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
 
 ### 8. Final Verification
@@ -133,6 +137,7 @@ Run the project verification command from `AGENTS.md`, package scripts, Makefile
 - Perform a smoke test to ensure the fix works in the actual environment.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
 - Verify the fix addresses the root cause and doesn't introduce new issues.
+- **Log gate (blocking):** before reporting the fix as done or committing, list both log files and their index rows by path (or the changelog's waiver line). If either is missing, go back to Step 7. A bug fix without its troubleshooting entry is not finished.
 
 ## Bug Fix Best Practices
 
@@ -163,7 +168,7 @@ Run the project verification command from `AGENTS.md`, package scripts, Makefile
 ## Output Requirements
 - Fixed code with bug resolved
 - Tests added or updated to verify the fix and prevent regression
-- Documentation updated (changelog and troubleshooting entry)
+- `<metadata-root>/changelog/fixed/` entry and `<metadata-root>/troubleshooting/<category>/` entry, both with index rows, in the repository that owns the changed files (or a recorded waiver line)
 - Verification that fix doesn't introduce new bugs
 - Confirmation that functionality works correctly
 
@@ -173,7 +178,7 @@ Run the project verification command from `AGENTS.md`, package scripts, Makefile
 - Tests verify the fix and prevent regression
 - No new bugs introduced
 - Code builds and passes all tests
-- Documentation is updated
+- Changelog and troubleshooting entries exist in the owning repository's metadata root, and both indexes are updated (Step 8 log gate passed)
 - Fix is ready for review and deployment
 
 ## Related Workflows

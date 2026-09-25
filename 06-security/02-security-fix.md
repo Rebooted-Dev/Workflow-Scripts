@@ -97,11 +97,11 @@ Use parallel agents to verify the fix. Suggested agent roles (spawn additional a
 After trust is established, run the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs plus relevant security tests. If no command exists, state that explicitly. If failures occur, fix and re-run.
 
 ### 7. Documentation
-**Update logs (only for completed tasks that change or affect project code):**
-- Update the changelog with a dated entry for the fix. Follow the **host repository's documented changelog convention** (see host AGENTS.md or `project/changelog/README.md`): use `project/changelog/` with typed entry and index row when the host uses that system; otherwise use its documented single-file changelog.
+**Every security fix gets BOTH a changelog entry and a troubleshooting entry**, whatever the fix touches (code, config, dependencies, scripts, or workflow instructions). Resolve `<metadata-root>` per [Metadata Root Resolution](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution) for the **repository that owns the changed files**: usually `project/` in a host project, and `00-project/` for Workflow-Scripts.
+- Update the changelog with a dated entry for the fix. Follow the **host repository's documented changelog convention**: `<metadata-root>/changelog/fixed/` with an index row when the host uses that system; otherwise its documented single-file changelog.
 - Add a troubleshooting entry (category `security`):
-   - Create a new file under `troubleshooting/security/` named `<yyyy-mm-dd>-security-<short-title>.md`
-  - Update `troubleshooting/index.md` (add the new entry at the top)
+  - Create `<metadata-root>/troubleshooting/security/<yyyy-mm-dd>-security-<short-title>.md`
+  - Update `<metadata-root>/troubleshooting/index.md` (add the new entry at the top)
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
 - **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
 
@@ -110,6 +110,7 @@ After trust is established, run the project verification command from `AGENTS.md
 - Perform a security smoke test to ensure the fix works.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
 - Verify no sensitive information is exposed in code or logs.
+- **Log gate (blocking):** before reporting the fix as done or committing, list the changelog and troubleshooting entries and their index rows by path. If either is missing, go back to Step 7.
 
 ## Security Fix Best Practices
 

@@ -24,7 +24,10 @@ Paths below are relative to `00-project/` unless noted.
   - **Bugs**: Any defect that causes incorrect behavior or crashes
   - **Issues**: Problems that required debugging, investigation, or workarounds
   - **Non-trivial problems**: Issues that took significant time to resolve, involved multiple steps, or have lessons worth preserving
-- **When NOT to create troubleshooting entries**: Simple doc or workflow updates, routine refactors, or straightforward additions. Changelog only for those.
+  - **Workflow defects are bugs here.** Workflows are this repo's product. A contradiction, broken handoff, rule agents follow wrongly, script failure, or wrong or broken reference is a bug, even when the fix is only a Markdown edit.
+- **Every `changelog/fixed/` entry needs a troubleshooting entry**, added in the same commit. The only waiver is a typo or formatting fix that involved no investigation. Record it with the line `**Troubleshooting:** not needed — <reason>` in the `fixed/` entry.
+- **When NOT to create troubleshooting entries**: New content, rewording, or restructuring that fixes no defect; routine refactors; straightforward additions. Changelog only for those.
+- **Enforcement**: `scripts/validation/check-meta-logs.sh` runs as a pre-commit hook (`git config core.hooksPath scripts/hooks`) and in CI.
 - **Location**: Use the `troubleshooting/` directory.
 - **Structure**:
   - Create individual files in the appropriate category folder (`build/`, `runtime/`, `data/`, `environment/`, `security/`, `git/`, `workflow/`)

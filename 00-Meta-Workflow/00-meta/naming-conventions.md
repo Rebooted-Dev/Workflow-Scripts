@@ -43,7 +43,11 @@ All generated reports should include this header:
 
 ### Metadata Root Resolution
 
-Workflows should infer the metadata root instead of requiring the user to name output directories in every prompt. Resolve in this order:
+Workflows should infer the metadata root instead of requiring the user to name output directories in every prompt.
+
+**Owning repository first.** Resolve the metadata root for the git repository that **owns the changed files**, not the project the session started in. A session in a host project that edits its local Workflow-Scripts clone (e.g. `Workflow-Scripts/`, `workflows/`, or `Shared-Links/Workflow-Scripts/`) logs those changes in **Workflow-Scripts' `00-project/`**, never in the host's `project/`. When one task changes both repositories, each repository gets its own entries in its own metadata root. Cross-link them.
+
+Then resolve in this order:
 
 1. If the user gives an explicit output directory, use it.
 2. If an explicit host policy names the metadata root — check the host repository's root `AGENTS.md`, root `README.md`, `User-Manual/`, root `plans/README.md`, or equivalent project documentation — use that documented location.

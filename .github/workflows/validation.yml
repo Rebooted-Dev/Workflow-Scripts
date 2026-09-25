@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -41,3 +43,18 @@ jobs:
 
       - name: Check update helper
         run: bash scripts/validation/check-update-workflows.sh
+
+      - name: Check completion-chain policy
+        run: bash scripts/validation/check-completion-chain-policy.sh
+
+      - name: Check meta-log validator self-test
+        run: bash scripts/validation/check-meta-logs-selftest.sh
+
+      - name: Check new commits are logged in 00-project
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$BASE_SHA" ] || ! git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null; then
+            BASE_SHA="$(git rev-parse HEAD~1)"
+          fi
+          bash scripts/validation/check-meta-logs.sh --range "$BASE_SHA..HEAD"

@@ -309,6 +309,7 @@ This project has **multiple independent git repositories**; do not assume one re
 | `<WORKFLOWS_DIR>/` | Workflow-Scripts | `<WORKFLOWS_REMOTE>` | Shared workflow instructions used by several projects |
 
 - `<WORKFLOWS_DIR>/` is listed in `.gitignore`, so main-repo commits never include it. Commit workflow changes from inside `<WORKFLOWS_DIR>/`.
+- **Log Workflow-Scripts changes in `<WORKFLOWS_DIR>/00-project/`** (changelog and troubleshooting, per `<WORKFLOWS_DIR>/AGENTS.md`), never in this project's `project/`. A task that changes both repositories logs in both.
 - Changes do not sync between repositories. A Workflow-Scripts change affects every project that uses it.
 - Pull every repository before starting work.
 

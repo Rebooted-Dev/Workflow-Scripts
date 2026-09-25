@@ -38,9 +38,9 @@ Use this skill for bugs that need evidence-first diagnosis plus durable repo boo
 5. Verify and reconcile.
    - Run targeted tests plus the workflow's required checks.
    - For UI/export/provider/runtime bugs, verify the real affected surface, not only helper functions.
-   - Update changelog and troubleshooting for non-trivial bugs or when the user says "update both logs".
+   - Update **both** changelog and troubleshooting for every bug fix, in the metadata root of the repository that owns the changed files (`project/` for a host project, `00-project/` for Workflow-Scripts). Skip troubleshooting only for a typo or formatting fix with no investigation, and record the skip as `**Troubleshooting:** not needed — <reason>` in the changelog entry.
    - Archive completed plans only after live code and verification prove completion.
 
 ## Completion Bar
 
-Report the root cause, changed files, verification run, log/plan updates, and any remaining risk. Do not call a persistent or partially verified bug fixed.
+Report the root cause, changed files, verification run, log/plan updates (the changelog and troubleshooting file paths), and any remaining risk. A fix without its troubleshooting entry or recorded waiver is not complete. Do not call a persistent or partially verified bug fixed.

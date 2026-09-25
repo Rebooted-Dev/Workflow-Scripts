@@ -21,6 +21,8 @@ Run from Workflow-Scripts root:
 ./scripts/validation/check-update-workflows.sh
 ./scripts/validation/check-review-workflow-policy.sh
 ./scripts/validation/check-completion-chain-policy.sh
+./scripts/validation/check-meta-logs-selftest.sh
+./scripts/validation/check-meta-logs.sh --range origin/v1.82..HEAD   # new commits only
 ```
 
 | Script | Scope |
@@ -31,8 +33,10 @@ Run from Workflow-Scripts root:
 | `check-update-workflows.sh` | Staged-only commit contract; rejects unstaged/untracked files |
 | `check-review-workflow-policy.sh` | Agent policy refs, research output routing, no stale agent caps |
 | `check-completion-chain-policy.sh` | Plan-level terminal-gate ownership, gate runs for every outcome (Full completion / Reconcile only), task ticks applied as tasks verify (01 ticks, 02 corrects both ways, gate verifies unticked tasks), host-policy archive routing, completion-chain navigation |
+| `check-meta-logs.sh` | Changes outside `00-project/` add a changelog entry + index row; `fixed/` entries need a troubleshooting entry (or `**Troubleshooting:** not needed — <reason>`); troubleshooting entries need an index row. `--staged` runs as the pre-commit hook (`git config core.hooksPath scripts/hooks`); `--range` runs in CI on new commits |
+| `check-meta-logs-selftest.sh` | Nine pass/fail cases for `check-meta-logs.sh` in a throwaway repo |
 
-Run all six before maintainer push. GitHub Actions runs the same suite via `.github/workflows/validation.yml`.
+Run all of these before maintainer push. GitHub Actions runs the same suite via `.github/workflows/validation.yml`.
 
 ## Package Unit Tests
 

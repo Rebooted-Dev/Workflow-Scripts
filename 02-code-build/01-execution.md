@@ -90,11 +90,12 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
   - **Tick every task whose Verification Bar items passed in this phase: change `[ ]` to `[✅]` in the plan file now**, before starting the next phase. **Do not tick a task unless the Verification Bar items that apply to it passed** (or the user explicitly accepts residual risk for a documented blocker). A blocked check leaves only the affected task `[ ]` with a note; it does not stop verified sibling tasks from being ticked.
   - Include brief verification evidence in the phase summary (commands/tests/smoke + result).
   - **Update logs (only for completed tasks that change or affect project code):**
+    - **Which repository:** log in the metadata root of the repository that **owns the changed files** ([Metadata Root Resolution](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution)). Workflow-Scripts changes go to its `00-project/`, even from a host-project session; there, a workflow defect counts as a bug.
     - **Changelog:** Add a dated entry for this phase's work per the host repository's documented changelog convention (see host AGENTS.md or `project/changelog/README.md`).
     - **Troubleshooting (only when applicable):** Add a troubleshooting entry **only** when this phase involved one of the following (see AGENTS.md and `troubleshooting/README.md` for full conventions):
       - **Add an entry when:** You fixed a **bug** (incorrect behavior or crash), resolved an **issue** that required debugging or a workaround, or solved a **non-trivial problem** (significant investigation, multiple steps, or lessons worth preserving — e.g. complex config, unexpected framework behavior, tricky debugging).
       - **Do not add an entry when:** The work was a simple code change, routine refactor, or straightforward feature addition with no real problem-solving. Changelog is enough.
-      - When you do add an entry: create a file under `troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`, update `troubleshooting/index.md` (new row at top), and include Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons.
+      - When you do add an entry: create a file under `<metadata-root>/troubleshooting/<category>/` named `YYYY-MM-DD-<category>-<short-title>.md`, update `troubleshooting/index.md` (new row at top), and include Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons.
   - Provide a concise summary (1-3 bullets) describing what changed and why, plus verification outcome.
 
 ## Finalization (After All Phases)
