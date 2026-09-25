@@ -6,6 +6,8 @@
 
 **Summary:** Coordinate the v1.82-fixes lanes without duplicating their procedures. Plan 01 is the first executable lane and blocks the Astra evaluation in Plan 05. Plan 02 is independent, validation-only audit work. Plan 03 is independent after its own discovery and safety gates. Plan 04 is approval-gated. Plan 06 is KIV/deferred by user and is not actionable without a new explicit user request. Plan 05 remains independent of Plans 03, 04, and deferred Plan 06 once Plan 01 restores the protocol and selects an evaluation arm.
 
+> **Cross-reference (2026-09-25):** the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) reused this roadmap's protected-baseline, single-owner and objective-exit patterns (its Phase 0). It interacts with two lanes: it hands the 4 broken links in `research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md` to Plan 01, and it records one commit SHA per phase so Plan 05 can pin clean arm boundaries. It adds no lane here and changes no lane's tasks.
+
 ## Source and review provenance
 
 - Source set: [`research/v1.82-fixes/`](../../research/v1.82-fixes/), including the completion-chain research, skills proposal, raw agent-rule material, Astra plan, and both harness documents.

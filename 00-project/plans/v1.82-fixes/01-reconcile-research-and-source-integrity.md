@@ -6,6 +6,8 @@
 
 **Summary:** Safely reconcile the externally reorganized v1.82-fixes research set into a seven-source inventory. Recover the missing Astra protocol from tracked history, compare content and provenance before filing it in the new source location, map old paths to new paths, repair active inbound and outbound references, and preserve review addenda and supersession relationships. Commit only after validation and authorization.
 
+> **Cross-reference (2026-09-25):** the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) (Phase A task 3) hands these known broken outbound links to P1 task 2 of this plan. Targets: `:96` → `../../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md`; `:97` → `../../../00-Meta-Workflow/00-meta/workflow-applicability.md`; `:7` and `:95` → the recovered protocol's filed location (the target is absent today). That plan also reused this plan's rule of classifying every search hit (for its Change Surface). Advisory input only; this plan's tasks and ownership are unchanged.
+
 ## Source and review provenance
 
 - Current source inputs: the six files in [`research/v1.82-fixes/`](../../research/v1.82-fixes/).

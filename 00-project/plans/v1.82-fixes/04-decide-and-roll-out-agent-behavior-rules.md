@@ -6,6 +6,8 @@
 
 **Summary:** Treat the raw `update-agents-files.md` material as input, not policy. Inventory target repositories and inheritance, map each rule to adopt/adapt/reject with evidence, and only then seek approval for a smallest representative pilot. The Visualize mandate is conditional on installation and material usefulness; approval, verification, untrusted-content safeguards, and consumer-project UI restrictions remain mandatory boundaries.
 
+> **Cross-reference (2026-09-25):** raw rule 5 in `update-agents-files.md` ("Ask questions only when a decision is materially ambiguous, risky, or requires approval") matches the intake rule R7 in the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) (Phase D task 3). That task links to this plan's decision if one exists and otherwise lands the rule workflow-scoped. Add `01-planning-and-organizing/00-research-and-plan.md` intake to this plan's P0 target inventory.
+
 ## Source and review provenance
 
 - Raw source material: [`update-agents-files.md`](../../research/v1.82-fixes/update-agents-files.md).

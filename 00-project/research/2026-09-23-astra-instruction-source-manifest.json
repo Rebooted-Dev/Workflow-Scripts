@@ -1,0 +1,80 @@
+[
+  {
+    "path": "/Users/jesse/Development/Personal/Flash-UI-Idea-Generator/AGENTS.md",
+    "sha256": "33228d3378cd038967714b3bb2662888869d7aaa43749cb2a23788cf5f6aa386",
+    "bytes": 1911,
+    "lines": 18
+  },
+  {
+    "path": "/Users/jesse/Development/Personal/Flash-UI-Idea-Generator/PROJECT.md",
+    "sha256": "0b01727b00c6192a40a19515144c6fcb333f6c0a0e23b88627d0e7737806a501",
+    "bytes": 1702,
+    "lines": 23
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/01-setup-project.md",
+    "sha256": "718833537b009935b2670e74615959efbce705091f966517a912447eba7b1193",
+    "bytes": 87284,
+    "lines": 1372
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/02-optimize-workflow-scripts.md",
+    "sha256": "be3e833c32b0a719701bf9d351808b2f01ecbf64752671d15f96c40ade08316a",
+    "bytes": 19520,
+    "lines": 708
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/03-sync-workflow-scripts.md",
+    "sha256": "0f2378b5b0991b28ed572ebf0ab829fb14feee5023d6d24bee303eab46354f20",
+    "bytes": 18860,
+    "lines": 656
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/04-track-repos-and-agent-map.md",
+    "sha256": "0a95ec620fb85b230c892f36d17ab629a02f0cfc98bed7cabf91b12d4de216ed",
+    "bytes": 10959,
+    "lines": 227
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/05-mcp-and-config-setup.md",
+    "sha256": "b1073fe35016878772cf5d46f1b26ad6c7bec253e73a4538cf9f7a27a328c137",
+    "bytes": 26589,
+    "lines": 310
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/06-skills-setup.md",
+    "sha256": "b01da74822886c7a8a4dc3648250fadf1c39459d25c20625c0831d04cf2c31df",
+    "bytes": 66174,
+    "lines": 811
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/07-migrate-project-structure.md",
+    "sha256": "ba9e363d116e60d5999129fbb20336b1fcbba3c457c398ebce3902b972af0276",
+    "bytes": 18347,
+    "lines": 574
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/08-kaparthy-template.md",
+    "sha256": "2678e791278ce40468e62c41bb12fc1373a87feb6ac73bd979fa682cce57d06b",
+    "bytes": 4997,
+    "lines": 60
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/09-seo-skill-setup.md",
+    "sha256": "d2ed474e678cae9e44ab81978067ebefd40e553b29c04bd818395163a273d962",
+    "bytes": 6514,
+    "lines": 116
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project-setup/README.md",
+    "sha256": "a928238e296cae922dcdf676a12ab8b2cf624a39ad207def5977ccc027f4584a",
+    "bytes": 7293,
+    "lines": 106
+  },
+  {
+    "path": "/Users/jesse/Development/Shared-Common-Library/Workflow-Scripts/00-project/plans/v1.82-fixes/05-run-astra-instruction-evaluation.md",
+    "sha256": "4779e2353140ebd48fc05fd1a1e9b925a4e275e5d5fe5cc242ba39b172be88fe",
+    "bytes": 20611,
+    "lines": 107
+  }
+]

@@ -6,6 +6,8 @@
 
 **Summary:** Evaluate GPT-6 Astra instruction behavior only after Plan 01 restores the authoritative protocol and an explicit decision selects one comparison arm. The current-v1.82 arm is recommended for decision, but is **not selected**. Preserve the protocol core for the selected arm; if the current-v1.82 arm is selected, add a separately approved generation-then-consumption suite. Use isolated synthetic projects, immutable approved inputs, pre-registered scoring and budget, a pilot before any full matrix, and evidence-bounded conclusions. This lane does not depend on the harness concept test, AGENTS-file behavior-rule rollout, or skills decision.
 
+> **Cross-reference (2026-09-25):** the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) edits planning and build workflows on `v1.82`, which changes the effective instruction stack this plan freezes (P1 task 2). It commits one phase at a time, records each SHA, and makes no workflow edit during an active Astra run (its Phase 0 task 2). The same plan reuses this plan's evidence-label idea (its Phase D task 1 maps these labels onto the shared review-core vocabulary).
+
 ## Operating boundaries and evidence labels
 
 - **Blocked means blocked:** read-only planning and audit work is allowed now; fixture creation, live setup changes, experiments, and model runs are not.

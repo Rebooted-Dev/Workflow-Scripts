@@ -5,8 +5,11 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-25 | docs | Planning and code-build workflow quality review | docs/2026-09-25-docs-planning-build-quality-review.md | 3 mechanics defects (04 gate wording, CI branches, agent sizing); tiered plan template, check-plan.sh, engineering-standards proposal; no workflow changes |
 | 2026-09-25 | fixed | Log Workflow-Scripts changes in 00-project; troubleshooting for every fix | fixed/2026-09-25-fixed-meta-log-routing-and-fix-troubleshooting.md | Owning-repo routing, root AGENTS.md/CLAUDE.md, fix workflows tightened, check-meta-logs.sh pre-commit hook + CI |
 | 2026-09-25 | fixed | Completion chain ticks verified tasks for every outcome | fixed/2026-09-25-fixed-completion-chain-task-ticking.md | Gate always runs (Full completion / Reconcile only); 01 must tick, 02 corrects both ways; gate verifies unticked tasks; validator regression checks |
+| 2026-09-23 | docs | Existing-project instruction upgrade recommendations | docs/2026-09-23-docs-existing-project-instruction-upgrade-recommendations.md | R10: proposed scan, preview, migration, preservation and recovery workflow |
+| 2026-09-23 | docs | Astra instruction performance recommendations | docs/2026-09-23-docs-astra-performance-recommendations.md | Evidence-based recommendations and source hashes; no instruction changes or experiments |
 | 2026-09-23 | docs | Agent files: single source of truth with PROJECT.md | docs/2026-09-23-docs-agent-files-single-source-project-md.md | AGENTS.md rules only; PROJECT.md facts + repo map; thin CLAUDE.md/GEMINI.md imports |
 | 2026-09-22 | docs | Strengthen Astra Instruction Evaluation | docs/2026-09-22-docs-strengthen-astra-instruction-evaluation.md | Expanded Plan 05 and added a first-party/local setup audit; documentation-only, with no live instruction changes or model runs |
 | 2026-09-22 | docs | Correct v1.82 Roadmap Completion State | docs/2026-09-22-docs-correct-v1-82-roadmap-completion-state.md | Corrected roadmap status: Plan 02 is filed Verified Complete; remaining lanes remain active or KIV; tasks and dependencies unchanged |

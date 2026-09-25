@@ -1,10 +1,12 @@
 # 2026-07-06 — Workflow-Scripts v2: Engineering Quality & Lifecycle Proposal (companion to the Full-Autonomy Redesign)
 
-**Status:** DRAFT - Ready for Review ✅
+**Status:** DRAFT - Ready for Review ✅ (still unreviewed; see banner)
 **Author:** claude-fable-5 (with codex/gpt-5.5 low survey pass)
 **Rubric:** `00-Meta-Workflow/00-meta/severity-priority-rubric.md`
 **Evidence base:** direct file review (this session) + delegated survey filed at `workflow-engineering-quality-survey-260706-0137-gpt55.md` (same directory)
 **Companion to:** `2026-07-06-workflow-system-v2-redesign-proposal.md` — that proposal fixes the system's *mechanics* (drift, token cost, enforcement, roles). This one fixes its *engineering substance*: what the workflows actually teach and require about building good software. Numbering continues from it (weaknesses W13+, improvements KI-12+); its structures (frontmatter, `core/` partials, role registry, `wf` CLI) are assumed and built upon, never duplicated.
+
+> **Current state (2026-09-25).** Parts of this proposal are **extracted** into [`2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md), which re-lands them on the existing `00-meta/` contract mechanism and drops the dependency on the v2 platform (`core/`, frontmatter, `wf` CLI, role registry). Extracted items are tagged **Extracted →** below; untagged items remain open here. Nothing is *superseded* until the plan's Phases B–C land (plan Phase E task 1 then records supersession). Line citations were re-checked on `1ab9fcb`: stale ones are updated in place with the July value kept, and two cite content that no longer exists (W15, W16). Source: [quality review](../../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) §6.
 
 ---
 
@@ -26,19 +28,23 @@ Weakness numbering continues from the companion proposal (W1–W12).
 
 | # | Weakness | Evidence | Consequence |
 |---|---|---|---|
-| W13 | **Architecture is analyzed, never designed** | `00-research-and-plan.md:63` — the "Architecture agent" only "Map[s] the overall system architecture"; the plan's single "Decision Record" block (`:122-127`) covers the overall approach, not individual design decisions; `01-plan-review.md:31` asks reviewers to find "design flaws" with no criteria defined; no workflow produces ADRs and `<metadata-root>` has no home for them | For greenfield or structural work, the most consequential decisions (module boundaries, interfaces, data ownership, sync/async, state) are made implicitly inside implementation, are unreviewable before code exists, and are unrecorded afterward — the root source of creeping architecture debt |
-| W14 | **No code-design standard at build time** | `01-execution.md:54` asks agents to "Validate code quality and adherence to project conventions" but no document defines the standard; OO design, abstraction, information hiding/encapsulation, class design, type safety, memory safety, and immutability appear *only* in the retrospective checklist of `03-code-refactoring.md:75-87` ("unclear abstractions", "Tight coupling", "Module boundaries", "Type safety") | The implementing agent improvises design quality per run; the review workflow then re-litigates it with different (unstated) criteria; findings become refactoring work that proper forward standards would have prevented |
-| W15 | **Error handling is a review concern, not an implementer contract** | `01-execution.md:73` ("If failures: fix, then re-run") is the only error-related instruction during build; error taxonomy, fallback rules, retry policy, graceful degradation, and silent-failure avoidance appear only in `03-code-refactoring.md:29-32` (triggered "error handling agent") and `05-comprehensive-audit.md:43-45` ("swallowed exceptions"); the doc template's "Error taxonomy"/"Recovery" sections (`00-doc-templates.md:437-458`) are optional after-the-fact docs | Silent failures and ad-hoc catch blocks ship, then surface as debugging sessions and audit findings; no workflow ever requires deciding *what should happen when this fails* before writing the code |
-| W16 | **Observability is absent from the lifecycle** | No workflow sets up logging/metrics/tracing/health checks; the only hard requirement in the entire repo is Electron-specific (`01a-MACOS_ELECTRON_GUIDE.md:172-208`, "Every implementation must include a modular packaged-runtime logging mechanism"); elsewhere it is "only if present" documentation (`01-create-docs.md:256-265`) or a review lens (`05-comprehensive-audit.md:53-55`) | Projects reach production with `console.log` and nothing else; debugging workflows (`03-debugging/`) then operate blind — the system asks agents to read logs it never asked anyone to produce |
+| W13 | **Architecture is analyzed, never designed** | `00-research-and-plan.md:63` — the "Architecture agent" only "Map[s] the overall system architecture" (*updated 2026-09-25: the agent roster was removed; `:63` is now sizing text and architecture analysis is only "Architecture overview" at `:88-89`*); the plan's single "Decision Record" block (`:122-127`; *updated 2026-09-25: now `:113-117`*) covers the overall approach, not individual design decisions; `01-plan-review.md:31` asks reviewers to find "design flaws" with no criteria defined; no workflow produces ADRs and `<metadata-root>` has no home for them | For greenfield or structural work, the most consequential decisions (module boundaries, interfaces, data ownership, sync/async, state) are made implicitly inside implementation, are unreviewable before code exists, and are unrecorded afterward — the root source of creeping architecture debt |
+| W14 | **No code-design standard at build time** | `01-execution.md:54` (*updated 2026-09-25: now `:70`*) asks agents to "Validate code quality and adherence to project conventions" but no document defines the standard; OO design, abstraction, information hiding/encapsulation, class design, type safety, memory safety, and immutability appear *only* in the retrospective checklist of `03-code-refactoring.md:75-87` (*updated 2026-09-25: now `:77-89`*) ("unclear abstractions", "Tight coupling", "Module boundaries", "Type safety") | The implementing agent improvises design quality per run; the review workflow then re-litigates it with different (unstated) criteria; findings become refactoring work that proper forward standards would have prevented |
+| W15 | **Error handling is a review concern, not an implementer contract** | `01-execution.md:73` ("If failures: fix, then re-run"; *updated 2026-09-25: now `:87`, with a stop condition added*) is the only error-related instruction during build; error taxonomy, fallback rules, retry policy, graceful degradation, and silent-failure avoidance appear only in `03-code-refactoring.md:29-32` (triggered "error handling agent"; *updated 2026-09-25: now `:33`*) and `05-comprehensive-audit.md:43-45` ("swallowed exceptions"; *updated 2026-09-25: **no longer present**. The file was rewritten, now 452 lines, and `grep -niE 'swallow' 05-review/` finds nothing, so the gap is now wider than stated*); the doc template's "Error taxonomy"/"Recovery" sections (`00-doc-templates.md:437-458`) are optional after-the-fact docs | Silent failures and ad-hoc catch blocks ship, then surface as debugging sessions and audit findings; no workflow ever requires deciding *what should happen when this fails* before writing the code |
+| W16 | **Observability is absent from the lifecycle** | No workflow sets up logging/metrics/tracing/health checks; the only hard requirement in the entire repo is Electron-specific (`01a-MACOS_ELECTRON_GUIDE.md:172-208`, rule at `:178`, "Every implementation must include a modular packaged-runtime logging mechanism"); elsewhere it is "only if present" documentation (`01-create-docs.md:256-265`; *updated 2026-09-25: now `:243`*) or a review lens (`05-comprehensive-audit.md:53-55`; *updated 2026-09-25: **no longer present**, since `grep -niE 'observab|logging|monitor' 05-review/05-comprehensive-audit.md` finds nothing*) | Projects reach production with `console.log` and nothing else; debugging workflows (`03-debugging/`) then operate blind — the system asks agents to read logs it never asked anyone to produce |
 | W17 | **Deployment is a guide pile, not a workflow** | `07-deployment/README.md:1-31` routes to tech-specific guides (Electron, electron-vite, AI Studio, Firebase, Nginx, ports); no generic deploy workflow exists; `08a-pre-deployment-security-check.md` is a genuinely good gate but npm-ecosystem-only (`npm audit`/`npm outdated`/`npm run build`) | "Deploy the MVP" has no repeatable path; every non-Electron, non-Firebase deployment is improvised; the security gate silently doesn't apply to Python/Go/Rust projects |
 | W18 | **No greenfield lane** | `00-project-setup/01-setup-project.md` sets up *workflow metadata* (`project/`, agent files) and requires "Git repository initialized" (`:112-117`); `00-research-and-plan.md` assumes a codebase to analyze (`:59-67`); survey Q6: "no single greenfield workflow from idea/concept → product architecture → scaffold → implementation → deploy MVP" | The highest-leverage moment for preventing tech debt — project inception, when type strictness, lint, test harness, CI, and deploy pipeline cost minutes to establish — has no workflow; projects bolt these on later at 10× cost, which *is* the creeping-debt failure mode |
 | W19 | **Tech debt has no ledger** | Debt appears only as review output (`03-code-refactoring.md:51-56` "Technical debt summary") and a planning priority note (`02-finalise-plan.md:53-57`); nothing records debt *when it is incurred*, no debt register exists in the metadata tree, no paydown trigger or budget rule anywhere | Deliberate shortcuts taken during execution ("hardcode this for now") vanish from institutional memory until a review rediscovers them as anonymous findings; planning cannot budget paydown because the debt inventory doesn't exist |
 
-**The cross-cutting pattern:** compare `05-review/03-code-refactoring.md:75-87` (twelve quality focus areas: abstractions, coupling, module boundaries, error handling, type safety…) with `02-code-build/01-execution.md` (zero of those twelve stated as build requirements). The system already knows what good code looks like — it just only says so *after* the code is written.
+**The cross-cutting pattern:** compare `05-review/03-code-refactoring.md:75-87` (*updated 2026-09-25: now `:77-89`*) (twelve quality focus areas: abstractions, coupling, module boundaries, error handling, type safety…) with `02-code-build/01-execution.md` (zero of those twelve stated as build requirements). The system already knows what good code looks like — it just only says so *after* the code is written.
+
+> **Extraction status (2026-09-25):** W13 is partly extracted (in-plan Decision and Change Surface, plan Phase B tasks 3–4; the design workflow and ADRs are not). W14 → plan Phase C tasks 1–3. W15 → plan Phase C task 1 (standards §3) and the template's Failure Modes & Recovery section (Phase B task 1). W19 is minimal only (Deferred & Debt, Phase C task 4; no ledger directory). **Not extracted:** W16, W17, W18.
 
 ---
 
 ## 3. Guiding Principles
+
+> **Extracted →** Principle 1 (plan Phase C tasks 2–3), Principle 3 tiers (plan Phase B task 1), and Principle 6 language appendix (plan Phase C task 1). Principles 2, 4 and 5 are only partly extracted (see the KI tags below).
 
 1. **Specify forward, review backward, from the same file.** Every quality standard lives in exactly one `core/standards/` partial (KI-2 mechanism). Execution workflows reference it as a build requirement; review workflows reference it as the judging criteria. Symmetry closes the gap where the builder and the reviewer hold different (or no) standards.
 2. **Decisions are artifacts.** Any decision expensive to reverse (boundaries, interfaces, storage, protocols, dependencies) gets a recorded ADR with alternatives and trade-offs — reviewable before build, findable after.
@@ -53,6 +59,8 @@ Weakness numbering continues from the companion proposal (W1–W12).
 
 ### ⭐ KI-12: Architecture & design workflow + ADR record (the missing lifecycle stage)
 
+> **Extracted → partial:** only the in-plan Decision section with a reversibility flag (plan Phase B task 4). The design workflow, ADR directory and design review gate remain open here (plan Deferred & Debt).
+
 New workflow `01-planning-and-organizing/00a-architecture-and-design.md`, slotted between research and plan finalisation for T2/T3 work:
 
 1. **Design brief** — context, quality attributes that matter *for this system* (latency? auditability? offline?), constraints, load/scale assumptions stated honestly (an MVP for 10 users should say so and design for it — right-sizing is the anti-debt, anti-overengineering move).
@@ -65,6 +73,8 @@ Frontmatter (KI-1) wires it in: `prev: [research-and-plan]`, `next: [plan-review
 
 ### ⭐ KI-13: `core/standards/` — the engineering standards partials
 
+> **Extracted → partial:** the substance of `code-design.md` and `error-handling.md` becomes **one** file, `00-meta/engineering-standards.md` (plan Decision D4, Phase C task 1), wired forward and backward as described here (Phase C tasks 2–3). `observability.md` and `security-baseline.md` are **not extracted**.
+
 Four new partials under the companion proposal's `core/` mechanism, each ≤80 lines body + per-language appendix, each referenced (never restated, per KI-10) by both build and review workflows:
 
 | Partial | Contract highlights |
@@ -76,12 +86,14 @@ Four new partials under the companion proposal's `core/` mechanism, each ≤80 l
 
 **Wiring (the part that changes behavior):**
 - `02-code-build/01-execution.md` Preparation gains one line: "Load the design brief/ADRs if present and `core/standards/*`; phase exit criteria include conformance." Its per-phase "Validate code quality and adherence to project conventions" bullet finally has a referent.
-- `05-review/01-code-review.md`, `03-code-refactoring.md`, `05-comprehensive-audit.md`, `06-security/01-security-review.md` replace their free-floating focus-area lists with references to the same partials (KI-10 dedup applies — the twelve focus areas of `03-code-refactoring.md:75-87` become the *table of contents* of `code-design.md` + `error-handling.md`).
+- `05-review/01-code-review.md`, `03-code-refactoring.md`, `05-comprehensive-audit.md`, `06-security/01-security-review.md` replace their free-floating focus-area lists with references to the same partials (KI-10 dedup applies — the twelve focus areas of `03-code-refactoring.md:75-87` (*now `:77-89`*) become the *table of contents* of `code-design.md` + `error-handling.md`).
 - The KI-11 role registry's scanner roles cite the relevant partial as their evidence standard.
 
 ### ⭐ KI-14: Plan template quality sections (tiered)
 
-The plan skeleton in `00-research-and-plan.md` (lines 225–270) gains five sections, required at T2/T3, one-line-each-or-N/A at T1:
+> **Extracted → yes, amended:** tiered template sections move into a shared `00-meta/plan-template.md` (plan Phase B task 1). "Error-Handling Strategy" becomes "Failure Modes & Recovery", and Change Surface, Decision and per-task `Verify:` are added. **Observability Plan is not extracted.** The tier check uses `check-plan.sh` instead of `wf validate`.
+
+The plan skeleton in `00-research-and-plan.md` (lines 225–270; *updated 2026-09-25: now `:216-261`*) gains five sections, required at T2/T3, one-line-each-or-N/A at T1:
 
 ```markdown
 ## Design & Interfaces        # link design brief + ADRs; new/changed boundaries and contracts
@@ -95,6 +107,8 @@ The plan skeleton in `00-research-and-plan.md` (lines 225–270) gains five sect
 
 ### ⭐ KI-15: Greenfield lane — idea to deployed MVP
 
+> **Not extracted** (plan non-goal).
+
 New workflow `00-project-setup/00-new-project-mvp.md` (T3 by definition), the missing front door. Sequence, reusing existing stages wherever they exist:
 
 1. **Product brief** — problem, target user, the 3–5 capabilities that *are* the MVP, explicit non-goals ledgered as "not-yet" (scope debt made visible instead of creeping back in).
@@ -105,6 +119,8 @@ New workflow `00-project-setup/00-new-project-mvp.md` (T3 by definition), the mi
 6. **Beyond MVP** — steady state: feature slices at T2, quarterly `03-code-refactoring.md` review reconciled against the debt ledger (KI-17), ADRs for each new boundary. The "and beyond" is just the loop continuing — because the skeleton front-loaded the infrastructure, growth doesn't require re-platforming.
 
 ### ⭐ KI-16: Generic deployment workflow
+
+> **Not extracted** (plan non-goal).
 
 New `07-deployment/00-deploy.md` — the repeatable path the category lacks; existing guides become reference targets it links per stack:
 
@@ -117,6 +133,8 @@ New `07-deployment/00-deploy.md` — the repeatable path the category lacks; exi
 `07-deployment/README.md`'s decision tree gets one new root: "Deploying anything → `00-deploy.md` (it routes to the tech guides)."
 
 ### ⭐ KI-17: Tech-debt ledger
+
+> **Extracted → minimal:** a Deferred & Debt plan section that the terminal gate copies into TODO (plan Phase C task 4). The `debt/` ledger, schema and budget rule remain open here.
 
 `<metadata-root>/debt/` — one file per debt item (KI-8 mechanism: frontmatter + generated index):
 
@@ -136,10 +154,12 @@ Wiring: execution's phase report gains "shortcuts taken this phase → `wf debt 
 
 ### ⭐ KI-18: Role registry additions (extends KI-11)
 
+> **Not extracted** (depends on the KI-11 role registry).
+
 Three additions to the canonical role registry, with contracts per the KI-11 schema:
 
 - **`architect`** — mission: produce/review design briefs, boundary and contract designs, ADRs; output: ADR-conformant records; evidence: every recommendation names the alternative it rejected and why; tier: strong; verify: different-model (design review gate).
-- **`resilience-reviewer`** — mission: audit error paths against `error-handling.md` (swallowed errors, unlogged fallbacks, unbounded retries, missing cleanup on failure paths); output: core-conformant findings; the current ad-hoc "error handling agent" (`03-code-refactoring.md:31`) folds into this.
+- **`resilience-reviewer`** — mission: audit error paths against `error-handling.md` (swallowed errors, unlogged fallbacks, unbounded retries, missing cleanup on failure paths); output: core-conformant findings; the current ad-hoc "error handling agent" (`03-code-refactoring.md:31`; *updated 2026-09-25: now `:33`*) folds into this.
 - **`observability-auditor`** — mission: verify the `observability.md` baseline exists and is real ("trigger a failure; show the log line that a responder would see"); output: core-conformant findings; tier: fast.
 
 ---
@@ -215,6 +235,8 @@ Interleaves with the companion proposal's phases; content work here is deliberat
 
 ## 8. Success Criteria
 
+> **Extracted →** the survey re-run (last bullet) is the plan's before/after measure (plan Phase E task 2).
+
 - [ ] Every quality focus area currently listed only in review workflows exists in exactly one `core/standards/` partial referenced by both build and review workflows (grep-verifiable).
 - [ ] `01-execution.md`'s "validate code quality" instruction resolves to a concrete, citable standard.
 - [ ] A T3 project produces: design brief, ≥1 ADR, walking skeleton deployed to production before the first feature slice, and passes the MVP gate — demonstrated end-to-end on one real new project.
@@ -234,5 +256,7 @@ Interleaves with the companion proposal's phases; content work here is deliberat
 ---
 
 ## 10. Revision Log
+
+- **2026-09-25 (status and citations):** Added the current-state banner and extraction tags pointing to the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md). Refreshed stale line citations against `1ab9fcb` (July values kept). Recorded that the `05-comprehensive-audit.md` evidence for W15/W16 no longer exists. No KI was reviewed or superseded.
 
 - **2026-07-06 (initial):** Gap analysis W13–W19, improvements KI-12–KI-18, lifecycle map, phased plan. Evidence: codex/gpt-5.5 low survey (Q1–Q8, all PARTIAL) + direct file verification by claude-fable-5.

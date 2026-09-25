@@ -6,6 +6,8 @@
 
 **Summary:** Run a bounded, disposable harness concept test that discovers the current command and permission behavior of `opencode`, `codex`, `droid`, and `claude`, launches verified non-interactive passes, proves protected-scope isolation and artifact discipline, and produces a single-writer manifest and synthesis record. This is a mechanics test, not a model-quality benchmark and not a reusable launcher project.
 
+> **Cross-reference (2026-09-25):** the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) lists behavioral evidence (whether agents actually follow its new plan rules) under Deferred & Debt, triggered by this concept test passing. No dependency in either direction.
+
 ## Source and review provenance
 
 - Authoritative source: [`Parallel Agent Harness Concept Test — Finalised Implementation Plan`](../../research/v1.82-fixes/2026-07-04-parallel-agent-harness-concept-test-implementation-plan.md).
