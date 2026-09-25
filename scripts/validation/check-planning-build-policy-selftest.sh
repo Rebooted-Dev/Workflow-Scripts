@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Exercise Phase A planning/build policy checks against isolated fixture roots.
+# Exercise Phase A-C planning/build policy checks against isolated fixture roots.
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -12,6 +12,25 @@ make_case() {
   local case_root="$1"
   mkdir -p "$case_root"
   cp -R "$FIXTURES/phase-b-pass/." "$case_root/"
+  add_phase_c_baseline "$case_root"
+}
+
+add_standard_link() {
+  local case_root="$1" relative_file="$2" file="$1/$2"
+  mkdir -p "$(dirname "$file")"
+  if [ ! -f "$file" ]; then
+    printf '# Isolated policy fixture\n' > "$file"
+  fi
+  printf '\n[engineering-standards.md](../00-Meta-Workflow/00-meta/engineering-standards.md)\n' >> "$file"
+}
+
+add_phase_c_baseline() {
+  local case_root="$1"
+  add_standard_link "$case_root" 02-code-build/01-execution.md
+  add_standard_link "$case_root" 02-code-build/02-confirm-execution.md
+  add_standard_link "$case_root" 01-planning-and-organizing/01-plan-review.md
+  add_standard_link "$case_root" 05-review/01-code-review.md
+  add_standard_link "$case_root" 05-review/03-code-refactoring.md
 }
 
 expect_root() {
@@ -46,6 +65,14 @@ expect_phase_b() {
   local fixture="$1" target="$2" message="$3" case_root="$temp_dir/$1"
   make_case "$case_root"
   cp "$FIXTURES/phase-b-negative/$fixture" "$case_root/$target"
+  add_standard_link "$case_root" "$target"
+  expect_root fail "$case_root" "$message"
+}
+
+expect_phase_c() {
+  local fixture="$1" target="$2" message="$3" case_root="$temp_dir/$1"
+  make_case "$case_root"
+  cp "$FIXTURES/phase-c-negative/$fixture" "$case_root/$target"
   expect_root fail "$case_root" "$message"
 }
 
@@ -67,5 +94,16 @@ expect_phase_b missing-skill-verify.md 11-Skills/execute-and-confirm-plan/SKILL.
   "execute-and-confirm-plan/SKILL.md is missing Verify:"
 expect_phase_b missing-skill-template-link.md 11-Skills/workflow-plan-review-finalize/SKILL.md \
   "workflow-plan-review-finalize/SKILL.md does not link plan-template.md"
+
+expect_phase_c missing-execution-link.md 02-code-build/01-execution.md \
+  "02-code-build/01-execution.md does not reference engineering-standards.md"
+expect_phase_c missing-confirm-link.md 02-code-build/02-confirm-execution.md \
+  "02-code-build/02-confirm-execution.md does not reference engineering-standards.md"
+expect_phase_c missing-plan-review-link.md 01-planning-and-organizing/01-plan-review.md \
+  "01-planning-and-organizing/01-plan-review.md does not reference engineering-standards.md"
+expect_phase_c missing-code-review-link.md 05-review/01-code-review.md \
+  "05-review/01-code-review.md does not reference engineering-standards.md"
+expect_phase_c missing-refactoring-link.md 05-review/03-code-refactoring.md \
+  "05-review/03-code-refactoring.md does not reference engineering-standards.md"
 
 echo "check-planning-build-policy self-test OK"

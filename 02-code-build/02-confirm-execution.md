@@ -72,8 +72,9 @@ If the plan does not use task list syntax, add an addendum section instead of re
 1. Read the plan end-to-end; extract the list of claimed completed tasks and their acceptance criteria / exit criteria.
 
 2. Use the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract to interpret the plan's tier and required task evidence. Size any delegated verification using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Relevant roles may include plan-to-diff comparison, project verification/tests, runtime acceptance/smoke, and documentation/log completeness; choose only what the claims require and use non-overlapping scopes. Re-run or confirm the required checks below even when no separate agent is used.
-   - Compare plan tasks to `git diff` / relevant files; confirm the code changes exist and match intent.
-   - After the build, re-run every search listed in the plan's Change Surface and classify the results. Unexplained stale hits mean the affected task is incomplete.
+    - Compare plan tasks to `git diff` / relevant files; confirm the code changes exist and match intent.
+    - For tiered plans, compare the built code with the plan's tier-required **Design** and **Failure Modes & Recovery** sections, and assess boundaries, reuse, and error/fallback handling against [engineering standards §1–§3](../00-Meta-Workflow/00-meta/engineering-standards.md). Do not invent absent sections for legacy plans; the Verification Bar below remains mandatory for every plan.
+    - After the build, re-run every search listed in the plan's Change Surface and classify the results. Unexplained stale hits mean the affected task is incomplete.
    - **Re-run or confirm** the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs when prior evidence is missing, stale, or only partial. If none exists, state that explicitly. `npm run build` is only an example.
    - **Run automated tests** when a suite/script exists for the change; do not treat tests as optional during confirm.
    - **Spot-check user-facing or runtime behavior** when the plan's acceptance criteria depend on it (dev server, CLI, IPC, provider path, export/render, etc.)—not only static review.

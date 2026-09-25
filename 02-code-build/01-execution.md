@@ -44,6 +44,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 - Check repo state (avoid clobbering unrelated work): `git status`.
 - Identify the plan under `<metadata-root>/plans/`; resolve the metadata root and any host-specific filename convention via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution). Use `<metadata-root>/build/` only when host policy explicitly permits it.
 - Use the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract for the declared tier, Change Surface, and each task's `Files:` and `Verify:` lines.
+- For a tiered plan, load the Design and Decision sections required by its declared tier, its Change Surface, and the shared [engineering standards §1–§5](../00-Meta-Workflow/00-meta/engineering-standards.md) before implementation. Treat those tier-required plan sections and applicable standards as build requirements; T1 does not acquire extra Design/Decision sections. Legacy plans keep their existing acceptance/exit criteria plus the Verification Bar and are not retroactively required to add tiered sections.
 - Validate a template-declaring plan from the host repository with `<workflow-scripts>/scripts/validation/check-plan.sh <plan>` before implementation; legacy plans without a Tier remain unaffected.
 - Break work into phases; for each phase define scope, out-of-scope, and **exit criteria that include how success will be verified** (commands, tests, and/or smoke of acceptance criteria—not only "code exists").
 - Size any delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). When the scope warrants focused roles, options include implementation, security/risk review, breaking-change analysis, and acceptance/test validation; select only what the phase needs and assign non-overlapping ownership.
@@ -55,8 +56,12 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
   - Exit criteria: concrete checks that must pass (map each criterion to the Verification Bar: verify command, tests, smoke, and/or static hygiene).
 - Implement
   - Make the smallest change that satisfies the phase scope.
+  - Before adding a helper, type, constant, validation, or other behavior, search for an existing implementation or source of truth to reuse; record the search and its result in the phase report per [engineering standards §2](../00-Meta-Workflow/00-meta/engineering-standards.md).
+  - After the change, re-run each search in the plan's Change Surface and classify the results. Update the plan when the surface changed; unexplained stale hits leave the affected task incomplete.
+  - Record shortcuts or workarounds in the plan's **Deferred & Debt** section with their location, trigger, and severity; do not leave them only in the phase report.
 - Review after implementation (before verification)
   - Review the completed change for risks, side effects, breaking changes, unintended impacts, and project conventions; do not make this a pre-implementation gate.
+  - Judge boundaries/abstraction, reuse, and error/fallback handling against [engineering standards §1–§3](../00-Meta-Workflow/00-meta/engineering-standards.md) rather than inventing local quality rules.
   - Size any delegated review using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Relevant lenses may include security, performance, test coverage, documentation, integration, and accessibility; use only those that fit the scope.
 - Verify (repeat until exit criteria met)
   - **Meet the Verification Bar above** before marking the phase complete. Build/lint alone is insufficient when tests or acceptance smoke apply.
@@ -67,6 +72,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
   - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
   - **Tick every task whose applicable verification passed in this phase: change `[ ]` to `[✅]` in the plan file now**, before starting the next phase. For a tier-declaring plan, require its task's `Verify:` evidence; for a legacy plan, use its existing acceptance or exit criteria. Both require the applicable Verification Bar. A blocked check leaves only the affected task `[ ]` with a note; it does not stop verified sibling tasks from being ticked.
   - Include brief verification evidence in the phase summary (commands/tests/smoke + result).
+  - Record the phase checkpoint and rollback reference per [engineering standards §5](../00-Meta-Workflow/00-meta/engineering-standards.md): use the verified-phase commit SHA when commits are authorized; otherwise record a `git stash create` reference or diff hash.
   - **Update logs (only for completed tasks that change or affect project code):**
     - **Which repository:** log in the metadata root of the repository that **owns the changed files** ([Metadata Root Resolution](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution)). Workflow-Scripts changes go to its `00-project/`, even from a host-project session; there, a workflow defect counts as a bug.
     - **Changelog:** Add a dated entry for this phase's work per the host repository's documented changelog convention (see host AGENTS.md or `project/changelog/README.md`).

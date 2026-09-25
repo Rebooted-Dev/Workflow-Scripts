@@ -253,24 +253,31 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 
 **Shared-document ownership with Phase D:** C3 and D2 both edit `01-planning-and-organizing/01-plan-review.md`; C4 and D1/D3 both edit `01-planning-and-organizing/00-research-and-plan.md`. These shared files must be edited sequentially or by one coordinated writer. Other C/D tasks may proceed in parallel only on disjoint files.
 
-1. [ ] Author `00-meta/engineering-standards.md` following research §6 §1–§5, each rule a checkable question, plus a language appendix (TypeScript, Python, shell). Keep the paradigm note (composition, functional core in hook-based code; no class hierarchies required). (P2, Effort: M)
+1. [✅] Author `00-meta/engineering-standards.md` following research §6 §1–§5, each rule a checkable question, plus a language appendix (TypeScript, Python, shell). Keep the paradigm note (composition, functional core in hook-based code; no class hierarchies required). (P2, Effort: M)
    - Files: `00-Meta-Workflow/00-meta/engineering-standards.md`, `00-Meta-Workflow/00-meta/README.md`
    - Verify: `awk '/^## Appendix/{exit} {n++} END{print n}' 00-Meta-Workflow/00-meta/engineering-standards.md` ≤ 90 (cost/prereqs: none)
-2. [ ] Wire forward: `01-execution.md` Preparation (load Design, Decision and Change Surface plus the standards), Implement (search for reuse first; re-run Change Surface after the change; record shortcuts in Deferred & Debt), phase report (checkpoint reference); `02-confirm-execution.md` checks the built code against Design and Failure Modes. `01-execution.md:70` "code quality" links §1–§3. (P2, Effort: S)
+2. [✅] Wire forward: `01-execution.md` Preparation (load Design, Decision and Change Surface plus the standards), Implement (search for reuse first; re-run Change Surface after the change; record shortcuts in Deferred & Debt), phase report (checkpoint reference); `02-confirm-execution.md` checks the built code against Design and Failure Modes. `01-execution.md:70` "code quality" links §1–§3. (P2, Effort: S)
    - Files: `02-code-build/01-execution.md`, `02-code-build/02-confirm-execution.md`
    - Verify: `check-planning-build-policy.sh` standards-link invariant → exit 0 (cost/prereqs: none)
-3. [ ] Wire backward: replace `05-review/03-code-refactoring.md:77-89` and the `01-code-review.md` focus list with links to the standards sections, keeping the domain-specific additions. `01-plan-review.md` judges the Design section against §1–§3. (P2, Effort: S)
+3. [✅] Wire backward: replace `05-review/03-code-refactoring.md:77-89` and the `01-code-review.md` focus list with links to the standards sections, keeping the domain-specific additions. `01-plan-review.md` judges the Design section against §1–§3. (P2, Effort: S)
    - Files: `05-review/01-code-review.md`, `05-review/03-code-refactoring.md`, `01-planning-and-organizing/01-plan-review.md`
    - Verify: `bash scripts/validation/check-review-workflow-policy.sh` → exit 0; `check-planning-build-policy.sh` → exit 0 (cost/prereqs: none)
-4. [ ] Q6: the terminal gate copies open Deferred & Debt entries into the host TODO (under the existing `03-mark-completed.md:161` host-TODO rule, with no new location); `00-research-and-plan.md` Phase 1 reads open entries that touch the Change Surface. (P2, Effort: S)
+4. [✅] Q6: the terminal gate copies open Deferred & Debt entries into the host TODO (under the existing `03-mark-completed.md:161` host-TODO rule, with no new location); `00-research-and-plan.md` Phase 1 reads open entries that touch the Change Surface. (P2, Effort: S)
    - Files: `04-documentation/03-mark-completed.md`, `01-planning-and-organizing/00-research-and-plan.md`
    - Verify: `bash scripts/validation/check-completion-chain-policy.sh` → exit 0; `grep -n 'Deferred & Debt' 04-documentation/03-mark-completed.md` → at least 1 hit (cost/prereqs: none)
-5. [ ] Strengthen `03-debugging/02-bug-fix-workflow.md:151` (failing test first) to a required regression step with a link to standards §4. Require automated regression evidence when feasible; when it is infeasible, permit manual regression evidence only with the concrete reason documented. (P2, Effort: S)
+5. [✅] Strengthen `03-debugging/02-bug-fix-workflow.md:151` (failing test first) to a required regression step with a link to standards §4. Require automated regression evidence when feasible; when it is infeasible, permit manual regression evidence only with the concrete reason documented. (P2, Effort: S)
     - Files: `03-debugging/02-bug-fix-workflow.md`
     - Verify: `grep -n 'engineering-standards.md' 03-debugging/02-bug-fix-workflow.md` → at least 1 hit; regression guidance requires an automated test when feasible and documents the reason plus reproducible manual evidence when not (cost/prereqs: none)
-6. [ ] Logs: `changelog/added/` (standards) and `changelog/changed/` (wiring). (P2, Effort: S)
-   - Files: `00-project/changelog/…`
-   - Verify: `bash scripts/validation/check-meta-logs.sh --staged` → exit 0 (cost/prereqs: none)
+6. [✅] Logs: `changelog/added/` (standards) and `changelog/changed/` (wiring). (P2, Effort: S)
+    - Files: `00-project/changelog/…`
+    - Verify: `bash scripts/validation/check-meta-logs.sh --staged` → exit 0 (cost/prereqs: none)
+
+**Phase C report (2026-09-26; parent validation):** C1–C6 have task-level local evidence. Gate 3 passed after its focused debt/TODO correction, and `bash scripts/validation/check-meta-logs.sh --staged` passed. Phase C has not been pushed; remote CI remains pending.
+
+- Parent-reported local passes: `awk '/^## Appendix/{exit} {n++} END{print n}' 00-Meta-Workflow/00-meta/engineering-standards.md` → 41 lines before Appendix; `bash scripts/validation/check-planning-build-policy.sh`; `bash scripts/validation/check-planning-build-policy-selftest.sh`; `bash scripts/validation/check-review-workflow-policy.sh`; `bash scripts/validation/check-completion-chain-policy.sh`; `bash scripts/validation/check-plan-selftest.sh`; `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md` → T2 dogfood pass; and `bash scripts/validation/check-meta-logs-selftest.sh`. Parent also reports Bash syntax checks and orchestration, sync, and update checks passed; exact argv for those checks was not provided.
+- Parent verified all five build/review links and the planning/build guard, the terminal-gate/planning debt-transfer checks, and debugging's §4 reference with automated-first/manual-evidence fallback. Gate 3 initially found two debt/TODO defects; remediation restored ordinary verified-task TODO reconciliation alongside open debt transfer, and clarified that triggers prompt reassessment rather than closure. The completion-chain policy guard and focused Gate 3 re-review passed.
+- Parent-reported `bash scripts/validation/check-active-markdown-links.sh` output remains exactly the four known Plan 01 links at lines 7, 95, 96, and 97; no new failures. Remote CI has not run; no CI success is claimed.
+- The added and changed Phase C records are present and indexed; the staged meta-log validator returned `meta log checks OK`. Phase A SHA `79d6841d708938e126cbc28c207fd1cedbef6ba5`; Phase B SHA `ac53e01dc6db456f658b5814b13e916fb3692ad3`. Phase C's commit SHA is recorded in the following phase report.
 
 ### Phase D: Research and review rigor (P2)
 

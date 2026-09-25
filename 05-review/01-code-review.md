@@ -5,6 +5,8 @@ Perform a structured code review that identifies defects, risks, and refactoring
 
 Use the shared review contract in `../00-Meta-Workflow/00-meta/review-workflow-core.md` for report routing, pre-flight checks, untrusted-content handling, severity/priority scoring, evidence quality, deduplication, report outline, and acceptance criteria.
 
+Use the shared [engineering standards §1–§3](../00-Meta-Workflow/00-meta/engineering-standards.md) for design boundaries, reuse/source-of-truth, and error/fallback handling. Keep the code-review-specific defect, security, test, performance, accessibility, and compliance lenses below; cite the relevant standards section instead of repeating generic implementation rules.
+
 ## Inputs
 - Repository root (determine using one of):
   - User-specified path
@@ -157,11 +159,13 @@ Use `../00-Meta-Workflow/00-meta/review-workflow-core.md` and the shared rubric 
 - No unverified claims or assumptions.
 - **Refactor Recommendation Criteria:**
 
+  Apply the shared [engineering standards §1–§3](../00-Meta-Workflow/00-meta/engineering-standards.md) when judging boundaries, reuse, error handling, and fallbacks. Use its second-copy-of-behavior question rather than a fixed duplicate-count threshold.
+
   **VALID refactor recommendations (include these):**
   - Fixes an identified defect (S0-S2)
   - Addresses measurable pain point (e.g., "function takes 10s, should take <100ms")
   - Materially reduces P0/P1 risk (with explanation)
-  - Eliminates code duplication found in 3+ locations
+  - Addresses repeated behavior or duplicated authority under the shared §2 criterion (distinguish behavior from incidental similarity)
   - Reduces cyclomatic complexity >15 to <10
 
   **INVALID "laundry list" items (exclude these):**

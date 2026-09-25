@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Phase A/B invariants for active planning/build workflows and skills.
-# Checks are phase-scoped so deferred Phase C rules are not enforced early.
+# Phase A-C invariants for active planning/build/review workflows and skills.
+# Checks are phase-scoped so deferred rules are not enforced before their docs.
 set -euo pipefail
 
 if [ "$#" -gt 1 ]; then
@@ -21,6 +21,13 @@ PLAN_REVIEW="$PLANNING_DIR/01-plan-review.md"
 PLAN_FINALISE="$PLANNING_DIR/02-finalise-plan.md"
 PLAN_REVIEW_SKILL="$ROOT_DIR/11-Skills/workflow-plan-review-finalize/SKILL.md"
 EXECUTION_SKILL="$ROOT_DIR/11-Skills/execute-and-confirm-plan/SKILL.md"
+ENGINEERING_STANDARDS_FILES=(
+  "$CODE_BUILD_DIR/01-execution.md"
+  "$CODE_BUILD_DIR/02-confirm-execution.md"
+  "$PLAN_REVIEW"
+  "$ROOT_DIR/05-review/01-code-review.md"
+  "$ROOT_DIR/05-review/03-code-refactoring.md"
+)
 ENABLING_REFACTOR_SENTENCE='An enabling refactor is in scope when required to make the planned fix correct and verifiable.'
 
 fail() { echo "check-planning-build-policy: $*" >&2; exit 1; }
@@ -102,12 +109,24 @@ check_phase_b_skill_tokens() {
   done
 }
 
+# --- Phase C: the five build/review workflows share engineering standards -----
+check_phase_c_standards_links() {
+  local file rel
+  for file in "${ENGINEERING_STANDARDS_FILES[@]}"; do
+    rel="${file#$ROOT_DIR/}"
+    [ -f "$file" ] || fail "$rel is missing"
+    grep -qiE ']\([^)]*engineering-standards\.md[^)]*\)' "$file" \
+      || fail "$rel does not reference engineering-standards.md"
+  done
+}
+
 check_phase_a_wording
 check_phase_a_parallel_applicability
 check_phase_b_phase_order
 check_phase_b_enabling_refactor
 check_phase_b_skill_tokens
+check_phase_c_standards_links
 
-# Future Phase C invariants belong in a separate phase-scoped check only when
-# that phase's standards contract and workflow changes land.
+# Future Phase D invariants belong in a separate phase-scoped check only when
+# that phase's workflow changes land.
 echo "planning/build policy checks OK"

@@ -15,6 +15,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 
 ## Steps
 1. Read the plan end-to-end and list its explicit goals, scope, and assumptions. Use [`../00-Meta-Workflow/00-meta/plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) to assess the declared tier and required structure; re-run every Change Surface search and classify each result, noting missing or stale sites.
+   - Judge the plan's Design against the shared [engineering standards §1–§3](../00-Meta-Workflow/00-meta/engineering-standards.md): boundaries/abstraction, reuse/source of truth, and errors/fallbacks. Cite the applicable section in findings; do not restate the standard as a separate local checklist.
 2. Size any delegated validation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Select only the roles needed to check plan claims; options include API/interface compatibility, structure/dependencies, configuration/environment, existing patterns, and tests/integration. Give roles non-overlapping read-only scopes, then consolidate results and flag conflicts.
 3. Apply the same sizing guidance to review concerns. Relevant lenses may include security/safety, architecture/design, defects, scope/over-engineering, performance, accessibility, domain constraints, and compliance; assess what applies without requiring a separate agent for every lens. Consolidate findings and identify:
    - design flaws in the plan
@@ -60,6 +61,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
   - Add sub-headings per model, for example: `### Model: <model-name>` under the main header.
 - Sections (priority-ordered): P0, P1, P2, P3
 - Assess Decision options, reversibility, and per-task `Files:`/`Verify:` fields against the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract.
+- Assess Design against the shared [engineering standards §1–§3](../00-Meta-Workflow/00-meta/engineering-standards.md), retaining plan-review-specific checks for scope, dependencies, feasibility, and evidence.
 - Each item must include:
   - **Severity** (S0–S3): Impact level if the issue ships
   - **Priority** (P0–P3): Urgency to fix based on severity × likelihood

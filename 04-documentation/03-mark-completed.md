@@ -33,7 +33,7 @@ In **Reconcile only** mode, individually verified tasks still get `✅`. A block
 - Plan or report files that declare completed tasks (resolved via active-plan discovery in Phase 1: named target first, then `<metadata-root>/plans/**` and the host-permitted `<metadata-root>/build/**` location — never archived plans by default)
 - Changelog index and entries under the host-resolved `<metadata-root>/changelog/`, using the authoritative [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy; honor a host-documented single-file changelog fallback
 - Troubleshooting index and entries under the host-resolved `<metadata-root>/troubleshooting/`, honoring the host's existing troubleshooting categories and any documented single-file troubleshooting fallback
-- A host-maintained TODO file, when present, resolved as `<metadata-root>/plans/TODO.md` through the same metadata-root and host-policy rules
+- A host-maintained TODO file or other host-documented follow-up task location, when present, resolved through the same metadata-root and host-policy rules
 - Relevant source files referenced in each task
 
 ## Prioritization and Ordering
@@ -158,7 +158,12 @@ Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follo
     - Add a Type=`plan` row at the **top** of the host's changelog index referencing the completed plan file.
     - **If the host policy is absent, unreadable, or contradictory:** block **only the move**. Report **archive blocked: policy unresolved**, name the conflicting sources (file and line), and leave the plan file where it is. Do not guess, migrate records, or invent a destination. The unresolved policy blocks **only** this step: still apply task `✅` marks, the completion marker, and every other Phase 4 step, then list the policy conflict first in the Phase 5 flagged issues so the developer can resolve it.
 4. **Related docs:** Update `docs/` (e.g. ARCHITECTURE, USER_MANUAL, OVERVIEW, TROUBLESHOOTING) so they do not contradict the verified state. Remove or correct any doc text that claims something is done when it is flagged as not done.
-5. **TODO:** When tasks are completed, update `<metadata-root>/plans/TODO.md` only if the host maintains that file; otherwise record any follow-up in the host-documented task location. Resolve the location through [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy.
+5. **Reconcile host task tracking and open Deferred & Debt (both modes):** Resolve the host-maintained TODO or other host-documented task location through [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy.
+   - **Verified plan tasks:** Reconcile existing TODO/task entries for each task whose implementation and acceptance evidence are verified; mark those entries completed. Leave entries for blocked or otherwise unverified tasks open.
+   - **Open Deferred & Debt:** Transfer every open plan entry into the resolved host task location unless it is already represented there; preserve its location, trigger, and severity. Keep each debt item open in both the plan and tracker while remediation remains outstanding.
+   - **Trigger and closure:** A trigger prompts reassessment and scheduling; it does not close the debt. Close an entry only after the remediation and its acceptance criteria are verified, or an explicit decision to retire it is recorded in the plan (and host tracker when available). Otherwise preserve it as open in the plan and host task tracker.
+   - **No documented location:** Do not invent a TODO or task-tracker destination. Report the routing as unresolved and preserve each open debt item in the plan; do not claim it was transferred.
+   - This reconciliation runs in both Full completion and Reconcile only modes and belongs to this terminal gate; execution and confirmation do not perform a competing task-tracker or debt-to-TODO reconciliation.
 6. **Plan/report file:** Write back into the plan/report file:
    - **✅** on tasks and sub-tasks that were verified complete, including tasks that were `[ ]` when this workflow started
    - **Completion marker** (e.g. `**Status:** ✅ COMPLETED`), in Full completion mode only. In Reconcile only mode, set the status line to say which tasks are verified and what blocks completion instead.
@@ -190,6 +195,7 @@ Illustrative example only (hypothetical consumer project; do not treat paths or 
 ### Reconciled artifacts
 - **Changelog:** New or updated entries only for **verified** completions; index updated.
 - **Troubleshooting:** Entries match verified fixes; open issues clearly marked; filed in appropriate subdirectories.
+- **TODO/task location:** Verified task completions and open Deferred & Debt entries are reconciled in the host-maintained TODO or other host-documented follow-up location without duplicates. If routing is unresolved, that limitation is reported and open debt remains in the plan rather than being claimed as transferred.
 - **Plans-Completed:** Completed plans filed in appropriate category subdirectories (`implementation/`, `investigation/`, `migration/`, `review/`, `tooling/` or custom); index updated with entries at top.
 - **Docs:** No claims that contradict verification (e.g. remove "API key is never sent to renderer" if P1-1 is still incomplete).
 
@@ -198,7 +204,7 @@ Illustrative example only (hypothetical consumer project; do not treat paths or 
 - The mode matches the outcome: Full completion applies the completion marker and archive; Reconcile only applies neither, and the plan stays active.
 - Verified completions are marked with ✅ (and `[✅]` where applicable); false or incomplete claims are flagged and not marked complete.
 - All flagged issues are listed in **descending order of importance or urgency** (P0→P3, S0→S3).
-- Changelog, troubleshooting, and related docs are reconciled with the verified state (no false claims in docs).
+- Changelog, troubleshooting, the host TODO/task location, and related docs are reconciled with the verified state (no false claims in docs); unresolved task-location routing is reported and does not claim open debt was transferred.
 - Verification is sized to the plan: one primary verifier for localized work, 2–3 focused non-overlapping roles for bounded work, or parallel evidence-justified domain roles for broad/high-risk work under the shared policy.
 - The task-to-verifier coverage matrix maps every in-scope task/sub-task to a responsible domain/verifier and evidence or a flag; evidence citations support every Verified or Flagged conclusion.
 

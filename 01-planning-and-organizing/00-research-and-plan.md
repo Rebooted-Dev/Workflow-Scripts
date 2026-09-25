@@ -98,6 +98,10 @@ Consolidate all research into a structured analysis:
 
 Use the shared plan contract for tier-specific sections, task fields, and decision structure: [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md).
 
+### 1.5 Carry Relevant Open Debt into the Plan
+
+When continuing or replacing an existing plan, read its open **Deferred & Debt** entries during Phase 1. Compare each entry's behavior, location, and trigger with the new plan's Change Surface. Carry forward entries that intersect the Change Surface into the scope, dependencies, or new Deferred & Debt section; identify unrelated open entries as out of scope. A trigger prompts reassessment and scheduling; it does not close debt. Close an entry only after remediation and its acceptance criteria are verified, or an explicit decision to retire it is recorded in the plan (and host tracker when available). Otherwise preserve it as open in the plan and, when one exists, the documented host task tracker.
+
 ---
 
 ## Phase 2: Plan Development

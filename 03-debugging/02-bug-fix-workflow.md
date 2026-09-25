@@ -148,7 +148,7 @@ Run the project verification command from `AGENTS.md`, package scripts, Makefile
 - Look for similar patterns that might have the same issue
 
 ### Testing
-- Write tests that reproduce the bug before fixing it
+- **Regression evidence before the fix:** Add and run a failing automated regression test that reproduces the bug before fixing it when feasible. If automation is infeasible, document the concrete reason and reproducible manual regression steps/evidence. Apply [Engineering Standards §4](../00-Meta-Workflow/00-meta/engineering-standards.md).
 - **Add a regression test when it fits** – Add regression tests to prevent the bug from recurring
 - Test edge cases and similar scenarios
 - Verify the fix doesn't break existing functionality

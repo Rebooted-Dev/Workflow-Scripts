@@ -5,6 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-26 | added | Add shared engineering standards | added/2026-09-26-added-engineering-standards.md | Five question-based sections and language appendix; 41-line body before appendix |
+| 2026-09-26 | changed | Wire engineering standards and regression policy | changed/2026-09-26-changed-engineering-standards-wiring.md | Gate 3 passed after debt/TODO semantics correction; remote CI pending |
 | 2026-09-25 | changed | Add the tiered planning and build contract | changed/2026-09-25-changed-tiered-planning-build-contract.md | Shared plan template; aligned planning, review, finalisation, and execution rules |
 | 2026-09-25 | added | Add the host-usable check-plan linter | added/2026-09-25-added-check-plan-linter.md | Gate 2 passed after parser regressions; local fixture suites pass; remote CI pending |
 | 2026-09-25 | fixed | Route Not Eligible plans through reconciliation | fixed/2026-09-25-fixed-not-eligible-reconcile-only-routing.md | M1/E2 corrected 04 workflow route; pre-fix failure captured; local completion-chain guard passes |

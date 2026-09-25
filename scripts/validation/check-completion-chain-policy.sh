@@ -18,6 +18,8 @@
 #   - Navigation links the terminal gate from the root README, the
 #     code-build README, the documentation README, and the skill.
 #   - Any 02-code-build file naming "Not Eligible" also names "Reconcile only".
+#   - The gate reconciles verified task completions and open debt separately;
+#     a debt trigger prompts reassessment and does not close the entry by itself.
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -104,5 +106,27 @@ while IFS= read -r file; do
   grep -q 'Reconcile only' "$file" \
     || fail "02-code-build file names Not Eligible without Reconcile only: $file"
 done <<< "$not_eligible_files"
+
+# --- 8. Terminal TODO reconciliation keeps task and debt dispositions distinct -
+todo_step="$(awk '
+  /^### Phase 4: Reconcile and Update Documentation and Logs/ { in_phase4 = 1; next }
+  in_phase4 && /^### Phase 5:/ { exit }
+  in_phase4 && /^[[:space:]]*5\.[[:space:]]+\*\*Reconcile host task tracking and open Deferred & Debt/ { in_step5 = 1 }
+  in_step5 && /^[[:space:]]*6\.[[:space:]]+/ { exit }
+  in_step5 { print }
+' "$DOC/03-mark-completed.md")"
+[ -n "$todo_step" ] \
+  || fail "Terminal gate is missing its Phase 4 TODO/debt reconciliation step"
+for token in \
+  "verified plan tasks" \
+  "open Deferred & Debt" \
+  "acceptance criteria" \
+  "reassess" \
+  "retir" \
+  "both Full completion and Reconcile only" \
+  "unresolved"; do
+  printf '%s\n' "$todo_step" | grep -qiF "$token" \
+    || fail "Terminal gate TODO/debt step lacks required concept: $token"
+done
 
 echo "completion chain policy checks OK"

@@ -8,6 +8,7 @@ This directory contains templates, rubrics, and analysis documents about the wor
 |------|------|--------|---------|
 | [`severity-priority-rubric.md`](./severity-priority-rubric.md) | Reference | **Active** | Shared rubric for S0-S3 severity and P0-P3 priority scoring |
 | [`plan-template.md`](./plan-template.md) | Contract | **Active** | Required plan structure, tiers, task fields, and Change Surface rules |
+| [`engineering-standards.md`](./engineering-standards.md) | Contract | **Active** | Checkable build-to and judge-against standards for boundaries, reuse, errors, tests, and recovery |
 | [`glossary.md`](./glossary.md) | Reference | **Active** | Common terminology and conventions used across workflows |
 | [`naming-conventions.md`](./naming-conventions.md) | Reference | **Active** | Standardized naming for generated reports and documents |
 | [`sync-summary-template.md`](./sync-summary-template.md) | Template | **Active** | Template for documentation sync summary reports |
@@ -27,6 +28,8 @@ This directory contains templates, rubrics, and analysis documents about the wor
   - Mapping rules and evidence requirements
 
 - **`plan-template.md`** - Shared contract for new implementation plans. Defines T1/T2/T3 required sections, task `Files:` and `Verify:` lines, Decision options, and Change Surface classification. Planning, review, and execution workflows link here rather than restating the contract.
+
+- **`engineering-standards.md`** - Shared build-to and judge-against questions for implementation and review: boundaries, reuse, errors/fallbacks, regression tests, and recovery. Apply proportionally; documented pragmatic exceptions are allowed.
 
 - **`glossary.md`** - Quick reference for workflow terminology. Covers:
   - Priority and severity level definitions

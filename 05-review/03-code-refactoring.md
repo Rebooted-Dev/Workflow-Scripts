@@ -75,18 +75,16 @@ Use the shared review contract in `../00-Meta-Workflow/00-meta/review-workflow-c
   - Risk assessment for the refactoring
 
 ## Refactoring Focus Areas
-- Code duplication and DRY violations
-- Long functions and files (complexity)
-- Poor naming and unclear abstractions
-- Tight coupling and low cohesion
-- Missing or inappropriate design patterns
-- Inconsistent code style and conventions
-- Dead code and unused dependencies
-- Complex conditional logic
-- Error handling patterns
-- Test coverage and testability
-- Module boundaries and separation of concerns
-- Type safety and type definitions
+
+Use the shared [engineering standards](../00-Meta-Workflow/00-meta/engineering-standards.md) as the canonical criteria for:
+- **§1 Boundaries and abstraction:** responsibility, information hiding, dependency direction, and invariants.
+- **§2 Reuse and single source of truth:** reuse search, repeated behavior, and duplicated authority.
+- **§3 Errors, fallbacks, and fault prevention:** taxonomy, surfaced failures, fallback behavior, and bounded resources.
+
+Retain these refactoring-specific investigation lenses, applying the relevant standards rather than duplicating their generic rules:
+- Measurable complexity, long functions/files, and performance bottlenecks.
+- Behavior-preserving testability and contract-test gaps (also see standards §4).
+- Dead code, unused dependencies, and language/toolchain-specific style or type-safety issues (also see the standards appendix).
 
 ## Acceptance Criteria
 - Every item includes a file/line reference, evidence, and rationale.
