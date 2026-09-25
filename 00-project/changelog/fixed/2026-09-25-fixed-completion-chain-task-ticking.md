@@ -16,6 +16,12 @@
 - `04-documentation/{03-mark-completed,README}.md`
 - `11-Skills/execute-and-confirm-plan/SKILL.md`
 - `scripts/validation/check-completion-chain-policy.sh`
+- Workflow fix commit: `d4407bd` (branch `v1.82`).
+- Meta follow-up: added the `git/` and `workflow/` categories to `troubleshooting/README.md` and `docs/agents/changelog-and-troubleshooting.md`. Updated the validator row in `docs/testing/README.md` and the gate row in `docs/architecture/file-map.md`, and recorded the post-audit defect in `plans/v1.82-fixes/00-meta-v1-82-fixes-roadmap.md`.
+
+## Verification
+- `bash scripts/validation/check-completion-chain-policy.sh` → OK.
+- Negative check: the updated validator run against the pre-fix docs (`git archive HEAD` copy) fails with `03-execute-and-confirm.md lacks the Reconcile only gate mode for Not Eligible plans`.
 
 ## Related
 - Troubleshooting: [../../troubleshooting/workflow/2026-09-25-workflow-verified-tasks-never-ticked.md](../../troubleshooting/workflow/2026-09-25-workflow-verified-tasks-never-ticked.md)

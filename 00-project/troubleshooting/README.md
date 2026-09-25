@@ -9,6 +9,8 @@ This directory contains organized troubleshooting entries for issues encountered
 - `data/` - Data, prompts, migrations, persistence issues
 - `environment/` - Local setup, Node, .env, permissions, OS quirks
 - `security/` - Security advisories & patches
+- `git/` - Git operations, dirty-tree safety, branch and sync issues
+- `workflow/` - Workflow instruction defects (handoffs, gates, contradictory rules)
 - `index.md` - Chronological index of all entries
 
 ## File Naming Convention

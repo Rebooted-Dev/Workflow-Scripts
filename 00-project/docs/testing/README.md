@@ -30,7 +30,7 @@ Run from Workflow-Scripts root:
 | `check-sync-workflow-scripts.sh` | Sync script portability (bash 3.2, `git -C`, SSH remote, env vars) |
 | `check-update-workflows.sh` | Staged-only commit contract; rejects unstaged/untracked files |
 | `check-review-workflow-policy.sh` | Agent policy refs, research output routing, no stale agent caps |
-| `check-completion-chain-policy.sh` | Terminal-gate ownership, host-policy archive routing, completion-chain navigation |
+| `check-completion-chain-policy.sh` | Plan-level terminal-gate ownership, gate runs for every outcome (Full completion / Reconcile only), task ticks applied as tasks verify (01 ticks, 02 corrects both ways, gate verifies unticked tasks), host-policy archive routing, completion-chain navigation |
 
 Run all six before maintainer push. GitHub Actions runs the same suite via `.github/workflows/validation.yml`.
 

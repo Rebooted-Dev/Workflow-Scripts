@@ -67,7 +67,7 @@ Workflow-Scripts/
 |------|------|
 | `04-documentation/01-create-docs.md` | Spec for generating `00-project/docs/` |
 | `04-documentation/00-doc-templates.md` | Section templates for all doc types |
-| `04-documentation/03-mark-completed.md` | Completion marking and plan archiving |
+| `04-documentation/03-mark-completed.md` | Terminal gate: verifies and ticks every task on every outcome; completion marker and plan archiving on Verified Complete only |
 | `00-Meta-Workflow/00-meta/severity-priority-rubric.md` | Shared P0–P3 / S0–S3 scoring |
 | `00-Meta-Workflow/00-meta/naming-conventions.md` | Report filename and metadata-root routing |
 | `00-Meta-Workflow/00-meta/agent-spawning-policy.md` | Parallel agent caps for review workflows |

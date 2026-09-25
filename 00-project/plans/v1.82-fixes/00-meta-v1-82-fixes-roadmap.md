@@ -26,6 +26,7 @@
 
 - [ ] 1. **(Small)** Execute [Plan 01](./01-reconcile-research-and-source-integrity.md) first; it owns source recovery and active-reference integrity.
 - [✅] 2. **(Small)** Run [Plan 02 audit — filed Verified Complete](../../plans-completed/review/2026-09-22-validate-completion-chain-current-state.md) independently as a read-only validation lane; parent accepted the static evidence, and the prior completion-chain remediation was not re-executed.
+  - **Post-audit defect (2026-09-25):** the static audit passed, but consumer use showed verified tasks were never ticked: the gate skipped `Not Eligible` plans, and `02` could only untick. The fix was made on direct developer request as commit `d4407bd`, outside this roadmap's lanes. See [troubleshooting](../../troubleshooting/workflow/2026-09-25-workflow-verified-tasks-never-ticked.md) and [changelog](../../changelog/fixed/2026-09-25-fixed-completion-chain-task-ticking.md).
 - [ ] 3. **(Small)** After its own discovery and safety gates, run [Plan 03](./03-run-parallel-agent-harness-concept-test.md) independently.
 
 **Dependencies:** Plan 01 is a prerequisite only for Plan 05, not for Plans 02 or 03.

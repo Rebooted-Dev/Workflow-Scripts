@@ -27,7 +27,7 @@ Paths below are relative to `00-project/` unless noted.
 - **When NOT to create troubleshooting entries**: Simple doc or workflow updates, routine refactors, or straightforward additions. Changelog only for those.
 - **Location**: Use the `troubleshooting/` directory.
 - **Structure**:
-  - Create individual files in the appropriate category folder (`build/`, `runtime/`, `data/`, `environment/`, `security/`)
+  - Create individual files in the appropriate category folder (`build/`, `runtime/`, `data/`, `environment/`, `security/`, `git/`, `workflow/`)
   - File naming: `<yyyy-mm-dd>-<category>-<short-title>.md`
   - Each entry must include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
 - **Index maintenance**: Always update `troubleshooting/index.md` when adding a new entry (add row at the top of the table).
