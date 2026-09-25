@@ -25,7 +25,7 @@ Validate that an implementation plan has actually been completed (in code and ve
 - Correct any misreporting in the plan; leave correct marking as-is
 - Add a verification addendum documenting what was checked
 
-**Relationship to 01:** This is an audit of claims vs reality. If [`01-execution.md`](./01-execution.md) was followed, the plan is already marked and checks were run—but you still **confirm** that code exists **and** that applicable Verification Bar items passed (or re-run them when evidence is absent, contradictory, or only "build green"). You do not blindly re-implement; you validate. Only change task checkboxes when you find misreporting (e.g. task marked complete but code, tests, or acceptance checks are missing/failed).
+**Relationship to 01:** This is an audit of claims vs reality. If [`01-execution.md`](./01-execution.md) was followed, the plan is already marked and checks were run—but you still **confirm** that code exists **and** that applicable Verification Bar items passed (or re-run them when evidence is absent, contradictory, or only "build green"). You do not blindly re-implement; you validate. Correct task checkboxes in **both** directions: untick a task marked complete whose code, tests, or acceptance checks are missing or failed, and tick (`[ ]` → `[✅]`) a task whose code and applicable evidence you verified but which `01` left unticked.
 
 ## Inputs
 
@@ -35,7 +35,7 @@ Validate that an implementation plan has actually been completed (in code and ve
 ## Output
 
 - The original plan document updated with:
-  - Completed vs incomplete items marked consistently (audit/downgrade only; **no** completion marker or archive from this workflow)
+  - Completed vs incomplete items marked consistently: verified tasks `[✅]`, unverified tasks `[ ]` (**no** plan-level completion marker or archive from this workflow)
   - A short verification addendum (what was checked and what passed/failed)
   - Misreporting called out explicitly with evidence
 - A hand-off note: when fully verified complete, route to the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md); when not, leave the plan active. This workflow does not finalize or archive.
@@ -83,7 +83,7 @@ If the plan does not use task list syntax, add an addendum section instead of re
      - Security validation
      - Documentation completeness]
 
-3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3). Apply the marking convention: correct any misreporting (e.g. task marked `- [✅]` but code or verification is missing → change to `- [ ]` and add a note). Leave already-correct marking as-is, using `- [✅]` for completed. Add notes for incomplete or deferred tasks.
+3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3), in bulleted (`- [ ]`) or numbered (`1. [ ]`) lists. Apply the marking convention in both directions: task marked `[✅]` but code or verification is missing → change to `[ ]` and add a note; task still `[ ]` but code and applicable evidence are verified → change to `[✅]`. Leave already-correct marking as-is. Add notes for incomplete or deferred tasks.
 
 4. Add a verification addendum to the plan containing:
    - Timestamp: `YYYY-MM-DD HH:MM`
@@ -93,9 +93,9 @@ If the plan does not use task list syntax, add an addendum section instead of re
    - Blocked or skipped checks and residual risk (if any)
    - Next steps (only for incomplete items)
 
-5. **No terminal completion here.** This workflow audits and may downgrade false claims; it does not apply a plan-level completion marker or archive. See [`03-mark-completed.md`](../04-documentation/03-mark-completed.md).
+5. **No plan-level completion here.** This workflow corrects task ticks and appends evidence; it does not apply a plan-level completion marker or archive. See [`03-mark-completed.md`](../04-documentation/03-mark-completed.md).
 
-6. **Hand off:** When fully verified complete → mandatory terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md). When blocked, partial, or under-evidenced → **`Not Eligible`**: plan stays active; no marker or archive.
+6. **Hand off to the gate (always):** When fully verified complete → [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) in **Full completion** mode. When blocked, partial, or under-evidenced → **`Not Eligible`** → the same gate in **Reconcile only** mode: verified tasks ticked, logs reconciled, plan stays active, no marker or archive.
 
 ## Related Workflows
 

@@ -2,11 +2,15 @@
 # Completion-chain policy validator.
 #
 # Asserts the Workflow-Scripts completion chain is unambiguous:
-#   - 03-mark-completed.md is the SOLE positive terminal owner (✅ marks,
-#     completion marker, archive). 01/02 confirm/execute report verification
-#     and may downgrade false claims, but never finalize or archive.
-#   - The combined 01 -> 02 -> 03-mark-completed handoff is mandatory, with
-#     explicit "Verified Complete" / "Not Eligible" outcomes.
+#   - 03-mark-completed.md is the SOLE plan-level terminal owner (completion
+#     marker, archive). Task-level ✅ ticks are applied as tasks verify: 01
+#     ticks per phase, 02 corrects ticks in both directions, and the gate
+#     reconciles every task (ticked or not). 01/02 never finalize or archive.
+#   - The combined 01 -> 02 -> 03-mark-completed handoff is mandatory for
+#     EVERY outcome: "Verified Complete" runs the gate in Full completion
+#     mode; "Not Eligible" runs it in Reconcile only mode (ticks verified
+#     tasks, no marker/archive). Regression guard for the 2026-09-25
+#     deadlock where verified tasks were never ticked.
 #   - No generic hardcoded archive destination in the code-build chain.
 #   - The terminal gate resolves archive routing from host policy, fails
 #     closed on unresolved policy, and uses deterministic active-plan
@@ -41,6 +45,25 @@ done
 
 grep -qi 'mandatory' "$CB/03-execute-and-confirm.md" \
   || fail "03-execute-and-confirm.md does not mark the terminal gate as mandatory"
+
+# The gate must run for both outcomes; Not Eligible uses Reconcile only mode.
+for f in "$CB/03-execute-and-confirm.md" "$DOC/03-mark-completed.md" "$SKILL"; do
+  grep -q 'Reconcile only' "$f" \
+    || fail "$(basename "$f") lacks the Reconcile only gate mode for Not Eligible plans"
+done
+if grep -RInE 'a `Not Eligible` plan must not|reaches this gate only on a `Verified Complete`' \
+  "$CB" "$DOC/03-mark-completed.md" "$DOC/README.md" "$SKILL"; then
+  fail "Not Eligible plans still skip the gate, so verified tasks never get ticked"
+fi
+
+# Task ticks must be correctable upward, and unticked tasks must be verified.
+if grep -RIn 'Only change task checkboxes when you find misreporting' "$CB/02-confirm-execution.md"; then
+  fail "02 is still downgrade-only; it must tick verified [ ] tasks"
+fi
+grep -q 'Unticked tasks are in scope' "$DOC/03-mark-completed.md" \
+  || fail "Terminal gate only verifies claimed completions; unticked tasks must be in scope"
+grep -q 'must\*\* tick each task' "$CB/01-execution.md" \
+  || fail "01 does not require ticking each task as its Verification Bar passes"
 
 # The skill must route to the terminal gate and not bypass it.
 grep -q 'terminal gate' "$SKILL" \

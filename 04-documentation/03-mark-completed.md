@@ -1,9 +1,20 @@
 # Workflow: Mark Completed and Verify Implementation
 
 ## Purpose
-Inspect the codebase and verify that all reported completed tasks were actually implemented. Mark truly completed tasks and sub-tasks with green check marks (✅). Flag instances of false reporting (incomplete or not done) so the developer can decide what to do. Reconcile and update related documentation, changelog, and troubleshooting logs at locations resolved from the host repository's metadata policy.
+Inspect the codebase and verify every task in the plan, whether it is already ticked or not. Mark truly completed tasks and sub-tasks with green check marks (✅). Flag instances of false reporting (incomplete or not done) so the developer can decide what to do. Reconcile and update related documentation, changelog, and troubleshooting logs at locations resolved from the host repository's metadata policy.
 
-> **Sole terminal authority.** This is the **only** workflow in the chain that may apply terminal `✅` task marks, create a completion marker, reconcile changelog/troubleshooting/docs, and archive a plan. `01-execution` and `02-confirm-execution` report verification and may **downgrade** false claims; they must **not** independently finalize or archive. The combined workflow reaches this gate only on a `Verified Complete` outcome (see [`../02-code-build/03-execute-and-confirm.md`](../02-code-build/03-execute-and-confirm.md)). Archive routing is resolved from the **host repository's** policy, not a global default (Phase 4 below).
+> **Terminal authority (plan level).** This is the **only** workflow that applies **plan-level** terminal actions: the plan completion marker and the archive move. **Task-level** `[✅]` marks are not reserved to this gate. `01-execution` ticks each task as its Verification Bar passes, and `02-confirm-execution` corrects ticks in both directions. This gate makes every task mark match verified reality: it adds `✅` to verified tasks that are still `[ ]` and removes `✅` from unverified ones. Archive routing is resolved from the **host repository's** policy, not a global default (Phase 4 below).
+
+## Modes
+
+The execute-and-confirm chain ([`../02-code-build/03-execute-and-confirm.md`](../02-code-build/03-execute-and-confirm.md)) runs this gate at the end of **every** execution, whatever the outcome. The outcome only chooses the mode:
+
+| Mode | When | Runs | Does not run |
+|------|------|------|--------------|
+| **Full completion** | `Verified Complete`: every applicable Verification Bar item passed, evidence present, no blocker | Phases 1–5 in full | — |
+| **Reconcile only** | `Not Eligible`: any check blocked, skipped, failed, partial, or under-evidenced | Phases 1–3; Phase 4 steps 1, 2, 4, 5, 6; Phase 5 | Plan completion marker; Phase 4 step 3 (archive). The plan stays active. |
+
+In **Reconcile only** mode, individually verified tasks still get `✅`. A blocked sibling task or a blocked plan-level check is **never** a reason to leave a verified task unticked.
 
 ## When to Use This Workflow
 
@@ -93,7 +104,7 @@ Inspect the codebase and verify that all reported completed tasks were actually 
    - **Never scan host-policy archive locations by default**; archives are historical, not active claims.
    - Exclude `README.md`, `TODO.md`, review artifacts, and other navigation/report-only files unless explicitly named.
    - If multiple candidates remain, report them and ask for a named target rather than guessing.
-2. **Extract claimed completions:** For each file, list every task/sub-task that is marked complete (e.g. `[✅]`, "COMPLETE", "Implementation Verified" with no "NOT COMPLETE" note). **Use only ✅ (green check mark) for marking completed items—not "x", ✓, or other symbols—for consistency.**
+2. **Extract the full task list:** For each file, list **every** in-scope task/sub-task and its current state: ticked (`[✅]`, `[x]`, `[✓]`), unticked (`[ ]`), or claimed complete in prose ("COMPLETE", "Implementation Verified", a phase report, or an execution addendum). Recognise checkbox syntax in both bulleted (`- [ ]`) and numbered (`1. [ ]`) lists. **Unticked tasks are in scope:** execution often lands and verifies work without ticking the box, so a `[ ]` task whose implementation and evidence are present must be verified and ticked, not skipped. **Use only ✅ (green check mark) for marking completed items—not "x", ✓, or other symbols—for consistency.** Normalise existing `[x]`/`[✓]` ticks to `[✅]` when they verify.
 
 ### Phase 2: Verify Implementation in Code (Sized Verification)
 Size the named plan before assigning verification. Use the smallest approach that provides complete evidence:
@@ -126,7 +137,7 @@ Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follo
 
 ### Phase 3: Mark Completed vs Flag False Reporting
 1. **For each task/sub-task:**
-   - If verification shows the implementation **is present and correct**: mark with **✅** (green check mark) in the plan/report. Ensure checkboxes are `[✅]` and any "Implementation Verified" or "Verification" section reflects reality.
+   - If verification shows the implementation **is present and correct**: mark with **✅** (green check mark) in the plan/report, whether the task was previously `[ ]` or already ticked. Ensure checkboxes are `[✅]` and any "Implementation Verified" or "Verification" section reflects reality. Parent tasks get `[✅]` only when all their sub-tasks are `[✅]`.
    - If verification shows the implementation **is missing, partial, or incorrect**: do **not** add a green check mark. Instead **flag** the item for the developer.
 2. **Flagging convention:**
    - **False completion:** Plan says complete but code/docs show no implementation
@@ -139,17 +150,18 @@ Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follo
 
 1. **Changelog:** For each verified completion that is not yet reflected in the host-resolved changelog, add or update an entry using `<metadata-root>/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and its index, unless the host documents a single-file changelog fallback. Resolve the location through [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy. For false completions, do not add a changelog entry claiming the fix; optionally add an entry only when the developer actually implements the fix.
 2. **Troubleshooting:** If a task was about a bug or incident, ensure the host-resolved troubleshooting location has an entry that matches the fix (or a note that it is still open). Resolve the location through [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy. Update or add entries only for **verified** fixes. Honor host-existing troubleshooting categories, or a host-documented single-file troubleshooting fallback, and add a row at the **top** of the applicable index.
-3. **Plans-Completed (host-policy archive routing):** This workflow is the **only** one that archives a completed plan. Resolve the destination from the host repository's policy — do **not** impose a global default:
+3. **Plans-Completed (host-policy archive routing) — Full completion mode only:** This workflow is the **only** one that archives a completed plan. Skip this step in Reconcile only mode. Resolve the destination from the host repository's policy — do **not** impose a global default:
     - Read the host repository's `AGENTS.md` and relevant project docs for the documented completed-plan destination. Host policies may use a metadata-root location or another explicitly documented location; do not infer or create a new archive default.
     - Apply the host's documented default, and honor an explicit alternate request **only** when the host policy documents/allows that override.
     - Move the plan from its active location to the host-policy destination (into the appropriate category subfolder where the host uses them: `implementation/`, `investigation/`, `migration/`, `review/`, `tooling/`, or a descriptive kebab-case folder).
     - Add a row at the **top** of the host's completed-plans index with: Date, Category, Title, File path, Notes.
     - Add a Type=`plan` row at the **top** of the host's changelog index referencing the completed plan file.
-    - **If the host policy is absent, unreadable, or contradictory:** report **`Not Eligible` / policy unresolved** and leave the plan active. Do not guess, migrate records, or invent a destination.
+    - **If the host policy is absent, unreadable, or contradictory:** block **only the move**. Report **archive blocked: policy unresolved**, name the conflicting sources (file and line), and leave the plan file where it is. Do not guess, migrate records, or invent a destination. The unresolved policy blocks **only** this step: still apply task `✅` marks, the completion marker, and every other Phase 4 step, then list the policy conflict first in the Phase 5 flagged issues so the developer can resolve it.
 4. **Related docs:** Update `docs/` (e.g. ARCHITECTURE, USER_MANUAL, OVERVIEW, TROUBLESHOOTING) so they do not contradict the verified state. Remove or correct any doc text that claims something is done when it is flagged as not done.
 5. **TODO:** When tasks are completed, update `<metadata-root>/plans/TODO.md` only if the host maintains that file; otherwise record any follow-up in the host-documented task location. Resolve the location through [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md) and host policy.
 6. **Plan/report file:** Write back into the plan/report file:
-   - **✅** on tasks and sub-tasks that were verified complete
+   - **✅** on tasks and sub-tasks that were verified complete, including tasks that were `[ ]` when this workflow started
+   - **Completion marker** (e.g. `**Status:** ✅ COMPLETED`), in Full completion mode only. In Reconcile only mode, set the status line to say which tasks are verified and what blocks completion instead.
    - **Remove** or **replace** completion markers from tasks that were flagged (leave as unchecked `[ ]` or add a "⚠ False completion" / "⚠ Incomplete" note). Do not use "x" or ✓ for completed; use **✅ (green check mark)** only for consistency.
 
 ### Phase 5: Produce Flagged Issues Report
@@ -182,7 +194,8 @@ Illustrative example only (hypothetical consumer project; do not treat paths or 
 - **Docs:** No claims that contradict verification (e.g. remove "API key is never sent to renderer" if P1-1 is still incomplete).
 
 ## Acceptance Criteria
-- Every task/sub-task in scope that is marked "complete" in the plan has been verified against the codebase (and docs where relevant).
+- Every task/sub-task in scope has been verified against the codebase (and docs where relevant), including tasks that were unticked when this workflow started. No verified task is left `[ ]`.
+- The mode matches the outcome: Full completion applies the completion marker and archive; Reconcile only applies neither, and the plan stays active.
 - Verified completions are marked with ✅ (and `[✅]` where applicable); false or incomplete claims are flagged and not marked complete.
 - All flagged issues are listed in **descending order of importance or urgency** (P0→P3, S0→S3).
 - Changelog, troubleshooting, and related docs are reconciled with the verified state (no false claims in docs).

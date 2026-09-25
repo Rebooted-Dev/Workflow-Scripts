@@ -106,7 +106,7 @@ This workflow updates existing documentation to match code:
 
 ### Mark Completed and Verify (`03-mark-completed.md`) — terminal gate
 
-This workflow is the **sole terminal authority** in the completion chain: the only workflow that applies terminal `✅` marks, the completion marker, and archive routing (resolved from the host repository's policy). `01-execution` and `02-confirm-execution` report verification and may downgrade false claims; they never finalize or archive. This workflow verifies that reported completed tasks were actually implemented:
+This workflow is the **plan-level terminal authority** in the completion chain: the only workflow that applies the plan completion marker and archive routing (resolved from the host repository's policy). It runs at the end of every execute-and-confirm chain, in **Full completion** mode (`Verified Complete`) or **Reconcile only** mode (`Not Eligible`: ticks verified tasks and reconciles logs, with no marker or archive). `01-execution` ticks tasks as they verify, and `02-confirm-execution` corrects ticks in both directions. This workflow verifies every task, ticked or not, against the implementation:
 
 1. **Identify sources** - Locate plan/report files that declare completed tasks
 2. **Verify in code** - Use parallel agents to read cited files and confirm implementation (P0→P3)

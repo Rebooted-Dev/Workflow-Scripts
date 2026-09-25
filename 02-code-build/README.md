@@ -25,15 +25,16 @@ This directory contains workflows for implementing code changes with verificatio
                     ┌──────────────────────────────┐
                     │ 04-documentation/            │
                     │ 03-mark-completed.md         │
-                    │ (TERMINAL GATE — sole        │
-                    │  ✅ / marker / archive owner) │
+                    │ (TERMINAL GATE — always runs;│
+                    │  sole marker / archive owner)│
                     └──────────────┬───────────────┘
                   Verified Complete │ Not Eligible
-                  (archive via host │ (plan stays active,
-                   policy)          no marker / archive)
+                  Full completion:  │ Reconcile only:
+                  ticks + marker +  │ ticks + logs; plan
+                  host-policy archive│ active, no marker/archive
 ```
 
-**The terminal gate is mandatory.** Only [`03-mark-completed`](../04-documentation/03-mark-completed.md) applies terminal `✅` task marks, the completion marker, and archive routing (resolved from the host repository's policy). `01` and `02` report verification and may downgrade false claims; they never finalize or archive independently. A `Verified Complete` plan must invoke the gate; a `Not Eligible` plan must not.
+**The terminal gate is mandatory for every outcome.** `01` ticks each task `[✅]` as its Verification Bar passes; `02` corrects ticks in both directions. [`03-mark-completed`](../04-documentation/03-mark-completed.md) always runs last and makes every task tick match verified reality. Only the gate applies the plan-level completion marker and archive routing (resolved from the host repository's policy), and only in Full completion mode.
 
 ## Quick Decision Guide
 

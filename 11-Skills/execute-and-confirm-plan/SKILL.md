@@ -34,9 +34,10 @@ Use this skill after the user has explicitly moved from planning into implementa
    - Name commands/smoke run and pass/fail in the summary (and plan addendum when using confirm workflows).
 
 4. Reconcile plan status with the terminal gate.
-   - If fully verified complete (all applicable Verification Bar items passed, evidence present, no blocker): run the terminal gate `04-documentation/03-mark-completed.md`. It is the **only** workflow that applies terminal `✅` marks, the completion marker, and archive routing (resolved from the host repository's policy). Do **not** finalize or archive outside the gate.
-   - If partial, blocked, skipped, failed, or under-evidenced: leave the plan **active** (`Not Eligible`), record landed work/blocker evidence/next verification, and apply **no** completion marker and **no** archive.
-   - "When appropriate" never means skipping the terminal gate for a `Verified Complete` plan.
+   - Always run the terminal gate `04-documentation/03-mark-completed.md`. It verifies every task, ticked or not, and ticks each verified one `[✅]`.
+   - If fully verified complete (all applicable Verification Bar items passed, evidence present, no blocker): run the gate in **Full completion** mode. It is the **only** workflow that applies the plan completion marker and archive routing (resolved from the host repository's policy). Do **not** finalize or archive outside the gate.
+   - If partial, blocked, skipped, failed, or under-evidenced (`Not Eligible`): run the gate in **Reconcile only** mode. Verified tasks still get `[✅]`. Leave the plan **active**, record landed work/blocker evidence/next verification, and apply **no** completion marker and **no** archive.
+   - Before reporting, confirm no verified task is still `[ ]`.
 
 5. Sync repo records.
    - Add changelog entries for code changes.

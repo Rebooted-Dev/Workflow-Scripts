@@ -19,7 +19,7 @@ Execute implementation in phases with verification and documentation updates.
 - Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
 - Implementation plan in `plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open)
 - Verification evidence: commands run, tests run, smoke/acceptance checks performed (or explicit blockers if something could not be run)
-- **Phase checkboxes vs terminal completion:** This workflow may mark **phase** task checkboxes (`- [✅]`) only after applicable Verification Bar evidence passes. **Plan-level** completion marker, log reconciliation, and archive are owned solely by **[`03-mark-completed.md`](../04-documentation/03-mark-completed.md)** (see Finalization).
+- **Task ticks vs plan completion:** This workflow **must** tick each task (`- [✅]` or `1. [✅]`) in the plan as soon as its applicable Verification Bar evidence passes. Do not leave verified tasks for a later step to tick. The **plan-level** completion marker and archive are owned solely by **[`03-mark-completed.md`](../04-documentation/03-mark-completed.md)** (see Finalization).
 
 ---
 
@@ -87,7 +87,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
   - If failures: fix, then re-run the **same** checks only after a meaningful corrective change or new hypothesis. If no evidence-backed next step remains, record the blocker and leave the task incomplete.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
-  - **Do not mark `- [✅]` unless Verification Bar items that apply to this phase passed** (or the user explicitly accepts residual risk for a documented blocker).
+  - **Tick every task whose Verification Bar items passed in this phase: change `[ ]` to `[✅]` in the plan file now**, before starting the next phase. **Do not tick a task unless the Verification Bar items that apply to it passed** (or the user explicitly accepts residual risk for a documented blocker). A blocked check leaves only the affected task `[ ]` with a note; it does not stop verified sibling tasks from being ticked.
   - Include brief verification evidence in the phase summary (commands/tests/smoke + result).
   - **Update logs (only for completed tasks that change or affect project code):**
     - **Changelog:** Add a dated entry for this phase's work per the host repository's documented changelog convention (see host AGENTS.md or `project/changelog/README.md`).
@@ -101,7 +101,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 
 - Re-run the Verification Bar for the whole change set: project verify command, automated tests when present, and acceptance/smoke for user-facing or runtime behavior. Confirm the repo is shippable against the plan's acceptance criteria; if no verify/test command exists, state that explicitly.
 - Sanity-check for secrets/unintended files before committing (do not commit `.env*` or credentials).
-- **Terminal completion:** Run the mandatory terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) when the whole plan is verified complete (sole owner of plan-level marker and archive).
+- **Terminal gate (always):** Run [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) at the end of every execution. Use **Full completion** mode when the whole plan is verified complete (it adds the plan-level marker and archive); otherwise use **Reconcile only** mode (it ticks verified tasks and reconciles logs; the plan stays active).
 - Optionally run [`02-confirm-execution.md`](./02-confirm-execution.md) to audit completion against the plan **before** the gate (recommended when using this workflow alone without [`03-execute-and-confirm.md`](./03-execute-and-confirm.md)). Confirmation may downgrade false claims and append evidence; it does not finalize or archive.
 
 ## Quick Checklist
@@ -112,7 +112,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 - [ ] Each phase: implement → **Verification Bar** (verify command + tests when present + smoke when user-facing/runtime) → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
 - [ ] Phase exit criteria include how success is verified; skipped checks recorded as blockers, not success
 - [ ] Final Verification Bar passes for the full change set; no secrets in diff
-- [ ] Plan fully marked per the terminal gate; completion marker/archive only via [`03-mark-completed.md`](../04-documentation/03-mark-completed.md)
+- [ ] Every verified task ticked `[✅]` in the plan file; gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) run (Full completion or Reconcile only); completion marker/archive only via the gate
 - [ ] (Optional) Confirm execution run for verification addendum
 
 ## Related Workflows
