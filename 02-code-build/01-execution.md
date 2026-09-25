@@ -19,7 +19,7 @@ Execute implementation in phases with verification and documentation updates.
 - Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
 - Implementation plan under `<metadata-root>/plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open); resolve its location via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution)
 - Verification evidence: commands run, tests run, smoke/acceptance checks performed (or explicit blockers if something could not be run)
-- **Task ticks vs plan completion:** This workflow **must** tick each task (`- [✅]` or `1. [✅]`) in the plan as soon as its applicable Verification Bar evidence passes. Do not leave verified tasks for a later step to tick. The **plan-level** completion marker and archive are owned solely by **[`03-mark-completed.md`](../04-documentation/03-mark-completed.md)** (see Finalization).
+- **Task ticks vs plan completion:** This workflow **must** tick each task (`- [✅]` or `1. [✅]`) as soon as its verification passes. For plans declaring a Tier, use the task's `Verify:` line plus the applicable Verification Bar; for legacy plans without a Tier, use their existing acceptance or exit criteria plus that same Verification Bar. Do not leave verified tasks for a later step to tick. The **plan-level** completion marker and archive are owned solely by **[`03-mark-completed.md`](../04-documentation/03-mark-completed.md)** (see Finalization).
 
 ---
 
@@ -43,6 +43,8 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 - Confirm goal + acceptance criteria (user-facing behavior, performance targets, "done" definition).
 - Check repo state (avoid clobbering unrelated work): `git status`.
 - Identify the plan under `<metadata-root>/plans/`; resolve the metadata root and any host-specific filename convention via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution). Use `<metadata-root>/build/` only when host policy explicitly permits it.
+- Use the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract for the declared tier, Change Surface, and each task's `Files:` and `Verify:` lines.
+- Validate a template-declaring plan from the host repository with `<workflow-scripts>/scripts/validation/check-plan.sh <plan>` before implementation; legacy plans without a Tier remain unaffected.
 - Break work into phases; for each phase define scope, out-of-scope, and **exit criteria that include how success will be verified** (commands, tests, and/or smoke of acceptance criteria—not only "code exists").
 - Size any delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). When the scope warrants focused roles, options include implementation, security/risk review, breaking-change analysis, and acceptance/test validation; select only what the phase needs and assign non-overlapping ownership.
 
@@ -63,7 +65,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
   - If failures: fix, then re-run the **same** checks only after a meaningful corrective change or new hypothesis. If no evidence-backed next step remains, record the blocker and leave the task incomplete.
 - Phase report (immediately after exit criteria met)
   - **CRITICAL: Update the implementation plan** so it reflects reality (completed vs pending vs deferred). For the single source of truth on task marking and completion conventions, follow **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
-  - **Tick every task whose Verification Bar items passed in this phase: change `[ ]` to `[✅]` in the plan file now**, before starting the next phase. **Do not tick a task unless the Verification Bar items that apply to it passed** (or the user explicitly accepts residual risk for a documented blocker). A blocked check leaves only the affected task `[ ]` with a note; it does not stop verified sibling tasks from being ticked.
+  - **Tick every task whose applicable verification passed in this phase: change `[ ]` to `[✅]` in the plan file now**, before starting the next phase. For a tier-declaring plan, require its task's `Verify:` evidence; for a legacy plan, use its existing acceptance or exit criteria. Both require the applicable Verification Bar. A blocked check leaves only the affected task `[ ]` with a note; it does not stop verified sibling tasks from being ticked.
   - Include brief verification evidence in the phase summary (commands/tests/smoke + result).
   - **Update logs (only for completed tasks that change or affect project code):**
     - **Which repository:** log in the metadata root of the repository that **owns the changed files** ([Metadata Root Resolution](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution)). Workflow-Scripts changes go to its `00-project/`, even from a host-project session; there, a workflow defect counts as a bug.
@@ -86,7 +88,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 - [ ] Goal and acceptance criteria confirmed
 - [ ] Repo state checked (`git status`)
 - [ ] Plan identified under `<metadata-root>/plans/` (or host-permitted `<metadata-root>/build/`), resolved via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution)
-- [ ] Each phase: implement → **Verification Bar** (verify command + tests when present + smoke when user-facing/runtime) → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
+- [ ] Each phase: implement → task `Verify:` (tier-declaring plan) or existing acceptance/exit criteria (legacy plan), plus the **Verification Bar** → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
 - [ ] Phase exit criteria include how success is verified; skipped checks recorded as blockers, not success
 - [ ] Final Verification Bar passes for the full change set; no secrets in diff
 - [ ] Every verified task ticked `[✅]` in the plan file; gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) run (Full completion or Reconcile only); completion marker/archive only via the gate

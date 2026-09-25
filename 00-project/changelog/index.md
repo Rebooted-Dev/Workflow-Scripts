@@ -5,6 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-25 | changed | Add the tiered planning and build contract | changed/2026-09-25-changed-tiered-planning-build-contract.md | Shared plan template; aligned planning, review, finalisation, and execution rules |
+| 2026-09-25 | added | Add the host-usable check-plan linter | added/2026-09-25-added-check-plan-linter.md | Gate 2 passed after parser regressions; local fixture suites pass; remote CI pending |
 | 2026-09-25 | fixed | Route Not Eligible plans through reconciliation | fixed/2026-09-25-fixed-not-eligible-reconcile-only-routing.md | M1/E2 corrected 04 workflow route; pre-fix failure captured; local completion-chain guard passes |
 | 2026-09-25 | fixed | Size planning and code-build agent use | fixed/2026-09-25-fixed-planning-build-agent-sizing-policy.md | M3/E4 central applicability link, policy guard, negative fixture/self-test and CI step |
 | 2026-09-25 | fixed | Route planning and build paths through metadata-root policy | fixed/2026-09-25-fixed-metadata-root-build-paths.md | M4 removes project-specific `project/build/` routing from active planning/build instructions |

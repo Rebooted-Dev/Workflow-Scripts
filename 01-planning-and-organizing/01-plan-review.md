@@ -11,9 +11,10 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 - Order all findings and recommendations by priority, descending urgency/importance: P0, P1, P2, P3.
 - Within the same priority, order by severity: S0, S1, S2, S3.
 - Use the shared rubric: [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md).
+- These rules order review findings; for plan phases and tasks, follow the ordering rule in [`../00-Meta-Workflow/00-meta/plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md).
 
 ## Steps
-1. Read the plan end-to-end and list its explicit goals, scope, and assumptions.
+1. Read the plan end-to-end and list its explicit goals, scope, and assumptions. Use [`../00-Meta-Workflow/00-meta/plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) to assess the declared tier and required structure; re-run every Change Surface search and classify each result, noting missing or stale sites.
 2. Size any delegated validation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Select only the roles needed to check plan claims; options include API/interface compatibility, structure/dependencies, configuration/environment, existing patterns, and tests/integration. Give roles non-overlapping read-only scopes, then consolidate results and flag conflicts.
 3. Apply the same sizing guidance to review concerns. Relevant lenses may include security/safety, architecture/design, defects, scope/over-engineering, performance, accessibility, domain constraints, and compliance; assess what applies without requiring a separate agent for every lens. Consolidate findings and identify:
    - design flaws in the plan
@@ -52,11 +53,13 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
     - Save per-model sub-reports into `PLAN.reviews/` using the same naming pattern for traceability.
 
 ## Output Format (append to plan)
-- Header (per addendum, at the top of the appended block):
+- Begin the appended block with `## Current state`, then add one line per open recommendation with its current disposition or next action. If none remain open, state that explicitly.
+- After the Current state block, include this dated review header:
   - `YYYY-MM-DD HH:MM (local time, 24h) - Plan Review (Model: <model-name>)`
 - Recommended when grouping multiple models in one addendum:
   - Add sub-headings per model, for example: `### Model: <model-name>` under the main header.
 - Sections (priority-ordered): P0, P1, P2, P3
+- Assess Decision options, reversibility, and per-task `Files:`/`Verify:` fields against the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract.
 - Each item must include:
   - **Severity** (S0–S3): Impact level if the issue ships
   - **Priority** (P0–P3): Urgency to fix based on severity × likelihood
@@ -75,6 +78,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
   - Identify any item whose scope exceeds the stated goal.
   - Recommend a smaller MVP approach when feasible.
   - Push speculative refactors/optimizations to P3 unless they unblock P0/P1 work.
+  - An enabling refactor is in scope when required to make the planned fix correct and verifiable.
 
 ## Notes
 - Size any scanning or validation delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md); use focused roles only when they materially improve coverage or speed.

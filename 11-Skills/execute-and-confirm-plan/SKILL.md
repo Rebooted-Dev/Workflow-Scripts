@@ -16,14 +16,16 @@ Use this skill after the user has explicitly moved from planning into implementa
 ## Workflow
 
 1. Establish execution scope.
-   - Read the named plan and any execute-and-confirm workflow file.
-   - Identify phases, required files, verification commands, and documentation/logging obligations.
+    - Read the named plan and any execute-and-confirm workflow file.
+    - Use the shared [plan-template contract](../../00-Meta-Workflow/00-meta/plan-template.md) to interpret the plan tier, Change Surface, and each task's `Verify:` evidence.
+    - Identify phases, required files, verification commands, and documentation/logging obligations.
    - Check `git status --short` before edits and protect unrelated user changes.
 
 2. Implement in plan order.
-   - Keep changes scoped to the approved plan.
-   - Add regression tests for bugs when practical.
-   - Prefer existing repo patterns, helpers, and architecture.
+    - Keep changes scoped to the approved plan.
+    - Add regression tests for bugs when practical.
+    - Prefer existing repo patterns, helpers, and architecture.
+    - Re-run the plan's Change Surface searches after implementation and classify the results; unresolved stale hits remain incomplete.
    - Update the active plan as phases complete or blockers appear.
 
 3. Verify (match `02-code-build` Verification Bar).

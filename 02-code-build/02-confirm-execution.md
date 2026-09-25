@@ -36,7 +36,7 @@ Validate that an implementation plan has actually been completed (in code and ve
 
 - The original plan document updated with:
   - Completed vs incomplete items marked consistently: verified tasks `[✅]`, unverified tasks `[ ]` (**no** plan-level completion marker or archive from this workflow)
-  - A short verification addendum (what was checked and what passed/failed)
+  - A short verification addendum beginning with a `## Current state` block, one line per open recommendation (or an explicit none), followed by what was checked and what passed/failed
   - Misreporting called out explicitly with evidence
 - A hand-off note: when fully verified complete, route to the terminal gate [`03-mark-completed.md`](../04-documentation/03-mark-completed.md); when not, leave the plan active. This workflow does not finalize or archive.
 
@@ -71,8 +71,9 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 1. Read the plan end-to-end; extract the list of claimed completed tasks and their acceptance criteria / exit criteria.
 
-2. Size any delegated verification using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Relevant roles may include plan-to-diff comparison, project verification/tests, runtime acceptance/smoke, and documentation/log completeness; choose only what the claims require and use non-overlapping scopes. Re-run or confirm the required checks below even when no separate agent is used.
+2. Use the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract to interpret the plan's tier and required task evidence. Size any delegated verification using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Relevant roles may include plan-to-diff comparison, project verification/tests, runtime acceptance/smoke, and documentation/log completeness; choose only what the claims require and use non-overlapping scopes. Re-run or confirm the required checks below even when no separate agent is used.
    - Compare plan tasks to `git diff` / relevant files; confirm the code changes exist and match intent.
+   - After the build, re-run every search listed in the plan's Change Surface and classify the results. Unexplained stale hits mean the affected task is incomplete.
    - **Re-run or confirm** the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs when prior evidence is missing, stale, or only partial. If none exists, state that explicitly. `npm run build` is only an example.
    - **Run automated tests** when a suite/script exists for the change; do not treat tests as optional during confirm.
    - **Spot-check user-facing or runtime behavior** when the plan's acceptance criteria depend on it (dev server, CLI, IPC, provider path, export/render, etc.)—not only static review.
@@ -81,6 +82,7 @@ If the plan does not use task list syntax, add an addendum section instead of re
 3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3), in bulleted (`- [ ]`) or numbered (`1. [ ]`) lists. Apply the marking convention in both directions: task marked `[✅]` but code or verification is missing → change to `[ ]` and add a note; task still `[ ]` but code and applicable evidence are verified → change to `[✅]`. Leave already-correct marking as-is. Add notes for incomplete or deferred tasks.
 
 4. Add a verification addendum to the plan containing:
+   - A `## Current state` block at the top, with one line per open recommendation and its disposition/next action; if none remain open, state that explicitly
    - Timestamp: `YYYY-MM-DD HH:MM`
    - Commands run (project verify, test suite, and any other checks—with pass/fail)
    - What was smoke-tested or verified manually against acceptance criteria (if any)

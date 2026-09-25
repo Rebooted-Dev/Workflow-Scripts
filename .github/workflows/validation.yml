@@ -55,6 +55,9 @@ jobs:
       - name: Check planning/build policy self-test
         run: bash scripts/validation/check-planning-build-policy-selftest.sh
 
+      - name: Check plan validator self-test
+        run: bash scripts/validation/check-plan-selftest.sh
+
       - name: Check meta-log validator self-test
         run: bash scripts/validation/check-meta-logs-selftest.sh
 

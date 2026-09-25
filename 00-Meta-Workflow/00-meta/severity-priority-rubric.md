@@ -37,9 +37,9 @@ Provide a shared rubric for scoring issues across reviews and plans.
 - S2: repro steps or test case, affected module reference.
 - S3: code pointer or screenshot, rationale for change.
 
-## Ordering Rule (reports and plans)
-- Present work items in descending urgency/importance: P0, P1, P2, P3.
-- Within the same priority, order by severity: S0, S1, S2, S3.
+## Ordering Rule
+- **Reports and findings:** present findings/recommendations in descending priority, P0, P1, P2, P3; within a priority, order by severity, S0, S1, S2, S3.
+- **Plans:** order phases by dependency, then risk; within each phase, label and order tasks by priority, P0, P1, P2, P3. Phase numbering is not a priority ranking.
 
 ## Per-finding requirements (normative)
 

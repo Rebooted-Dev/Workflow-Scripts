@@ -74,7 +74,12 @@ START HERE
 
 ### Priority Ordering
 
-All plans use consistent priority ordering (P0 → P3):
+Plan ordering separates phase sequence from task priority:
+- Order phases by dependency, then risk; phase numbers are not priority labels.
+- Label and order tasks within each phase P0 → P3.
+- Keep report findings and recommendations ordered P0 → P3, with severity breaking ties.
+
+Use the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract for tier-specific sections and required task fields. Priority labels mean:
 - **P0 Blocker:** Critical path items, must complete before merge
 - **P1 Urgent:** High impact, must complete before release
 - **P2 Soon:** Medium impact, complete next sprint

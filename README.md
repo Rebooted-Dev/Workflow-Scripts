@@ -129,7 +129,7 @@ The workflows are organized into fifteen categories:
 
 #### Implementation Plan (`01-planning-and-organizing/02-finalise-plan.md`)
 
-**Purpose:** Generate a consolidated, priority-ordered implementation plan from requirements and feedback.
+**Purpose:** Generate a consolidated implementation plan with phases ordered by dependency then risk, and tasks prioritized within each phase.
 
 **When to use:**
 - Starting a new feature or refactoring
@@ -139,8 +139,9 @@ The workflows are organized into fifteen categories:
 **How to use:**
 1. Provide the primary plan document path
 2. Include any feedback or review comments
-3. The workflow will generate a priority-ordered plan (P0 → P3)
-4. Plan is saved to `plans/` (project root) with a dated filename
+3. The workflow orders phases by dependency then risk, and labels and orders tasks within each phase P0 → P3.
+4. Plan is saved under the owning repository's `<metadata-root>/plans/` (or host-authorized `<metadata-root>/build/`), resolved by [Metadata Root Resolution](00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution).
+5. Use the shared [plan-template contract](00-Meta-Workflow/00-meta/plan-template.md) for tier-specific sections and task fields.
 
 **Example:**
 ```
@@ -151,8 +152,8 @@ User: "Create an implementation plan for adding user authentication.
 Workflow will:
 - Read plans/auth-plan.md
 - Analyze codebase for feasibility
-- Generate priority-ordered phases
-- Save to plans/implementation-plan-auth-YYMMDD-HHMM-{model}.md
+- Order phases by dependency then risk; order tasks within each phase by priority
+- Save to <metadata-root>/plans/YYYY-MM-DD-authentication-implementation-plan.md
 ```
 
 **Key Features:**
@@ -786,9 +787,9 @@ Step 7: Code Review
 ## Best Practices
 
 ### 1. Always Use Priority Ordering
-- All workflows use P0 → P3 priority ordering
-- Focus on P0/P1 items first
-- Defer P3 items unless they unblock higher priorities
+- Order report findings and recommendations P0 → P3; within plans, order tasks within each phase P0 → P3.
+- Order plan phases by dependency, then risk; phase numbers do not represent priority.
+- Focus on P0/P1 tasks within a phase first; defer P3 tasks unless they unblock higher priorities.
 
 ### 2. Verify Before Proceeding
 - Use the project-specific verification command from `AGENTS.md`, package scripts, Makefile, or local test docs

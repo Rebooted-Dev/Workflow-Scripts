@@ -33,8 +33,8 @@ Conduct deep research and analysis to create a comprehensive initial implementat
 
 ## Prioritization Rule
 
-- Organize the implementation plan by priority: P0, P1, P2, P3
-- Research findings should identify which items are P0 vs P3
+- Order plan phases by dependency, then risk; label and order tasks within each phase by priority, P0 to P3.
+- Order research findings by priority, P0 to P3, with severity breaking ties.
 - Use the shared rubric: [`../00-Meta-Workflow/00-meta/severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md)
 
 ---
@@ -80,6 +80,11 @@ Consolidate all research into a structured analysis:
 - Technical constraints or limitations
 - Areas that would be affected by the change
 
+**Change Surface:**
+- List each site that implements, restates, guards, or historically records the target behavior.
+- Include `file:line`, the search command, and a classification for every hit (`implements`, `restates`, `guards`, or `historical`). Classify examples and archived text rather than treating every match as an active rule.
+- Reviewers re-run these searches; confirmation re-runs them after the build. Unexplained stale hits leave the affected task incomplete.
+
 **External Options Analysis:**
 - Library options with pros/cons
 - Pattern options with trade-offs
@@ -90,6 +95,8 @@ Consolidate all research into a structured analysis:
 - Integration risks
 - Performance risks
 - Maintenance risks
+
+Use the shared plan contract for tier-specific sections, task fields, and decision structure: [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md).
 
 ---
 
@@ -105,15 +112,15 @@ Based on research, define the recommended approach:
 - What alternatives did you consider and reject?
 - What are the trade-offs?
 
+Follow the options and reversibility requirements in [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md).
+
 ### 2.2 Break Down Into Phases
 
 Organize work into logical phases:
 
 **Phase Guidelines:**
-- Phase 1 = P0 work (critical path, blockers)
-- Phase 2 = P1 work (urgent, high impact)
-- Phase 3 = P2 work (important improvements)
-- Phase 4 = P3 work (backlog, nice-to-have)
+- Order phases by dependency, then risk; do not use phase numbers as priority labels.
+- Label and order tasks within each phase by priority (P0, P1, P2, P3), using the shared rubric.
 
 **Each phase should include:**
 - Scope and objectives
@@ -124,19 +131,7 @@ Organize work into logical phases:
 
 ### 2.3 Define Tasks and Sub-Tasks
 
-**For each task:**
-- Clear description
-- Acceptance criteria
-- Effort estimate
-- Dependencies
-- Assigned priority (P0-P3)
-
-**Task structure:**
-```markdown
-- [ ] Task name (Priority: P0, Effort: Medium)
-  - Sub-task 1
-  - Sub-task 2
-```
+Use [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) for tiered task syntax, priority labels, and required `Files:` and `Verify:` lines.
 
 ### 2.4 Identify Dependencies and Ordering
 
@@ -201,54 +196,7 @@ Create the implementation plan under `<metadata-root>/plans/` per [`../00-Meta-W
 
 **Filename format:** `<metadata-root>/plans/YYYY-MM-DD-{goal-name}-implementation-plan.md` (or the host's explicit convention)
 
-**Plan structure:**
-
-```markdown
-# Implementation Plan: [Goal/Feature Name]
-
-**Created:** YYYY-MM-DD HH:MM  
-**Status:** DRAFT  
-**Goal:** [Brief restatement of goal]
-
-## Research Summary
-[Link to or embed research findings]
-
-## Recommended Approach
-[High-level description of the solution]
-
-## Implementation Phases
-
-### Phase 1: [Name] (P0 - Critical)
-**Scope:** [What's included]  
-**Exit Criteria:** [How to verify complete]
-
-- [ ] Task 1 (Effort: Small)
-- [ ] Task 2 (Effort: Medium)
-  - [ ] Sub-task 2a
-  - [ ] Sub-task 2b
-
-### Phase 2: [Name] (P1 - Urgent)
-...
-
-### Phase 3: [Name] (P2 - Soon)
-...
-
-### Phase 4: [Name] (P3 - Backlog)
-...
-
-## Dependencies
-- Dependency 1 must complete before Task X
-- External API access needed by Phase 2
-
-## Risks and Mitigations
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| Risk 1 | Possible | Medium | Mitigation strategy |
-
-## Success Criteria
-- [ ] Criterion 1
-- [ ] Criterion 2
-```
+Use the tiered section requirements and scaffold in [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md); do not maintain a separate inline plan template here.
 
 ### 3.3 Add Planning Complete Marker
 
@@ -257,6 +205,8 @@ When the plan is fully written and ready for review:
 ```markdown
 **Status:** DRAFT - Ready for Review
 ```
+
+Use the shared [plan-template contract](../00-Meta-Workflow/00-meta/plan-template.md) for the declared tier and required sections.
 
 Or if you want to indicate research is complete but plan is still being written:
 
@@ -275,7 +225,7 @@ Or if you want to indicate research is complete but plan is still being written:
 
 2. **Implementation Plan in `<metadata-root>/plans/`:**
    - Dated filename per naming conventions
-   - Priority-ordered phases (P0 → P3)
+   - Phases ordered by dependency, then risk; tasks within each phase labeled and ordered P0 → P3
    - Tasks with effort estimates
    - Dependencies mapped
    - Risks identified with mitigations
@@ -294,7 +244,7 @@ Or if you want to indicate research is complete but plan is still being written:
 - [ ] Research covers current codebase state thoroughly
 - [ ] External options have been evaluated
 - [ ] Recommended approach is justified with evidence
-- [ ] Plan is organized by priority (P0 to P3)
+- [ ] Plan phases are ordered by dependency, then risk; tasks within each phase carry P0–P3 priority labels and are priority-ordered
 - [ ] Each phase has clear scope and exit criteria
 - [ ] Tasks have effort estimates (S/M/L)
 - [ ] Dependencies are explicitly mapped

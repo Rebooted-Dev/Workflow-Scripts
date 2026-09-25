@@ -32,10 +32,11 @@ Use this skill to turn research, a draft, a stale plan, or a review-stage plan i
    - Include an explicit relevance assessment: still needed, partially obsolete, obsolete, or ready to execute.
 
 4. Create or update the plan artifact.
-   - Create a separate dated plan in `project/plans/` unless the user or workflow says otherwise.
-   - If the user asks to update a named plan in place, edit that plan and add dated findings or a revision section.
-   - Keep the source plan as audit trail.
-   - Prioritize phases by severity and dependency order.
+    - Create a separate dated plan in `project/plans/` unless the user or workflow says otherwise.
+    - If the user asks to update a named plan in place, edit that plan and add dated findings or a revision section.
+    - Keep the source plan as audit trail.
+    - Use the shared [plan-template contract](../../00-Meta-Workflow/00-meta/plan-template.md) for tier, sections, Decision options, and task syntax. A Change Surface lists and classifies search hits; each top-level task has `Files:` and `Verify:` lines.
+    - Order phases by dependency then risk; order priority-labeled tasks P0–P3 within each phase.
    - Include success criteria, verification commands, rollback or mitigation notes, and docs/logging requirements.
 
 5. Update trackers.
