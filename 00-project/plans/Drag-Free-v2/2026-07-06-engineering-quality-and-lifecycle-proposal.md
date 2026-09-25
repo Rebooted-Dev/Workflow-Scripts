@@ -6,7 +6,7 @@
 **Evidence base:** direct file review (this session) + delegated survey filed at `workflow-engineering-quality-survey-260706-0137-gpt55.md` (same directory)
 **Companion to:** `2026-07-06-workflow-system-v2-redesign-proposal.md` — that proposal fixes the system's *mechanics* (drift, token cost, enforcement, roles). This one fixes its *engineering substance*: what the workflows actually teach and require about building good software. Numbering continues from it (weaknesses W13+, improvements KI-12+); its structures (frontmatter, `core/` partials, role registry, `wf` CLI) are assumed and built upon, never duplicated.
 
-> **Current state (2026-09-25).** Parts of this proposal are **extracted** into [`2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md), which re-lands them on the existing `00-meta/` contract mechanism and drops the dependency on the v2 platform (`core/`, frontmatter, `wf` CLI, role registry). Extracted items are tagged **Extracted →** below; untagged items remain open here. Nothing is *superseded* until the plan's Phases B–C land (plan Phase E task 1 then records supersession). Line citations were re-checked on `1ab9fcb`: stale ones are updated in place with the July value kept, and two cite content that no longer exists (W15, W16). Source: [quality review](../../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) §6.
+> **Historical current-state snapshot (2026-09-25; superseded by the 2026-09-26 Current state addendum below).** At that date, parts of this proposal were **extracted** into [`2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md), which re-lands them on the existing `00-meta/` contract mechanism and drops the dependency on the v2 platform (`core/`, frontmatter, `wf` CLI, role registry). Extracted items were tagged **Extracted →** below; untagged items remained open. No KIs had been superseded as of this snapshot. Line citations were re-checked on `1ab9fcb`; two cited contents no longer existed (W15, W16). See the addendum for current KI dispositions and citation refresh. Source: [quality review](../../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) §6.
 
 ---
 
@@ -73,7 +73,7 @@ Frontmatter (KI-1) wires it in: `prev: [research-and-plan]`, `next: [plan-review
 
 ### ⭐ KI-13: `core/standards/` — the engineering standards partials
 
-> **Extracted → partial:** the substance of `code-design.md` and `error-handling.md` becomes **one** file, `00-meta/engineering-standards.md` (plan Decision D4, Phase C task 1), wired forward and backward as described here (Phase C tasks 2–3). `observability.md` and `security-baseline.md` are **not extracted**.
+> **Superseded in part (2026-09-26):** The code-design and error-handling substance of partials 1–2 is now covered by the shared [`engineering-standards.md`](../../../00-Meta-Workflow/00-meta/engineering-standards.md) contract (§§1–3), wired forward and backward. This supersedes only partials 1–2; `observability.md` and `security-baseline.md` (partials 3–4) remain **OPEN**.
 
 Four new partials under the companion proposal's `core/` mechanism, each ≤80 lines body + per-language appendix, each referenced (never restated, per KI-10) by both build and review workflows:
 
@@ -91,9 +91,9 @@ Four new partials under the companion proposal's `core/` mechanism, each ≤80 l
 
 ### ⭐ KI-14: Plan template quality sections (tiered)
 
-> **Extracted → yes, amended:** tiered template sections move into a shared `00-meta/plan-template.md` (plan Phase B task 1). "Error-Handling Strategy" becomes "Failure Modes & Recovery", and Change Surface, Decision and per-task `Verify:` are added. **Observability Plan is not extracted.** The tier check uses `check-plan.sh` instead of `wf validate`.
+> **Superseded in part (2026-09-26):** Tiered plan-quality sections are now in the shared [`plan-template.md`](../../../00-Meta-Workflow/00-meta/plan-template.md) and enforced structurally by [`check-plan.sh`](../../../scripts/validation/check-plan.sh). This does **not** supersede the omitted Observability Plan: that KI-14 requirement remains **OPEN**.
 
-The plan skeleton in `00-research-and-plan.md` (lines 225–270; *updated 2026-09-25: now `:216-261`*) gains five sections, required at T2/T3, one-line-each-or-N/A at T1:
+The following sketch records the original proposal, not the current plan template. The former inline skeleton in `00-research-and-plan.md` (last referenced at `:216-261`) was replaced by the shared contract linked above. The current contract does not include an Observability Plan, so that requirement remains open:
 
 ```markdown
 ## Design & Interfaces        # link design brief + ADRs; new/changed boundaries and contracts
@@ -134,7 +134,7 @@ New `07-deployment/00-deploy.md` — the repeatable path the category lacks; exi
 
 ### ⭐ KI-17: Tech-debt ledger
 
-> **Extracted → minimal:** a Deferred & Debt plan section that the terminal gate copies into TODO (plan Phase C task 4). The `debt/` ledger, schema and budget rule remain open here.
+> **Partially extracted; KI-17 remains OPEN (2026-09-26):** the plan's Deferred & Debt section and terminal-gate transfer to the host TODO/task location cover the minimal handoff (plan Phase C task 4). The standalone `debt/` ledger, schema, and budget rule remain open.
 
 `<metadata-root>/debt/` — one file per debt item (KI-8 mechanism: frontmatter + generated index):
 
@@ -260,3 +260,23 @@ Interleaves with the companion proposal's phases; content work here is deliberat
 - **2026-09-25 (status and citations):** Added the current-state banner and extraction tags pointing to the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md). Refreshed stale line citations against `1ab9fcb` (July values kept). Recorded that the `05-comprehensive-audit.md` evidence for W15/W16 no longer exists. No KI was reviewed or superseded.
 
 - **2026-07-06 (initial):** Gap analysis W13–W19, improvements KI-12–KI-18, lifecycle map, phased plan. Evidence: codex/gpt-5.5 low survey (Q1–Q8, all PARTIAL) + direct file verification by claude-fable-5.
+
+## Current state
+
+- **KI-12 — OPEN:** The in-plan Decision/reversibility field is partial only; the design workflow, ADR directory, and pre-plan design review gate remain open.
+- **KI-13 — PARTIAL:** Code-design/error-handling partials 1–2 are superseded by engineering standards §§1–3; observability/security partials 3–4 remain **OPEN**.
+- **KI-14 — PARTIAL:** Tiered plan-quality sections are superseded by the shared template and `check-plan.sh`; the Observability Plan omission remains **OPEN**.
+- **KI-15 — OPEN:** Greenfield lane and walking skeleton are not implemented.
+- **KI-16 — OPEN:** Generic deployment workflow is not implemented.
+- **KI-17 — OPEN:** Only the minimal plan Deferred & Debt/TODO handoff is extracted; the standalone ledger, schema, and budget rule remain open.
+- **KI-18 — OPEN:** Role registry additions remain unimplemented.
+
+## Plan Review Addendum
+
+2026-09-26 00:54 (local time, 24h) - Plan Review (Model: gpt-6-luna)
+
+**Scope and evidence.** Reviewed the proposal's current KI dispositions against the Phase B/C artifacts only. Those phases supersede the specifically named partials, not the full lifecycle proposal. The citation baseline was the clean v1.82 tree at D commit `2505cc10fbd053c730fe55091876357c9a4b2f65`. This review performed no survey rerun or behavioral pilot and made no host-project edits; no remote CI result is claimed.
+
+**Citation refresh.** Current architecture/decision references are `01-planning-and-organizing/00-research-and-plan.md:76-80,117-123` and the review “design flaws” bullet is `01-planning-and-organizing/01-plan-review.md:21`. The active build-to standard is linked at `02-code-build/01-execution.md:47`; refactoring criteria link to it at `05-review/03-code-refactoring.md:79-87`; the execution failure response is at `02-code-build/01-execution.md:70`. The errors documentation template remains optional at `04-documentation/00-doc-templates.md:437-459`. For W16, docs request monitoring/logging only if present (`04-documentation/01-create-docs.md:243`), while the packaged Electron logging rule is `07-deployment/01a-MACOS_ELECTRON_GUIDE.md:178`; no general observability baseline was found. For W17, `07-deployment/README.md:1-31` still routes to guides, but `07-deployment/08a-pre-deployment-security-check.md:3,9,24,56` is now project-agnostic, so the proposal's old npm-only characterization is stale; the generic `00-deploy.md` workflow remains absent. For W18, setup still requires a Git repository (`00-project-setup/01-setup-project.md:113-119`) and research still takes a repository root/codebase context (`01-planning-and-organizing/00-research-and-plan.md:23-25,58-60`). For W19, the old `02-finalise-plan.md:53-57` citation is no longer a debt note; the current minimal handoff is represented by `00-Meta-Workflow/00-meta/plan-template.md:88-89`, `01-planning-and-organizing/00-research-and-plan.md:105-107`, and `04-documentation/03-mark-completed.md:161-166`. The ledger/schema/budget remain open.
+
+**Next step:** use the proposal TODO entry to decide the remaining KIs. The Flash-UI forward pilot is deferred to its owner; the named follow-up is to select and explicitly authorize the next non-trivial host plan before running the template/check-plan and post-build Change Surface checks. No host edits are part of this review.

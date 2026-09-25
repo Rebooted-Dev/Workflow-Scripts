@@ -1,7 +1,7 @@
 # Implementation Plan: Planning and Code-Build Workflow Quality
 
 **Created:** 2026-09-25 15:10
-**Status:** DRAFT — Ready for local execution — remote CI/pilot pending
+**Status:** Active — Not Eligible (Plan 01 links and separately authorized remote CI pending; parent terminal gate pending)
 **Tier:** T2
 **Research:** [`planning-and-build-workflow-quality-review-260925-1347-claude.md`](../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) (researched at `1ab9fcb`, inferred from the 13:47 report time vs the 13:39 commit; re-verified at the same commit on 2026-09-25, see [Research summary](#research-summary-and-re-verification)). The source documents are annotated: the research carries in-place corrections and a `Plan:` line per finding, and the Drag-Free-v2 and v1.82-fixes documents carry extraction or cross-reference notes.
 **Workflow:** [`00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md). Pre-execution review by a different model is incorporated below; execute locally through [`03-execute-and-confirm.md`](../../02-code-build/03-execute-and-confirm.md).
@@ -308,18 +308,25 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 
 **Scope:** research §9 Phase E, plus the before/after measure. **Depends on:** Phases B–D. **Exit:** July proposal status recorded; survey re-run filed with evidence-based ratings; TODO updated, including the Flash-UI pilot deferral.
 
-1. [ ] Run `01-plan-review.md` on `Drag-Free-v2/2026-07-06-engineering-quality-and-lifecycle-proposal.md`: mark KI-13 (partials 1–2) and KI-14 as superseded by Phases B–C with links (extraction tags and refreshed citations were already added on 2026-09-25, so this step only turns **Extracted →** tags into superseded status); keep KI-12, KI-15, KI-16, KI-17 and KI-13 partials 3–4 as open. Add the proposal to `plans/TODO.md` (it is not listed there today) and record the Flash-UI forward pilot as deferred to its owner there; make no host-project changes. (P3, Effort: S)
+1. [✅] Review `Drag-Free-v2/2026-07-06-engineering-quality-and-lifecycle-proposal.md` against Phases B–C. Its 2026-09-26 Plan Review Addendum supersedes KI-13 partials 1–2 and KI-14's tiered plan sections; KI-12, KI-13 partials 3–4, KI-14's Observability Plan, and KI-15–KI-18 remain open or partial as documented. `plans/TODO.md` includes the proposal and the Flash-UI forward-pilot deferral; no host-project changes. (P3, Effort: S)
     - Files: the July proposal (review addendum), `00-project/plans/TODO.md`
-    - Verify: the addendum names each KI with its status; the proposal and pilot-deferral TODO rows exist; no host-project path was changed (cost/prereqs: none)
-2. [ ] Re-run the July survey's 8 questions (`Drag-Free-v2/workflow-engineering-quality-survey-260706-0137-gpt55.md`) against the new tree and file the result as `research/engineering-quality-survey-rerun-YYMMDD-HHMM-<model>.md`. Hypothesis only: Q1–Q3 and Q8 may move from PARTIAL to COVERED, Q7 may move to PARTIAL+, and Q4–Q6 may remain PARTIAL (non-goals); evidence determines the reported ratings. (P3, Effort: S)
+    - Verify: the addendum names each KI disposition; the proposal and pilot-deferral TODO rows exist; no host-project path was changed (cost/prereqs: none)
+2. [✅] Re-run the July survey's 8 questions (`Drag-Free-v2/workflow-engineering-quality-survey-260706-0137-gpt55.md`) against the new tree. The evidence-only result is filed at [`research/engineering-quality-survey-rerun-260926-0047-gpt6sol.md`](../research/engineering-quality-survey-rerun-260926-0047-gpt6sol.md): Q1 PARTIAL+; Q2/Q3 COVERED (documented standard); Q4–Q6 PARTIAL; Q7/Q8 PARTIAL+. No behavioral-compliance, host-pilot, or CI claim is made. (P3, Effort: S)
     - Files: `00-project/research/…`
     - Verify: the report exists with a before/after table, every change cites a file:line, and each COVERED/PARTIAL rating is supported by evidence rather than the hypothesis (cost/prereqs: none)
-3. [ ] Optional: extend `scripts/hooks/pre-commit` to run the completion-chain and planning-build validators, plus `check-plan.sh` on staged plan files that declare a Tier. Defer adding `check-active-markdown-links.sh` until Plan 01 fixes the four known broken links. (P3, Effort: S)
+3. [ ] Optional hook follow-up — **deferred**; leave `scripts/hooks/pre-commit` unchanged. After Plan 01 repairs the four known broken links, a separately authorized follow-up may add the completion-chain and planning-build validators plus `check-plan.sh` for staged plans declaring a Tier. (P3, Effort: S)
     - Files: `scripts/hooks/pre-commit`
-    - Verify: staging a fixture plan that lacks `Verify:` blocks the commit; staging this plan does not; the hook does not add the link check before Plan 01 repairs the baseline failures (cost/prereqs: none)
-4. [ ] Hand off to the execution chain: this plan's completion runs through `02-code-build/03-execute-and-confirm.md` and the terminal gate. (P3, Effort: S)
-   - Files: this plan
-   - Verify: the terminal gate outcome is recorded (cost/prereqs: none)
+    - Verify: if authorized after the trigger, a staged fixture plan that lacks `Verify:` blocks the commit, staging this plan does not, and the link check is not added before Plan 01 repairs the baseline failures (cost/prereqs: Plan 01 link repairs and separate authorization)
+4. [ ] Parent-owned terminal handoff, pending an independent `02-code-build/02-confirm-execution.md` confirmation and `04-documentation/03-mark-completed.md` terminal gate using **Reconcile only** (`Not Eligible`). This records-only pass does not perform that gate. (P3, Effort: S)
+    - Files: this plan
+    - Verify: the parent independently records the confirmation and Reconcile-only terminal-gate outcome; do not claim full completion (cost/prereqs: parent execution)
+
+**Phase E report (2026-09-26; local records pass; validation owner: parent):** E1 and E2 have local documentary evidence and are ticked above. The July proposal's Plan Review Addendum records KI-specific dispositions, and TODO includes the proposal and deferred Flash-UI pilot. The survey report exists with its evidence-based Q1–Q8 ratings.
+
+- Parent-reported local passes: `bash scripts/validation/check-plan-selftest.sh`; `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md` (T2); `bash scripts/validation/check-planning-build-policy-selftest.sh`; `bash scripts/validation/check-planning-build-policy.sh`; `bash scripts/validation/check-completion-chain-policy.sh`; `bash scripts/validation/check-review-workflow-policy.sh`; `bash scripts/validation/check-orchestrator-review.sh`; `bash scripts/validation/check-sync-workflow-scripts.sh`; `bash scripts/validation/check-update-workflows.sh`; and `bash scripts/validation/check-meta-logs-selftest.sh`.
+- Parent-reported `bash scripts/validation/check-active-markdown-links.sh` remains nonzero and reports exactly the four Plan 01 failures in `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md` at lines 7, 95, 96, and 97; no additional link failures are reported. Plan 01 owns these repairs.
+- Oracle Gate 5: PASS. The optional pre-commit hook expansion is accepted as deferred. Parent staged only intended Phase E records and `bash scripts/validation/check-meta-logs.sh --staged` returned `meta log checks OK`.
+- Remote CI has not run and remains pending Plan 01 link repairs plus separate push authorization. No Flash-UI host pilot or host-project changes occurred. The parent-owned independent confirmation and Reconcile-only terminal gate remain pending; no plan-level completion marker or archive is claimed.
 
 ## Dependencies
 
@@ -339,6 +346,7 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 - **Behavioral evidence** that agents follow the new rules (structure ≠ behavior) — the v1.82 Plan 03 harness — trigger: harness concept test passes — S2.
 - **Superseded-plan lint** (a superseded plan still listed as active in TODO) — `check-plan.sh` — trigger: first observed stale-TODO case — S3.
+- **Optional pre-commit validator expansion** — `scripts/hooks/pre-commit` — trigger: after Plan 01 repairs the four known active-link failures and a separate follow-up is authorized — S3.
 - **`research/` filename convention mixing** (M7 bullet 5) — `00-project/research/` — trigger: next meta-hygiene plan — S3.
 - **Standalone ADRs and `<metadata-root>/decisions/`** (July KI-12) — `naming-conventions.md` — trigger: first T3 plan or first one-way decision — S3.
 - **Host-project verify gates** (research E6) — `00-project-setup/` — trigger: the next project setup — S3.
@@ -357,10 +365,10 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 ## Success Criteria
 
-- [ ] All local validators pass except the active-link checker, whose nonzero result reports only the still-unfixed subset of the four Plan 01 baseline links; the new `check-plan-selftest.sh` and `check-planning-build-policy.sh` pass locally. Remote CI on `v1.82` is pending until Plan 01 P1.2 repairs those links and a push is separately authorized; no remote CI success is claimed before then.
-- [ ] The E2 loop and the M3 grep are empty; the 7 phase-order sites agree.
-- [ ] This plan passes `check-plan.sh`; the retro-check lists `lib/style-loader.ts:444, 506` and `lib/skill-loader.ts` and classifies the catalog hits.
-- [ ] The Flash-UI forward pilot is recorded as deferred to its owner in TODO; no host-project changes are made by this plan.
-- [ ] The named representative `scripts/validation/fixtures/check-plan/t1-pass.md` fixture stays within about 20 lines; this example does not impose a maximum on every T1 plan.
-- [ ] `engineering-standards.md` is linked from all 5 build and review workflows (validator-enforced).
-- [ ] The survey rerun is filed with evidence-supported ratings; predicted COVERED/PARTIAL+ changes remain hypotheses unless confirmed by that evidence.
+- [ ] All local validators pass except the active-link checker, whose nonzero result reports only the still-unfixed subset of the four Plan 01 baseline links; the new `check-plan-selftest.sh` and `check-planning-build-policy.sh` pass locally. Staged meta-log validation passes. Remote CI on `v1.82` is pending until Plan 01 P1.2 repairs those links and a push is separately authorized; no remote CI success is claimed before then.
+- [✅] The E2 loop and the M3 grep are empty; the 7 phase-order sites agree.
+- [✅] This plan passes `check-plan.sh`; the retro-check lists `lib/style-loader.ts:444, 506` and `lib/skill-loader.ts` and classifies the catalog hits.
+- [✅] The Flash-UI forward pilot is recorded as deferred to its owner in TODO; no host-project changes are made by this plan.
+- [✅] The named representative `scripts/validation/fixtures/check-plan/t1-pass.md` fixture stays within about 20 lines; this example does not impose a maximum on every T1 plan.
+- [✅] `engineering-standards.md` is linked from all 5 build and review workflows (validator-enforced).
+- [✅] The survey rerun is filed with evidence-supported ratings; predicted COVERED/PARTIAL+ changes remain hypotheses unless confirmed by that evidence.

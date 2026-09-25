@@ -45,6 +45,8 @@
 - [ ] 1. **(Small)** Parent orchestrator records each lane's objective exit result, unresolved blocker, or separately approved delta plan.
 - [ ] 2. **(Small)** Do not convert this roadmap into an implementation record or completion claim while any active lane remains open.
 
+> **Cross-reference (2026-09-26):** The planning/build quality plan's local Phase A–D SHAs are recorded as Plan 05 arm boundaries only: A `79d6841d708938e126cbc28c207fd1cedbef6ba5`, B `ac53e01dc6db456f658b5814b13e916fb3692ad3`, C `9aad15cf8ab96f16a6af6b9ea2bb795fa44e6ef1`, D `2505cc10fbd053c730fe55091876357c9a4b2f65`. Recording these boundaries does not close any v1.82 roadmap lane; active lanes and their gates remain unchanged.
+
 **Dependencies:** All lane validations and approval decisions must be recorded first.
 
 ## Dependency graph and ownership

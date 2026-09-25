@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-26 | docs | Reconcile planning/build quality Phase E evidence | docs/2026-09-26-docs-planning-build-quality-phase-e.md | E1/E2 evidenced; optional hook and parent terminal gate remain pending; Plan 01 links and remote CI pending |
 | 2026-09-26 | changed | Strengthen research evidence and plan review rigor | changed/2026-09-26-changed-research-evidence-and-plan-review-rigor.md | Gate 4 passed with dirty-tree evidence freshness; remote CI pending |
 | 2026-09-26 | added | Add shared engineering standards | added/2026-09-26-added-engineering-standards.md | Five question-based sections and language appendix; 41-line body before appendix |
 | 2026-09-26 | changed | Wire engineering standards and regression policy | changed/2026-09-26-changed-engineering-standards-wiring.md | Gate 3 passed after debt/TODO semantics correction; remote CI pending |
