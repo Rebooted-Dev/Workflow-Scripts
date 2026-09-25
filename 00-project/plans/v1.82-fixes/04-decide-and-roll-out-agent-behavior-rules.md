@@ -6,7 +6,7 @@
 
 **Summary:** Treat the raw `update-agents-files.md` material as input, not policy. Inventory target repositories and inheritance, map each rule to adopt/adapt/reject with evidence, and only then seek approval for a smallest representative pilot. The Visualize mandate is conditional on installation and material usefulness; approval, verification, untrusted-content safeguards, and consumer-project UI restrictions remain mandatory boundaries.
 
-> **Cross-reference (2026-09-25):** raw rule 5 in `update-agents-files.md` ("Ask questions only when a decision is materially ambiguous, risky, or requires approval") matches the intake rule R7 in the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) (Phase D task 3). That task links to this plan's decision if one exists and otherwise lands the rule workflow-scoped. Add `01-planning-and-organizing/00-research-and-plan.md` intake to this plan's P0 target inventory.
+> **Cross-reference (2026-09-26):** `01-planning-and-organizing/00-research-and-plan.md` is added to the P0 target inventory as a workflow-text reference for raw rule 5 only. Raw agent-file rule 5 remains **not adopted**: this workflow's ask-or-assume guidance does not authorize agent-file changes or propagation, or permit rollout. This plan remains **Active** and approval-gated; raw-rule decisions and any adoption/rollout still require the listed inventory and explicit approvals.
 
 ## Source and review provenance
 
@@ -25,7 +25,7 @@
 ### P0 — establish decision authority and target scope
 
 - [ ] 1. **(Small)** Confirm the repository/branch/dirty-state baseline and protected external reorganization from the meta roadmap.
-- [ ] 2. **(Medium)** Inventory every proposed target, owner, inheritance source, current agent-file location, active branch, consumer-project policy, and collision/precedence concern before editing anything.
+- [ ] 2. **(Medium)** Inventory every proposed target, owner, inheritance source, current agent-file location, active branch, consumer-project policy, and collision/precedence concern before editing anything. Include `01-planning-and-organizing/00-research-and-plan.md` as a workflow-text reference target for raw rule 5 only; this does not adopt the rule into agent files or authorize propagation.
 - [ ] 3. **(Small)** Record explicit approval authority, pilot boundary, prohibited targets, and rollback owner. Keep the lane blocked until the inventory is reviewable.
 
 **Dependencies:** Meta safety baseline. No dependency on Plans 02, 03, 05, or 06 for the decision analysis itself.

@@ -76,11 +76,21 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 - Every critique includes evidence or a rationale.
 - All suggestions are actionable and measurable.
 - Ambiguities and missing steps are explicitly called out.
+- Use the shared [engineering standards](../00-Meta-Workflow/00-meta/engineering-standards.md) and [review evidence quality contract](../00-Meta-Workflow/00-meta/review-workflow-core.md#evidence-quality) when assessing applicable Design and evidence claims.
 - Over-engineering checks are explicit:
   - Identify any item whose scope exceeds the stated goal.
   - Recommend a smaller MVP approach when feasible.
   - Push speculative refactors/optimizations to P3 unless they unblock P0/P1 work.
   - An enabling refactor is in scope when required to make the planned fix correct and verifiable.
+
+## Plan Review Checklist
+
+- [ ] **Completeness:** Are goals, assumptions, scope, tasks, dependencies, and acceptance/exit criteria complete and mutually consistent?
+- [ ] **Boundaries:** Are in-scope and out-of-scope areas explicit, and does the Change Surface include and classify relevant implementations, restatements, guards, and fallbacks?
+- [ ] **Failure modes:** Are likely failures detectable, with actionable recovery?
+- [ ] **Reversibility:** Are rollback paths and one-way decisions explicit, with one-way choices flagged for review?
+- [ ] **Pre-mortem:** What plausible event would make this plan fail, and is there a mitigation or stop condition?
+- [ ] **Feasibility:** Can every exit criterion be achieved in the expected environment? If not, split it into a separate evaluation plan or obtain the required authorization now, before approving the plan.
 
 ## Notes
 - Size any scanning or validation delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md); use focused roles only when they materially improve coverage or speed.

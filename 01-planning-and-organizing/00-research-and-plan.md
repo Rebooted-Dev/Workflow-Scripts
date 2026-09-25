@@ -51,10 +51,9 @@ Conduct deep research and analysis to create a comprehensive initial implementat
 - Define scope boundaries: what's in-scope vs out-of-scope?
 
 **Ask clarifying questions if needed:**
-- What is the primary user problem being solved?
-- Are there existing solutions to reference?
-- What are the must-haves vs nice-to-haves?
-- What are the success metrics?
+- Ask only when an ambiguity could materially change scope, risk, correctness, outcome, or an approval decision.
+- Otherwise, record a reasonable assumption in the plan's `## Assumptions` with a confirmation path and continue; revisit it if evidence contradicts it.
+- Request explicit approval whenever the action or decision requires it.
 
 ### 1.2 Codebase Context Gathering
 
@@ -79,6 +78,11 @@ Consolidate all research into a structured analysis:
 - Existing patterns that could be reused
 - Technical constraints or limitations
 - Areas that would be affected by the change
+
+**Evidence quality:**
+- Use the shared labels in [`review-workflow-core.md` §Evidence Quality](../00-Meta-Workflow/00-meta/review-workflow-core.md#evidence-quality): `observed` (direct local verification), `sourced` (primary source with access date/version), or `hypothesis` (unverified, with the evidence that would verify it).
+- Follow that shared contract for evidence freshness. If local research uses a dirty working tree, record `HEAD`, relevant dirty paths including `??` untracked files, and a reproducible content/diff fingerprint; do not identify that observation by the commit SHA alone.
+- State what was not checked. For labels at `00-project/plans/v1.82-fixes/05-run-astra-instruction-evaluation.md:15`, map Astra fact → `sourced`; harness-specific → `observed` when directly measured, otherwise `sourced` or `hypothesis`; local observation → `observed`; hypothesis → `hypothesis`; experiment result → `observed` with run evidence. This is a vocabulary mapping only and does not change Plan 05 or authorize agent-file adoption/rollout.
 
 **Change Surface:**
 - List each site that implements, restates, guards, or historically records the target behavior.
@@ -237,7 +241,7 @@ Or if you want to indicate research is complete but plan is still being written:
 
 3. **Both documents must:**
    - Cite actual file paths and references
-   - Include no unverified claims
+   - Include no unlabeled claims
    - Be ready for review using `01-plan-review.md`
    - Resolve destinations through [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md)
 

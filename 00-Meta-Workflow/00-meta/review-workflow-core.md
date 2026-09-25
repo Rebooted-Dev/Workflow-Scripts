@@ -36,10 +36,27 @@ Every finding must include:
 Domain workflows may add fields such as vulnerability type, performance characteristic, refactoring risk, or compliance reference.
 
 ## Evidence Quality
+- Label material factual claims with the shared vocabulary:
+  - `observed` — directly verified in the local repository or runtime; cite the file/line or command and result.
+  - `sourced` — supported by a primary source; cite it and record its access date and version.
+  - `hypothesis` — not yet verified; state what evidence or check would verify or falsify it.
+- Distinguish the evidence state. A commit SHA identifies an immutable committed revision only; it does not identify dirty working-tree contents. For an observation from a clean committed revision, record that revision's SHA. For a working-tree observation, record `HEAD`, relevant dirty paths from `git status --porcelain=v1` (including `??` untracked files), and a reproducible content/diff fingerprint. Do not attribute dirty-tree observations to `HEAD` alone.
+- Before reusing repository evidence, inspect changes committed since its recorded SHA, then inspect staged and unstaged changes and relevant untracked paths/content. Re-verify if any relevant state changed or if the original state cannot be reconstructed; state what was not checked.
+- Illustrative checks (substitute the recorded SHA and relevant paths; these are not a SHA-only freshness test):
+  ```sh
+  git diff --stat <sha>..HEAD -- <paths>
+  git status --porcelain=v1 -- <paths>
+  git diff --cached -- <paths>
+  git diff -- <paths>
+  git diff --cached --binary -- <paths> | shasum -a 256
+  git diff --binary -- <paths> | shasum -a 256
+  git hash-object -- path/to/relevant-file
+  ```
+  Record the staged/unstaged diff fingerprints and hash relevant tracked or untracked files when their contents are part of the evidence; inspect untracked contents because ordinary `git diff` omits them.
 - S0/S1 findings require reproduction steps or a test case, affected surface, and mitigation or rollback guidance.
 - S2 findings require reproduction steps or a test case and an affected module reference.
 - S3 findings require a concrete code, config, or documentation pointer and rationale.
-- Do not report assumptions as findings without labeling them as hypotheses and listing the evidence needed to confirm them.
+- Do not report assumptions as findings without labeling them `hypothesis` and listing the evidence needed to confirm them.
 
 ## Deduplication
 - Group duplicate findings by file path and nearby line range when possible.

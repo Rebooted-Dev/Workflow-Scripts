@@ -283,18 +283,26 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 
 **Scope:** R4–R7. **Depends on:** Phase B (template `Verify:` cost field). May proceed alongside Phase C only on disjoint files; the shared files listed in Phase C's ownership note are sequential or single-writer. **Exit:** the research standard is linked from `00-research-and-plan.md`; the plan review has the feasibility check and the checklist.
 
-1. [ ] R4: add a research standard (claim labels; primary sources with access date and version; commit pin; re-verify claims whose files changed since the pinned commit (`git diff --stat <sha>..HEAD -- <paths>`); state what was not checked; replace "no unverified claims" with "no unlabeled claims"). Extend `review-workflow-core.md` §Evidence Quality with the label set so research and review share one vocabulary. Map the Astra labels to it in one line. (P2, Effort: S)
+1. [✅] R4: add a research standard (claim labels; primary sources with access date and version; commit pin; re-verify claims whose files changed since the pinned commit, including staged, unstaged, and untracked working-tree content; state what was not checked; replace "no unverified claims" with "no unlabeled claims"). Extend `review-workflow-core.md` §Evidence Quality with the label set so research and review share one vocabulary. Map the Astra labels to it in one line. (P2, Effort: S)
    - Files: `00-Meta-Workflow/00-meta/review-workflow-core.md`, `01-planning-and-organizing/00-research-and-plan.md`
    - Verify: `grep -n 'unverified claims' 01-planning-and-organizing/00-research-and-plan.md` → empty; `bash scripts/validation/check-review-workflow-policy.sh` → exit 0 (cost/prereqs: none)
-2. [ ] R5 + R6: add the feasibility check (each exit criterion is achievable in the expected environment; otherwise split it into a separate evaluation plan or get authorization now) and the review checklist (completeness, boundaries, failure, reversibility, pre-mortem, feasibility) to `01-plan-review.md`. (P2, Effort: S)
+2. [✅] R5 + R6: add the feasibility check (each exit criterion is achievable in the expected environment; otherwise split it into a separate evaluation plan or get authorization now) and the review checklist (completeness, boundaries, failure, reversibility, pre-mortem, feasibility) to `01-plan-review.md`. (P2, Effort: S)
    - Files: `01-planning-and-organizing/01-plan-review.md`
    - Verify: `grep -nE 'Pre-mortem|Feasibility' 01-planning-and-organizing/01-plan-review.md` → at least 2 hits (cost/prereqs: none)
-3. [ ] R7: replace the generic intake list (`00-research-and-plan.md:46-57`) with the ask-or-assume rule and an Assumptions list. **Coordinate with v1.82 Plan 04:** if Plan 04 has adopted the same rule for agent files, link to it instead of restating it; otherwise land it workflow-scoped and add this site to Plan 04's inventory note. (P3, Effort: S)
+3. [✅] R7: replace the generic intake list (`00-research-and-plan.md:46-57`) with the ask-or-assume rule and an Assumptions list. **Coordinate with v1.82 Plan 04:** if Plan 04 has adopted the same rule for agent files, link to it instead of restating it; otherwise land it workflow-scoped and add this site to Plan 04's inventory note. (P3, Effort: S)
    - Files: `01-planning-and-organizing/00-research-and-plan.md`
    - Verify: `grep -n 'Assumptions' 01-planning-and-organizing/00-research-and-plan.md` → at least 1 hit (cost/prereqs: Plan 04 status check)
-4. [ ] Logs: `changelog/changed/`. (P2, Effort: S)
-   - Files: `00-project/changelog/…`
-   - Verify: `bash scripts/validation/check-meta-logs.sh --staged` → exit 0 (cost/prereqs: none)
+4. [✅] Logs: `changelog/changed/`. (P2, Effort: S)
+    - Files: `00-project/changelog/…`
+    - Verify: `bash scripts/validation/check-meta-logs.sh --staged` → exit 0 (cost/prereqs: none)
+
+**Phase D report (2026-09-26; validation owner: parent):** D1–D4 have local acceptance evidence and are ticked above. Gate 4 passed after a focused evidence-freshness correction; `bash scripts/validation/check-meta-logs.sh --staged` returned `meta log checks OK`. No remote CI result is claimed.
+
+- Parent-reported local passes: `bash scripts/validation/check-review-workflow-policy.sh`; `bash scripts/validation/check-plan-selftest.sh`; `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`; `bash scripts/validation/check-planning-build-policy.sh`; `bash scripts/validation/check-planning-build-policy-selftest.sh`; `bash scripts/validation/check-completion-chain-policy.sh`; `bash scripts/validation/check-orchestrator-review.sh`; `bash scripts/validation/check-sync-workflow-scripts.sh`; `bash scripts/validation/check-update-workflows.sh`; and `bash scripts/validation/check-meta-logs-selftest.sh`.
+- The research workflow uses the shared `observed`/`sourced`/`hypothesis` evidence vocabulary, maps Astra labels, records primary-source access date/version, and points to the shared freshness rule. Clean committed observations pin a SHA; dirty working-tree observations also record relevant staged/unstaged/untracked paths and fingerprints, and re-verify changes before reuse. Gate 4's focused re-review passed. Plan review adds feasibility/pre-mortem checks. Plan 04 remains Active, approval-gated, and without rollout authorization; its P0 workflow-text inventory note is not an adoption decision.
+- Parent-reported `bash scripts/validation/check-active-markdown-links.sh` still reports exactly the four Plan 01 failures in `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md` at lines 7, 95, 96, and 97; no new failures. Remote CI has not run and is not claimed green.
+- Phase C SHA: `9aad15cf8ab96f16a6af6b9ea2bb795fa44e6ef1`.
+- **D4:** the Phase D changed entry and index row are present; parent staged only intended Phase D files and the staged meta-log check passed. Phase D's commit SHA is recorded in the following phase report.
 
 ### Phase E: Reconcile and measure (P3)
 
