@@ -58,22 +58,11 @@ Conduct deep research and analysis to create a comprehensive initial implementat
 
 ### 1.2 Codebase Context Gathering
 
-Size the research effort per [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md) and [`agent-spawning-policy.md`](../00-Meta-Workflow/00-meta/agent-spawning-policy.md):
-
-- **Localized task:** inspect relevant files directly; produce a short plan.
-- **Bounded task:** use 2–3 focused roles (e.g. architecture, dependencies, tests) with non-overlapping ownership.
-- **Broad/high-risk task:** up to 6 roles per session; add specialists only when repository evidence justifies them (API, database, UI, performance).
-
-Batch-read files concurrently within each role. Do not treat a large default roster as required for every plan.
+Size research and any delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Select only roles that address an identified evidence gap; options include architecture/patterns, dependencies/integrations, tests/verification, and documentation. When roles are used, give them non-overlapping scopes and batch related file reads where practical.
 
 ### 1.3 External Research
 
-Use **librarian agents** to research external options in parallel:
-
-- **Library research agent:** Find and evaluate relevant libraries/packages
-- **Pattern research agent:** Research industry best practices and patterns
-- **Documentation agent:** Review official documentation for technologies involved
-- **Community agent:** Research common pitfalls and solutions from community sources
+Use external research when it could change the decision. Size any delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md); relevant roles may include library/API comparison, official documentation, or community pitfalls. Do not require parallel roles for routine or local research.
 
 **Research areas:**
 - Available libraries/packages that could help
@@ -163,10 +152,11 @@ Organize work into logical phases:
 
 ### 2.5 Risk Analysis and Mitigation
 
-**For each identified risk:**
+**For each identified risk, use the shared [`severity-priority-rubric.md`](../00-Meta-Workflow/00-meta/severity-priority-rubric.md) scales and mapping:**
 - Risk description
-- Likelihood (High/Medium/Low)
-- Impact (High/Medium/Low)
+- Likelihood (Rare/Possible/Likely)
+- Impact (Low/Medium/High)
+- Priority, where applicable, from the rubric's Impact × Likelihood mapping
 - Mitigation strategy
 - Contingency plan
 
@@ -253,7 +243,7 @@ Create the implementation plan under `<metadata-root>/plans/` per [`../00-Meta-W
 ## Risks and Mitigations
 | Risk | Likelihood | Impact | Mitigation |
 |------|------------|--------|------------|
-| Risk 1 | High | High | Mitigation strategy |
+| Risk 1 | Possible | Medium | Mitigation strategy |
 
 ## Success Criteria
 - [ ] Criterion 1
@@ -265,7 +255,7 @@ Create the implementation plan under `<metadata-root>/plans/` per [`../00-Meta-W
 When the plan is fully written and ready for review:
 
 ```markdown
-**Status:** DRAFT - Ready for Review ✅
+**Status:** DRAFT - Ready for Review
 ```
 
 Or if you want to indicate research is complete but plan is still being written:
@@ -326,7 +316,7 @@ Or if you want to indicate research is complete but plan is still being written:
 
 - This workflow is the **entry point** for any significant work
 - Spend adequate time in Phase 1 (research) - good research prevents bad plans
-- Use parallel agents aggressively during research phases
+- Right-size research and any delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md); choose roles from the evidence needs rather than a default roster.
 - Don't commit to an approach until research is complete
 - The output should be detailed enough that someone else could execute it
 - Plans can (and should) be revised as you learn more during implementation

@@ -1,4 +1,4 @@
-# Workflow: Implementation Plan
+# Workflow: Finalise Plan
 
 ## Purpose
 Generate a consolidated, improved plan from the supplied plan and feedback, with clear phases, dependencies, and verification steps.
@@ -20,37 +20,9 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
    - If a `PLAN.reviews/` subdirectory exists for the supplied plan:
      - Read all `PLAN.review.*.md` files under that directory.
      - Treat these as additional, parallel review inputs from different agents/models.
-2. Use parallel agents to scan the codebase for context. Suggested agent roles (spawn additional agents as needed):
-   - Identify existing implementations or similar patterns (read relevant files in parallel batches)
-   - Map dependencies and constraints in the codebase (read dependency files in parallel batches)
-   - Find related code that might be affected by the plan (read related files in parallel batches)
-   - [Spawn additional agents if you discover other areas that need investigation, such as:
-     - Performance implications
-     - Security considerations
-     - Testing requirements
-     - Documentation needs
-     - Integration points]
-   Consolidate ideas into a single coherent plan that removes duplicates and contradictions.
-3. Use parallel agents to validate dependencies and ordering constraints. Suggested agent roles (spawn additional agents as needed):
-   - Verify dependency claims against actual code structure (read dependency files in parallel batches)
-   - Check for potential conflicts or circular dependencies (read conflicting files in parallel batches)
-   - Validate ordering constraints are technically sound (read constraint-related files in parallel batches)
-   - [Spawn additional agents if you discover other dependency concerns, such as:
-     - Runtime dependencies
-     - Build-time dependencies
-     - Data flow dependencies
-     - External service dependencies]
-   Define dependencies and ordering constraints (what must happen before what).
-4. Use parallel agents to cross-check technical feasibility of each priority bucket. Suggested agent roles (spawn additional agents as needed):
-   - Validate P0/P1 items are technically feasible (read implementation files in parallel batches)
-   - Check for existing solutions or patterns that could be reused (read pattern files in parallel batches)
-   - Identify potential blockers or risks for each priority level (read risk-related files in parallel batches)
-   - [Spawn additional agents if you discover other feasibility concerns, such as:
-     - Resource constraints
-     - Timeline constraints
-     - Skill/team constraints
-     - External dependencies]
-   Convert scope into a priority-ordered roadmap:
+2. Size any delegated codebase scan using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Relevant roles may include existing-patterns, dependencies/constraints, affected surfaces/integrations, or risk/security review; choose only those needed to resolve evidence gaps. Consolidate findings into a coherent plan that removes duplicates and contradictions.
+3. Check dependency and ordering claims against repository evidence. If delegation would materially improve confidence, use focused roles from [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md), such as dependency/data-flow mapping or conflict analysis. Define what must happen before what.
+4. Assess the feasibility of each priority bucket, using focused implementation, reuse, or risk review only where useful. Convert scope into a priority-ordered roadmap:
    - P0: blockers, active incidents, security-critical, release-stoppers
    - P1: urgent, high user impact, likely failures
    - P2: important improvements, tech debt paydown with near-term value
@@ -67,13 +39,10 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
      - The original plan
      - Any inline addenda in the original file
      - Any reports in `PLAN.reviews/` (if present)
-8. Perform post-finalisation cleanup of temporary review artifacts:
-   - If a `PLAN.reviews/` subdirectory exists:
-     - Decide whether the raw per-agent reports are still needed as an audit trail.
-     - If they are **not** needed:
-       - Delete the `PLAN.reviews/` directory after confirming the new plan has been saved and, if applicable, logged in `<metadata-root>/changelog/`.
-     - If they **are** needed:
-       - Optionally archive them (for example, compress or move to an archive directory) and record that location in the new plan or changelog entry.
+8. Archive temporary review artifacts after finalisation by default:
+   - If a `PLAN.reviews/` subdirectory exists, move it to the adjacent `PLAN.reviews-archive/` directory after confirming the new plan has been saved.
+   - Record the archive location in the new plan or changelog entry.
+   - Delete the reports only when the user or host policy explicitly directs deletion and the audit trail is no longer needed; if applicable, confirm logging before deletion.
 
 ## Output Requirements
 - The new plan must begin with a timestamp header: `YYYY-MM-DD HH:MM`.
@@ -110,6 +79,6 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 
 ## Notes
 - Prefer the smallest viable change that satisfies the objective and verification step.
-- Use parallel agents to cross-check feasibility or scan codebase references. Spawn additional agents as needed when you discover new concerns or areas that need investigation.
-- When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.
+- Size any codebase scanning or feasibility delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md); use focused roles only when they materially improve confidence.
+- When agents are used, batch related file reads where practical.
 - Do not modify application code in this workflow; only produce the plan.

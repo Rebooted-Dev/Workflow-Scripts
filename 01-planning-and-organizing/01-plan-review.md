@@ -14,30 +14,8 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 
 ## Steps
 1. Read the plan end-to-end and list its explicit goals, scope, and assumptions.
-2. Use parallel agents to validate each item for technical feasibility and correctness. Suggested agent roles (spawn additional agents as needed):
-   - Validate API/interface compatibility and availability (read API/interface files in parallel batches)
-   - Check file structure, module dependencies, and imports (read module files in parallel batches)
-   - Verify configuration and environment assumptions (read config files in parallel batches)
-   - Cross-reference with existing patterns and conventions (read pattern files in parallel batches)
-   - [Spawn additional agents if you discover other validation needs, such as:
-     - Performance impact analysis
-     - Security implications
-     - Testing requirements
-     - Documentation gaps
-     - Integration points]
-   Consolidate validation results and flag any conflicts or issues.
-3. Use parallel agents to identify issues across different domains. Suggested agent roles (spawn additional agents as needed):
-   - Scan for security and safety issues (read security-critical files in parallel batches)
-   - Identify design flaws and architectural concerns (read architecture files in parallel batches)
-   - Detect potential bugs and software faults (read implementation files in parallel batches)
-   - Flag scope creep and over-engineering risks (read feature files in parallel batches)
-   - [Spawn additional agents if you discover other concern areas, such as:
-     - Performance bottlenecks
-     - Accessibility issues
-     - Test coverage gaps
-     - Domain-specific concerns (database, API, UI, etc.)
-     - Compliance or regulatory issues]
-   Consolidate findings and identify:
+2. Size any delegated validation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Select only the roles needed to check plan claims; options include API/interface compatibility, structure/dependencies, configuration/environment, existing patterns, and tests/integration. Give roles non-overlapping read-only scopes, then consolidate results and flag conflicts.
+3. Apply the same sizing guidance to review concerns. Relevant lenses may include security/safety, architecture/design, defects, scope/over-engineering, performance, accessibility, domain constraints, and compliance; assess what applies without requiring a separate agent for every lens. Consolidate findings and identify:
    - design flaws in the plan
    - potential bugs and software faults
    - security and safety issues
@@ -99,8 +77,8 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
   - Push speculative refactors/optimizations to P3 unless they unblock P0/P1 work.
 
 ## Notes
-- Use parallel agents for scanning files or validating claims when helpful. Spawn additional agents as needed when you discover new concerns or areas that need investigation.
-- When reading files, agents should read multiple files concurrently (parallel batch reading) rather than sequentially to maximize speed.
+- Size any scanning or validation delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md); use focused roles only when they materially improve coverage or speed.
+- When agents are used, batch related file reads where practical.
 - Do not modify source code in this workflow; only update the plan document.
 
 ## Related Workflows

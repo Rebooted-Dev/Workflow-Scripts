@@ -8,11 +8,11 @@ Run implementation (Execution) followed by validation (Confirm Execution) in one
 
 ## Inputs
 
-- Same as **[`01-execution.md`](./01-execution.md):** goal and acceptance criteria, repository root, implementation plan (typically in `project/build/` or per `plans/README.md`).
+- Same as **[`01-execution.md`](./01-execution.md):** goal and acceptance criteria, repository root, implementation plan under `<metadata-root>/plans/` (or host-permitted `<metadata-root>/build/`); resolve the metadata root and filename convention via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution).
 
 ## Output
 
-- Everything from **[`01-execution.md`](./01-execution.md):** implemented code, updated changelog and (when applicable) troubleshooting, implementation plan updated with task status and completion marker, verification evidence.
+- Everything from **[`01-execution.md`](./01-execution.md):** implemented code, updated changelog and (when applicable) troubleshooting, implementation plan updated with verified task status, and verification evidence. The plan-level completion marker and archive are applied only by the terminal gate.
 - Plus everything from **[`02-confirm-execution.md`](./02-confirm-execution.md):** plan updated with any corrected marking, verification addendum (what was checked, any misreporting, next steps for incomplete items).
 
 ## Completion Bar
@@ -45,7 +45,7 @@ Do not treat "build green" as a substitute for tests or acceptance smoke when th
 
 ## Quick Checklist
 
-- [ ] Goal and acceptance criteria confirmed; plan identified (e.g. in `project/build/` or per `plans/README.md`)
+- [ ] Goal and acceptance criteria confirmed; plan identified under `<metadata-root>/plans/` (or host-permitted `<metadata-root>/build/`) using [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution)
 - [ ] **01** run in full: phases implemented; **Verification Bar** met (verify command + tests when present + smoke when user-facing/runtime); plan and logs updated; residual blockers documented if any
 - [ ] **02** run in full: plan audited against code **and** verification evidence; addendum lists commands/tests/smoke; ticks corrected in both directions (verified `[ ]` → `[✅]`, unverified `[✅]` → `[ ]`)
 - [ ] **Gate run for the outcome:** `Verified Complete` → Full completion mode (marker + archive); `Not Eligible` → Reconcile only mode (verified tasks ticked, logs reconciled, plan active, no marker/archive)

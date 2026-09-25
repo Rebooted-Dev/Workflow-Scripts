@@ -71,17 +71,12 @@ If the plan does not use task list syntax, add an addendum section instead of re
 
 1. Read the plan end-to-end; extract the list of claimed completed tasks and their acceptance criteria / exit criteria.
 
-2. Use parallel agents to verify completion against the repo. Agent roles (spawn additional agents as needed):
+2. Size any delegated verification using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Relevant roles may include plan-to-diff comparison, project verification/tests, runtime acceptance/smoke, and documentation/log completeness; choose only what the claims require and use non-overlapping scopes. Re-run or confirm the required checks below even when no separate agent is used.
    - Compare plan tasks to `git diff` / relevant files; confirm the code changes exist and match intent.
    - **Re-run or confirm** the project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs when prior evidence is missing, stale, or only partial. If none exists, state that explicitly. `npm run build` is only an example.
    - **Run automated tests** when a suite/script exists for the change; do not treat tests as optional during confirm.
    - **Spot-check user-facing or runtime behavior** when the plan's acceptance criteria depend on it (dev server, CLI, IPC, provider path, export/render, etc.)—not only static review.
    - Look for gaps: missing docs/log updates, missing edge-case handling, broken imports, false "complete" marks without verification evidence.
-   - [Spawn additional agents if you discover other verification needs, such as:
-     - Test coverage gaps
-     - Performance impact checks
-     - Security validation
-     - Documentation completeness]
 
 3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3), in bulleted (`- [ ]`) or numbered (`1. [ ]`) lists. Apply the marking convention in both directions: task marked `[✅]` but code or verification is missing → change to `[ ]` and add a note; task still `[ ]` but code and applicable evidence are verified → change to `[✅]`. Leave already-correct marking as-is. Add notes for incomplete or deferred tasks.
 

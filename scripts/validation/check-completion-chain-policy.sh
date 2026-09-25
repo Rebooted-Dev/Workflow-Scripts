@@ -17,6 +17,7 @@
 #     discovery (named target first; never scans archives by default).
 #   - Navigation links the terminal gate from the root README, the
 #     code-build README, the documentation README, and the skill.
+#   - Any 02-code-build file naming "Not Eligible" also names "Reconcile only".
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -95,5 +96,13 @@ grep -q '03-mark-completed.md' "$DOC/README.md" \
   || fail "04-documentation README does not reference the terminal gate"
 grep -q '03-mark-completed' "$CB/README.md" \
   || fail "02-code-build README does not reference the terminal gate"
+
+# --- 7. Not Eligible always routes through Reconcile only ---------------------
+not_eligible_files="$(grep -RIl 'Not Eligible' "$CB" || true)"
+while IFS= read -r file; do
+  [ -n "$file" ] || continue
+  grep -q 'Reconcile only' "$file" \
+    || fail "02-code-build file names Not Eligible without Reconcile only: $file"
+done <<< "$not_eligible_files"
 
 echo "completion chain policy checks OK"

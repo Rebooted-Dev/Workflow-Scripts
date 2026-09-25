@@ -5,11 +5,13 @@ on:
     branches:
       - main
       - v1.8
+      - 'v1.8*'
       - 'ci-validation-fixture/**'
   pull_request:
     branches:
       - main
       - v1.8
+      - 'v1.8*'
 
 permissions:
   contents: read
@@ -46,6 +48,12 @@ jobs:
 
       - name: Check completion-chain policy
         run: bash scripts/validation/check-completion-chain-policy.sh
+
+      - name: Check planning/build policy
+        run: bash scripts/validation/check-planning-build-policy.sh
+
+      - name: Check planning/build policy self-test
+        run: bash scripts/validation/check-planning-build-policy-selftest.sh
 
       - name: Check meta-log validator self-test
         run: bash scripts/validation/check-meta-logs-selftest.sh

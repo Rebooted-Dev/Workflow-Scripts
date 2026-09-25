@@ -10,14 +10,14 @@ Execute implementation in phases with verification and documentation updates.
 
 - Goal and acceptance criteria (user-facing behavior, performance targets, "done" definition)
 - Repository root
-- Implementation plan (optional, but recommended) — locate in `plans/` (e.g. `plans/implementation-plan-*.md` or `plans/YYYY-MM-DD-*-implementation-plan.md`)
+- Implementation plan (optional, but recommended) — locate under `<metadata-root>/plans/`; resolve the owning repository's metadata root and filename convention via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution). Use `<metadata-root>/build/` only when host policy explicitly permits it.
 
 ## Output
 
 - Implemented code changes
 - Updated changelog per the **host repository's documented changelog convention** (see host AGENTS.md or `project/changelog/README.md`)
 - Troubleshooting entries only when a bug, issue, or non-trivial problem was fixed (see AGENTS.md); not for simple changes or routine refactors
-- Implementation plan in `plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open)
+- Implementation plan under `<metadata-root>/plans/` updated with task list and completion status (`- [✅]` for completed, `- [ ]` for open); resolve its location via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution)
 - Verification evidence: commands run, tests run, smoke/acceptance checks performed (or explicit blockers if something could not be run)
 - **Task ticks vs plan completion:** This workflow **must** tick each task (`- [✅]` or `1. [✅]`) in the plan as soon as its applicable Verification Bar evidence passes. Do not leave verified tasks for a later step to tick. The **plan-level** completion marker and archive are owned solely by **[`03-mark-completed.md`](../04-documentation/03-mark-completed.md)** (see Finalization).
 
@@ -42,19 +42,9 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 
 - Confirm goal + acceptance criteria (user-facing behavior, performance targets, "done" definition).
 - Check repo state (avoid clobbering unrelated work): `git status`.
-- Identify the plan: implementation plan in `plans/` (e.g. `plans/implementation-plan-*.md` or `plans/YYYY-MM-DD-*-implementation-plan.md`).
+- Identify the plan under `<metadata-root>/plans/`; resolve the metadata root and any host-specific filename convention via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution). Use `<metadata-root>/build/` only when host policy explicitly permits it.
 - Break work into phases; for each phase define scope, out-of-scope, and **exit criteria that include how success will be verified** (commands, tests, and/or smoke of acceptance criteria—not only "code exists").
-- Plan delegation per [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md) and [`agent-spawning-policy.md`](../00-Meta-Workflow/00-meta/agent-spawning-policy.md). Suggested agent roles when scope warrants (adapt as needed):
-  - Implement core functionality
-  - Review for security/risk issues and side effects
-  - Check for breaking changes or unintended impacts
-  - Validate against acceptance criteria and test cases
-  - [Spawn additional agents if the phase complexity requires it, such as:
-    - Performance impact analysis
-    - Documentation updates
-    - Test coverage validation
-    - Integration testing
-    - Accessibility checks]
+- Size any delegation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). When the scope warrants focused roles, options include implementation, security/risk review, breaking-change analysis, and acceptance/test validation; select only what the phase needs and assign non-overlapping ownership.
 
 ## For Each Phase (Implementation Loop)
 - Phase definition (before coding)
@@ -63,26 +53,12 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
   - Exit criteria: concrete checks that must pass (map each criterion to the Verification Bar: verify command, tests, smoke, and/or static hygiene).
 - Implement
   - Make the smallest change that satisfies the phase scope.
-  - Use parallel agents. Suggested agent roles (spawn additional agents as needed):
-    - Implement the core change
-    - Concurrently review for risks, side effects, and breaking changes
-    - Check for unintended impacts on other modules or features
-    - Validate code quality and adherence to project conventions
-    - [Spawn additional agents if you discover other concerns during implementation, such as:
-      - Performance optimizations
-      - Additional test coverage
-      - Documentation updates
-      - Related code cleanup
-      - Security hardening]
+- Review after implementation (before verification)
+  - Review the completed change for risks, side effects, breaking changes, unintended impacts, and project conventions; do not make this a pre-implementation gate.
+  - Size any delegated review using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Relevant lenses may include security, performance, test coverage, documentation, integration, and accessibility; use only those that fit the scope.
 - Verify (repeat until exit criteria met)
   - **Meet the Verification Bar above** before marking the phase complete. Build/lint alone is insufficient when tests or acceptance smoke apply.
-  - Use parallel agents to run checks concurrently. Required agent roles when applicable:
-    - Run the project verification command (build/lint/typecheck as defined by the project)
-    - Run automated tests for this change when a suite/script exists; report results
-    - Smoke acceptance criteria / affected user-facing or runtime flows when the phase touches them
-    - Check TypeScript/ESLint errors and warnings (when configured)
-    - Validate file structure and imports; review git diff for unintended changes or secrets
-  - Spawn additional agents when needed (performance, security scan, docs validation, integration tests).
+  - Run every applicable check in the Verification Bar. Delegate independent checks only when useful, sized per [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md); possible roles include project verification, automated tests, acceptance/smoke, and static hygiene.
   - Prefer the local dev (or project-documented) command for smoke tests when the project is trusted and the change is user-facing or runtime-dependent.
   - If failures: fix, then re-run the **same** checks only after a meaningful corrective change or new hypothesis. If no evidence-backed next step remains, record the blocker and leave the task incomplete.
 - Phase report (immediately after exit criteria met)
@@ -109,7 +85,7 @@ Apply this bar for every phase and again at finalization (shared with [`README.m
 
 - [ ] Goal and acceptance criteria confirmed
 - [ ] Repo state checked (`git status`)
-- [ ] Plan identified in `plans/`
+- [ ] Plan identified under `<metadata-root>/plans/` (or host-permitted `<metadata-root>/build/`), resolved via [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#metadata-root-resolution)
 - [ ] Each phase: implement → **Verification Bar** (verify command + tests when present + smoke when user-facing/runtime) → update plan (`- [✅]` / `- [ ]`) and logs (changelog; troubleshooting only if bug/issue/non-trivial fix — see phase report)
 - [ ] Phase exit criteria include how success is verified; skipped checks recorded as blockers, not success
 - [ ] Final Verification Bar passes for the full change set; no secrets in diff

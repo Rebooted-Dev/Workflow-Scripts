@@ -5,6 +5,11 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-25 | fixed | Route Not Eligible plans through reconciliation | fixed/2026-09-25-fixed-not-eligible-reconcile-only-routing.md | M1/E2 corrected 04 workflow route; pre-fix failure captured; local completion-chain guard passes |
+| 2026-09-25 | fixed | Size planning and code-build agent use | fixed/2026-09-25-fixed-planning-build-agent-sizing-policy.md | M3/E4 central applicability link, policy guard, negative fixture/self-test and CI step |
+| 2026-09-25 | fixed | Route planning and build paths through metadata-root policy | fixed/2026-09-25-fixed-metadata-root-build-paths.md | M4 removes project-specific `project/build/` routing from active planning/build instructions |
+| 2026-09-25 | fixed | Trigger validation on active v1.8 lines | fixed/2026-09-25-fixed-active-line-validation-triggers.md | E3 adds `v1.8*` to push and pull-request filters; remote CI remains pending |
+| 2026-09-25 | changed | Clarify planning and build workflow wording | changed/2026-09-25-changed-planning-build-wording.md | M7 title, marker, risk scale, and review-artifact archive wording |
 | 2026-09-25 | docs | Reconcile planning/build quality plan for local execution | docs/2026-09-25-docs-local-execution-review-disposition.md | Review disposition and Phase 0 gates; remote CI and host pilot remain pending |
 | 2026-09-25 | config | Keep execution progress local | config/2026-09-25-config-local-deepwork-progress.md | Ignore `.slim/deepwork/` in Git; retain local readable phase notes |
 | 2026-09-25 | docs | Planning and code-build workflow quality review | docs/2026-09-25-docs-planning-build-quality-review.md | 3 mechanics defects (04 gate wording, CI branches, agent sizing); tiered plan template, check-plan.sh, engineering-standards proposal; no workflow changes |

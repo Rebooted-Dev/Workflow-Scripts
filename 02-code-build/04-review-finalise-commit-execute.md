@@ -32,7 +32,7 @@ Use this workflow when you would otherwise ask for both:
 
 3. **Execute and confirm** – Execute [`03-execute-and-confirm.md`](./03-execute-and-confirm.md) in full on the finalised plan:
    - Implementation via [`01-execution.md`](./01-execution.md), confirmation via [`02-confirm-execution.md`](./02-confirm-execution.md).
-   - Resolve the terminal outcome exactly as that workflow requires: `Verified Complete` → run [`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md); `Not Eligible` → plan stays active with addendum, no completion marker, no archive.
+   - Resolve the terminal outcome and always run the terminal gate [`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md): `Verified Complete` → **Full completion**; `Not Eligible` → **Reconcile only** (reconcile verified task ticks and logs, leave the plan active, and apply no completion marker or archive).
 
 ## Output
 
@@ -45,7 +45,7 @@ Use this workflow when you would otherwise ask for both:
 - [ ] Plan supplied and reviewed; finalisation acceptance criteria met
 - [ ] Finalised plan and planning artifacts staged and committed in the host repo (conventional commit message; no push unless requested)
 - [ ] [`03-execute-and-confirm.md`](./03-execute-and-confirm.md) run in full on the finalised plan
-- [ ] Terminal outcome resolved: `Verified Complete` → completion gate run; or `Not Eligible` → plan active, addendum, no marker/archive
+- [ ] Terminal gate always run: `Verified Complete` → **Full completion**; `Not Eligible` → **Reconcile only** (plan stays active, no marker/archive)
 
 ## Notes
 
