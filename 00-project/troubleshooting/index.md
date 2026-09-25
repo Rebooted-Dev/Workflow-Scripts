@@ -5,6 +5,8 @@ Chronological index of troubleshooting entries.
 
 | Date | Category | Title | File | Status |
 |------|----------|-------|------|--------|
+| 2026-09-26 | workflow | Plan 01 link handoff targets lost from TODO | workflow/2026-09-26-workflow-plan01-link-handoff-lost.md | resolved |
+| 2026-09-26 | workflow | Debt trigger and verified-task TODO reconciliation | workflow/2026-09-26-workflow-debt-todo-reconciliation.md | resolved |
 | 2026-09-25 | workflow | Not Eligible outcome bypassed reconciliation | workflow/2026-09-25-workflow-not-eligible-routing.md | resolved |
 | 2026-09-25 | workflow | Planning/build delegation was over-prescriptive | workflow/2026-09-25-workflow-planning-build-agent-sizing.md | resolved |
 | 2026-09-25 | workflow | Build workflow used a project-specific path | workflow/2026-09-25-workflow-metadata-root-build-paths.md | resolved |

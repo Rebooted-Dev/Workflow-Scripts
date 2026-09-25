@@ -1,7 +1,7 @@
 # Implementation Plan: Planning and Code-Build Workflow Quality
 
 **Created:** 2026-09-25 15:10
-**Status:** Active — Not Eligible (Plan 01 links and separately authorized remote CI pending; parent terminal gate pending)
+**Status:** Active — Not Eligible (Reconcile only; Plan 01 links and separately authorized remote CI remain pending)
 **Tier:** T2
 **Research:** [`planning-and-build-workflow-quality-review-260925-1347-claude.md`](../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) (researched at `1ab9fcb`, inferred from the 13:47 report time vs the 13:39 commit; re-verified at the same commit on 2026-09-25, see [Research summary](#research-summary-and-re-verification)). The source documents are annotated: the research carries in-place corrections and a `Plan:` line per finding, and the Drag-Free-v2 and v1.82-fixes documents carry extraction or cross-reference notes.
 **Workflow:** [`00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md). Pre-execution review by a different model is incorporated below; execute locally through [`03-execute-and-confirm.md`](../../02-code-build/03-execute-and-confirm.md).
@@ -268,16 +268,16 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 5. [✅] Strengthen `03-debugging/02-bug-fix-workflow.md:151` (failing test first) to a required regression step with a link to standards §4. Require automated regression evidence when feasible; when it is infeasible, permit manual regression evidence only with the concrete reason documented. (P2, Effort: S)
     - Files: `03-debugging/02-bug-fix-workflow.md`
     - Verify: `grep -n 'engineering-standards.md' 03-debugging/02-bug-fix-workflow.md` → at least 1 hit; regression guidance requires an automated test when feasible and documents the reason plus reproducible manual evidence when not (cost/prereqs: none)
-6. [✅] Logs: `changelog/added/` (standards) and `changelog/changed/` (wiring). (P2, Effort: S)
-    - Files: `00-project/changelog/…`
-    - Verify: `bash scripts/validation/check-meta-logs.sh --staged` → exit 0 (cost/prereqs: none)
+6. [✅] Logs: `changelog/added/` (standards), `changelog/changed/` (wiring), and a matching `changelog/fixed/` plus `troubleshooting/workflow/` entry for the Gate 3 debt/TODO workflow defect. Both new entries and their index rows are staged; parent `bash scripts/validation/check-meta-logs.sh --staged` passed. (P2, Effort: S)
+    - Files: `00-project/changelog/…`, `00-project/troubleshooting/workflow/…`
+    - Verify: `bash scripts/validation/check-meta-logs.sh --staged` → exit 0 with the Phase C records, including the fixed/troubleshooting pair, staged (cost/prereqs: parent staging and validation; passed)
 
-**Phase C report (2026-09-26; parent validation):** C1–C6 have task-level local evidence. Gate 3 passed after its focused debt/TODO correction, and `bash scripts/validation/check-meta-logs.sh --staged` passed. Phase C has not been pushed; remote CI remains pending.
+**Phase C report (2026-09-26; parent validation):** C1–C6 have task-level local evidence. Gate 3 passed after its focused debt/TODO correction. The missing fixed/troubleshooting pair and index rows are now staged; parent `bash scripts/validation/check-meta-logs.sh --staged` passed. Phase C has not been pushed; remote CI remains pending.
 
 - Parent-reported local passes: `awk '/^## Appendix/{exit} {n++} END{print n}' 00-Meta-Workflow/00-meta/engineering-standards.md` → 41 lines before Appendix; `bash scripts/validation/check-planning-build-policy.sh`; `bash scripts/validation/check-planning-build-policy-selftest.sh`; `bash scripts/validation/check-review-workflow-policy.sh`; `bash scripts/validation/check-completion-chain-policy.sh`; `bash scripts/validation/check-plan-selftest.sh`; `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md` → T2 dogfood pass; and `bash scripts/validation/check-meta-logs-selftest.sh`. Parent also reports Bash syntax checks and orchestration, sync, and update checks passed; exact argv for those checks was not provided.
 - Parent verified all five build/review links and the planning/build guard, the terminal-gate/planning debt-transfer checks, and debugging's §4 reference with automated-first/manual-evidence fallback. Gate 3 initially found two debt/TODO defects; remediation restored ordinary verified-task TODO reconciliation alongside open debt transfer, and clarified that triggers prompt reassessment rather than closure. The completion-chain policy guard and focused Gate 3 re-review passed.
 - Parent-reported `bash scripts/validation/check-active-markdown-links.sh` output remains exactly the four known Plan 01 links at lines 7, 95, 96, and 97; no new failures. Remote CI has not run; no CI success is claimed.
-- The added and changed Phase C records are present and indexed; the staged meta-log validator returned `meta log checks OK`. Phase A SHA `79d6841d708938e126cbc28c207fd1cedbef6ba5`; Phase B SHA `ac53e01dc6db456f658b5814b13e916fb3692ad3`. Phase C's commit SHA is recorded in the following phase report.
+- The original added/changed Phase C records plus the fixed/troubleshooting pair and index rows are staged. Parent `bash scripts/validation/check-meta-logs.sh --staged` passed with the required records present. Phase A SHA `79d6841d708938e126cbc28c207fd1cedbef6ba5`; Phase B SHA `ac53e01dc6db456f658b5814b13e916fb3692ad3`. Phase C SHA `9aad15cf8ab96f16a6af6b9ea2bb795fa44e6ef1`.
 
 ### Phase D: Research and review rigor (P2)
 
@@ -317,16 +317,16 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 3. [ ] Optional hook follow-up — **deferred**; leave `scripts/hooks/pre-commit` unchanged. After Plan 01 repairs the four known broken links, a separately authorized follow-up may add the completion-chain and planning-build validators plus `check-plan.sh` for staged plans declaring a Tier. (P3, Effort: S)
     - Files: `scripts/hooks/pre-commit`
     - Verify: if authorized after the trigger, a staged fixture plan that lacks `Verify:` blocks the commit, staging this plan does not, and the link check is not added before Plan 01 repairs the baseline failures (cost/prereqs: Plan 01 link repairs and separate authorization)
-4. [ ] Parent-owned terminal handoff, pending an independent `02-code-build/02-confirm-execution.md` confirmation and `04-documentation/03-mark-completed.md` terminal gate using **Reconcile only** (`Not Eligible`). This records-only pass does not perform that gate. (P3, Effort: S)
+4. [✅] Parent independently confirmed the plan and ran `04-documentation/03-mark-completed.md` in **Reconcile only** (`Not Eligible`) mode. Verified tasks are reconciled; the plan remains Active, with no completion marker or archive. (P3, Effort: S)
     - Files: this plan
-    - Verify: the parent independently records the confirmation and Reconcile-only terminal-gate outcome; do not claim full completion (cost/prereqs: parent execution)
+    - Verify: parent reports the independent confirmation and Reconcile-only gate outcome; plan-level completion and archival are omitted (cost/prereqs: parent validation; passed)
 
-**Phase E report (2026-09-26; local records pass; validation owner: parent):** E1 and E2 have local documentary evidence and are ticked above. The July proposal's Plan Review Addendum records KI-specific dispositions, and TODO includes the proposal and deferred Flash-UI pilot. The survey report exists with its evidence-based Q1–Q8 ratings.
+**Phase E report (2026-09-26; local records pass; validation owner: parent):** E1 and E2 have local documentary evidence and are ticked above. The July proposal's Plan Review Addendum records KI-specific dispositions, and TODO includes the proposal and deferred Flash-UI pilot. The survey report exists with its evidence-based Q1–Q8 ratings. E3 remains deliberately deferred and open; E4's parent-owned Reconcile-only terminal gate has been run.
 
 - Parent-reported local passes: `bash scripts/validation/check-plan-selftest.sh`; `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md` (T2); `bash scripts/validation/check-planning-build-policy-selftest.sh`; `bash scripts/validation/check-planning-build-policy.sh`; `bash scripts/validation/check-completion-chain-policy.sh`; `bash scripts/validation/check-review-workflow-policy.sh`; `bash scripts/validation/check-orchestrator-review.sh`; `bash scripts/validation/check-sync-workflow-scripts.sh`; `bash scripts/validation/check-update-workflows.sh`; and `bash scripts/validation/check-meta-logs-selftest.sh`.
 - Parent-reported `bash scripts/validation/check-active-markdown-links.sh` remains nonzero and reports exactly the four Plan 01 failures in `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md` at lines 7, 95, 96, and 97; no additional link failures are reported. Plan 01 owns these repairs.
-- Oracle Gate 5: PASS. The optional pre-commit hook expansion is accepted as deferred. Parent staged only intended Phase E records and `bash scripts/validation/check-meta-logs.sh --staged` returned `meta log checks OK`.
-- Remote CI has not run and remains pending Plan 01 link repairs plus separate push authorization. No Flash-UI host pilot or host-project changes occurred. The parent-owned independent confirmation and Reconcile-only terminal gate remain pending; no plan-level completion marker or archive is claimed.
+- Oracle Gate 5: PASS. The optional pre-commit hook expansion is accepted as deferred. Parent staged only intended Phase E records and `bash scripts/validation/check-meta-logs.sh --staged` returned `meta log checks OK`. Parent then ran the independent confirmation and terminal gate in Reconcile-only mode.
+- Remote CI has not run and remains pending Plan 01 link repairs plus separate push authorization. No Flash-UI host pilot or host-project changes occurred. Reconcile-only updates task/TODO/log state only; no plan-level completion marker or archive is claimed.
 
 ## Dependencies
 
@@ -372,3 +372,97 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 - [✅] The named representative `scripts/validation/fixtures/check-plan/t1-pass.md` fixture stays within about 20 lines; this example does not impose a maximum on every T1 plan.
 - [✅] `engineering-standards.md` is linked from all 5 build and review workflows (validator-enforced).
 - [✅] The survey rerun is filed with evidence-supported ratings; predicted COVERED/PARTIAL+ changes remain hypotheses unless confirmed by that evidence.
+
+## Current state
+
+**2026-09-26 01:29 +08 — Not Eligible; terminal gate ran in Reconcile only.**
+
+- **P1 — Plan 01 links:** `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md:7,95,96,97` remain broken; restored TODO targets are a handoff only, and Plan 01 owns recovery/repair.
+- **P1 — Remote CI:** not run; requires Plan 01 link repairs and separate push authorization.
+- **P2 — Flash-UI pilot:** remains deferred to the host owner; no host-app changes were made.
+- **P2/S2 — Behavioral evidence:** v1.82 Plan 03 harness; reassess when its concept test passes.
+- **P3/S3 — Superseded-plan lint:** `scripts/validation/check-plan.sh`; reassess at the first observed stale-TODO case.
+- **P3/S3 — Optional pre-commit validators:** `scripts/hooks/pre-commit`; consider only after Plan 01 repairs the links and a separate follow-up is authorized.
+- **P3/S3 — Research filename convention:** `00-project/research/`; reassess in the next meta-hygiene plan.
+- **P3/S3 — ADRs/decisions:** `<metadata-root>/decisions/` and `00-Meta-Workflow/00-meta/naming-conventions.md`; reassess at the first T3 plan or one-way decision (July KI-12).
+- **P3/S3 — Host-project verify gates:** `00-project-setup/`; reassess at the next project setup.
+- **July proposal:** remaining open KIs are tracked in its TODO entry; only KI-13 partials 1–2 and KI-14 tiered plan sections are superseded.
+
+## Verification Addendum
+
+**Confirmation timestamp:** 2026-09-26 01:29 +08. **Outcome:** Not Eligible — Reconcile only. **Validation owner:** parent orchestrator. The plan remains active; no completion marker or archive was applied.
+
+### Commands and checks
+
+Parent-reported PASS:
+
+- `bash scripts/validation/check-plan-selftest.sh`
+- `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md` (T2)
+- `bash scripts/validation/check-planning-build-policy-selftest.sh`
+- `bash scripts/validation/check-planning-build-policy.sh`
+- `bash scripts/validation/check-completion-chain-policy.sh`
+- `bash scripts/validation/check-review-workflow-policy.sh`
+- `bash scripts/validation/check-orchestrator-review.sh`
+- `bash scripts/validation/check-sync-workflow-scripts.sh`
+- `bash scripts/validation/check-update-workflows.sh`
+- `bash scripts/validation/check-meta-logs-selftest.sh`
+- `bash scripts/validation/check-meta-logs.sh --staged` (includes staged C6 fixed/troubleshooting records and indexes)
+- `bash scripts/validation/check-meta-logs.sh --range 0593467932cbb548855d8080ec8e63185e6a6a53..HEAD` (all local phase/setup commits)
+- Shell syntax checks (PASS; exact argv not supplied).
+- Oracle Gate 5: PASS.
+
+Parent-reported NONZERO, not a pass: `bash scripts/validation/check-active-markdown-links.sh` reports exactly four pre-existing Plan 01 references in `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md:7,95,96,97`. No other link failures are reported; Plan 01 owns these repairs.
+
+**Smoke and environment:** The parent statically smoke-checked the CLI validators listed above. No runtime or host-app smoke is applicable to this documentation/workflow-plan record reconciliation; the Flash-UI pilot remains deferred and no host project was changed. Remote CI was not run and no push is authorized.
+
+### Corrected misreports
+
+- **C6 log omission:** Phase C initially lacked the required fixed/troubleshooting pair for the Gate 3 workflow defect. Both entries and index rows are now staged, and parent `check-meta-logs.sh --staged` passed.
+- **A3 tracker mapping:** The Phase E TODO summary dropped A3's four explicit target mappings; the parent restored the nested handoff in `00-project/plans/TODO.md:20`. The source links themselves remain broken and Plan 01-owned.
+
+### Task-to-verifier coverage matrix (32 tasks)
+
+**Citation key:** `plan:N` refers to `00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md:N`; Phase report references are within that file.
+
+| Task | Verifier / evidence | Result |
+|---|---|---|
+| 0.1 | Parent records audit — Phase 0 baseline, plan:168-178 | ✅ |
+| 0.2 | Parent + user confirmation — no live Astra arm and pre-change SHA, plan:171-178 | ✅ |
+| 0.3 | Parent records audit — local commit authorization and no-push boundary, plan:174-178 | ✅ |
+| A1 | Parent — M1 wording and completion-chain invariant, plan:186-188, Phase A report:208 | ✅ |
+| A2 | Parent — local v1.8* push/PR trigger inspection; remote run explicitly deferred, plan:189-191, report:208 | ✅ |
+| A3 | Parent — restored exact four-target Plan 01 TODO handoff, `00-project/plans/TODO.md:20`; source repair remains flagged to Plan 01, plan:192-194 | ✅ |
+| A4 | Parent — agent-sizing edits and negative fixture/policy guard, plan:195-197, Phase A report:208 | ✅ |
+| A5 | Parent — metadata-root path migration and completion-chain guard, plan:198-200, Phase A report:208 | ✅ |
+| A6 | Parent — M7 terminology/rubric/review-archive updates, plan:201-203, Phase A report:208 | ✅ |
+| A7 | Parent — Phase A fixed/troubleshooting and changed records/indexes, plan:204-210 | ✅ |
+| B1 | Parent — shared tiered template and contract dogfood, plan:216-218, Phase B report:241-245 | ✅ |
+| B2 | Parent — seven phase-order sites and policy guard, plan:219-221, Phase B report:243,245 | ✅ |
+| B3 | Parent — Change Surface wiring across research/review/confirmation, plan:222-224, Phase B report:245 | ✅ |
+| B4 | Parent — Decision options, reversibility and task evidence structure, plan:225-227, Phase B report:243 | ✅ |
+| B5 | Parent — linter/self-test fixtures, CI step and T2 dogfood, plan:228-230, Phase B report:243 | ✅ |
+| B6 | Parent — superseded-plan and Current state block rules, plan:231-233, Phase B report:243 | ✅ |
+| B7 | Parent — skill references and planning/build guard, plan:234-236, Phase B report:243 | ✅ |
+| B8 | Parent — changed/added Phase B entries, indexes and staged meta-log check, plan:237-245 | ✅ |
+| C1 | Parent — standards body and appendix, plan:256-258, Phase C report:277 | ✅ |
+| C2 | Parent — forward build wiring and confirmation checks, plan:259-261, Phase C report:278 | ✅ |
+| C3 | Parent — backward review wiring and policy checks, plan:262-264, Phase C report:278 | ✅ |
+| C4 | Parent — debt transfer plus verified-task reconciliation; corrected trigger semantics, plan:265-267, Phase C report:278 | ✅ |
+| C5 | Parent — automated-first regression guidance, plan:268-270, Phase C report:278 | ✅ |
+| C6 | Parent — fixed/troubleshooting pair plus indexes staged; `check-meta-logs.sh --staged` PASS, plan:271-280 | ✅ |
+| D1 | Parent — evidence standard and shared vocabulary, plan:286-288, Phase D report:299-303 | ✅ |
+| D2 | Parent — feasibility and review checklist, plan:289-291, Phase D report:299-302 | ✅ |
+| D3 | Parent — ask-or-assume rule coordinated with Plan 04, plan:292-294, Phase D report:302 | ✅ |
+| D4 | Parent — changed record/index and staged meta-log check, plan:295-305 | ✅ |
+| E1 | Parent — July proposal review addendum and TODO entry, plan:311-313; proposal Plan Review Addendum | ✅ |
+| E2 | Parent — evidence-only survey report and ratings, plan:314-316; survey:17-32 | ✅ |
+| E3 | Explicitly deferred; no pre-commit hook edit, plan:317-319 and Deferred & Debt:349 | OPEN `[ ]` |
+| E4 | Parent — independent confirmation and `03-mark-completed.md` Reconcile-only result, plan:320-329 and this addendum | ✅ |
+
+### Reconciled TODO and flagged issues
+
+- Open Deferred & Debt items are preserved in the active plan and transferred to existing TODO entries without claiming closure: behavioral evidence in the Plan 03 harness (trigger: concept test passes; S2); superseded-plan lint in `check-plan.sh` (trigger: first stale-TODO case; S3); optional hook in `scripts/hooks/pre-commit` (trigger: Plan 01 link repairs plus separate authorization; S3); research filename convention in `00-project/research/` (trigger: next meta-hygiene plan; S3); standalone ADRs in `<metadata-root>/decisions/`/`naming-conventions.md` (trigger: first T3 plan or one-way decision; S3); host verify gates in `00-project-setup/` (trigger: next project setup; S3). Existing proposal, Plan 03, and quality-plan TODO rows were updated rather than duplicated.
+- **P1 / S2 — Link integrity:** four Plan 01 links remain broken; restore/repair and rerun the link check under Plan 01.
+- **P1 / S3 — Remote CI:** not run; requires link repairs and separately authorized push.
+- **P2 / S2 — Host pilot:** Flash-UI template pilot remains deferred to its owner; select and authorize a non-trivial host plan before testing.
+- **P3 / S3 — Optional hook and remaining deferred work:** hook stays open; other transferred debt stays open until its recorded trigger prompts reassessment and its own acceptance evidence supports closure.
