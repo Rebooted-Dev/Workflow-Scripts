@@ -1,13 +1,15 @@
 # Implementation Plan: Planning and Code-Build Workflow Quality
 
 **Created:** 2026-09-25 15:10
-**Status:** DRAFT - Ready for Review
+**Status:** DRAFT — Ready for local execution — remote CI/pilot pending
 **Tier:** T2
 **Research:** [`planning-and-build-workflow-quality-review-260925-1347-claude.md`](../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) (researched at `1ab9fcb`, inferred from the 13:47 report time vs the 13:39 commit; re-verified at the same commit on 2026-09-25, see [Research summary](#research-summary-and-re-verification)). The source documents are annotated: the research carries in-place corrections and a `Plan:` line per finding, and the Drag-Free-v2 and v1.82-fixes documents carry extraction or cross-reference notes.
-**Workflow:** [`00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md). Next step: [`01-plan-review.md`](../../01-planning-and-organizing/01-plan-review.md) by a different model.
+**Workflow:** [`00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md). Pre-execution review by a different model is incorporated below; execute locally through [`03-execute-and-confirm.md`](../../02-code-build/03-execute-and-confirm.md).
 **Validation owner:** parent orchestrator (the session that executes the plan), per phase.
 
 This plan is written on the template it proposes (research §8). That makes it the first pilot: Phase B's `check-plan.sh` must pass on this file.
+
+**Pre-execution review addendum (2026-09-25).** Decision: **Ready for local execution — remote CI/pilot pending**. DRAFT provenance is retained; this disposition is not a claim that implementation, remote CI, or the Flash-UI pilot has completed. The baseline, confirmed Astra status, commit/push authorization, link-failure handling, write ownership, and deferred pilot are recorded below. `.gitignore`/`.ignore` deepwork setup is separate from this plan and its baseline.
 
 ## Goal
 
@@ -17,7 +19,7 @@ Make the planning → build chain decide **what to build and how to shape it** a
 2. Make plans carry the inputs that prevent incomplete fixes: a **Change Surface** with search commands, a **Decision** with at least 2 options, and a **Verify:** line per task. Order phases by dependency and risk rather than by priority, and enforce the structure with a host-usable plan linter.
 3. Give builders and reviewers **one shared engineering standard** (boundaries, reuse, errors/recovery, tests, checkpoints), referenced forward from planning and execution and backward from review.
 
-**Success is observable:** a new host plan written on the template passes `check-plan.sh`; its Change Surface searches, re-run after the build, show zero stale sites; all validators are green in CI on `v1.8*`; and no T1 plan exceeds about 20 lines.
+**Success is observable:** this plan passes `check-plan.sh` as the first dogfood case; its Change Surface searches, re-run after the build, show zero stale sites; applicable non-link local validators pass and the link checker reports no failures beyond the four recorded Plan 01 failures. A future host-plan pilot and remote CI on `v1.8*` remain external follow-ups. The named representative T1 fixture stays within about 20 lines (not a limit asserted for every T1 plan).
 
 ## Research summary and re-verification
 
@@ -51,16 +53,16 @@ The research findings document is the linked review (§1–§10). It is not rest
 
 ## Assumptions
 
-- The active line stays `v1.82` for the duration (confirm by: `git branch --show-current` at Phase 0).
-- No Astra evaluation run is using the live `v1.82` tree as an arm while this plan executes (confirm by: ask the Plan 05 owner at Phase 0; Plan 05 is currently blocked on Plan 01).
-- Host projects pick up changes through `scripts/sync-workflow-scripts.sh`, so each phase must be internally consistent when it lands (confirm by: reading the sync script's mode at Phase 0).
-- The user authorizes commits per phase. Without authorization, work stays uncommitted and each phase report records a diff hash instead (engineering-standards §5 draft rule).
+- The baseline is on branch `v1.82` tracking `origin/v1.82` (recorded in the Phase 0 report); re-confirm the branch before each phase and pause if it changes.
+- The user confirmed at Phase 0 that no live Astra arm is using the tree. If an arm starts before this plan completes, pause workflow edits and coordinate with the Plan 05 owner.
+- The sync script uses ff-only Git sync but stashes dirty changes; it does not sync a host project. Do not run host sync as part of this plan. Deepwork setup is separate.
+- The user authorized local per-phase commits, but **did not authorize any push**. Keep remote CI pending; do not make a push part of a local phase gate.
 
 ## Scope and non-goals
 
-**In scope:** `01-planning-and-organizing/`, `02-code-build/`, the shared contracts in `00-Meta-Workflow/00-meta/`, the review and refactoring references named in the Change Surface, `scripts/validation/`, `.github/workflows/validation.yml`, the two skills in `11-Skills/` that restate these rules, and the READMEs that restate them.
+**In scope:** `01-planning-and-organizing/`, `02-code-build/`, `03-debugging/02-bug-fix-workflow.md`, the shared contracts in `00-Meta-Workflow/00-meta/`, the review and refactoring references named in the Change Surface, `scripts/validation/`, `.github/workflows/validation.yml`, the two skills in `11-Skills/` that restate these rules, and the READMEs that restate them.
 
-**Non-goals:** the v2 platform (frontmatter, `wf` CLI, `core/`, role registry); July KI-12 (full design workflow and ADR directory), KI-15 (greenfield lane), KI-16 (deploy workflow) and KI-17 (debt ledger directory); observability and security baselines (July KI-13 partials 3–4); repairing the 4 broken links (Plan 01's lane); host-project code, including the Flash-UI residuals (the Flash-UI plan owns those); behavioral A/B testing of agents (the Plan 03 harness); rewriting historical or archived plans.
+**Non-goals:** the v2 platform (frontmatter, `wf` CLI, `core/`, role registry); July KI-12 (full design workflow and ADR directory), KI-15 (greenfield lane), KI-16 (deploy workflow) and KI-17 (debt ledger directory); observability and security baselines (July KI-13 partials 3–4); repairing the 4 broken links (Plan 01's lane); host-project code, including the Flash-UI residuals (the Flash-UI plan owns those); behavioral A/B testing of agents (the Plan 03 harness); rewriting historical or archived plans. The Flash-UI forward pilot is deferred to its owner/TODO; this plan makes no host-project modifications.
 
 ## Change Surface
 
@@ -78,6 +80,7 @@ Every site that states a rule this plan changes. "Class" = implements / restates
 | Code-quality criteria | `02-code-build/01-execution.md:70` (no referent); `05-review/03-code-refactoring.md:77-89`; `05-review/01-code-review.md` focus list | implements | `grep -n 'code quality\|Focus' 02-code-build/01-execution.md 05-review/0[13]-*.md` |
 | Debt → TODO | `04-documentation/03-mark-completed.md:161` | implements | `grep -n 'TODO' 04-documentation/03-mark-completed.md` |
 | Evidence labels | `00-Meta-Workflow/00-meta/review-workflow-core.md:38-42`; `00-research-and-plan.md:294-297` ("no unverified claims") | implements | `grep -rn 'hypothes\|unverified claims' 00-Meta-Workflow/00-meta 01-planning-and-organizing` |
+| Regression-test-first guidance in the debug workflow | `03-debugging/02-bug-fix-workflow.md:151` | implements | `grep -nE 'failing test|regression test|engineering-standards' 03-debugging/02-bug-fix-workflow.md` |
 | Validators and CI | `scripts/validation/check-completion-chain-policy.sh`, `check-review-workflow-policy.sh`, `.github/workflows/validation.yml:5-12`, `scripts/hooks/pre-commit` | guards | `ls scripts/validation scripts/hooks` |
 
 ## Decision
@@ -129,7 +132,8 @@ Four decisions. Each lists the minimal option first.
 | Failure | Detection | User sees | Recovery |
 |---|---|---|---|
 | A host pulls mid-migration (template changed, linter not yet shipped, or the reverse) | Phase lands as one commit; `check-planning-build-policy.sh` runs in CI on that commit | Nothing inconsistent, if each phase is atomic | `git revert <phase commit>`; the host re-syncs |
-| CI goes red on `v1.82` after A2 because Plan 01 has not fixed the links yet | Validation run fails at "Check active Markdown links" | A red CI badge on `v1.82` | Expected and honest. It clears when Plan 01 P1.2 lands. Do not skip the step or exclude the file |
+| A later, separately authorized remote CI run reports the known links before Plan 01 fixes them | The link-check step reports the four recorded Plan 01 links | The run is not green; local phase validation is unaffected | Report the remote result honestly; do not skip or exclude the link check. Plan 01 P1.2 owns repair; after repair, rerun the full check |
+| A local phase introduces a new broken Markdown link | Run `check-active-markdown-links.sh` and compare its failure set with the recorded Plan 01 baseline | A new failure blocks that phase | Fix the new link; never hide it by skipping or suppressing the checker |
 | New lint false positive (e.g. "parallel agents" in a quoted example) | Self-test fixtures; a first full run on the tree before the CI step is added | A blocked commit or a red CI run | Narrow the pattern and add a fixture for the case; never add an ignore list without a recorded reason |
 | `check-plan.sh` diverges between BSD and GNU awk | Self-test runs locally (macOS) and in CI (ubuntu) | Different result per platform | Restrict to POSIX awk features; the fixture covering the divergence stays |
 | Workflow edits contaminate an Astra arm | Phase 0 check; commit SHAs recorded per phase | — | Plan 05 pins the arm on recorded SHAs; no workflow edit during an active Astra run |
@@ -137,57 +141,63 @@ Four decisions. Each lists the minimal option first.
 
 ## Test Strategy
 
+- **Local versus remote:** the parent owns validation. Local checks are the phase gates; remote CI is a separate, pending check because push is not authorized. Run `check-active-markdown-links.sh` locally at baseline and after every phase. Exactly the four existing Plan 01 failures are tolerated while they remain; record them, do not skip/suppress/exclude the link check, and block on any new failure. If Plan 01 repairs some or all, only the still-unfixed subset may remain. A nonzero link-check exit is not reported as a pass.
 - **Defect fixes (Phase A):** each invariant ships with a failing case before the fix. For example, the E2 loop prints `WOULD FAIL …04…` before M1 is fixed and nothing after. This is the repo's "Bugs: add regression test" rule applied to validators.
-- **Linters:** fixture self-tests. `check-plan.sh` gets 6 fixtures (T1 pass, T2 pass, missing `Verify:`, single Decision option, legacy file without a Tier header that warns and exits 0, and Success Criteria checkboxes outside `## Tasks` that must pass). `check-planning-build-policy.sh` gets one negative fixture per invariant.
+- **Linters:** fixture self-tests. `check-plan.sh` gets 6 fixtures (`t1-pass.md`, T2 pass, missing `Verify:`, single Decision option, legacy file without a Tier header that warns and exits 0, and Success Criteria checkboxes outside `## Tasks` that must pass). `t1-pass.md` is the named representative fixture for the approximate 20-line T1 example; it does not establish a universal T1 limit. `check-planning-build-policy.sh` gets one negative fixture per invariant.
 - **Dogfood:** `check-plan.sh` passes on this plan.
 - **Retro-check (zero cost):** apply the R2 rule to Flash-UI's 2026-09-23 prompt-quality plan. The Change Surface search must list `lib/style-loader.ts:444, 506` and `lib/skill-loader.ts`, and classify `prompts/catalog/design-templates.txt` hits as non-mandates.
-- **Forward pilot:** the next non-trivial Flash-UI plan uses the template. Pass = `check-plan.sh` passes and the post-build Change Surface re-run shows zero stale sites. A failed or declined pilot is a valid, recorded outcome.
+- **Forward pilot:** deferred to the Flash-UI owner and recorded in TODO; no host-project modification is part of this plan. When the owner later runs a non-trivial pilot, evidence is `check-plan.sh` passing and the post-build Change Surface re-run showing zero stale sites. A failed, declined, or still-pending pilot is a valid, recorded outcome.
+- **Survey:** predicted movement of Q1–Q3 and Q8 to COVERED and Q7 to PARTIAL+ is a hypothesis only. The rerun's documented evidence determines every rating; predictions are not acceptance criteria.
 - **Limit:** these tests check wording and structure, not whether agents follow the rules. Behavioral evidence is deferred (see Deferred & Debt).
 
 ## Rollout & Rollback
 
-- One commit per phase on `v1.82`, after user authorization, each with its own `00-project` changelog (and troubleshooting where required) so `check-meta-logs.sh --staged` passes.
+- One local commit per phase on `v1.82`, authorized by the user, each with its own `00-project` changelog (and troubleshooting where required) so `check-meta-logs.sh --staged` passes. Do not push; remote CI remains pending until push is separately authorized and the Plan 01 links are repaired.
 - Record each phase's commit SHA in the phase report and in [the v1.82 roadmap's](v1.82-fixes/00-meta-v1-82-fixes-roadmap.md) P3 closeout note so that Plan 05 can select clean arm boundaries.
 - Rollback = `git revert <phase SHA>`. Phases B–D depend on earlier phases, so revert in reverse order.
 - Hosts are unaffected until they sync. Host plans without `**Tier:**` are never failed by the linter (D3).
 
 ## Tasks
 
-Phases are ordered by dependency, then risk. For this plan that order also matches priority (A, B = P1; C, D = P2; E = P3), so it satisfies both the current rule and R1. Phase C and Phase D are independent of each other after B and may run in either order.
+Phases are ordered by dependency, then risk. For this plan that order also matches priority (A, B = P1; C, D = P2; E = P3), so it satisfies both the current rule and R1. Phases C and D are logically independent after B, but shared-document edits must be sequential or have one coordinated writer (see Phase C).
 
 ### Phase 0: Baseline and gates (prerequisite)
 
-**Exit:** baseline recorded; Plan 05 conflict cleared; commit authorization recorded (or "uncommitted mode" chosen).
+**Exit:** baseline and user confirmation recorded; local per-phase commits authorized; push not authorized.
 
-1. [ ] Capture branch, `HEAD`, upstream and `git status --porcelain=v1`. List the pre-existing dirty paths as protected (currently: `00-project/changelog/index.md`, three untracked `changelog/docs/` entries, and the untracked `research/2026-09-23-astra-*` files and research review). These are not staged by this plan unless the user says so. (P1, Effort: S)
-   - Files: none (record in the Phase 0 report)
-   - Verify: after each phase, `git status --porcelain=v1` differs from the baseline only in this plan's Change Surface and log entries → no protected path appears in `git diff --cached --name-only` (cost/prereqs: none)
-2. [ ] Confirm with the user/Plan 05 owner that no Astra run uses the live tree; record the pre-change SHA. (P1, Effort: S)
-   - Files: this plan (Phase 0 report)
-   - Verify: SHA and confirmation recorded in the report (cost/prereqs: user answer)
-3. [ ] Get commit authorization for per-phase commits, or choose uncommitted mode. (P1, Effort: S)
-   - Files: none
-   - Verify: the decision is recorded (cost/prereqs: user answer)
+1. [✅] Capture branch, `HEAD`, upstream and `git status --porcelain=v1`. The baseline is clean; it predates the separately committed `.gitignore`/`.ignore` deepwork setup. (P1, Effort: S)
+    - Files: none (record in the Phase 0 report)
+    - Verify: retain the clean pre-setup baseline as recorded; the setup was separately committed as `823bc04`; before Phase A the only worktree change is this plan; ensure each subsequent phase stages only its Change Surface and log entries (cost/prereqs: none)
+2. [✅] Confirm with the user/Plan 05 owner that no Astra run uses the live tree; record the pre-change SHA. (P1, Effort: S)
+    - Files: this plan (Phase 0 report)
+    - Verify: SHA and the user's no-live-arm confirmation are recorded in the report (cost/prereqs: user answer)
+3. [✅] Get commit authorization for per-phase commits, or choose uncommitted mode. (P1, Effort: S)
+    - Files: none
+    - Verify: local per-phase commit authorization and the explicit no-push boundary are recorded (cost/prereqs: user answer)
+
+**Phase 0 report (2026-09-25):** Baseline SHA `0593467932cbb548855d8080ec8e63185e6a6a53`; branch `v1.82`, upstream `origin/v1.82`; `git status --porcelain=v1` was clean. The separate `.gitignore`/`.ignore` deepwork setup and its log were committed as `823bc04`; post-setup status before Phase A contains only this plan's pre-execution amendments. The user confirmed no live Astra arm. Local per-phase commits are authorized; push is **not** authorized. `scripts/sync-workflow-scripts.sh` uses ff-only Git sync but stashes dirty changes; do not run it or host sync during implementation. Baseline validators: completion-chain, review-policy and meta-log self-test pass; the active-link check reports exactly four broken references in `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md` at lines 7, 95, 96 and 97, owned by Plan 01. No host project was changed.
 
 ### Phase A: Repair the mechanics (P1)
 
-**Scope:** M1–M4, M7, E2, E3, E4. **Depends on:** Phase 0. **Exit:** all validators pass locally except the 4 Plan 01 links; the CI trigger covers `v1.8*`; log entries exist.
+**Scope:** M1–M4, M7, E2, E3, E4. **Depends on:** Phase 0. **Exit:** applicable local validators pass; the active-link checker reports only the four still-unfixed Plan 01 baseline failures and no new failures; the CI trigger covers `v1.8*`; log entries exist. Remote CI is pending a later authorized push and Plan 01's link repairs, not a local phase gate.
+
+**Write ownership:** A2 and A4 both edit `.github/workflows/validation.yml`; integrate these edits through one writer or sequentially. A4 and A5 both edit `02-code-build/01-execution.md`; likewise use one writer or sequential edits. Do not make concurrent writes to either shared file.
 
 1. [ ] M1: replace `04-review-finalise-commit-execute.md:35` and `:48` with the 03 wording (the gate always runs; `Not Eligible` uses Reconcile only). Add the E2 positive invariant to `check-completion-chain-policy.sh`. (P1, Effort: S)
    - Files: `02-code-build/04-review-finalise-commit-execute.md`, `scripts/validation/check-completion-chain-policy.sh`
    - Verify: before the fix, the E2 loop prints `WOULD FAIL …04…`; after it, `bash scripts/validation/check-completion-chain-policy.sh` → exit 0 (cost/prereqs: none)
 2. [ ] E3: add `'v1.8*'` to `push.branches` and `pull_request.branches` in `validation.yml`, keeping `main`, `v1.8` and the fixture pattern. (P1, Effort: S)
    - Files: `.github/workflows/validation.yml`
-   - Verify: after an authorized push, `gh run list --branch v1.82 --workflow Validation` shows a run. Every step except the links check passes until Plan 01 lands (cost/prereqs: push authorization, `gh` auth)
-3. [ ] M2 links: hand over, don't edit. Record the corrected targets for Plan 01: link 3 → `../../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md`; link 4 → `../../../00-Meta-Workflow/00-meta/workflow-applicability.md`; links 1–2 → wherever Plan 01 files the recovered protocol (planned as the same directory, `./2026-09-10-astra-instruction-evaluation-protocol.md`). Add the note to `plans/TODO.md` under the v1.82 item. (P1, Effort: S)
-   - Files: `00-project/plans/TODO.md`
-   - Verify: the TODO row names all 4 links and their targets. The final check (`check-active-markdown-links.sh` → exit 0) is owned by Plan 01 (cost/prereqs: Plan 01)
+    - Verify: local inspection confirms both branch filters cover `v1.8*`; `gh run list --branch v1.82 --workflow Validation` is deferred until a push is separately authorized. Remote CI is currently pending, not passed. After a future authorized push, record the run and expect the link step to report only the four still-unfixed Plan 01 failures (cost/prereqs: push authorization, Plan 01 for link repair, `gh` auth)
+3. [ ] M2 links: hand over, don't edit. The existing `plans/TODO.md` v1.82 item records the corrected targets for Plan 01: link 3 → `../../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md`; link 4 → `../../../00-Meta-Workflow/00-meta/workflow-applicability.md`; links 1–2 → wherever Plan 01 files the recovered protocol (planned as the same directory, `./2026-09-10-astra-instruction-evaluation-protocol.md`). Verify the existing item and do not duplicate it. (P1, Effort: S)
+    - Files: `00-project/plans/TODO.md` (verify existing entry; edit only if a target is missing or wrong)
+    - Verify: the TODO row names all 4 links and their targets; `check-active-markdown-links.sh` is run and reports exactly the four still-unfixed Plan 01 failures, with no new failures (cost/prereqs: Plan 01 owns repairs)
 4. [ ] M3 + E4: replace the rosters at the M3 sites with the §1.2 pattern (a one-line link to `workflow-applicability.md` sizing plus a role *menu*). Delete "aggressively". Move `01-execution.md:66-76` review to after the change. Create `check-planning-build-policy.sh` with the sizing invariant and a negative fixture, and add it to CI. (P1, Effort: M)
    - Files: `01-planning-and-organizing/00-research-and-plan.md`, `01-plan-review.md`, `02-finalise-plan.md`, `02-code-build/01-execution.md`, `02-confirm-execution.md`, `scripts/validation/check-planning-build-policy.sh`, `.github/workflows/validation.yml`
-   - Verify: `grep -nE 'aggressively|librarian agents' 01-planning-and-organizing/*.md` → empty; `bash scripts/validation/check-planning-build-policy.sh` → exit 0; the negative fixture → exit 1 (cost/prereqs: none)
+    - Verify: `grep -nE 'aggressively|librarian agents' 01-planning-and-organizing/*.md` → empty; `bash scripts/validation/check-planning-build-policy.sh` → exit 0; the negative fixture → exit 1; shared CI-file edits are integrated with A2 by one writer (cost/prereqs: none)
 5. [ ] M4: replace bare `plans/` and `project/build/` with `<metadata-root>/plans/` plus a link to Metadata Root Resolution. (P1, Effort: S)
    - Files: `02-code-build/01-execution.md`, `02-code-build/03-execute-and-confirm.md`
-   - Verify: `grep -rn 'project/build/' 02-code-build 01-planning-and-organizing` → empty; `bash scripts/validation/check-completion-chain-policy.sh` → exit 0 (cost/prereqs: none)
+    - Verify: `grep -rn 'project/build/' 02-code-build 01-planning-and-organizing` → empty; `bash scripts/validation/check-completion-chain-policy.sh` → exit 0; shared `01-execution.md` edits are integrated with A4 by one writer or sequentially (cost/prereqs: none)
 6. [ ] M7 wording: `02-finalise-plan.md:1` title → "Finalise Plan"; `03-execute-and-confirm.md:15` marker attributed to the gate; `00-research-and-plan.md:268` drop the ✅ from the draft status; `:166-171` risk scale → rubric Impact × Likelihood; `02-finalise-plan.md:73-74` default to archiving `PLAN.reviews/`. (P3, Effort: S)
    - Files: `01-planning-and-organizing/02-finalise-plan.md`, `00-research-and-plan.md`, `02-code-build/03-execute-and-confirm.md`
    - Verify: `grep -n 'Ready for Review ✅' 01-planning-and-organizing/*.md` → empty; `head -1 01-planning-and-organizing/02-finalise-plan.md` → contains "Finalise Plan" (cost/prereqs: none)
@@ -197,11 +207,11 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 
 ### Phase B: Planning quality (P1)
 
-**Scope:** R1, R2, R3, R8, E1, E5, M5, M6. **Depends on:** Phase A (green local validators; `check-planning-build-policy.sh` exists). **Exit:** the template contract exists and is linked; `check-plan.sh` and its self-test pass in CI; this plan passes `check-plan.sh`; all 7 phase-order sites agree.
+**Scope:** R1, R2, R3, R8, E1, E5, M5, M6. **Depends on:** Phase A (local validators pass, except any still-unfixed known Plan 01 links; `check-planning-build-policy.sh` exists). **Exit:** the template contract exists and is linked; `check-plan.sh` and its self-test pass locally; this plan passes `check-plan.sh`; all 7 phase-order sites agree. Remote CI remains pending until a later authorized push.
 
 1. [ ] D1: create `00-meta/plan-template.md` from research §8, with these changes: the Risks table uses the rubric's scales (Impact Low/Medium/High, Likelihood Rare/Possible/Likely, with S0–S3); add a Scope and non-goals section; each `Verify:` names cost and prerequisites (R5 hook); add the tier rule and default-tier inference. Replace `00-research-and-plan.md:216-261` and §2.3 `:138-143` with a link to it. (P1, Effort: M)
    - Files: `00-Meta-Workflow/00-meta/plan-template.md`, `00-Meta-Workflow/00-meta/README.md`, `01-planning-and-organizing/00-research-and-plan.md`
-   - Verify: `bash scripts/validation/check-active-markdown-links.sh` shows no new broken links; `wc -l 01-planning-and-organizing/00-research-and-plan.md` is lower than 333 (cost/prereqs: none)
+    - Verify: `bash scripts/validation/check-active-markdown-links.sh` reports only the four still-unfixed Plan 01 baseline failures and no new broken links; `wc -l 01-planning-and-organizing/00-research-and-plan.md` is lower than 333 (cost/prereqs: none)
 2. [ ] R1: phases ordered by dependency, then risk; each task carries its own P label; add the enabling-refactor rule (research §5 R1 wording) next to the over-engineering checks. Update all 7 phase-order sites in the Change Surface. For the rubric's Ordering Rule: findings in reports stay ordered P0→P3; plans order phases by dependency and tasks within a phase by priority. Adopt the skill's wording. (P1, Effort: M)
    - Files: `00-research-and-plan.md`, `01-plan-review.md`, `02-finalise-plan.md`, `01-planning-and-organizing/README.md`, `README.md`, `00-Meta-Workflow/00-meta/severity-priority-rubric.md`
    - Verify: `grep -rnE 'Phase 1 = P0|phase numbering must follow priority' --exclude-dir=00-project --exclude-dir=12-SEO-GEO-checklist .` → empty; `check-planning-build-policy.sh` (enabling-refactor invariant added) → exit 0 (cost/prereqs: none)
@@ -213,7 +223,7 @@ Phases are ordered by dependency, then risk. For this plan that order also match
    - Verify: `grep -n 'Verify:' 02-code-build/01-execution.md` → at least 1 hit in the tick rule (cost/prereqs: none)
 5. [ ] E1: `scripts/validation/check-plan.sh` (D3 activation; the `Verify:` check is scoped to `## Tasks`, research gap 4), `check-plan-selftest.sh` with the 6 fixtures listed in Test Strategy under `scripts/validation/fixtures/check-plan/`, and a CI step. Reference it from `02-finalise-plan.md` acceptance criteria and from `01-execution.md` Preparation, including the host-side path (`<workflow-scripts>/scripts/validation/check-plan.sh <plan>`). (P1, Effort: M)
    - Files: `scripts/validation/check-plan.sh`, `scripts/validation/check-plan-selftest.sh`, `scripts/validation/fixtures/check-plan/*`, `.github/workflows/validation.yml`, `01-planning-and-organizing/02-finalise-plan.md`, `02-code-build/01-execution.md`
-   - Verify: `bash scripts/validation/check-plan-selftest.sh` → exit 0 on macOS and in CI; `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md` → exit 0 (cost/prereqs: none)
+    - Verify: `bash scripts/validation/check-plan-selftest.sh` → exit 0 locally on macOS; remote CI result is recorded only after a separately authorized push and is currently pending; `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md` → exit 0 (cost/prereqs: none)
 6. [ ] M5 + M6: `02-finalise-plan.md` marks the source plan `**Status:** Superseded by <link>`. Appending workflows (`01-plan-review.md`, `02-confirm-execution.md`) keep a "Current state" block at the top of the appended document, one line per open recommendation. (P2, Effort: S)
    - Files: `01-planning-and-organizing/02-finalise-plan.md`, `01-plan-review.md`, `02-code-build/02-confirm-execution.md`
    - Verify: `grep -n 'Superseded by' 01-planning-and-organizing/02-finalise-plan.md` and `grep -ln 'Current state' 01-planning-and-organizing/01-plan-review.md 02-code-build/02-confirm-execution.md` → hits in all 3 files (cost/prereqs: none)
@@ -226,7 +236,9 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 
 ### Phase C: Engineering standards (P2)
 
-**Scope:** research §6, Q6. **Depends on:** Phase B (the template sections it references). **Exit:** `engineering-standards.md` exists (body ≤ ~90 lines) and is linked from all 5 build/review workflows; the Deferred & Debt → TODO step is live in the gate; completion-chain and review-policy validators pass.
+**Scope:** research §6, Q6, and debug-workflow regression guidance. **Depends on:** Phase B (the template sections it references). **Exit:** `engineering-standards.md` exists (body ≤ ~90 lines) and is linked from all 5 build/review workflows; the Deferred & Debt → TODO step is live in the gate; debug-workflow regression guidance allows manual evidence only when automation is infeasible and the reason is recorded; completion-chain and review-policy validators pass.
+
+**Shared-document ownership with Phase D:** C3 and D2 both edit `01-planning-and-organizing/01-plan-review.md`; C4 and D1/D3 both edit `01-planning-and-organizing/00-research-and-plan.md`. These shared files must be edited sequentially or by one coordinated writer. Other C/D tasks may proceed in parallel only on disjoint files.
 
 1. [ ] Author `00-meta/engineering-standards.md` following research §6 §1–§5, each rule a checkable question, plus a language appendix (TypeScript, Python, shell). Keep the paradigm note (composition, functional core in hook-based code; no class hierarchies required). (P2, Effort: M)
    - Files: `00-Meta-Workflow/00-meta/engineering-standards.md`, `00-Meta-Workflow/00-meta/README.md`
@@ -240,16 +252,16 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 4. [ ] Q6: the terminal gate copies open Deferred & Debt entries into the host TODO (under the existing `03-mark-completed.md:161` host-TODO rule, with no new location); `00-research-and-plan.md` Phase 1 reads open entries that touch the Change Surface. (P2, Effort: S)
    - Files: `04-documentation/03-mark-completed.md`, `01-planning-and-organizing/00-research-and-plan.md`
    - Verify: `bash scripts/validation/check-completion-chain-policy.sh` → exit 0; `grep -n 'Deferred & Debt' 04-documentation/03-mark-completed.md` → at least 1 hit (cost/prereqs: none)
-5. [ ] Strengthen `03-debugging/02-bug-fix-workflow.md:151` (failing test first) to a required step with a link to standards §4. (P2, Effort: S)
-   - Files: `03-debugging/02-bug-fix-workflow.md`
-   - Verify: `grep -n 'engineering-standards.md' 03-debugging/02-bug-fix-workflow.md` → at least 1 hit (cost/prereqs: none)
+5. [ ] Strengthen `03-debugging/02-bug-fix-workflow.md:151` (failing test first) to a required regression step with a link to standards §4. Require automated regression evidence when feasible; when it is infeasible, permit manual regression evidence only with the concrete reason documented. (P2, Effort: S)
+    - Files: `03-debugging/02-bug-fix-workflow.md`
+    - Verify: `grep -n 'engineering-standards.md' 03-debugging/02-bug-fix-workflow.md` → at least 1 hit; regression guidance requires an automated test when feasible and documents the reason plus reproducible manual evidence when not (cost/prereqs: none)
 6. [ ] Logs: `changelog/added/` (standards) and `changelog/changed/` (wiring). (P2, Effort: S)
    - Files: `00-project/changelog/…`
    - Verify: `bash scripts/validation/check-meta-logs.sh --staged` → exit 0 (cost/prereqs: none)
 
 ### Phase D: Research and review rigor (P2)
 
-**Scope:** R4–R7. **Depends on:** Phase B (template `Verify:` cost field). Independent of Phase C except that R6 links the standards file if C has landed. **Exit:** the research standard is linked from `00-research-and-plan.md`; the plan review has the feasibility check and the checklist.
+**Scope:** R4–R7. **Depends on:** Phase B (template `Verify:` cost field). May proceed alongside Phase C only on disjoint files; the shared files listed in Phase C's ownership note are sequential or single-writer. **Exit:** the research standard is linked from `00-research-and-plan.md`; the plan review has the feasibility check and the checklist.
 
 1. [ ] R4: add a research standard (claim labels; primary sources with access date and version; commit pin; re-verify claims whose files changed since the pinned commit (`git diff --stat <sha>..HEAD -- <paths>`); state what was not checked; replace "no unverified claims" with "no unlabeled claims"). Extend `review-workflow-core.md` §Evidence Quality with the label set so research and review share one vocabulary. Map the Astra labels to it in one line. (P2, Effort: S)
    - Files: `00-Meta-Workflow/00-meta/review-workflow-core.md`, `01-planning-and-organizing/00-research-and-plan.md`
@@ -266,17 +278,17 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 
 ### Phase E: Reconcile and measure (P3)
 
-**Scope:** research §9 Phase E, plus the before/after measure. **Depends on:** Phases B–D. **Exit:** July proposal status recorded; survey re-run filed; TODO updated.
+**Scope:** research §9 Phase E, plus the before/after measure. **Depends on:** Phases B–D. **Exit:** July proposal status recorded; survey re-run filed with evidence-based ratings; TODO updated, including the Flash-UI pilot deferral.
 
-1. [ ] Run `01-plan-review.md` on `Drag-Free-v2/2026-07-06-engineering-quality-and-lifecycle-proposal.md`: mark KI-13 (partials 1–2) and KI-14 as superseded by Phases B–C with links (extraction tags and refreshed citations were already added on 2026-09-25, so this step only turns **Extracted →** tags into superseded status); keep KI-12, KI-15, KI-16, KI-17 and KI-13 partials 3–4 as open. Add the proposal to `plans/TODO.md` (it is not listed there today). (P3, Effort: S)
-   - Files: the July proposal (review addendum), `00-project/plans/TODO.md`
-   - Verify: the addendum names each KI with its status; the TODO row exists (cost/prereqs: none)
-2. [ ] Re-run the July survey's 8 questions (`Drag-Free-v2/workflow-engineering-quality-survey-260706-0137-gpt55.md`) against the new tree and file the result as `research/engineering-quality-survey-rerun-YYMMDD-HHMM-<model>.md`. Expected: Q1–Q3 and Q8 move from PARTIAL to COVERED; Q7 moves to PARTIAL+; Q4–Q6 stay PARTIAL (non-goals). (P3, Effort: S)
-   - Files: `00-project/research/…`
-   - Verify: the report exists with a before/after table and every change cites a file:line (cost/prereqs: none)
-3. [ ] Optional: extend `scripts/hooks/pre-commit` to also run the links, completion-chain and planning-build validators, plus `check-plan.sh` on staged plan files that declare a Tier. (P3, Effort: S)
-   - Files: `scripts/hooks/pre-commit`
-   - Verify: staging a fixture plan that lacks `Verify:` blocks the commit; staging this plan does not (cost/prereqs: none)
+1. [ ] Run `01-plan-review.md` on `Drag-Free-v2/2026-07-06-engineering-quality-and-lifecycle-proposal.md`: mark KI-13 (partials 1–2) and KI-14 as superseded by Phases B–C with links (extraction tags and refreshed citations were already added on 2026-09-25, so this step only turns **Extracted →** tags into superseded status); keep KI-12, KI-15, KI-16, KI-17 and KI-13 partials 3–4 as open. Add the proposal to `plans/TODO.md` (it is not listed there today) and record the Flash-UI forward pilot as deferred to its owner there; make no host-project changes. (P3, Effort: S)
+    - Files: the July proposal (review addendum), `00-project/plans/TODO.md`
+    - Verify: the addendum names each KI with its status; the proposal and pilot-deferral TODO rows exist; no host-project path was changed (cost/prereqs: none)
+2. [ ] Re-run the July survey's 8 questions (`Drag-Free-v2/workflow-engineering-quality-survey-260706-0137-gpt55.md`) against the new tree and file the result as `research/engineering-quality-survey-rerun-YYMMDD-HHMM-<model>.md`. Hypothesis only: Q1–Q3 and Q8 may move from PARTIAL to COVERED, Q7 may move to PARTIAL+, and Q4–Q6 may remain PARTIAL (non-goals); evidence determines the reported ratings. (P3, Effort: S)
+    - Files: `00-project/research/…`
+    - Verify: the report exists with a before/after table, every change cites a file:line, and each COVERED/PARTIAL rating is supported by evidence rather than the hypothesis (cost/prereqs: none)
+3. [ ] Optional: extend `scripts/hooks/pre-commit` to run the completion-chain and planning-build validators, plus `check-plan.sh` on staged plan files that declare a Tier. Defer adding `check-active-markdown-links.sh` until Plan 01 fixes the four known broken links. (P3, Effort: S)
+    - Files: `scripts/hooks/pre-commit`
+    - Verify: staging a fixture plan that lacks `Verify:` blocks the commit; staging this plan does not; the hook does not add the link check before Plan 01 repairs the baseline failures (cost/prereqs: none)
 4. [ ] Hand off to the execution chain: this plan's completion runs through `02-code-build/03-execute-and-confirm.md` and the terminal gate. (P3, Effort: S)
    - Files: this plan
    - Verify: the terminal gate outcome is recorded (cost/prereqs: none)
@@ -291,9 +303,9 @@ v1.82 Plan 04 status ──► D3 (R7) wording choice
 v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 ```
 
-- **Critical path:** 0 → A → B → C → E.
-- **Parallel:** C and D after B. Within Phase A, tasks 1, 2, 4 and 5 touch different files and are independent.
-- **External:** push authorization (A2); the Plan 01 owner for links (A3); the Flash-UI owner for the forward pilot.
+- **Critical path:** 0 → A → B → C/D coordination → E.
+- **Parallel:** C and D may run in parallel after B only on disjoint files; their shared documents are sequential or single-writer as specified in Phase C. Within Phase A, parallelize only tasks with disjoint `Files:` lists: A2/A4 share `validation.yml`, and A4/A5 share `01-execution.md`.
+- **External:** a future push authorization for remote CI (not granted for this execution); the Plan 01 owner for links (A3); the Flash-UI owner for the deferred forward pilot.
 
 ## Deferred & Debt
 
@@ -307,20 +319,20 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 | Risk | Impact (S) | Likelihood | Mitigation |
 |---|---|---|---|
-| Process tax on small changes | Medium (S2) | Likely without tiers | T1 = Goal, Change Surface, Tasks only; linter enforces T2+ sections only when the Tier is T2+; success criterion "T1 ≤ ~20 lines" |
+| Process tax on small changes | Medium (S2) | Likely without tiers | T1 = Goal, Change Surface, Tasks only; linter enforces T2+ sections only when the Tier is T2+; keep the named representative `t1-pass.md` fixture around 20 lines as an example, not a universal cap |
 | Rule restated in a site this plan missed, creating a new contradiction | Medium (S2) | Possible | The Change Surface searches are part of each task's `Verify:`; the positive invariants in `check-planning-build-policy.sh` catch regressions |
 | Standards file becomes an unread style guide | Low (S3) | Possible | ≤ ~90-line body; checkable questions; reviewers cite section numbers |
 | Linters create false confidence | Medium (S2) | Possible | Linters guarantee reviewable inputs only; judgement stays with the R6 review; behavioral evidence is tracked in Deferred & Debt |
 | Collision with the v2 redesign or July proposal | Low (S3) | Possible | Everything lives in the existing `00-meta/` mechanism; Phase E records which KIs are superseded |
 | Contaminating an Astra arm | Medium (S2) | Rare | Phase 0 check; one commit per phase with SHAs recorded |
-| CI red on `v1.82` read as a regression | Low (S3) | Likely until Plan 01 lands | Named in Failure Modes; the A3 TODO row explains the cause |
+| Remote CI pending or reporting the known links misread as a validation result | Low (S3) | Likely until Plan 01 lands and a push is authorized | Local checks are the phase gates; remote CI is explicitly pending. If later run, report its result and the four-link baseline honestly; the A3 TODO row explains ownership |
 
 ## Success Criteria
 
-- [ ] All validators, including the new `check-plan-selftest.sh` and `check-planning-build-policy.sh`, pass in CI on `v1.82` (after Plan 01 P1.2).
+- [ ] All local validators pass except the active-link checker, whose nonzero result reports only the still-unfixed subset of the four Plan 01 baseline links; the new `check-plan-selftest.sh` and `check-planning-build-policy.sh` pass locally. Remote CI on `v1.82` is pending until Plan 01 P1.2 repairs those links and a push is separately authorized; no remote CI success is claimed before then.
 - [ ] The E2 loop and the M3 grep are empty; the 7 phase-order sites agree.
 - [ ] This plan passes `check-plan.sh`; the retro-check lists `lib/style-loader.ts:444, 506` and `lib/skill-loader.ts` and classifies the catalog hits.
-- [ ] The next non-trivial Flash-UI plan uses the template, passes `check-plan.sh`, and its post-build Change Surface re-run shows zero stale sites (or a declined or failed pilot is recorded with its reason).
-- [ ] No T1 plan written on the template exceeds about 20 lines.
+- [ ] The Flash-UI forward pilot is recorded as deferred to its owner in TODO; no host-project changes are made by this plan.
+- [ ] The named representative `scripts/validation/fixtures/check-plan/t1-pass.md` fixture stays within about 20 lines; this example does not impose a maximum on every T1 plan.
 - [ ] `engineering-standards.md` is linked from all 5 build and review workflows (validator-enforced).
-- [ ] The survey re-run shows Q1–Q3 and Q8 COVERED.
+- [ ] The survey rerun is filed with evidence-supported ratings; predicted COVERED/PARTIAL+ changes remain hypotheses unless confirmed by that evidence.

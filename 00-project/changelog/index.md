@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-25 | docs | Reconcile planning/build quality plan for local execution | docs/2026-09-25-docs-local-execution-review-disposition.md | Review disposition and Phase 0 gates; remote CI and host pilot remain pending |
 | 2026-09-25 | config | Keep execution progress local | config/2026-09-25-config-local-deepwork-progress.md | Ignore `.slim/deepwork/` in Git; retain local readable phase notes |
 | 2026-09-25 | docs | Planning and code-build workflow quality review | docs/2026-09-25-docs-planning-build-quality-review.md | 3 mechanics defects (04 gate wording, CI branches, agent sizing); tiered plan template, check-plan.sh, engineering-standards proposal; no workflow changes |
 | 2026-09-25 | fixed | Log Workflow-Scripts changes in 00-project; troubleshooting for every fix | fixed/2026-09-25-fixed-meta-log-routing-and-fix-troubleshooting.md | Owning-repo routing, root AGENTS.md/CLAUDE.md, fix workflows tightened, check-meta-logs.sh pre-commit hook + CI |
