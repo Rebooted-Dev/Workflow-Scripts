@@ -2,7 +2,7 @@
 
 # v1.82 Fixes Roadmap
 
-**Status:** Active roadmap — Plan 02 filed Verified Complete; remaining lanes are active or KIV
+**Status:** Active roadmap — Plan 02 filed Verified Complete; remaining lanes are active or KIV. P0 safety-baseline tasks 1–2 verified done via archived Plan 01 (`03-mark-completed` pass, 2026-09-27)
 
 **Summary:** Coordinate the v1.82-fixes lanes without duplicating their procedures. Plan 01 source recovery and active-reference repair are Verified Complete on `9714c15`; Plan 05 remains blocked until an explicit comparison-arm decision. Plan 02 is independent, validation-only audit work. Plan 03 is independent after its own discovery and safety gates. Plan 04 is approval-gated. Plan 06 is KIV/deferred by user and is not actionable without a new explicit user request.
 
@@ -18,9 +18,9 @@
 
 ### P0 — protect the worktree and authorize the graph
 
-- [ ] 1. **(Small)** Re-capture the Workflow-Scripts repository root, current branch, `HEAD`, upstream, and dirty-state inventory before any lane writes.
-- [ ] 2. **(Small)** Treat the externally made uncommitted reorganization as protected; prohibit reset, clean, checkout, branch switching, history rewriting, or consumer-repository changes.
-- [ ] 3. **(Small)** Confirm lane owners and approval authority before any approval-gated or cross-repository action.
+- [✅] 1. **(Small)** Re-capture the Workflow-Scripts repository root, current branch, `HEAD`, upstream, and dirty-state inventory before any lane writes. *(Verified: archived Plan 01 P0.1 recorded the baseline — `v1.82`, `HEAD 6a25c36`, full dirty-state inventory — at execution time on `9714c15`.)*
+- [✅] 2. **(Small)** Treat the externally made uncommitted reorganization as protected; prohibit reset, clean, checkout, branch switching, history rewriting, or consumer-repository changes. *(Verified: archived Plan 01 P0.2; no destructive operation in any lane record.)*
+- [ ] 3. **(Small)** Confirm lane owners and approval authority before any approval-gated or cross-repository action. *(Owners are recorded in the dependency table below; no approval-gated or cross-repository action has occurred yet, so this precondition has not been exercised.)*
 
 **Dependencies:** None. This baseline precedes every executable lane.
 

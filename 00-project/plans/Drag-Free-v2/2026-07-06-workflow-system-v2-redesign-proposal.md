@@ -5,7 +5,7 @@
 **Status:** DRAFT - Ready for Review ✅
 **Author:** claude-fable-5 (with codex/gpt-5.5 survey pass)
 **Rubric:** `00-Meta-Workflow/00-meta/severity-priority-rubric.md`
-**Evidence base:** direct file review (this session) + delegated survey filed at `00-project/research/workflow-scripts-survey-260706-1200-gpt55.md` + token-cost & agent-role survey filed at `00-project/research/workflow-token-and-roles-survey-260706-0120-gpt55.md` (codex/gpt-5.5 low + direct verification)
+**Evidence base:** direct file review (this session) + delegated survey filed at `Drag-Free-v2/workflow-scripts-survey-260706-1200-gpt55.md` (same directory) + token-cost & agent-role survey filed at `Drag-Free-v2/workflow-token-and-roles-survey-260706-0120-gpt55.md` (same directory; codex/gpt-5.5 low + direct verification)
 **Scope:** The Workflow-Scripts system itself (`<PROJECT_META>/` = `00-project/`). No consumer-project code is touched.
 **Related active plans (this proposal builds on, and must not duplicate, them):**
 - `2026-07-03-multi-model-plan-review-pass-system-implementation-plan.md` (adversarial multi-model fan-out)
@@ -23,7 +23,7 @@ If I were designing this system from scratch with full autonomy, I would keep th
 
 **The v2 thesis: treat workflows as *compiled, tool-supported artifacts*, not hand-maintained prose.** One canonical source per workflow with machine-readable frontmatter; generated catalogs, indexes, and per-harness skill bundles; a single small CLI (`wf`) that does the mechanical bookkeeping agents currently do by hand; CI that makes drift impossible to merge.
 
-Eleven key improvements are proposed (§4), phased P0→P3 (§6). P0 alone (frontmatter + validation + generated router) removes the majority of drift risk with zero behavior change to existing workflows. A 2026-07-06 token-cost and agent-role survey (§4 KI-10/KI-11, evidence in `00-project/research/workflow-token-and-roles-survey-260706-0120-gpt55.md`) adds two further levers: an instruction authoring standard that removes the measured 30–55% per-file boilerplate, and a canonical agent-role registry that turns today's 38 ad-hoc role names into contracted specialisations.
+Eleven key improvements are proposed (§4), phased P0→P3 (§6). P0 alone (frontmatter + validation + generated router) removes the majority of drift risk with zero behavior change to existing workflows. A 2026-07-06 token-cost and agent-role survey (§4 KI-10/KI-11, evidence in `Drag-Free-v2/workflow-token-and-roles-survey-260706-0120-gpt55.md`) adds two further levers: an instruction authoring standard that removes the measured 30–55% per-file boilerplate, and a canonical agent-role registry that turns today's 38 ad-hoc role names into contracted specialisations.
 
 ---
 
@@ -373,5 +373,5 @@ Per core/roles/ contracts; session cap and reconciliation per core/parallel-agen
 - **2026-09-25 (status):** Added the current-state banner and **Extracted →** tags for the KI-2/KI-10 principles reused by the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md). Refreshed the KI-10 template line range. No KI was reviewed or superseded.
 
 - **2026-07-06 (initial):** Draft proposal, KI-1–KI-9 (claude-fable-5 + codex/gpt-5.5 survey).
-- **2026-07-06 (token/roles pass):** Added W11 (reference-then-restate) and W12 (ad-hoc agent roles) with measured evidence; added KI-10 (instruction authoring standard) and KI-11 (agent role registry); wired both into Phase 2/3 tasks, success criteria, and risks. Evidence: `00-project/research/workflow-token-and-roles-survey-260706-0120-gpt55.md` (codex/gpt-5.5 low survey + direct verification by claude-fable-5).
+- **2026-07-06 (token/roles pass):** Added W11 (reference-then-restate) and W12 (ad-hoc agent roles) with measured evidence; added KI-10 (instruction authoring standard) and KI-11 (agent role registry); wired both into Phase 2/3 tasks, success criteria, and risks. Evidence: `Drag-Free-v2/workflow-token-and-roles-survey-260706-0120-gpt55.md` (codex/gpt-5.5 low survey + direct verification by claude-fable-5).
 - **2026-07-06 (engineering-quality pass):** Companion proposal filed (same directory): `2026-07-06-engineering-quality-and-lifecycle-proposal.md` — continues numbering with W13–W19 / KI-12–KI-18 covering the engineering-substance lens (architecture & design, code-design/error-handling/observability/security standards, greenfield idea→MVP lane, generic deployment, tech-debt ledger). It consumes this proposal's KI-2 partials, KI-8 ledger, KI-10 authoring standard, and KI-11 registry; shared-file edit sequencing is called out in its §7. Evidence: `workflow-engineering-quality-survey-260706-0137-gpt55.md`.

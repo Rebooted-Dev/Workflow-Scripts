@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-27 | docs | Verify v1.82-fixes and Drag-Free-v2 plan states | docs/2026-09-27-docs-v182-dragfree-verify-reconcile.md | Reconcile-only pass; blocked states verified accurate; roadmap P0 ticks; stale survey paths fixed |
 | 2026-09-27 | plan | Quality-plan outstanding closeout | plan/2026-09-27-plan-quality-plan-closeout.md | Full completion via 03-mark-completed; all four phases verified; filed under plans-completed/implementation/ |
 | 2026-09-27 | docs | Clarify historical phase reports in archived quality plan | docs/2026-09-27-docs-quality-plan-historical-phase-reports.md | Post-verification addendum; link gate green on HEAD |
 | 2026-09-27 | plan | Archive Plan 01 and planning/build quality plan | plan/2026-09-27-plan-archive-plan01-and-quality-plan.md | Full completion closeout; E3 hook; debt in TODO |

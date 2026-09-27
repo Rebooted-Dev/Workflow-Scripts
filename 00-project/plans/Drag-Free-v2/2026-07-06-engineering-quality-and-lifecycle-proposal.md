@@ -1,6 +1,6 @@
 # 2026-07-06 — Workflow-Scripts v2: Engineering Quality & Lifecycle Proposal (companion to the Full-Autonomy Redesign)
 
-**Status:** DRAFT - Ready for Review ✅ (still unreviewed; see banner)
+**Status:** DRAFT - Ready for Review ✅ (a scoped KI-disposition review is recorded 2026-09-26 in the Plan Review Addendum; the full plan-review pass, finalisation, and remaining-KI decision are still pending — see banner)
 **Author:** claude-fable-5 (with codex/gpt-5.5 low survey pass)
 **Rubric:** `00-Meta-Workflow/00-meta/severity-priority-rubric.md`
 **Evidence base:** direct file review (this session) + delegated survey filed at `workflow-engineering-quality-survey-260706-0137-gpt55.md` (same directory)
