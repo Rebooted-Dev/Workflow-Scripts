@@ -5,7 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
-| 2026-09-26 | fixed | Restore v1.82 source-integrity links and navigation | fixed/2026-09-26-fixed-v182-source-integrity-links.md | Active links and staged meta-log pass; approved local commit awaits parent restage/revalidation; two preserved protocol hard-break spaces; no CI/push |
+| 2026-09-27 | docs | Refresh quality plan after Plan 01 link repair | docs/2026-09-27-docs-planning-build-quality-post-plan01-reconcile.md | Current state and Success Criteria updated post `9714c15`; remote CI still pending |
+| 2026-09-26 | fixed | Restore v1.82 source-integrity links and navigation | fixed/2026-09-26-fixed-v182-source-integrity-links.md | Committed `9714c15`; active links pass locally; remote CI pending push |
 | 2026-09-26 | docs | Reconcile planning/build quality plan — Reconcile only | docs/2026-09-26-docs-planning-build-quality-reconcile-only.md | Parent-confirmed 32-task audit and TODO reconciliation; active plan retained, links/CI and host pilot remain open |
 | 2026-09-26 | fixed | Restore Plan 01 link targets in TODO handoff | fixed/2026-09-26-fixed-plan01-link-handoff-tracker.md | Parent-restored nested mapping preserves all four intended targets; source links remain Plan 01-owned and broken |
 | 2026-09-26 | fixed | Preserve verified-task and open-debt TODO reconciliation | fixed/2026-09-26-fixed-debt-todo-reconciliation.md | Gate 3 workflow correction logged; trigger prompts reassessment, verified task reconciliation retained; Phase C commit `9aad15c` |

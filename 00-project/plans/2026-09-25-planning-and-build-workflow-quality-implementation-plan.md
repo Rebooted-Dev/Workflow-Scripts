@@ -1,7 +1,7 @@
 # Implementation Plan: Planning and Code-Build Workflow Quality
 
 **Created:** 2026-09-25 15:10
-**Status:** Active — Not Eligible (Reconcile only; Plan 01 links and separately authorized remote CI remain pending)
+**Status:** Active — Not Eligible (Reconcile only; separately authorized remote CI remains pending)
 **Tier:** T2
 **Research:** [`planning-and-build-workflow-quality-review-260925-1347-claude.md`](../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) (researched at `1ab9fcb`, inferred from the 13:47 report time vs the 13:39 commit; re-verified at the same commit on 2026-09-25, see [Research summary](#research-summary-and-re-verification)). The source documents are annotated: the research carries in-place corrections and a `Plan:` line per finding, and the Drag-Free-v2 and v1.82-fixes documents carry extraction or cross-reference notes.
 **Workflow:** [`00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md). Pre-execution review by a different model is incorporated below; execute locally through [`03-execute-and-confirm.md`](../../02-code-build/03-execute-and-confirm.md).
@@ -245,7 +245,7 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 - Parent-reported supporting evidence: `00-research-and-plan.md` is 273 lines (below 333); the named T1 representative fixture is 14 lines; the B2 active-site grep excludes intentional negative fixtures and the site guard passes.
 - Read-only retro-check: `lib/style-loader.ts:444,506` are mandates; `lib/skill-loader.ts:197` is a fallback. `prompts/catalog/design-templates.txt:23,35,53,77,113,125,137,149` and `btn-styles.txt` hits are user prompt examples, not universal mandates. No host files were changed; the Flash-UI pilot remains deferred to its owner/TODO.
 - Active-link baseline remains exactly the four Plan 01 failures at lines 7, 95, 96, and 97; no new failures. Remote CI has not run and is pending authorized push; no CI success is claimed.
-- Baseline references: Phase 0 SHA `0d0dce0`; Phase A local commit SHA `79d6841d708938e126cbc28c207fd1cedbef6ba5`. No Phase B commit was made.
+- Baseline references: Phase 0 SHA `0d0dce0`; Phase A local commit SHA `79d6841d708938e126cbc28c207fd1cedbef6ba5`. *(Superseded narrative: “No Phase B commit was made” — Phase B landed as `ac53e01`.)*
 
 ### Phase C: Engineering standards (P2)
 
@@ -314,9 +314,9 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 2. [✅] Re-run the July survey's 8 questions (`Drag-Free-v2/workflow-engineering-quality-survey-260706-0137-gpt55.md`) against the new tree. The evidence-only result is filed at [`research/engineering-quality-survey-rerun-260926-0047-gpt6sol.md`](../research/engineering-quality-survey-rerun-260926-0047-gpt6sol.md): Q1 PARTIAL+; Q2/Q3 COVERED (documented standard); Q4–Q6 PARTIAL; Q7/Q8 PARTIAL+. No behavioral-compliance, host-pilot, or CI claim is made. (P3, Effort: S)
     - Files: `00-project/research/…`
     - Verify: the report exists with a before/after table, every change cites a file:line, and each COVERED/PARTIAL rating is supported by evidence rather than the hypothesis (cost/prereqs: none)
-3. [ ] Optional hook follow-up — **deferred**; leave `scripts/hooks/pre-commit` unchanged. After Plan 01 repairs the four known broken links, a separately authorized follow-up may add the completion-chain and planning-build validators plus `check-plan.sh` for staged plans declaring a Tier. (P3, Effort: S)
+3. [ ] Optional hook follow-up — **deferred**; leave [`scripts/hooks/pre-commit`](../../../scripts/hooks/pre-commit) unchanged (today it only runs `check-meta-logs.sh --staged`; enable per clone with `git config core.hooksPath scripts/hooks`). Plan 01 link repair is committed (`9714c15`); a separately authorized follow-up may add completion-chain, planning-build, and tiered `check-plan.sh` coverage for staged plans. (P3, Effort: S)
     - Files: `scripts/hooks/pre-commit`
-    - Verify: if authorized after the trigger, a staged fixture plan that lacks `Verify:` blocks the commit, staging this plan does not, and the link check is not added before Plan 01 repairs the baseline failures (cost/prereqs: Plan 01 link repairs and separate authorization)
+    - Verify: if authorized after a separate follow-up, a staged fixture plan that lacks `Verify:` blocks the commit, staging this plan does not, and validators are not expanded in the hook before that authorization (cost/prereqs: separate hook authorization)
 4. [✅] Parent independently confirmed the plan and ran `04-documentation/03-mark-completed.md` in **Reconcile only** (`Not Eligible`) mode. Verified tasks are reconciled; the plan remains Active, with no completion marker or archive. (P3, Effort: S)
     - Files: this plan
     - Verify: parent reports the independent confirmation and Reconcile-only gate outcome; plan-level completion and archival are omitted (cost/prereqs: parent validation; passed)
@@ -346,7 +346,7 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 - **Behavioral evidence** that agents follow the new rules (structure ≠ behavior) — the v1.82 Plan 03 harness — trigger: harness concept test passes — S2.
 - **Superseded-plan lint** (a superseded plan still listed as active in TODO) — `check-plan.sh` — trigger: first observed stale-TODO case — S3.
-- **Optional pre-commit validator expansion** — `scripts/hooks/pre-commit` — trigger: after Plan 01 repairs the four known active-link failures and a separate follow-up is authorized — S3.
+- **Optional pre-commit validator expansion** — [`scripts/hooks/pre-commit`](../../../scripts/hooks/pre-commit) (meta-log only; enable via `git config core.hooksPath scripts/hooks`) — trigger: separate follow-up authorization after Plan 01 link repair commit `9714c15` — S3.
 - **`research/` filename convention mixing** (M7 bullet 5) — `00-project/research/` — trigger: next meta-hygiene plan — S3.
 - **Standalone ADRs and `<metadata-root>/decisions/`** (July KI-12) — `naming-conventions.md` — trigger: first T3 plan or first one-way decision — S3.
 - **Host-project verify gates** (research E6) — `00-project-setup/` — trigger: the next project setup — S3.
@@ -365,7 +365,7 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 ## Success Criteria
 
-- [ ] All local validators pass except the active-link checker, whose nonzero result reports only the still-unfixed subset of the four Plan 01 baseline links; the new `check-plan-selftest.sh` and `check-planning-build-policy.sh` pass locally. Staged meta-log validation passes. Remote CI on `v1.82` is pending until Plan 01 P1.2 repairs those links and a push is separately authorized; no remote CI success is claimed before then.
+- [✅] All applicable local validators pass on `HEAD` (including `check-active-markdown-links.sh` after Plan 01 commit `9714c15`); `check-plan-selftest.sh` and `check-planning-build-policy.sh` pass locally. Remote CI on `v1.82` remains pending until push completes and a Validation workflow run is recorded; no remote CI success is claimed before then.
 - [✅] The E2 loop and the M3 grep are empty; the 7 phase-order sites agree.
 - [✅] This plan passes `check-plan.sh`; the retro-check lists `lib/style-loader.ts:444, 506` and `lib/skill-loader.ts` and classifies the catalog hits.
 - [✅] The Flash-UI forward pilot is recorded as deferred to its owner in TODO; no host-project changes are made by this plan.
@@ -375,14 +375,14 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 ## Current state
 
-**2026-09-26 01:29 +08 — Not Eligible; terminal gate ran in Reconcile only.**
+**2026-09-27 — Not Eligible; terminal gate ran in Reconcile only (prior snapshot 2026-09-26 01:29 +08).**
 
-- **P1 — Plan 01 links:** `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md:7,95,96,97` remain broken; restored TODO targets are a handoff only, and Plan 01 owns recovery/repair.
-- **P1 — Remote CI:** not run; requires Plan 01 link repairs and separate push authorization.
+- **P1 — Plan 01 links:** repaired on `9714c15` (`00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md:7,95,96,97` and recovered protocol).
+- **P1 — Remote CI:** not run on remote; push and Validation workflow recording remain pending.
 - **P2 — Flash-UI pilot:** remains deferred to the host owner; no host-app changes were made.
 - **P2/S2 — Behavioral evidence:** v1.82 Plan 03 harness; reassess when its concept test passes.
 - **P3/S3 — Superseded-plan lint:** `scripts/validation/check-plan.sh`; reassess at the first observed stale-TODO case.
-- **P3/S3 — Optional pre-commit validators:** `scripts/hooks/pre-commit`; consider only after Plan 01 repairs the links and a separate follow-up is authorized.
+- **P3/S3 — Optional pre-commit validators:** [`scripts/hooks/pre-commit`](../../../scripts/hooks/pre-commit) (meta-log only today); expansion deferred until a separate follow-up is authorized.
 - **P3/S3 — Research filename convention:** `00-project/research/`; reassess in the next meta-hygiene plan.
 - **P3/S3 — ADRs/decisions:** `<metadata-root>/decisions/` and `00-Meta-Workflow/00-meta/naming-conventions.md`; reassess at the first T3 plan or one-way decision (July KI-12).
 - **P3/S3 — Host-project verify gates:** `00-project-setup/`; reassess at the next project setup.
@@ -411,14 +411,14 @@ Parent-reported PASS:
 - Shell syntax checks (PASS; exact argv not supplied).
 - Oracle Gate 5: PASS.
 
-Parent-reported NONZERO, not a pass: `bash scripts/validation/check-active-markdown-links.sh` reports exactly four pre-existing Plan 01 references in `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md:7,95,96,97`. No other link failures are reported; Plan 01 owns these repairs.
+**2026-09-27 reconcile (post–Plan 01 `9714c15`):** `bash scripts/validation/check-active-markdown-links.sh` → exit 0 on `HEAD`. Prior NONZERO baseline (four Plan 01 references at `:7,95,96,97`) is resolved by that commit.
 
-**Smoke and environment:** The parent statically smoke-checked the CLI validators listed above. No runtime or host-app smoke is applicable to this documentation/workflow-plan record reconciliation; the Flash-UI pilot remains deferred and no host project was changed. Remote CI was not run and no push is authorized.
+**Smoke and environment:** The parent statically smoke-checked the CLI validators listed above. No runtime or host-app smoke is applicable to this documentation/workflow-plan record reconciliation; the Flash-UI pilot remains deferred and no host project was changed. Remote CI on `origin/v1.82` was not run at the 2026-09-26 reconcile; push and workflow recording are tracked separately.
 
 ### Corrected misreports
 
 - **C6 log omission:** Phase C initially lacked the required fixed/troubleshooting pair for the Gate 3 workflow defect. Both entries and index rows are now staged, and parent `check-meta-logs.sh --staged` passed.
-- **A3 tracker mapping:** The Phase E TODO summary dropped A3's four explicit target mappings; the parent restored the nested handoff in `00-project/plans/TODO.md:20`. The source links themselves remain broken and Plan 01-owned.
+- **A3 tracker mapping:** The Phase E TODO summary dropped A3's four explicit target mappings; the parent restored the nested handoff in `00-project/plans/TODO.md:20`. Plan 01 repaired those targets on `9714c15`.
 
 ### Task-to-verifier coverage matrix (32 tasks)
 
