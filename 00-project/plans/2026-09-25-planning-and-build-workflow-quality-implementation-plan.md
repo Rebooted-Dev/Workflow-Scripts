@@ -365,7 +365,7 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 ## Success Criteria
 
-- [✅] All applicable local validators pass on `HEAD` (including `check-active-markdown-links.sh` after Plan 01 commit `9714c15`); `check-plan-selftest.sh` and `check-planning-build-policy.sh` pass locally. Remote CI on `v1.82` remains pending until push completes and a Validation workflow run is recorded; no remote CI success is claimed before then.
+- [✅] All applicable local validators pass on `HEAD` (including `check-active-markdown-links.sh` after Plan 01 commit `9714c15`); `check-plan-selftest.sh` and `check-planning-build-policy.sh` pass locally. Remote Validation on `v1.82` succeeded at `33467b1` (GitHub Actions run `36314447856`).
 - [✅] The E2 loop and the M3 grep are empty; the 7 phase-order sites agree.
 - [✅] This plan passes `check-plan.sh`; the retro-check lists `lib/style-loader.ts:444, 506` and `lib/skill-loader.ts` and classifies the catalog hits.
 - [✅] The Flash-UI forward pilot is recorded as deferred to its owner in TODO; no host-project changes are made by this plan.
@@ -378,7 +378,7 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 **2026-09-27 — Not Eligible; terminal gate ran in Reconcile only (prior snapshot 2026-09-26 01:29 +08).**
 
 - **P1 — Plan 01 links:** repaired on `9714c15` (`00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md:7,95,96,97` and recovered protocol).
-- **P1 — Remote CI:** push `376284d` triggered Validation run `36314390408` (failed: bad `pre-commit` relative links in this plan); repair and re-push pending.
+- **P1 — Remote CI:** Validation succeeded on `33467b1` (run `36314447856`) after link fix `33467b1`; prior run `36314390408` on `376284d` failed on bad hook paths.
 - **P2 — Flash-UI pilot:** remains deferred to the host owner; no host-app changes were made.
 - **P2/S2 — Behavioral evidence:** v1.82 Plan 03 harness; reassess when its concept test passes.
 - **P3/S3 — Superseded-plan lint:** `scripts/validation/check-plan.sh`; reassess at the first observed stale-TODO case.
@@ -413,7 +413,7 @@ Parent-reported PASS:
 
 **2026-09-27 reconcile (post–Plan 01 `9714c15`):** `bash scripts/validation/check-active-markdown-links.sh` → exit 0 on `HEAD`. Prior NONZERO baseline (four Plan 01 references at `:7,95,96,97`) is resolved by that commit.
 
-**2026-09-27 remote Validation (push `376284d`):** GitHub Actions run `36314390408` — **failure** on link check (three `../../../scripts/hooks/pre-commit` targets escaped repo root in this plan). Corrected to `../../scripts/hooks/pre-commit`; re-run after fix push.
+**2026-09-27 remote Validation:** run `36314390408` on `376284d` — **failure** (bad `../../../scripts/hooks/pre-commit` links). Fixed on `33467b1`; run `36314447856` — **success** (https://github.com/Rebooted-Dev/Workflow-Scripts/actions/runs/36314447856).
 
 **Smoke and environment:** The parent statically smoke-checked the CLI validators listed above. No runtime or host-app smoke is applicable to this documentation/workflow-plan record reconciliation; the Flash-UI pilot remains deferred and no host project was changed.
 
