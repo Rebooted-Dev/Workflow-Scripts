@@ -1,7 +1,7 @@
 # Implementation Plan: Planning and Code-Build Workflow Quality
 
 **Created:** 2026-09-25 15:10
-**Status:** Active — Not Eligible (Reconcile only; separately authorized remote CI remains pending)
+**Status:** Active — Not Eligible (Reconcile only; deferred E3 hook expansion and Flash-UI pilot remain open)
 **Tier:** T2
 **Research:** [`planning-and-build-workflow-quality-review-260925-1347-claude.md`](../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) (researched at `1ab9fcb`, inferred from the 13:47 report time vs the 13:39 commit; re-verified at the same commit on 2026-09-25, see [Research summary](#research-summary-and-re-verification)). The source documents are annotated: the research carries in-place corrections and a `Plan:` line per finding, and the Drag-Free-v2 and v1.82-fixes documents carry extraction or cross-reference notes.
 **Workflow:** [`00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md). Pre-execution review by a different model is incorporated below; execute locally through [`03-execute-and-confirm.md`](../../02-code-build/03-execute-and-confirm.md).

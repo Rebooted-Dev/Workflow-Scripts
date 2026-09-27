@@ -5,8 +5,10 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-27 | plan | Planning and Build Workflow Quality Verification | ../plans-completed/review/2026-09-27-planning-and-build-workflow-quality-verification.md | Verified Complete; Plan 01 + remote Validation recorded; E3 deferred |
+| 2026-09-27 | docs | Archive planning/build quality verification plan | docs/2026-09-27-docs-archive-quality-plan-verification.md | Full completion via 03-mark-completed; quality plan stays Not Eligible |
 | 2026-09-27 | fixed | Correct pre-commit hook links in quality plan | fixed/2026-09-27-fixed-quality-plan-pre-commit-link-paths.md | Validation run `36314447856` green on `33467b1` |
-| 2026-09-27 | docs | Refresh quality plan after Plan 01 link repair | docs/2026-09-27-docs-planning-build-quality-post-plan01-reconcile.md | Current state and Success Criteria updated post `9714c15`; remote CI still pending |
+| 2026-09-27 | docs | Refresh quality plan after Plan 01 link repair | docs/2026-09-27-docs-planning-build-quality-post-plan01-reconcile.md | Current state and Success Criteria updated post `9714c15`; Validation later green |
 | 2026-09-26 | fixed | Restore v1.82 source-integrity links and navigation | fixed/2026-09-26-fixed-v182-source-integrity-links.md | Committed `9714c15`; active links pass locally; remote CI pending push |
 | 2026-09-26 | docs | Reconcile planning/build quality plan — Reconcile only | docs/2026-09-26-docs-planning-build-quality-reconcile-only.md | Parent-confirmed 32-task audit and TODO reconciliation; active plan retained, links/CI and host pilot remain open |
 | 2026-09-26 | fixed | Restore Plan 01 link targets in TODO handoff | fixed/2026-09-26-fixed-plan01-link-handoff-tracker.md | Parent-restored nested mapping preserves all four intended targets; source links remain Plan 01-owned and broken |

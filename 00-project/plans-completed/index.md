@@ -4,6 +4,7 @@ Chronological index of filed plans under **`plans-completed/`**. **Newest first.
 
 | Date | Category | Title | File | Notes |
 |------|----------|-------|------|-------|
+| 2026-09-27 | review | Planning and Build Workflow Quality Verification | review/2026-09-27-planning-and-build-workflow-quality-verification.md | Verified Complete; Plan 01 `9714c15`; Validation green `36314447856`/`36314487013`; E3 expansion deferred; quality plan stays Active — Not Eligible |
 | 2026-09-22 | review | Validate Completion-Chain Current State | review/2026-09-22-validate-completion-chain-current-state.md | Verified Complete; parent accepted validator exit 0 and five static contract scenarios; no workflow/validator changes; prior remediation was not re-executed |
 | 2026-09-22 | tooling | v1.72 Workflow Improvements (nine-plan set) | tooling/v1.72-Improvements/ | Verified Complete; all nine plans confirmed implemented on `v1.81` (`846caef` + 2026-09-22 residual batch); link/completion-chain validators passed; full directory filed from Core-Learning reference copy |
 | 2026-09-22 | migration | Carry Update-AI-Tools Hygiene-Plan Commits to v1.81 | migration/2026-09-22-carry-hygiene-plan-commits-to-v1-81.md | Verified Complete; carried `f5fd73a`/`694add5` to `v1.81` as `00fa092`/`feaaffd`; validators passed and push confirmed |
