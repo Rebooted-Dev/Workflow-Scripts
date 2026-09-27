@@ -4,6 +4,7 @@ Chronological index of filed plans under **`plans-completed/`**. **Newest first.
 
 | Date | Category | Title | File | Notes |
 |------|----------|-------|------|-------|
+| 2026-09-27 | implementation | Quality-Plan Outstanding Closeout | implementation/2026-09-27-quality-plan-outstanding-closeout.md | Verified Complete; E3 hook expansion; agent-flex review historical; Plan 01 + quality plan archives verified; Validation green on `d760259` |
 | 2026-09-27 | implementation | Planning and Build Workflow Quality Implementation | implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md | Verified Complete; E3 pre-commit expansion; Flash-UI pilot deferred; debt in TODO |
 | 2026-09-27 | review | Reconcile v1.82 Research and Source Integrity (Plan 01) | review/2026-09-22-reconcile-research-and-source-integrity.md | Verified Complete on commit `9714c15`; protocol + active links |
 | 2026-09-27 | review | Planning and Build Workflow Quality Verification | review/2026-09-27-planning-and-build-workflow-quality-verification.md | Verified Complete; Plan 01 `9714c15`; quality plan archived `8761af4` |
