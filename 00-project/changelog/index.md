@@ -5,7 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
-| 2026-09-27 | docs | Clarify historical phase reports in archived quality plan | docs/2026-09-27-docs-quality-plan-historical-phase-reports.md | Post-verification addendum; live link gate green |
+| 2026-09-27 | docs | Clarify historical phase reports in archived quality plan | docs/2026-09-27-docs-quality-plan-historical-phase-reports.md | Post-verification addendum; link gate green on HEAD |
 | 2026-09-27 | plan | Archive Plan 01 and planning/build quality plan | plan/2026-09-27-plan-archive-plan01-and-quality-plan.md | Full completion closeout; E3 hook; debt in TODO |
 | 2026-09-27 | changed | Expand pre-commit hook validators (E3) | changed/2026-09-27-changed-pre-commit-validator-expansion.md | Meta-logs + policy + tiered check-plan |
 | 2026-09-27 | docs | Mark agent-flexibility review historical | docs/2026-09-27-docs-agent-flexibility-review-historical.md | January 2026 path snapshot preserved |
