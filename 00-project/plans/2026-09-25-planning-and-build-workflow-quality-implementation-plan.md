@@ -30,7 +30,7 @@ The research findings document is the linked review (§1–§10). It is not rest
 | Research claim | Result | Evidence (observed) |
 |---|---|---|
 | M1: 04 routes `Not Eligible` without Reconcile only | Holds | `grep -n 'Not Eligible\|Reconcile only' 02-code-build/04-…md` → `:35`, `:48` only; E2 loop prints `WOULD FAIL 02-code-build/04-review-finalise-commit-execute.md` |
-| M2: CI ignores active line; 4 broken links | Holds, **with a correction** | `validation.yml` branches `main`, `v1.8`; `check-active-markdown-links.sh` exit 1, same 4 links. **Correction:** "add one `../`" fixes only links 3–4. Links 1–2 target `2026-09-10-astra-instruction-evaluation-protocol.md`, which exists nowhere in the worktree (`ls 00-project/research/ research/v1.82-fixes/`). Recovering it is [v1.82 Plan 01](../review/2026-09-22-reconcile-research-and-source-integrity.md) P0.4/P1.2 |
+| M2: CI ignores active line; 4 broken links | Holds, **with a correction** | `validation.yml` branches `main`, `v1.8`; `check-active-markdown-links.sh` exit 1, same 4 links. **Correction:** "add one `../`" fixes only links 3–4. Links 1–2 target `2026-09-10-astra-instruction-evaluation-protocol.md`, which exists nowhere in the worktree (`ls 00-project/research/ research/v1.82-fixes/`). Recovering it is [v1.82 Plan 01](v1.82-fixes/01-reconcile-research-and-source-integrity.md) P0.4/P1.2 |
 | M3: unsized rosters | Holds | `00-research-and-plan.md:71, 329`; `01-plan-review.md:17, 29, 102`; `02-finalise-plan.md:23, 34, 44, 113`; `01-execution.md:66, 79`; `02-confirm-execution.md:74` |
 | M4: path drift | Holds | `01-execution.md:13, 20, 45, 112`; `03-execute-and-confirm.md:11, 48` |
 | Case study residual | Holds | Flash-UI `lib/style-loader.ts:444, 506` still emit "layered box-shadows (3+ layers)… spring-physics" (working tree and `HEAD`) |
@@ -414,20 +414,16 @@ Parent-reported PASS:
 
 **2026-09-27 remote Validation:** run `36314390408` on `376284d` — **failure** (bad `../../../scripts/hooks/pre-commit` links). Fixed on `33467b1`; run `36314447856` — **success** (https://github.com/Rebooted-Dev/Workflow-Scripts/actions/runs/36314447856).
 
-**2026-09-27 closeout:** commit `8761af4` (E3 hook + plan archives); Validation run `36320582680` — **success**.
-
-**Historical phase reports:** Phase A–E inline reports dated 2026-09-26 may still mention four broken Plan 01 links, a nonzero link checker, pending remote CI, or deferred E3. Treat those as **time-stamped execution notes**. For link integrity, CI, E3, and completion status, the bullets in this addendum and **Current state** supersede them.
-
 **Smoke and environment:** The parent statically smoke-checked the CLI validators listed above. No runtime or host-app smoke is applicable to this documentation/workflow-plan record reconciliation; the Flash-UI pilot remains deferred and no host project was changed.
 
 ### Corrected misreports
 
 - **C6 log omission:** Phase C initially lacked the required fixed/troubleshooting pair for the Gate 3 workflow defect. Both entries and index rows are now staged, and parent `check-meta-logs.sh --staged` passed.
-- **A3 tracker mapping:** Plan 01 repaired the four Astra-plan link targets on `9714c15`; handoff detail is recorded in changelog/troubleshooting for that commit, not a standing TODO row.
+- **A3 tracker mapping:** The Phase E TODO summary dropped A3's four explicit target mappings; the parent restored the nested handoff in `00-project/plans/TODO.md:20`. Plan 01 repaired those targets on `9714c15`.
 
 ### Task-to-verifier coverage matrix (32 tasks)
 
-**Citation key:** `plan:N` refers to this archived file (`00-project/plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md:N`); Phase report references are within that file.
+**Citation key:** `plan:N` refers to `00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md:N`; Phase report references are within that file.
 
 | Task | Verifier / evidence | Result |
 |---|---|---|
@@ -436,7 +432,7 @@ Parent-reported PASS:
 | 0.3 | Parent records audit — local commit authorization and no-push boundary, plan:174-178 | ✅ |
 | A1 | Parent — M1 wording and completion-chain invariant, plan:186-188, Phase A report:208 | ✅ |
 | A2 | Parent — local v1.8* push/PR trigger inspection; remote run explicitly deferred, plan:189-191, report:208 | ✅ |
-| A3 | Parent — Plan 01 handoff targets; repairs on `9714c15`, plan:192-194 | ✅ |
+| A3 | Parent — restored exact four-target Plan 01 TODO handoff, `00-project/plans/TODO.md:20`; source repair remains flagged to Plan 01, plan:192-194 | ✅ |
 | A4 | Parent — agent-sizing edits and negative fixture/policy guard, plan:195-197, Phase A report:208 | ✅ |
 | A5 | Parent — metadata-root path migration and completion-chain guard, plan:198-200, Phase A report:208 | ✅ |
 | A6 | Parent — M7 terminology/rubric/review-archive updates, plan:201-203, Phase A report:208 | ✅ |
