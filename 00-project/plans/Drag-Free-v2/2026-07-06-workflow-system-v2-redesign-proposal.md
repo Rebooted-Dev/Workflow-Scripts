@@ -9,7 +9,7 @@
 **Scope:** The Workflow-Scripts system itself (`<PROJECT_META>/` = `00-project/`). No consumer-project code is touched.
 **Related active plans (this proposal builds on, and must not duplicate, them):**
 - `2026-07-03-multi-model-plan-review-pass-system-implementation-plan.md` (adversarial multi-model fan-out)
-- `2026-07-04-parallel-agent-harness-concept-test-implementation-plan.md` (harness mechanics test)
+- [2026-07-04 parallel-agent harness concept-test implementation plan](../../research/v1.82-fixes/2026-07-04-parallel-agent-harness-concept-test-implementation-plan.md) (harness mechanics test)
 - `deep-review-plans/2026-07-03-deep-review-00-overview.md` (four-lens deep review, evidence tiers)
 - `2026-07-06-engineering-quality-and-lifecycle-proposal.md` (companion, same directory: engineering-substance gaps W13–W19 and improvements KI-12–KI-18 — architecture/design workflow, `core/standards/` partials, greenfield MVP lane, generic deploy workflow, tech-debt ledger; builds on this proposal's KI-1/2/8/10/11 mechanisms)
 

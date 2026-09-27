@@ -4,7 +4,7 @@
 **Status:** Active — corpus/harness not yet built; baseline/revised runs pending
 **Owner repository:** Workflow-Scripts (protocol and fixtures) with a scratch consumer workspace
 **Split from:** `plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md` (Phase 5), by explicit developer decision on 2026-09-10
-**Protocol:** [`../research/2026-09-10-astra-instruction-evaluation-protocol.md`](../research/2026-09-10-astra-instruction-evaluation-protocol.md)
+**Protocol:** [`./2026-09-10-astra-instruction-evaluation-protocol.md`](./2026-09-10-astra-instruction-evaluation-protocol.md)
 
 ## Goal
 
@@ -92,6 +92,6 @@ Per the protocol: acceptance success, wrong path/repository attempts, unnecessar
 
 ## Related documents
 
-- Protocol: [`../research/2026-09-10-astra-instruction-evaluation-protocol.md`](../research/2026-09-10-astra-instruction-evaluation-protocol.md)
-- Archived source plan: [`../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md`](../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md)
-- Sizing/delegation policy: [`../../00-Meta-Workflow/00-meta/workflow-applicability.md`](../../00-Meta-Workflow/00-meta/workflow-applicability.md)
+- Protocol: [`./2026-09-10-astra-instruction-evaluation-protocol.md`](./2026-09-10-astra-instruction-evaluation-protocol.md)
+- Archived source plan: [`../../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md`](../../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md)
+- Sizing/delegation policy: [`../../../00-Meta-Workflow/00-meta/workflow-applicability.md`](../../../00-Meta-Workflow/00-meta/workflow-applicability.md)

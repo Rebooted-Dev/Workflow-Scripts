@@ -5,6 +5,7 @@ Chronological index of troubleshooting entries.
 
 | Date | Category | Title | File | Status |
 |------|----------|-------|------|--------|
+| 2026-09-26 | workflow | v1.82 source-integrity links and navigation were stale | workflow/2026-09-26-workflow-v182-source-integrity-links.md | corrected locally; approved commit pending parent restage/revalidation; CI pending |
 | 2026-09-26 | workflow | Plan 01 link handoff targets lost from TODO | workflow/2026-09-26-workflow-plan01-link-handoff-lost.md | resolved |
 | 2026-09-26 | workflow | Debt trigger and verified-task TODO reconciliation | workflow/2026-09-26-workflow-debt-todo-reconciliation.md | resolved |
 | 2026-09-25 | workflow | Not Eligible outcome bypassed reconciliation | workflow/2026-09-25-workflow-not-eligible-routing.md | resolved |

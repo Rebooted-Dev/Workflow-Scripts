@@ -2,7 +2,7 @@
 
 # Parallel Agent Harness Concept Test - Implementation Plan
 
-**Status:** Active (ready to execute)
+**Status:** Superseded — see the [finalised implementation plan](./2026-07-04-parallel-agent-harness-concept-test-implementation-plan.md); this draft and its inline review addendum are retained as historical source.
 **Parent plan:** `00-project/plans/2026-07-03-multi-model-plan-review-pass-system-implementation-plan.md`
 **Purpose:** Prove that an orchestrator can launch parallel sub-agent passes through multiple harnesses, collect one artifact per pass, preserve protected files, and produce a manifest plus synthesis report.
 **Project metadata root:** `00-project/` only because this plan tests changes to the Workflow-Scripts system itself. For consumer-project tests, the same layout belongs under that project's root-level `project/` directory.
