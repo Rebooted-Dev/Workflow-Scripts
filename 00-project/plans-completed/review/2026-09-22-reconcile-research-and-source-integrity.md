@@ -2,11 +2,11 @@
 
 # Reconcile v1.82-Fixes Research and Source Integrity
 
-**Status:** Active — first executable lane; source recovery and reference repair pending
+**Status:** Verified Complete — parent accepted evidence on commit `9714c15` (2026-09-26); protocol filed and active references repaired
 
 **Summary:** Safely reconcile the externally reorganized v1.82-fixes research set into a seven-source inventory. Recover the missing Astra protocol from tracked history, compare content and provenance before filing it in the new source location, map old paths to new paths, repair active inbound and outbound references, and preserve review addenda and supersession relationships. Commit only after validation and authorization.
 
-> **Cross-reference (2026-09-25):** the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) (Phase A task 3) hands these known broken outbound links to P1 task 2 of this plan. Targets: `:96` → `../../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md`; `:97` → `../../../00-Meta-Workflow/00-meta/workflow-applicability.md`; `:7` and `:95` → the recovered protocol's filed location (the target is absent today). That plan also reused this plan's rule of classifying every search hit (for its Change Surface). Advisory input only; this plan's tasks and ownership are unchanged.
+> **Cross-reference (2026-09-25):** the [planning and build workflow quality plan](../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) (Phase A task 3) handed four outbound links in the Astra plan to P1 task 2 here. Repaired on `9714c15` (`:7`, `:95` → `./2026-09-10-astra-instruction-evaluation-protocol.md`; `:96` → remediation plan; `:97` → `workflow-applicability.md`). Advisory input only; this plan's tasks and ownership were unchanged.
 
 ## Source and review provenance
 
@@ -19,42 +19,42 @@
 
 ### P0 — preserve the external work and recover authoritative content
 
-- [ ] 1. **(Small)** Record the repository root, branch, `HEAD`, upstream, and complete dirty-state inventory from the Workflow-Scripts repository. The observed baseline is branch `v1.82`, `HEAD` `6a25c36`, with deleted tracked legacy paths and an untracked `research/v1.82-fixes/` set; re-capture these facts at execution time.
-- [ ] 2. **(Small)** Mark all pre-existing deletions, untracked reorganization files, and unrelated dirty paths as protected. Do not reset, clean, checkout, switch branches, rewrite history, or modify consumer repositories.
-- [ ] 3. **(Small)** Inventory exactly seven source records: the six current source files plus the missing Astra protocol recovered from tracked history. Record old path, current/proposed path, source status, author/date metadata, and review/supersession relationship.
-- [ ] 4. **(Medium)** Recover the protocol by inspecting tracked history, beginning with the commit that last recorded it (currently discoverable as `58689d8`), using `git show <commit>:<path>` or equivalent read-only history inspection. Compare the recovered bytes, headings, links, pin values, and provenance with the Astra plan and any historical protocol record before writing a new copy.
+- [✅] 1. **(Small)** Record the repository root, branch, `HEAD`, upstream, and complete dirty-state inventory from the Workflow-Scripts repository. The observed baseline is branch `v1.82`, `HEAD` `6a25c36`, with deleted tracked legacy paths and an untracked `research/v1.82-fixes/` set; re-capture these facts at execution time.
+- [✅] 2. **(Small)** Mark all pre-existing deletions, untracked reorganization files, and unrelated dirty paths as protected. Do not reset, clean, checkout, switch branches, rewrite history, or modify consumer repositories.
+- [✅] 3. **(Small)** Inventory exactly seven source records: the six current source files plus the missing Astra protocol recovered from tracked history. Record old path, current/proposed path, source status, author/date metadata, and review/supersession relationship.
+- [✅] 4. **(Medium)** Recover the protocol by inspecting tracked history, beginning with the commit that last recorded it (currently discoverable as `58689d8`), using `git show <commit>:<path>` or equivalent read-only history inspection. Compare the recovered bytes, headings, links, pin values, and provenance with the Astra plan and any historical protocol record before writing a new copy.
 
 **Dependencies:** P0 safety baseline from [the meta roadmap](./00-meta-v1-82-fixes-roadmap.md). No source or reference write occurs until the protected baseline is captured.
 
 ### P1 — reconcile paths, references, and review state
 
-- [ ] 1. **(Medium)** Build and review the old-to-new path map:
+- [✅] 1. **(Medium)** Build and review the old-to-new path map:
    - `00-project/research/2026-07-04-workflow-auto-trigger-skills-proposal.md` → `00-project/research/v1.82-fixes/2026-07-04-workflow-auto-trigger-skills-proposal.md`
    - `00-project/research/2026-08-08-workflow-completion-chain-remediation.md` → `00-project/research/v1.82-fixes/2026-08-08-workflow-completion-chain-remediation.md`
-   - `00-project/research/2026-09-10-astra-instruction-evaluation-plan.md` → `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md`
+   - `00-project/plans/2026-09-10-astra-instruction-evaluation-plan.md` → `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md`
    - `00-project/research/2026-09-10-astra-instruction-evaluation-protocol.md` → `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md`
    - `00-project/plans/2026-07-04-parallel-agent-harness-concept-test-plan.md` → `00-project/research/v1.82-fixes/2026-07-04-parallel-agent-harness-concept-test-plan.md`
    - `00-project/plans/2026-07-04-parallel-agent-harness-concept-test-implementation-plan.md` → `00-project/research/v1.82-fixes/2026-07-04-parallel-agent-harness-concept-test-implementation-plan.md`
    - `00-project/plans/workflow-enhancements/update-agents-files.md` → `00-project/research/v1.82-fixes/update-agents-files.md`.
-- [ ] 2. **(Medium)** Search active Workflow-Scripts documentation, plans, indexes, and navigation for old paths and repair only active inbound/outbound references to the reconciled locations. Classify historical archived mentions separately; do not rewrite history merely to make an archived citation look current.
-- [ ] 3. **(Medium)** Preserve the harness draft and finalized implementation plan as separate source records. Mark the finalized implementation plan as the sole authoritative successor, retain the draft as superseded review provenance, and preserve its inline review addendum rather than merging away evidence.
-- [ ] 4. **(Small)** Preserve the Astra protocol's original provenance and its relationship to the Astra plan; do not claim that a reconstructed or inferred protocol is equivalent to the tracked source.
+- [✅] 2. **(Medium)** Search active Workflow-Scripts documentation, plans, indexes, and navigation for old paths and repair only active inbound/outbound references to the reconciled locations. Classify historical archived mentions separately; do not rewrite history merely to make an archived citation look current.
+- [✅] 3. **(Medium)** Preserve the harness draft and finalized implementation plan as separate source records. Mark the finalized implementation plan as the sole authoritative successor, retain the draft as superseded review provenance, and preserve its inline review addendum rather than merging away evidence.
+- [✅] 4. **(Small)** Preserve the Astra protocol's original provenance and its relationship to the Astra plan; do not claim that a reconstructed or inferred protocol is equivalent to the tracked source.
 
 **Dependencies:** Tasks 1–4 require the P0 inventory and read-only comparison. Active-link repair must follow the path map and precede validation.
 
 ### P2 — validate the reconciliation and prepare the authorized commit
 
-- [ ] 1. **(Medium)** Validate that all seven source records exist at their reconciled locations, content comparison is documented, internal links resolve or are explicitly historical, and no review addendum or supersession marker was lost.
-- [ ] 2. **(Medium)** Re-run repository-wide searches for each old path and classify every remaining hit as an intentional historical record, a source/provenance statement, or an unresolved active reference. Resolve all active-reference hits before proceeding.
-- [ ] 3. **(Small)** Compare the post-reconciliation dirty state with the protected baseline and prove that only explicitly authorized source/reference changes were added; treat unexpected changes as a blocker.
+- [✅] 1. **(Medium)** Validate that all seven source records exist at their reconciled locations, content comparison is documented, internal links resolve or are explicitly historical, and no review addendum or supersession marker was lost.
+- [✅] 2. **(Medium)** Re-run repository-wide searches for each old path and classify every remaining hit as an intentional historical record, a source/provenance statement, or an unresolved active reference. Resolve all active-reference hits before proceeding.
+- [✅] 3. **(Small)** Compare the post-reconciliation dirty state with the protected baseline and prove that only explicitly authorized source/reference changes were added; treat unexpected changes as a blocker.
 
 **Dependencies:** All P0/P1 tasks. Validation must pass before any commit proposal.
 
 ### P3 — commit only after approval
 
-- [ ] 1. **(Small)** Obtain explicit authorization for the reconciled source/reference change set.
-- [ ] 2. **(Small)** Stage only the validated reconciliation paths and commit only after the link, content, provenance, and dirty-state checks pass. Do not include this plan set, unrelated dirty work, consumer files, or untracked reorganization files outside the approved set.
-- [ ] 3. **(Small)** Record the commit identifier and validation evidence for downstream Plan 05; if validation fails, leave the worktree untouched and return a blocker rather than guessing.
+- [✅] 1. **(Small)** Obtain explicit authorization for the reconciled source/reference change set.
+- [✅] 2. **(Small)** Stage only the validated reconciliation paths and commit only after the link, content, provenance, and dirty-state checks pass. Do not include this plan set, unrelated dirty work, consumer files, or untracked reorganization files outside the approved set.
+- [✅] 3. **(Small)** Record the commit identifier and validation evidence for downstream Plan 05; if validation fails, leave the worktree untouched and return a blocker rather than guessing.
 
 **Dependencies:** P2 validation and parent authorization. Plan 05 remains blocked until the protocol and its provenance are resolved.
 

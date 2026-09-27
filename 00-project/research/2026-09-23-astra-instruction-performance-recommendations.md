@@ -208,7 +208,7 @@ Keep project constraints, changelog obligations, secret handling, repository bou
 
 ## How this fits Plan 05
 
-Plan 05 remains **Active — blocked pending protocol recovery and an explicit comparison-arm decision**. The original protocol is absent from the current research tree, and [Plan 01](../plans/v1.82-fixes/01-reconcile-research-and-source-integrity.md) still records recovery as pending. This audit does not recover or reconstruct it. No fixtures, model-driven setup, pilot, access probe or benchmark were run.
+Plan 05 remains **Active — blocked pending protocol recovery and an explicit comparison-arm decision**. The original protocol is absent from the current research tree, and [Plan 01](../plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md) is Verified Complete on `9714c15`; arm selection for Plan 05 remains pending. This audit does not recover or reconstruct it. No fixtures, model-driven setup, pilot, access probe or benchmark were run.
 
 1. **Refresh audit inputs before freezing them.** Plan 05's source notes and the September 22 audit describe pre-September-23 setup. Inventory current `PROJECT.md` alongside AGENTS, harness imports, linked guides and selected skills. Check actual loading rather than assuming a link or import was consumed. Preserve the earlier audit as dated provenance.
 2. **Prefer the current-v1.82 comparison for this question, subject to written selection.** The historical pair measures historical changes and cannot isolate today's PROJECT split or these proposals. This recommendation does not select an arm or approve revisions.

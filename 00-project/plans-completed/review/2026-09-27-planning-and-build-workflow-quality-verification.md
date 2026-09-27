@@ -22,7 +22,7 @@ isProject: false
 **Status:** ✅ COMPLETED (Verified Complete — Full completion; archived 2026-09-27)
 **Created:** 2026-09-27
 **Archived:** `00-project/plans-completed/review/2026-09-27-planning-and-build-workflow-quality-verification.md`
-**Target plan:** [`../plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`](../plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) (remains Active — Not Eligible; deferred E3 + Flash-UI pilot)
+**Target plan:** [`../implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`](../implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) (Verified Complete 2026-09-27 closeout; Flash-UI pilot deferred)
 
 ## Verdict (final)
 

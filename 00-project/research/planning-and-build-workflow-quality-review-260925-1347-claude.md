@@ -7,7 +7,7 @@
 **Status:** Complete. Recommendations only; no workflow files were changed.  
 **Commit pin (added 2026-09-25):** `1ab9fcb`. This is inferred: the report's 13:47 timestamp is after that commit (13:39), and `HEAD` did not move before re-verification.
 
-> **Current state (2026-09-25).** Extracted into the implementation plan [`2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`](../plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md). Each finding below carries a `Plan:` line that names the task implementing it; **Not extracted** marks items deliberately left out. The plan's re-verification found 5 errors or gaps in this report. They are corrected in place and each correction is marked **Corrected 2026-09-25**: M2 link fix (§4), R1 site list (§5), R4 vocabulary (§5), Q6 wiring (§6), and the E1 sketch (§7). §9 Roadmap is superseded by the plan's Tasks section, which adds a Phase 0 baseline.
+> **Current state (2026-09-25).** Extracted into the implementation plan [`2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`](../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md). Each finding below carries a `Plan:` line that names the task implementing it; **Not extracted** marks items deliberately left out. The plan's re-verification found 5 errors or gaps in this report. They are corrected in place and each correction is marked **Corrected 2026-09-25**: M2 link fix (§4), R1 site list (§5), R4 vocabulary (§5), Q6 wiring (§6), and the E1 sketch (§7). §9 Roadmap is superseded by the plan's Tasks section, which adds a Phase 0 baseline.
 
 **Evidence labels used below:** **Observed** = read or run in this session, with a file:line or command. **Case study** = observed in the Flash-UI plan and code. **Hypothesis** = a proposed benefit, not measured. Line numbers refer to the files as they were on 2026-09-25.
 
@@ -490,7 +490,7 @@ For T1, the sections marked `T2+` are omitted, which keeps a bug-fix plan to abo
 
 ## 9. Roadmap
 
-> **Superseded 2026-09-25** by the implementation plan's Tasks section ([plan](../plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md#tasks)). The plan keeps Phases A–E, adds a Phase 0 baseline and gates, and applies the corrections above. The text below is kept as the original record.
+> **Superseded 2026-09-25** by the implementation plan's Tasks section ([plan](../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md#tasks)). The plan keeps Phases A–E, adds a Phase 0 baseline and gates, and applies the corrections above. The text below is kept as the original record.
 
 Each phase is small enough to land and verify independently. Phases are ordered by dependency, following R1's own rule.
 

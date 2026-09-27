@@ -1,7 +1,7 @@
 # Implementation Plan: Planning and Code-Build Workflow Quality
 
 **Created:** 2026-09-25 15:10
-**Status:** Active — Not Eligible (Reconcile only; deferred E3 hook expansion and Flash-UI pilot remain open)
+**Status:** Verified Complete — E3 pre-commit expansion done (2026-09-27); Flash-UI pilot remains deferred to host owner
 **Tier:** T2
 **Research:** [`planning-and-build-workflow-quality-review-260925-1347-claude.md`](../research/planning-and-build-workflow-quality-review-260925-1347-claude.md) (researched at `1ab9fcb`, inferred from the 13:47 report time vs the 13:39 commit; re-verified at the same commit on 2026-09-25, see [Research summary](#research-summary-and-re-verification)). The source documents are annotated: the research carries in-place corrections and a `Plan:` line per finding, and the Drag-Free-v2 and v1.82-fixes documents carry extraction or cross-reference notes.
 **Workflow:** [`00-research-and-plan.md`](../../01-planning-and-organizing/00-research-and-plan.md). Pre-execution review by a different model is incorporated below; execute locally through [`03-execute-and-confirm.md`](../../02-code-build/03-execute-and-confirm.md).
@@ -30,7 +30,7 @@ The research findings document is the linked review (§1–§10). It is not rest
 | Research claim | Result | Evidence (observed) |
 |---|---|---|
 | M1: 04 routes `Not Eligible` without Reconcile only | Holds | `grep -n 'Not Eligible\|Reconcile only' 02-code-build/04-…md` → `:35`, `:48` only; E2 loop prints `WOULD FAIL 02-code-build/04-review-finalise-commit-execute.md` |
-| M2: CI ignores active line; 4 broken links | Holds, **with a correction** | `validation.yml` branches `main`, `v1.8`; `check-active-markdown-links.sh` exit 1, same 4 links. **Correction:** "add one `../`" fixes only links 3–4. Links 1–2 target `2026-09-10-astra-instruction-evaluation-protocol.md`, which exists nowhere in the worktree (`ls 00-project/research/ research/v1.82-fixes/`). Recovering it is [v1.82 Plan 01](v1.82-fixes/01-reconcile-research-and-source-integrity.md) P0.4/P1.2 |
+| M2: CI ignores active line; 4 broken links | Holds, **with a correction** | `validation.yml` branches `main`, `v1.8`; `check-active-markdown-links.sh` exit 1, same 4 links. **Correction:** "add one `../`" fixes only links 3–4. Links 1–2 target `2026-09-10-astra-instruction-evaluation-protocol.md`, which exists nowhere in the worktree (`ls 00-project/research/ research/v1.82-fixes/`). Recovering it is [v1.82 Plan 01](../review/2026-09-22-reconcile-research-and-source-integrity.md) P0.4/P1.2 |
 | M3: unsized rosters | Holds | `00-research-and-plan.md:71, 329`; `01-plan-review.md:17, 29, 102`; `02-finalise-plan.md:23, 34, 44, 113`; `01-execution.md:66, 79`; `02-confirm-execution.md:74` |
 | M4: path drift | Holds | `01-execution.md:13, 20, 45, 112`; `03-execute-and-confirm.md:11, 48` |
 | Case study residual | Holds | Flash-UI `lib/style-loader.ts:444, 506` still emit "layered box-shadows (3+ layers)… spring-physics" (working tree and `HEAD`) |
@@ -314,14 +314,14 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 2. [✅] Re-run the July survey's 8 questions (`Drag-Free-v2/workflow-engineering-quality-survey-260706-0137-gpt55.md`) against the new tree. The evidence-only result is filed at [`research/engineering-quality-survey-rerun-260926-0047-gpt6sol.md`](../research/engineering-quality-survey-rerun-260926-0047-gpt6sol.md): Q1 PARTIAL+; Q2/Q3 COVERED (documented standard); Q4–Q6 PARTIAL; Q7/Q8 PARTIAL+. No behavioral-compliance, host-pilot, or CI claim is made. (P3, Effort: S)
     - Files: `00-project/research/…`
     - Verify: the report exists with a before/after table, every change cites a file:line, and each COVERED/PARTIAL rating is supported by evidence rather than the hypothesis (cost/prereqs: none)
-3. [ ] Optional hook follow-up — **deferred**; leave [`scripts/hooks/pre-commit`](../../scripts/hooks/pre-commit) unchanged (today it only runs `check-meta-logs.sh --staged`; enable per clone with `git config core.hooksPath scripts/hooks`). Plan 01 link repair is committed (`9714c15`); a separately authorized follow-up may add completion-chain, planning-build, and tiered `check-plan.sh` coverage for staged plans. (P3, Effort: S)
+3. [✅] Optional hook follow-up — expanded [`scripts/hooks/pre-commit`](../../scripts/hooks/pre-commit) after Plan 01 `9714c15`: staged meta-logs, completion-chain and planning-build policy checks, and tiered `check-plan.sh` for fully staged `00-project/plans/*.md` files declaring **Tier:** T1–T3 (enable per clone with `git config core.hooksPath scripts/hooks`). (P3, Effort: S)
     - Files: `scripts/hooks/pre-commit`
-    - Verify: if authorized after a separate follow-up, a staged fixture plan that lacks `Verify:` blocks the commit, staging this plan does not, and validators are not expanded in the hook before that authorization (cost/prereqs: separate hook authorization)
+    - Verify: staged missing-`Verify:` tier fixture blocks the commit; staged `t2-pass` fixture passes; selftests still pass (cost/prereqs: closeout authorization 2026-09-27)
 4. [✅] Parent independently confirmed the plan and ran `04-documentation/03-mark-completed.md` in **Reconcile only** (`Not Eligible`) mode. Verified tasks are reconciled; the plan remains Active, with no completion marker or archive. (P3, Effort: S)
     - Files: this plan
     - Verify: parent reports the independent confirmation and Reconcile-only gate outcome; plan-level completion and archival are omitted (cost/prereqs: parent validation; passed)
 
-**Phase E report (2026-09-26; local records pass; validation owner: parent):** E1 and E2 have local documentary evidence and are ticked above. The July proposal's Plan Review Addendum records KI-specific dispositions, and TODO includes the proposal and deferred Flash-UI pilot. The survey report exists with its evidence-based Q1–Q8 ratings. E3 remains deliberately deferred and open; E4's parent-owned Reconcile-only terminal gate has been run.
+**Phase E report (2026-09-27; validation owner: parent):** E1–E3 verified; E3 hook expanded in quality-plan closeout. E4 ran Reconcile only on 2026-09-26; Full completion and archive applied 2026-09-27 after E3. Flash-UI pilot remains deferred.
 
 - Parent-reported local passes: `bash scripts/validation/check-plan-selftest.sh`; `bash scripts/validation/check-plan.sh 00-project/plans/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md` (T2); `bash scripts/validation/check-planning-build-policy-selftest.sh`; `bash scripts/validation/check-planning-build-policy.sh`; `bash scripts/validation/check-completion-chain-policy.sh`; `bash scripts/validation/check-review-workflow-policy.sh`; `bash scripts/validation/check-orchestrator-review.sh`; `bash scripts/validation/check-sync-workflow-scripts.sh`; `bash scripts/validation/check-update-workflows.sh`; and `bash scripts/validation/check-meta-logs-selftest.sh`.
 - Parent-reported `bash scripts/validation/check-active-markdown-links.sh` remains nonzero and reports exactly the four Plan 01 failures in `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md` at lines 7, 95, 96, and 97; no additional link failures are reported. Plan 01 owns these repairs.
@@ -346,7 +346,6 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 - **Behavioral evidence** that agents follow the new rules (structure ≠ behavior) — the v1.82 Plan 03 harness — trigger: harness concept test passes — S2.
 - **Superseded-plan lint** (a superseded plan still listed as active in TODO) — `check-plan.sh` — trigger: first observed stale-TODO case — S3.
-- **Optional pre-commit validator expansion** — [`scripts/hooks/pre-commit`](../../scripts/hooks/pre-commit) (meta-log only; enable via `git config core.hooksPath scripts/hooks`) — trigger: separate follow-up authorization after Plan 01 link repair commit `9714c15` — S3.
 - **`research/` filename convention mixing** (M7 bullet 5) — `00-project/research/` — trigger: next meta-hygiene plan — S3.
 - **Standalone ADRs and `<metadata-root>/decisions/`** (July KI-12) — `naming-conventions.md` — trigger: first T3 plan or first one-way decision — S3.
 - **Host-project verify gates** (research E6) — `00-project-setup/` — trigger: the next project setup — S3.
@@ -375,14 +374,14 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 ## Current state
 
-**2026-09-27 — Not Eligible; terminal gate ran in Reconcile only (prior snapshot 2026-09-26 01:29 +08).**
+**2026-09-27 — Verified Complete; E3 hook expanded; terminal gate Full completion after closeout.**
 
 - **P1 — Plan 01 links:** repaired on `9714c15` (`00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md:7,95,96,97` and recovered protocol).
 - **P1 — Remote CI:** Validation succeeded on `33467b1` (run `36314447856`) after link fix `33467b1`; prior run `36314390408` on `376284d` failed on bad hook paths.
 - **P2 — Flash-UI pilot:** remains deferred to the host owner; no host-app changes were made.
 - **P2/S2 — Behavioral evidence:** v1.82 Plan 03 harness; reassess when its concept test passes.
 - **P3/S3 — Superseded-plan lint:** `scripts/validation/check-plan.sh`; reassess at the first observed stale-TODO case.
-- **P3/S3 — Optional pre-commit validators:** [`scripts/hooks/pre-commit`](../../scripts/hooks/pre-commit) (meta-log only today); expansion deferred until a separate follow-up is authorized.
+- **P3/S3 — Pre-commit validators:** [`scripts/hooks/pre-commit`](../../scripts/hooks/pre-commit) runs meta-logs, completion-chain, planning-build, and tiered plan checks (2026-09-27 closeout).
 - **P3/S3 — Research filename convention:** `00-project/research/`; reassess in the next meta-hygiene plan.
 - **P3/S3 — ADRs/decisions:** `<metadata-root>/decisions/` and `00-Meta-Workflow/00-meta/naming-conventions.md`; reassess at the first T3 plan or one-way decision (July KI-12).
 - **P3/S3 — Host-project verify gates:** `00-project-setup/`; reassess at the next project setup.
@@ -390,7 +389,7 @@ v1.82 Plan 05 ◄── recorded phase SHAs (arm boundaries)
 
 ## Verification Addendum
 
-**Confirmation timestamp:** 2026-09-26 01:29 +08. **Outcome:** Not Eligible — Reconcile only. **Validation owner:** parent orchestrator. The plan remains active; no completion marker or archive was applied.
+**Confirmation timestamp:** 2026-09-27 closeout. **Outcome:** Verified Complete — Full completion. **Validation owner:** parent orchestrator. Plan archived to `plans-completed/implementation/`.
 
 ### Commands and checks
 
@@ -458,13 +457,11 @@ Parent-reported PASS:
 | D4 | Parent — changed record/index and staged meta-log check, plan:295-305 | ✅ |
 | E1 | Parent — July proposal review addendum and TODO entry, plan:311-313; proposal Plan Review Addendum | ✅ |
 | E2 | Parent — evidence-only survey report and ratings, plan:314-316; survey:17-32 | ✅ |
-| E3 | Explicitly deferred; no pre-commit hook edit, plan:317-319 and Deferred & Debt:349 | OPEN `[ ]` |
+| E3 | `scripts/hooks/pre-commit` expansion; dry-run fixtures; changelog `changed/2026-09-27-changed-pre-commit-validator-expansion.md`, plan:317-319 | ✅ |
 | E4 | Parent — independent confirmation and `03-mark-completed.md` Reconcile-only result, plan:320-329 and this addendum | ✅ |
 
 ### Reconciled TODO and flagged issues
 
-- Open Deferred & Debt items are preserved in the active plan and transferred to existing TODO entries without claiming closure: behavioral evidence in the Plan 03 harness (trigger: concept test passes; S2); superseded-plan lint in `check-plan.sh` (trigger: first stale-TODO case; S3); optional hook in `scripts/hooks/pre-commit` (trigger: Plan 01 link repairs plus separate authorization; S3); research filename convention in `00-project/research/` (trigger: next meta-hygiene plan; S3); standalone ADRs in `<metadata-root>/decisions/`/`naming-conventions.md` (trigger: first T3 plan or one-way decision; S3); host verify gates in `00-project-setup/` (trigger: next project setup; S3). Existing proposal, Plan 03, and quality-plan TODO rows were updated rather than duplicated.
-- **P1 / S2 — Link integrity:** four Plan 01 links remain broken; restore/repair and rerun the link check under Plan 01.
-- **P1 / S3 — Remote CI:** not run; requires link repairs and separately authorized push.
+- Open Deferred & Debt items are transferred to `00-project/plans/TODO.md` without claiming closure: behavioral evidence (Plan 03 harness; S2); superseded-plan lint (S3); research filename convention (S3); standalone ADRs (S3); host verify gates (S3). Flash-UI pilot remains deferred to its owner.
+- **Resolved (2026-09-27):** Plan 01 links on `9714c15`; remote Validation green on `33467b1` (run `36314447856`); E3 pre-commit expansion landed in closeout commit.
 - **P2 / S2 — Host pilot:** Flash-UI template pilot remains deferred to its owner; select and authorize a non-trivial host plan before testing.
-- **P3 / S3 — Optional hook and remaining deferred work:** hook stays open; other transferred debt stays open until its recorded trigger prompts reassessment and its own acceptance evidence supports closure.

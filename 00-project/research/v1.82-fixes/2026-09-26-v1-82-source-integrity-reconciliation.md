@@ -71,3 +71,9 @@ The ignored `.slim/deepwork/plan01-source-integrity.md` scratch note is excluded
 - **P3 authorization and exact scope:** the user explicitly approved a local commit, with no push, of exactly these ten paths: `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md`; this provenance report; `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md`; `00-project/research/v1.82-fixes/2026-07-04-parallel-agent-harness-concept-test-plan.md`; `00-project/plans/TODO.md`; `00-project/plans/Drag-Free-v2/2026-07-06-workflow-system-v2-redesign-proposal.md`; `00-project/changelog/fixed/2026-09-26-fixed-v182-source-integrity-links.md`; `00-project/troubleshooting/workflow/2026-09-26-workflow-v182-source-integrity-links.md`; `00-project/changelog/index.md`; and `00-project/troubleshooting/index.md`. The parent staged only these ten paths.
 - **Staged validation:** parent `check-meta-logs.sh --staged` passed. Strict staged whitespace validation reported exactly the preserved historical hard-line-break spaces at protocol lines 3 and 4; all other staged paths passed. These two source-byte exceptions are intentional, so no unqualified whitespace-pass claim is made.
 - **Next:** the parent will restage the five updated report/records/index paths and rerun strict checks. A local commit will follow only if revalidation passes. No commit, remote CI verification, or push has occurred or is claimed.
+
+## Commit record (2026-09-27 addendum)
+
+- **Commit:** `9714c15` — `fix: restore v1.82 source-integrity links and Astra protocol` on `v1.82`.
+- **Scope:** ten paths as authorized in the P3 section above (protocol, this report, Astra plan link repairs, harness plan status line, Drag-Free-v2 cross-link, TODO, changelog/troubleshooting pair + indexes).
+- **Post-commit:** `check-active-markdown-links.sh` passes on `HEAD`; Plan 01 tasks verified and archived under `plans-completed/review/`.

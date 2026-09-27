@@ -60,5 +60,5 @@ Coverage is incomplete until Plan 01 recovers the protocol. The future map must 
 
 - Evaluation plan: [`05-run-astra-instruction-evaluation.md`](../../plans/v1.82-fixes/05-run-astra-instruction-evaluation.md)
 - Current source plan: [`2026-09-10-astra-instruction-evaluation-plan.md`](2026-09-10-astra-instruction-evaluation-plan.md)
-- Protocol recovery gate: [`01-reconcile-research-and-source-integrity.md`](../../plans/v1.82-fixes/01-reconcile-research-and-source-integrity.md)
+- Protocol recovery gate: [`2026-09-22-reconcile-research-and-source-integrity.md`](../../plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md)
 - Sizing and authority: [`workflow-applicability.md`](../../../00-Meta-Workflow/00-meta/workflow-applicability.md)

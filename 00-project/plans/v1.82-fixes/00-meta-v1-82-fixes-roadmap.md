@@ -4,14 +4,14 @@
 
 **Status:** Active roadmap — Plan 02 filed Verified Complete; remaining lanes are active or KIV
 
-**Summary:** Coordinate the v1.82-fixes lanes without duplicating their procedures. Plan 01 is the first executable lane and blocks the Astra evaluation in Plan 05. Plan 02 is independent, validation-only audit work. Plan 03 is independent after its own discovery and safety gates. Plan 04 is approval-gated. Plan 06 is KIV/deferred by user and is not actionable without a new explicit user request. Plan 05 remains independent of Plans 03, 04, and deferred Plan 06 once Plan 01 restores the protocol and selects an evaluation arm.
+**Summary:** Coordinate the v1.82-fixes lanes without duplicating their procedures. Plan 01 source recovery and active-reference repair are Verified Complete on `9714c15`; Plan 05 remains blocked until an explicit comparison-arm decision. Plan 02 is independent, validation-only audit work. Plan 03 is independent after its own discovery and safety gates. Plan 04 is approval-gated. Plan 06 is KIV/deferred by user and is not actionable without a new explicit user request.
 
-> **Cross-reference (2026-09-25):** the [planning and build workflow quality plan](../2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) reused this roadmap's protected-baseline, single-owner and objective-exit patterns (its Phase 0). It interacts with two lanes: it hands the 4 broken links in `research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md` to Plan 01, and it records one commit SHA per phase so Plan 05 can pin clean arm boundaries. It adds no lane here and changes no lane's tasks.
+> **Cross-reference (2026-09-25):** the archived [planning and build workflow quality plan](../../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) reused this roadmap's protected-baseline, single-owner and objective-exit patterns (its Phase 0). Plan 01 repaired the four Astra-plan links on `9714c15`. It adds no lane here and changes no lane's tasks.
 
 ## Source and review provenance
 
 - Source set: [`research/v1.82-fixes/`](../../research/v1.82-fixes/), including the completion-chain research, skills proposal, raw agent-rule material, Astra plan, and both harness documents.
-- Historical Astra protocol: the tracked path `00-project/research/2026-09-10-astra-instruction-evaluation-protocol.md` is currently absent from the worktree and must be recovered under Plan 01 from tracked history.
+- Historical Astra protocol: recovered from `58689d8` and filed at `00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md` on commit `9714c15` (Plan 01 Verified Complete).
 - Advisory review inputs: the two independent read-only reviews and Oracle graph review supplied for this lane. Their corrections are incorporated as safety baselines, explicit gates, single-writer rules, non-overlapping ownership, and evidence-bounded conclusions; they are not treated as implementation evidence.
 
 ## P0–P3 priority roadmap
@@ -26,7 +26,7 @@
 
 ### P1 — execute the evidence and validation lanes
 
-- [ ] 1. **(Small)** Execute [Plan 01](./01-reconcile-research-and-source-integrity.md) first; it owns source recovery and active-reference integrity.
+- [✅] 1. **(Small)** Execute [Plan 01](../../plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md) first; it owns source recovery and active-reference integrity (Verified Complete on `9714c15`).
 - [✅] 2. **(Small)** Run [Plan 02 audit — filed Verified Complete](../../plans-completed/review/2026-09-22-validate-completion-chain-current-state.md) independently as a read-only validation lane; parent accepted the static evidence, and the prior completion-chain remediation was not re-executed.
   - **Post-audit defect (2026-09-25):** the static audit passed, but consumer use showed verified tasks were never ticked: the gate skipped `Not Eligible` plans, and `02` could only untick. The fix was made on direct developer request as commit `d4407bd`, outside this roadmap's lanes. See [troubleshooting](../../troubleshooting/workflow/2026-09-25-workflow-verified-tasks-never-ticked.md) and [changelog](../../changelog/fixed/2026-09-25-fixed-completion-chain-task-ticking.md).
 - [ ] 3. **(Small)** After its own discovery and safety gates, run [Plan 03](./03-run-parallel-agent-harness-concept-test.md) independently.

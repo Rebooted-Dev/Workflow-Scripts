@@ -5,6 +5,11 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-09-27 | plan | Archive Plan 01 and planning/build quality plan | plan/2026-09-27-plan-archive-plan01-and-quality-plan.md | Full completion closeout; E3 hook; debt in TODO |
+| 2026-09-27 | changed | Expand pre-commit hook validators (E3) | changed/2026-09-27-changed-pre-commit-validator-expansion.md | Meta-logs + policy + tiered check-plan |
+| 2026-09-27 | docs | Mark agent-flexibility review historical | docs/2026-09-27-docs-agent-flexibility-review-historical.md | January 2026 path snapshot preserved |
+| 2026-09-27 | plan | Planning and Build Workflow Quality Implementation | ../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md | Verified Complete; E3 done; Flash-UI pilot deferred |
+| 2026-09-27 | plan | Reconcile v1.82 Research and Source Integrity (Plan 01) | ../plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md | Verified Complete on `9714c15` |
 | 2026-09-27 | plan | Planning and Build Workflow Quality Verification | ../plans-completed/review/2026-09-27-planning-and-build-workflow-quality-verification.md | Verified Complete; Plan 01 + remote Validation recorded; E3 deferred |
 | 2026-09-27 | docs | Archive planning/build quality verification plan | docs/2026-09-27-docs-archive-quality-plan-verification.md | Full completion via 03-mark-completed; quality plan stays Not Eligible |
 | 2026-09-27 | fixed | Correct pre-commit hook links in quality plan | fixed/2026-09-27-fixed-quality-plan-pre-commit-link-paths.md | Validation run `36314447856` green on `33467b1` |

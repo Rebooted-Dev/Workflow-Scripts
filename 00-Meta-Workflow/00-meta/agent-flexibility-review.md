@@ -1,6 +1,6 @@
 # Agent Flexibility Review
 
-**Status:** Active - Implementation Complete  
+**Status:** Historical (archived)  
 **Created:** 2026-01-26  
 **Last Updated:** 2026-01-26  
 **Implementation Date:** 2026-01-26
@@ -8,6 +8,8 @@
 ## Summary
 
 This document reviews how workflows specify parallel agent usage and identifies opportunities to make agent usage more flexible and dynamic. While workflows encourage parallel agents, they currently constrain flexibility by specifying fixed agent counts and fixed roles, which may limit the AI's ability to adapt to task complexity and spawn additional agents when beneficial.
+
+> **Note:** Workflow file paths cited in this document (for example `02-build-code/`, `05-review-audit/`, `03-debug/`) reflect the **January 2026** tree when the review was written. They are preserved intentionally. Current sizing and delegation policy lives in [`workflow-applicability.md`](./workflow-applicability.md) and the numbered workflow directories.
 
 ---
 
