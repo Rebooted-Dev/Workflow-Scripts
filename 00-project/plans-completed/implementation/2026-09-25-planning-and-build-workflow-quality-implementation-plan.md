@@ -57,6 +57,7 @@ The research findings document is the linked review (§1–§10). It is not rest
 - The user confirmed at Phase 0 that no live Astra arm is using the tree. If an arm starts before this plan completes, pause workflow edits and coordinate with the Plan 05 owner.
 - The sync script uses ff-only Git sync but stashes dirty changes; it does not sync a host project. Do not run host sync as part of this plan. Deepwork setup is separate.
 - The user authorized local per-phase commits, but **did not authorize any push**. Keep remote CI pending; do not make a push part of a local phase gate.
+- **Post-closeout (2026-09-27):** pushes to `origin/v1.82` were authorized for closeout; branch is synced with remote. This bullet records **execution-time** constraints only.
 
 ## Scope and non-goals
 
@@ -245,7 +246,7 @@ Phases are ordered by dependency, then risk. For this plan that order also match
 - Parent-reported supporting evidence: `00-research-and-plan.md` is 273 lines (below 333); the named T1 representative fixture is 14 lines; the B2 active-site grep excludes intentional negative fixtures and the site guard passes.
 - Read-only retro-check: `lib/style-loader.ts:444,506` are mandates; `lib/skill-loader.ts:197` is a fallback. `prompts/catalog/design-templates.txt:23,35,53,77,113,125,137,149` and `btn-styles.txt` hits are user prompt examples, not universal mandates. No host files were changed; the Flash-UI pilot remains deferred to its owner/TODO.
 - Active-link baseline remains exactly the four Plan 01 failures at lines 7, 95, 96, and 97; no new failures. Remote CI has not run and is pending authorized push; no CI success is claimed.
-- Baseline references: Phase 0 SHA `0d0dce0`; Phase A local commit SHA `79d6841d708938e126cbc28c207fd1cedbef6ba5`. *(Superseded narrative: “No Phase B commit was made” — Phase B landed as `ac53e01`.)*
+- Baseline references: plan-reconcile after deepwork `0d0dce0` (parent `823bc04`; **not** the clean Phase 0 baseline `0593467` — see Phase 0 report); Phase A local commit SHA `79d6841d708938e126cbc28c207fd1cedbef6ba5`. *(Superseded narrative: “No Phase B commit was made” — Phase B landed as `ac53e01`.)*
 
 ### Phase C: Engineering standards (P2)
 
@@ -416,14 +417,14 @@ Parent-reported PASS:
 
 **2026-09-27 closeout:** commit `8761af4` (E3 hook + plan archives); Validation run `36320582680` — **success**.
 
-**Historical phase reports:** Phase A–E inline reports dated 2026-09-26 may still mention four broken Plan 01 links, a nonzero link checker, pending remote CI, or deferred E3. Treat those as **time-stamped execution notes**. For link integrity, CI, E3, and completion status, the bullets in this addendum and **Current state** supersede them.
+**Historical phase reports:** Phase A–E inline reports, the Phase 0 report, and **Assumptions** may still describe four broken Plan 01 links, a nonzero link checker, push not authorized, deferred E3, or a mislabeled “Phase 0 SHA” (`0d0dce0` vs clean baseline `0593467`). Treat those as **time-stamped execution notes**. For link integrity, CI, push/sync, E3, SHA labels, and completion status, the bullets in this addendum and **Current state** supersede them.
 
 **Smoke and environment:** The parent statically smoke-checked the CLI validators listed above. No runtime or host-app smoke is applicable to this documentation/workflow-plan record reconciliation; the Flash-UI pilot remains deferred and no host project was changed.
 
 ### Corrected misreports
 
 - **C6 log omission:** Phase C initially lacked the required fixed/troubleshooting pair for the Gate 3 workflow defect. Both entries and index rows are now staged, and parent `check-meta-logs.sh --staged` passed.
-- **A3 tracker mapping:** Plan 01 repaired the four Astra-plan link targets on `9714c15`; handoff detail is recorded in changelog/troubleshooting for that commit, not a standing TODO row.
+- **A3 tracker mapping:** Plan 01 repaired the four Astra-plan link targets on `9714c15` (`research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md` lines 7 and 95 → `./2026-09-10-astra-instruction-evaluation-protocol.md`; line 96 → remediation plan; line 97 → `workflow-applicability.md`). Evidence: `fixed/2026-09-26-fixed-v182-source-integrity-links.md` and roadmap Plan 01 row — not a standing TODO handoff block.
 
 ### Task-to-verifier coverage matrix (32 tasks)
 
