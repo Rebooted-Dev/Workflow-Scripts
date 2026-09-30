@@ -56,7 +56,7 @@ The research findings document is the linked review (§1–§10). It is not rest
 - The baseline is on branch `v1.82` tracking `origin/v1.82` (recorded in the Phase 0 report); re-confirm the branch before each phase and pause if it changes.
 - The user confirmed at Phase 0 that no live Astra arm is using the tree. If an arm starts before this plan completes, pause workflow edits and coordinate with the Plan 05 owner.
 - The sync script uses ff-only Git sync but stashes dirty changes; it does not sync a host project. Do not run host sync as part of this plan. Deepwork setup is separate.
-- The user authorized local per-phase commits, but **did not authorize any push**. Keep remote CI pending; do not make a push part of a local phase gate.
+- The user authorized local per-phase commits, but **did not authorize any push** during original phase execution. Keep remote CI pending for that window; do not make a push part of a local phase gate. *(Later closeout commits were pushed to `origin/v1.82`; see Verification Addendum 2026-09-27.)*
 - **Post-closeout (2026-09-27):** pushes to `origin/v1.82` were authorized for closeout; branch is synced with remote. This bullet records **execution-time** constraints only.
 
 ## Scope and non-goals
