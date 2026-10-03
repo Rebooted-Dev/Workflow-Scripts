@@ -258,7 +258,7 @@ Every project uses the same split. Each rule or fact lives in **exactly one** fi
 | `GEMINI.md` | `@AGENTS.md` and `@PROJECT.md` imports, then **Gemini-only** instructions (2.10). | Gemini CLI |
 
 **Placement test** for any new line:
-1. Does it only make sense for one harness (a model name, a tool, an import syntax)? Put it in that harness file.
+1. Does it only make sense for one harness (a harness-specific model choice, tool, or import syntax)? Put it in that harness file. Shared sub-agent preferences and concurrency limits belong in `AGENTS.md`.
 2. Is it a fact about this project (repos, paths, commands, architecture, constraints)? Put it in `PROJECT.md`, or in `docs/agents/` if it is long.
 3. Otherwise it is an agent rule: put it in `AGENTS.md`, or in `docs/agents/` if it is long.
 
@@ -274,8 +274,15 @@ If `AGENTS.md` exists, move any project facts out to `PROJECT.md` (1.4) and long
 Read `PROJECT.md` before starting work: it holds this project's facts (repositories, layout, constraints). Put project facts there, not here.
 
 ## Execution
-- Use parallel agents only for independent scopes where doing so materially reduces latency or improves confidence. Keep dependent work sequential. Assign non-overlapping write ownership, verify returned findings before changing code, and handle small localized work directly. Follow the task-specific workflow only when it was selected for the request.
-- Always verify findings from parallel agents before acting on them.
+
+- Use parallel sub-agents only for independent scopes where doing so materially reduces latency or improves confidence. Keep dependent work sequential; assign non-overlapping write ownership and coordinate shared-file changes to avoid conflicting edits. Handle small localized work directly. Follow the task-specific workflow only when it was selected for the request.
+- When sub-agents are used, prefer GPT 6 Luna (`gpt-6-luna`) with `xhigh` reasoning effort when available. Use at most **12 concurrent sub-agents per task**, including any nested sub-agents, subject to the runtime's available concurrency limit. This is a ceiling, not a target.
+- Parallel sub-agents can be used for:
+  - Scanning codebases across different directories simultaneously
+  - Reviewing different aspects of code (security, performance, style) in parallel
+  - Testing multiple hypotheses during debugging
+  - Validating changes across multiple files concurrently
+- Always verify findings from parallel sub-agents before acting on them.
 - **Bugs:** add regression test when it fits.
 
 ## Change Management
@@ -1302,7 +1309,7 @@ If you also adopt the centralized `project/` meta directory, follow the addition
 When checking off completed items below, use **`- [✅]`** (green check mark); leave incomplete as **`- [ ]`** (see [Checklist marking convention](#checklist-marking-convention) above).
 
 - [ ] PROJECT.md states clearly that the project has **multiple repositories** (not a single repo), with the Repositories table (Step 1.4)
-- [ ] AGENTS.md matches the Step 1.2 template: Execution (parallel agents, **Bugs: add regression test when it fits.**), pointer to PROJECT.md
+- [ ] AGENTS.md matches the Step 1.2 template: Execution (appropriate parallel sub-agents, maximum 12 concurrent sub-agents per task, GPT 6 Luna / `xhigh` preference when available, **Bugs: add regression test when it fits.**), pointer to PROJECT.md
 - [ ] Completed plans filing rule reachable from AGENTS.md via docs/agents/changelog-and-troubleshooting.md
 - [ ] `.gitignore` includes the workflows directory (e.g. `Workflow-Scripts/` or `workflows/` — replace `<WORKFLOWS_DIR>` in Step 1.4)
 - [ ] project/troubleshooting directory structure created

@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-10-03 | docs | Bound sub-agent use in the project setup template | docs/2026-10-03-docs-setup-subagent-limit.md | Maximum 12 concurrent sub-agents per task; GPT 6 Luna / xhigh preference when available; applied to Update-AI-Tools AGENTS.md |
 | 2026-09-28 | docs | Append feasibility review to Claude Code model-routing plan | docs/2026-09-28-docs-claude-md-model-routing-plan-feasibility-addendum.md | Plan-only append: gate false-pass conditions, fixture-matrix runner gap, self-contradictions, and CLAUDE.md fix scope across existing files and 00-project-setup sources |
 | 2026-09-28 | docs | Revise Claude Code model-routing plan gates and migration rules | docs/2026-09-28-docs-claude-md-model-routing-plan-compatibility-revision.md | Plan-only revision: tools allowlist, bounded compatibility gate, safe migration, warning checks, and corrected future fix logging; no implementation or live tests |
 | 2026-09-27 | docs | Correct CLAUDE.md model-routing report; file plan | docs/2026-09-27-docs-claude-md-model-routing-report-and-plan.md | Finding 2 corrected (token-efficiency routing exists); T2 plan filed and revised to agent-definition routing with prior-art fallbacks; prior-art research added, DRAFT |
