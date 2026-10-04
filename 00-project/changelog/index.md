@@ -5,6 +5,10 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-10-04 | plan | Skills stack in Workflow-Scripts only | ../plans-completed/tooling/2026-10-04-skills-stack-workflow-scripts-only.md | Verified Complete; portable skills/; no swe-skills.md dependency |
+| 2026-10-04 | plan | Simplify setup: 01 is the skills-stack front door | ../plans-completed/tooling/2026-10-04-simplify-setup-front-door.md | Verified Complete; Step 2.12; skills/ is detail only |
+| 2026-10-04 | docs | 01-setup-project is the skills-stack front door | docs/2026-10-04-docs-01-skills-front-door.md | Step 2.12; skills/ is detail only |
+| 2026-10-04 | docs | Curated agent-skills stack under 00-project-setup/skills/ | docs/2026-10-04-docs-skills-stack-setup-subdir.md | Fresh-machine install + project scan + scaffold; portable; no host-repo plan dependency |
 | 2026-10-03 | docs | Bound sub-agent use in the project setup template | docs/2026-10-03-docs-setup-subagent-limit.md | Maximum 12 concurrent sub-agents per task; GPT 6 Luna / xhigh preference when available; applied to Update-AI-Tools AGENTS.md |
 | 2026-09-28 | docs | Append feasibility review to Claude Code model-routing plan | docs/2026-09-28-docs-claude-md-model-routing-plan-feasibility-addendum.md | Plan-only append: gate false-pass conditions, fixture-matrix runner gap, self-contradictions, and CLAUDE.md fix scope across existing files and 00-project-setup sources |
 | 2026-09-28 | docs | Revise Claude Code model-routing plan gates and migration rules | docs/2026-09-28-docs-claude-md-model-routing-plan-compatibility-revision.md | Plan-only revision: tools allowlist, bounded compatibility gate, safe migration, warning checks, and corrected future fix logging; no implementation or live tests |

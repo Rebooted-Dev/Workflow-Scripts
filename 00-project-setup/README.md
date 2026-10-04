@@ -6,18 +6,19 @@ This directory contains workflows for setting up new projects and optimizing exi
 
 | File | Purpose | When to Use |
 |------|---------|-------------|
-| [`01-setup-project.md`](./01-setup-project.md) | Set up new project with **multiple repositories** (multi-repo) and troubleshooting system | New projects, migrating existing projects to use these workflows |
+| [`01-setup-project.md`](./01-setup-project.md) | **Front door:** set up or update a project (multi-repo, `project/` logs, agent harness) **including** curated skills Step 2.12 | New projects, migrating or refreshing an existing project’s setup and harness |
 | [`02-optimize-workflow-scripts.md`](./02-optimize-workflow-scripts.md) | Analyze, optimize, and verify workflow scripts | Periodic maintenance, after workflows accumulate, before sharing workflows |
 | [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md) | Automate syncing Workflow-Scripts across multiple projects | When managing multiple projects, want to update all at once, or need to track sync status |
 | [`04-track-repos-and-agent-map.md`](./04-track-repos-and-agent-map.md) | Discover repos in the project and write the repository map to `PROJECT.md`, with sync/push/pull instructions | New projects with multiple repos, onboarding agents, or when adding a new nested repo |
 | [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md) | MCP and config setup: Google Developer Knowledge MCP (Cursor + OpenCode), fix Cursor stdio PATH, OpenCode default model, oh-my-opencode overrides | Setting up or fixing MCP servers, adding Gemini docs MCP, or setting default model (e.g. GLM 5) |
-| [`06-skills-setup.md`](./06-skills-setup.md) | Skills setup: install and configure agent skills in Cursor/Codex (personal vs project skills, storage locations, top recommended skills) | Setting up agent skills, onboarding to skills-based workflows, troubleshooting skill loading |
+| [`06-skills-setup.md`](./06-skills-setup.md) | Skills discovery catalog: personal vs project skills, storage locations, Top-N / Top-250 recommendations | Exploring skills.sh, onboarding to skills-based workflows, troubleshooting skill loading |
+| [`skills/`](./skills/) | Detail playbook for **01 Step 2.12** (global install, scan, Matt/Impeccable scaffold, precedence) | Invoked from `01-setup-project.md`; also machine-only reinstall of curated packs |
 | [`09-seo-skill-setup.md`](./09-seo-skill-setup.md) | SEO skill setup: install the `seo` CLI + agent skill + MCP across Cursor/Claude Code/Codex/OpenCode/pi, guided Google/Search Console wiring, verification checklist | Setting up the iannuttall/seo toolchain, SEO evidence reports, or troubleshooting the seo skill/MCP |
 
 ## Quick Decision Guide
 
-**Are you setting up a new project or adding workflows to an existing project?**
-- Yes → Use [`01-setup-project.md`](./01-setup-project.md)
+**Are you setting up a new project or updating an existing project’s setup / harness (including curated skills)?**
+- Yes → Use [`01-setup-project.md`](./01-setup-project.md) (skills are Step 2.12; detail in [`skills/`](./skills/))
 
 **Are you reviewing/cleaning up existing workflow scripts?**
 - Yes → Use [`02-optimize-workflow-scripts.md`](./02-optimize-workflow-scripts.md)
@@ -31,15 +32,14 @@ This directory contains workflows for setting up new projects and optimizing exi
 **Are you setting up MCP servers (e.g. Google Developer Knowledge), fixing Cursor MCP errors, or setting OpenCode/oh-my-opencode default model?**
 - Yes → Use [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md)
 
-**Are you setting up agent skills in Cursor or Codex, or troubleshooting "the agent didn't use my skill"?**
+**Are you browsing the skills catalog, storage locations, or troubleshooting "the agent didn't use my skill"?**
 - Yes → Use [`06-skills-setup.md`](./06-skills-setup.md)
-- Yes → Use [`05-mcp-and-config-setup.md`](./05-mcp-and-config-setup.md)
 
 ## Workflow Summaries
 
 ### 01-setup-project.md
 
-Sets up a project with dual repo management, a **`project/`** container (KIV, research, build, **changelog**, troubleshooting), and **`plans/`** (README map + TODO). Changelog is merged: `project/changelog/` holds type folders plus a `plans/` subdir for completed plan docs, with a single index (Type includes `plan`). Troubleshooting lives under `project/troubleshooting/`. Agent files split by role: slim `AGENTS.md` (rules only, with `docs/agents/` links), `PROJECT.md` (project facts, including the repo map), and thin `CLAUDE.md`/`GEMINI.md` that import both plus harness-only instructions. Includes backups and verification. Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) after setup to populate the repo map in `PROJECT.md`.
+**Front door** for project setup. Sets up dual repo management, a **`project/`** container (KIV, research, build, **changelog**, troubleshooting), and **`plans/`** (README map + TODO). Changelog is merged: `project/changelog/` holds type folders plus a `plans/` subdir for completed plan docs, with a single index (Type includes `plan`). Troubleshooting lives under `project/troubleshooting/`. Agent files split by role: slim `AGENTS.md` (rules only, with `docs/agents/` links), `PROJECT.md` (project facts, including the repo map), and thin `CLAUDE.md`/`GEMINI.md` that import both plus harness-only instructions. Includes backups, verification, and **Step 2.12 (Agent skills stack)** — global install if needed, then scan + Matt/Impeccable gaps via [`skills/`](./skills/). Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) as Step 2.11 to populate the repo map in `PROJECT.md`.
 
 ### 02-optimize-workflow-scripts.md
 
@@ -83,6 +83,16 @@ Key steps:
 2. Update the Repositories table in `PROJECT.md` (optionally link a longer `docs/agents/repository-map.md`)
 3. Verify `AGENTS.md`/`CLAUDE.md`/`GEMINI.md` only point to `PROJECT.md` rather than duplicating the map
 4. Document sync, pull, and push procedures for each repo
+
+### skills/ (detail for 01 Step 2.12)
+
+Detail playbook for the locked agent-skills stack. **Enter via [`01-setup-project.md`](./01-setup-project.md)** (Step 2.12). Open this folder directly only for machine-only reinstall or deep dive:
+
+- **[skills/README.md](./skills/README.md)** — phases and verification (points back to 01)
+- **[skills/01-global-install.md](./skills/01-global-install.md)** — install Impeccable, official shadcn, React Doctor, find-skills, Pocock; disable clashers; pstack
+- **[skills/02-project-scan.md](./skills/02-project-scan.md)** — probe project files, then decide what to run
+- **[skills/03-project-scaffold.md](./skills/03-project-scaffold.md)** — fill Matt / Impeccable gaps (`/setup-matt-pocock-skills`, `/impeccable init`)
+- **[skills/precedence.md](./skills/precedence.md)** — clash rules and Pocock ↔ pstack handoff
 
 ### 05-mcp-and-config-setup.md
 

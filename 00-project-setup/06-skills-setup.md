@@ -1,10 +1,12 @@
 # Skills Setup Task List
 
+> **Curated stack (project setup):** use **[`01-setup-project.md`](./01-setup-project.md)** — Step 2.12 pulls in [`skills/`](./skills/) for install/scan/scaffold detail. That keeps one front door for new and existing projects. **This file** remains the discovery catalog (storage locations, Top-N / Top-250, topic indexes). Install ≠ project context: global packs alone do not create `PROJECT.md` / Matt docs / `PRODUCT.md`.
+
 Checklist for configuring **Agent Skills** in **Cursor**, **Codex**, **Kilo Code CLI**, and **Gemini CLI**: where they live, how to add personal vs project skills, and how to install or create skills so the AI uses them in the right contexts.
 
 **Principles:** Skills are packaged, reusable instructions that give agents on-demand expertise. They are built on an [open standard](https://agentskills.io/) adopted by many agent platforms. Install a skill package once; the agent loads it when the task matches. Skills fix **prompt drift** (same ask, different results), **lost workflow conventions** (quality checks, formats, decision criteria), and **instruction sprawl** (long playbooks buried in prompts). Centralize instructions in a versioned, reviewable place so the agent "actually knows how we do things here." See [Vercel: Agent skills explained (FAQ)](https://vercel.com/blog/agent-skills-explained-an-faq) for more.
 
-**When to use:** Setting up a new machine, onboarding to a project that uses skills, adding or updating skills (personal or project), or troubleshooting “the agent didn’t use my skill.”
+**When to use:** Exploring skills.sh / Top-N catalogs, personal vs project skill storage, or troubleshooting “the agent didn’t use my skill.” For the **locked curated stack** on a new or existing app repo, run [`01-setup-project.md`](./01-setup-project.md) (Step 2.12); open [`skills/`](./skills/) only for detail or machine-only reinstall.
 
 ---
 

@@ -8,6 +8,7 @@ This workflow sets up a new project, migrates a project from an older structure,
 5. **Agent file architecture (single source of truth)** - `AGENTS.md` holds agent rules only (same concise template in every project); `PROJECT.md` holds project facts; `docs/agents/` holds detailed guides (see [Step 1.1](#11-agent-file-architecture-single-source-of-truth))
 6. **Thin CLAUDE.md and GEMINI.md** - Each imports `@AGENTS.md` and `@PROJECT.md` and adds harness-only instructions; existing files are migrated, not duplicated (Step 2.10)
 7. **Track Repos** - Discover all Git repos in the project and record the repository map in `PROJECT.md` (see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
+8. **Agent skills stack** - After layout and harness files: once-per-machine global installs (if needed), then scan this repo and fill Matt Pocock / Impeccable gaps (see [Step 2.12](#step-212-agent-skills-stack); details in [`skills/`](./skills/))
 
 ---
 
@@ -66,6 +67,10 @@ ls -d docs docs/agents 2>/dev/null && echo "✓ docs/ and docs/agents/ created"
 # 8. Run track-repos workflow (discover repos, record the repo map in PROJECT.md)
 # Follow: Workflow-Scripts/00-project-setup/04-track-repos-and-agent-map.md
 ```
+
+**9. Agent skills stack (Step 2.12)** — After layout + agent files exist, complete the curated skills step in this same workflow:
+- Fresh machine: follow [`skills/01-global-install.md`](./skills/01-global-install.md) (skip what `npx skills list -g` already shows).
+- Then scan this app repo ([`skills/02-project-scan.md`](./skills/02-project-scan.md)) and fill only Matt / Impeccable / `PRODUCT.md` gaps ([`skills/03-project-scaffold.md`](./skills/03-project-scaffold.md)). Do not invent product truth.
 
 For detailed prerequisite verification (git repo checks, .gitignore, workflows directory validation, placeholder checks), see **Step 0** below.
 
@@ -150,7 +155,9 @@ If you use the `project/` pattern, make sure:
 
 4. **Optionally refresh repo map and sync instructions:** If you added/removed repos or changed remotes, run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) (see Step 2.11).
 
-5. **Verify:** Run the checks in **Step 3** (Verification) that apply to the files you changed (e.g. directory structure, agent files present). Do **not** re-run backup or migration steps (Step 2.3, 2.7.3, Step 4) unless you are actually migrating from an old structure.
+5. **Complete Step 2.12 (Agent skills stack):** Global install only if this machine still lacks the curated packs; then scan this repo and fill Matt / Impeccable gaps. Do **not** re-do layout already refreshed above; do **not** wipe indexes.
+
+6. **Verify:** Run the checks in **Step 3** (Verification) that apply to the files you changed (e.g. directory structure, agent files present). Do **not** re-run backup or migration steps (Step 2.3, 2.7.3, Step 4) unless you are actually migrating from an old structure.
 
 ### What not to do
 
@@ -172,6 +179,7 @@ For consistent checklist marking (✅ vs `[ ]`), completion markers, and archivi
 - [ ] docs/agents/changelog-and-troubleshooting.md: content matches Step 2.6.1 including **Plans completed** and changelog archive sections (if you use this file)
 - [ ] CLAUDE.md / GEMINI.md: thin import form, harness-only content (Step 2.10.3)
 - [ ] Missing category/type folders created; repo map refreshed if needed (Step 2.11)
+- [ ] Step 2.12 (Agent skills stack) completed — global install if needed; scan; Matt / Impeccable gaps only
 - [ ] Verification (Step 3) run for changed areas; indexes and existing data preserved
 
 ---
@@ -1067,6 +1075,24 @@ When **setting up a new project**, run this after Step 2.10 (so the agent files 
 
 ---
 
+## Step 2.12: Agent skills stack
+
+This step is part of **this** workflow (new setup and existing-project updates). Detail docs live under [`skills/`](./skills/); do not treat that folder as a separate front door.
+
+**Order:**
+
+1. **Global install (once per machine, if needed)** — Follow [`skills/01-global-install.md`](./skills/01-global-install.md). Skip checklist items already verified (`npx skills list -g`, pstack rule file, marketplace shadcn disabled). Clash rules: [`skills/precedence.md`](./skills/precedence.md).
+2. **Scan this application repo** — Follow [`skills/02-project-scan.md`](./skills/02-project-scan.md) (readonly probes first). Skip if cwd is the Workflow-Scripts repo itself.
+3. **Fill gaps only** — Follow [`skills/03-project-scaffold.md`](./skills/03-project-scaffold.md) for what the scan reported:
+   - Layout / harness / `docs/agents/changelog-and-troubleshooting.md` should already be done in Steps 1–2.11; do **not** re-run full layout unless the scan still shows gaps.
+   - Missing Matt docs or `## Agent skills` → `/setup-matt-pocock-skills` (org defaults: GitHub, default triage labels, single-context domain).
+   - UI/design repo without `PRODUCT.md` → `/impeccable init` (interview; do not invent). Skip Impeccable for CLI-only repos until a visual surface is planned.
+4. Continue to **Step 3** (Verification), including the skills checks below when applicable.
+
+Stubs (fallback only): [`skills/stubs/`](./skills/stubs/).
+
+---
+
 ## Step 3: Verification
 
 After setup, verify everything is correct:
@@ -1169,6 +1195,24 @@ grep -q '^## Repositories' PROJECT.md && echo "✓ Repo map present in PROJECT.m
 test -f docs/agents/repository-map.md && echo "✓ docs/agents/repository-map.md exists"
 ```
 
+### 3.7.1 Verify Agent Skills Stack (Step 2.12)
+
+After Step 2.12, confirm what applies to this repo:
+
+```bash
+# Matt Pocock context (when using the engineering chain)
+test -f docs/agents/issue-tracker.md && echo "✓ issue-tracker.md"
+test -f docs/agents/triage-labels.md && echo "✓ triage-labels.md"
+test -f docs/agents/domain.md && echo "✓ domain.md"
+grep -q '^## Agent skills' CLAUDE.md 2>/dev/null && echo "✓ CLAUDE.md Agent skills block"
+
+# Impeccable (UI/design repos only)
+# test -f PRODUCT.md && echo "✓ PRODUCT.md"
+
+# Machine globals (spot-check; full list in skills/README.md)
+# npx skills list -g
+```
+
 ### 3.8 Check for Backups
 
 ```bash
@@ -1193,6 +1237,7 @@ Summary of the standard setup. Details are in the referenced steps.
 - **docs/agents/** – Created in 2.9; long AGENTS.md sections relocated here via 2.9.3. At minimum: `changelog-and-troubleshooting.md`.
 - **CLAUDE.md / GEMINI.md** – Thin (2.10): `@AGENTS.md` + `@PROJECT.md` imports plus harness-only instructions; existing files migrated (2.10.3).
 - **Repositories map (PROJECT.md)** – Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) (Step 2.11) after setup and when adding/removing repos.
+- **Agent skills stack** – Step 2.12 after layout: global install if needed, then scan and fill Matt / Impeccable gaps ([`skills/`](./skills/) for detail).
 - **Completed plans filing rule** – When the user asks to **file … as completed**, move from `project/plans/` or `project/build/` to **`project/plans-completed/<category>/`**, update **`project/plans-completed/index.md`**, and add a row at the top of **`project/changelog/index.md`** (Type=plan, File `../plans-completed/...`). Alternate: **`project/changelog/plans/`** when explicitly requested. The rule lives in `docs/agents/changelog-and-troubleshooting.md`, linked from `AGENTS.md`. See Step 2.6.1 and Step 2.8.4.
 
 **Populating docs/agents/:** The workflow creates at least `changelog-and-troubleshooting.md`. Step 2.9.3 adds other topical files by relocating content from AGENTS.md. To adopt a full refactor plan:
@@ -1336,6 +1381,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] project/plans-completed/ (categories + README + index) verified (Step 3.4.1)
 - [ ] docs/ and docs/agents/ verified
 - [ ] Agent files verified (Step 3.6)
+- [ ] Step 2.12 Agent skills stack completed (global if needed; scan; Matt / Impeccable gaps); spot-check Step 3.7.1
 - [ ] Backup files reviewed; migration completed before removing old monolithic troubleshooting file (if applicable)
 - [ ] If migrated: index files updated with new paths; link/reference scan run and broken links fixed (Step 4.4)
 
@@ -1343,9 +1389,11 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 
 ## For AI Agents Executing This Setup
 
-**Execution:** Read existing files first; preserve data (back up before moving/editing); replace all placeholders (`<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>`); verify after each step. Use parallel agents when appropriate; verify findings before making changes.
+**Execution:** Read existing files first; preserve data (back up before moving/editing); replace all placeholders (`<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>`); verify after each step. Use parallel agents when appropriate; verify findings before making changes. **Do not stop after harness files** — complete **Step 2.12** (skills stack) before declaring setup done.
 
 **Single source of truth (mandatory):** Follow the Step 1.1 architecture. Agent rules go in AGENTS.md, project facts in PROJECT.md, long material in `docs/agents/` (Changelog/Troubleshooting/Plans in `changelog-and-troubleshooting.md`, 2.6.1; other topics per 2.9.3). CLAUDE.md and GEMINI.md import AGENTS.md and PROJECT.md and hold harness-only instructions; migrate existing ones (2.10.3) rather than overwriting or duplicating.
+
+**Skills stack (Step 2.12):** After Steps 1–2.11, run global install only if missing, then project scan, then fill Matt/Impeccable gaps only. Prefer chat skills over hand-copying; never wipe changelog/troubleshooting indexes; never invent PRODUCT.md.
 
 **Safety:** Back up before migrating (e.g. CHANGELOG.md, TROUBLESHOOTING.md in root or `docs/`). Preserve existing index entries when updating `project/changelog/index.md` and `project/troubleshooting/index.md` (new row at top when adding). After any renames/moves in project/changelog or project/troubleshooting, run the link/reference scan (Step 4.4).
 
