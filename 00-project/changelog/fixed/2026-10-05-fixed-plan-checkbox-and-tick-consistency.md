@@ -25,7 +25,7 @@
 - `11-Skills/{execute-and-confirm-plan,workflow-plan-review-finalize}/SKILL.md`
 - `00-project-setup/01-setup-project.md`, `00-project/plans-completed/README.md`
 - `scripts/validation/{check-plan.sh,check-plan-selftest.sh,check-completion-chain-policy.sh}`, nine new fixtures, `scripts/hooks/pre-commit`
-- Plan: [`../../plans/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md`](../../plans/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md)
+- Plan: [`../../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md`](../../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md)
 - Troubleshooting: [`../../troubleshooting/workflow/2026-10-05-workflow-plans-without-checkboxes-or-ticks.md`](../../troubleshooting/workflow/2026-10-05-workflow-plans-without-checkboxes-or-ticks.md)
 - Host side: Update-AI-Tools `AGENTS.md` and `docs/agents/changelog-and-troubleshooting.md`, logged in that repository.
-- Uncommitted at the time of writing (base `2cd0a55`, branch `v1.82`).
+- Committed as `28be480` on branch `v1.82` (base `2cd0a55`); plan filed to `plans-completed/implementation/`.

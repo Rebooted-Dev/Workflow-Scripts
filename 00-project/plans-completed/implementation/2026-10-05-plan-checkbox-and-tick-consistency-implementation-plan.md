@@ -1,7 +1,7 @@
 # Implementation Plan: Consistent plan checkboxes and completion ticks
 
 **Created:** 2026-10-05 15:25
-**Status:** ✅ COMPLETED 2026-10-05 — executed and verified in the same session; changes are uncommitted in both repositories. Kept in `plans/` as the owner directed; archiving to `plans-completed/implementation/` is left for the owner after review. See the execution addendum.
+**Status:** ✅ COMPLETED 2026-10-05 — executed and verified in the same session; Workflow-Scripts changes committed and pushed as `28be480` on `v1.82`. Filed to `plans-completed/implementation/` on owner instruction (the host Update-AI-Tools changes remain uncommitted in that repository). See the execution addendum and filing note.
 **Tier:** T2
 
 **Consolidated from:** the owner's problem statement of 2026-10-05 (no prior plan document), finalised with `01-planning-and-organizing/02-finalise-plan.md`. There were no inline addenda and no `PLAN.reviews/` directory, so nothing was archived and no source plan was marked superseded.
@@ -288,4 +288,8 @@ Every search in the Change Surface table was re-run after the build. `may mark` 
 
 ### Rollback reference
 
-No commits were authorised. Workflow-Scripts base is `2cd0a55` on `v1.82`; `git checkout -- .` plus removing the untracked files listed by `git status` restores it.
+Workflow-Scripts base is `2cd0a55` on `v1.82`. The implementation is commit `28be480`; roll back with `git revert 28be480` (or reset to `2cd0a55` before the commit is shared). The edits are additive, and plans that gained `Open:` lines remain valid under the old linter.
+
+## Filing note — 2026-10-05 (owner-instructed)
+
+Filed via `04-documentation/03-mark-completed.md` on owner instruction. Workflow-Scripts changes were committed and pushed as `28be480` on `v1.82`; this plan moved from `plans/` to `plans-completed/implementation/`, `plans-completed/index.md` gained a top row, and `changelog/index.md` gained a Type=`plan` row. `check-plan.sh --state` re-ran green on the archived file. The host Update-AI-Tools edits to `AGENTS.md` and `docs/agents/changelog-and-troubleshooting.md` remain in that repository's working tree, uncommitted alongside unrelated owner changes.

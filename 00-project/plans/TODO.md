@@ -14,7 +14,8 @@ When a plan is finished and should be archived, follow **`plans-completed/README
 
 ## Active
 
-- [ ] [Consistent plan checkboxes and completion ticks](2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md) — executed and verified 2026-10-05, uncommitted. Owner: review defaults D1–D3 and the diff, commit, then file as completed. Open Deferred & Debt:
+- [✅] [Consistent plan checkboxes and completion ticks](../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md) — verified complete 2026-10-05; committed and pushed (`28be480`, `v1.82`); filed to `plans-completed/implementation/`. Open Deferred & Debt carried below.
+- [ ] **Consistent plan checkboxes Deferred & Debt** (from archived [`../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md`](../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md); triggers unchanged):
   - Refresh other host projects' `AGENTS.md` **Plans** rule and filing step — each host repository; trigger: next setup or update run in that host; S3.
   - Harness hook that ticks automatically — per-harness configuration; trigger: a silent open box reaches the owner after this fix; S3.
   - Retrofit archived plans — `plans-completed/` in each repository; trigger: an archived plan is reopened; S3.

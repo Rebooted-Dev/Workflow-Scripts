@@ -4,6 +4,7 @@ Chronological index of filed plans under **`plans-completed/`**. **Newest first.
 
 | Date | Category | Title | File | Notes |
 |------|----------|-------|------|-------|
+| 2026-10-05 | implementation | Consistent plan checkboxes and completion ticks | implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md | Verified Complete on `28be480` (`v1.82`); Marking Contract; `--require-tier`/`--state`; `[x]` rejected in tiered plans; pre-commit + host rule; 9 new fixtures |
 | 2026-10-04 | tooling | Skills stack in Workflow-Scripts only | tooling/2026-10-04-skills-stack-workflow-scripts-only.md | Verified Complete; portable `00-project-setup/skills/`; no swe-skills.md dependency; entry later via 01 Step 2.12 |
 | 2026-10-04 | tooling | Simplify setup: 01 is the skills-stack front door | tooling/2026-10-04-simplify-setup-front-door.md | Verified Complete; Step 2.12 folds curated skills into 01; skills/ detail only |
 | 2026-09-27 | implementation | Quality-Plan Outstanding Closeout | implementation/2026-09-27-quality-plan-outstanding-closeout.md | Verified Complete; E3 hook expansion; agent-flex review historical; Plan 01 + quality plan archives verified; Validation green on `d760259` |
