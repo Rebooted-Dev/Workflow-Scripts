@@ -24,7 +24,7 @@ This workflow is **not finished** when code is written. It is finished when **on
 3. **Terminal outcome (mandatory):** run [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) for **both** outcomes; the outcome only picks its mode:
    - **`Verified Complete`** — `01` and `02` report all applicable Verification Bar items passed, evidence is present, and no blocker remains → gate in **Full completion** mode (task `✅` reconciliation, completion marker, log/docs reconciliation, host-policy archive).
    - **`Not Eligible`** — any applicable check is blocked, skipped, failed, partial, or under-evidenced → gate in **Reconcile only** mode (verified tasks still get `✅`; logs, docs, and TODO reconciled). The plan stays **active** with the addendum; **no** completion marker, **no** archive.
-4. **Every verified task is ticked.** When this workflow ends, no task whose implementation and evidence are present is still `[ ]`, in either outcome.
+4. **Every verified task and criterion is ticked, and nothing is silently open.** When this workflow ends, no box whose implementation and evidence are present is still `[ ]`, in either outcome, and every remaining `[ ]` has an `Open:` reason. `check-plan.sh --state` passes.
 
 Do not treat "build green" as a substitute for tests or acceptance smoke when those apply. Prefer the plan's named verify/test commands and acceptance criteria over generic checks alone.
 
@@ -41,7 +41,7 @@ Do not treat "build green" as a substitute for tests or acceptance smoke when th
 
    There is no "optional" or "when appropriate" path around the gate: it runs for **every** outcome. Only the completion marker and archive depend on the outcome.
 
-4. **Final check before reporting.** Re-read the plan's task list. Every task with implementation and evidence present must be `[✅]`; every other task stays `[ ]` with a note. If a verified task is still `[ ]`, the gate was skipped or cut short: go back and finish it.
+4. **Final check before reporting.** Run `bash <workflow-scripts>/scripts/validation/check-plan.sh --state <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)) and include its output line in the report. It must print `OK (…, state)`. Each line it reports is a box that is neither ticked nor explained: tick it if its implementation and evidence are present, otherwise give it an `Open:` reason ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)), and re-run. If a verified task was still `[ ]`, the gate was skipped or cut short: go back and finish it. Do not hand this check back to the user.
 
 ## Quick Checklist
 
@@ -49,7 +49,7 @@ Do not treat "build green" as a substitute for tests or acceptance smoke when th
 - [ ] **01** run in full: phases implemented; **Verification Bar** met (verify command + tests when present + smoke when user-facing/runtime); plan and logs updated; residual blockers documented if any
 - [ ] **02** run in full: plan audited against code **and** verification evidence; addendum lists commands/tests/smoke; ticks corrected in both directions (verified `[ ]` → `[✅]`, unverified `[✅]` → `[ ]`)
 - [ ] **Gate run for the outcome:** `Verified Complete` → Full completion mode (marker + archive); `Not Eligible` → Reconcile only mode (verified tasks ticked, logs reconciled, plan active, no marker/archive)
-- [ ] **No verified task left `[ ]`**
+- [ ] **No verified task or criterion left `[ ]`; `check-plan.sh --state` prints `OK`**
 
 ## Related Workflows
 

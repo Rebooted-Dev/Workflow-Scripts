@@ -14,6 +14,12 @@ When a plan is finished and should be archived, follow **`plans-completed/README
 
 ## Active
 
+- [ ] [Consistent plan checkboxes and completion ticks](2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md) — executed and verified 2026-10-05, uncommitted. Owner: review defaults D1–D3 and the diff, commit, then file as completed. Open Deferred & Debt:
+  - Refresh other host projects' `AGENTS.md` **Plans** rule and filing step — each host repository; trigger: next setup or update run in that host; S3.
+  - Harness hook that ticks automatically — per-harness configuration; trigger: a silent open box reaches the owner after this fix; S3.
+  - Retrofit archived plans — `plans-completed/` in each repository; trigger: an archived plan is reopened; S3.
+  - `--state` in host pre-commit hooks — host repositories; trigger: the Workflow-Scripts hook proves stable; S3.
+  - First unrelated plan executed under the new rules in a host — confirm it ends `check-plan.sh --state` OK with no follow-up scan; S3.
 - [ ] [Claude Code subagent model routing](2026-09-27-claude-md-model-routing-implementation-plan.md) (T2, DRAFT, revised 23:42): approve, then add `sweeper`/`tracer` agent templates with fixed models, a short `CLAUDE.md` pointer plus documented fallback, a live check repeated per Claude Code upgrade, conditional create on update, warning-only checks, and token-efficiency cross-link.
 - [ ] [Drag-Free-v2 engineering-quality and lifecycle proposal](Drag-Free-v2/2026-07-06-engineering-quality-and-lifecycle-proposal.md): decide the remaining open KIs recorded in its 2026-09-26 review addendum. Only KI-13 code-design/error-handling and KI-14 tiered plan sections are superseded; observability, architecture/ADR, greenfield, deployment, full debt ledger/budget, and registry work remain open. **Open KI-12 debt:** standalone ADRs in `<metadata-root>/decisions/`, location policy in `00-Meta-Workflow/00-meta/naming-conventions.md`; trigger: first T3 plan or first one-way decision; severity S3.
 - [ ] Flash-UI forward plan-template pilot — deferred to the Flash-UI owner. Named follow-up: owner selects and explicitly authorizes the next non-trivial Flash-UI plan; then run the host-side `check-plan.sh` and post-build Change Surface searches in that host. No host edits before approval.

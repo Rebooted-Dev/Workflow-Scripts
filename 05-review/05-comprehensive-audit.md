@@ -71,7 +71,9 @@ and then S0 → S3.
   It is staging data, not a replacement for the final report location.
 - **Active improvement plan:** If the user requests a separately filed plan,
   use `<metadata-root>/plans/<plan-name>.md` and follow the target repository's
-  plan conventions.
+  plan conventions. Write it to the shared
+  [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) with checkbox
+  tasks, and run `check-plan.sh --require-tier` on it before reporting.
 
 Resolve all paths before executing commands. Do not execute commands with
 unexpanded placeholders such as `<metadata-root>` or `<repository-root>`.

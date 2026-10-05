@@ -1,10 +1,37 @@
 #!/usr/bin/env bash
 # Structural plan linter. Plans opt in with **Tier:** T1/T2/T3; unmarked plans
-# remain compatible as legacy documents.
+# remain compatible as legacy documents unless --require-tier is given.
+#
+#   check-plan.sh <plan>                 structure + canonical tick marks
+#   check-plan.sh --require-tier <plan>  also fail when the Tier header is absent
+#                                        (authoring, review, execution intake)
+#   check-plan.sh --state <plan>         also fail on a silently open box: every
+#                                        unticked task or Success Criteria item
+#                                        needs an Open: reason. Use from the
+#                                        first phase report onward, not on a
+#                                        draft plan.
+#
+# The marking contract lives in 00-Meta-Workflow/00-meta/plan-template.md.
 set -euo pipefail
 
+usage() {
+  echo "check-plan: usage: check-plan.sh [--require-tier] [--state] <plan>" >&2
+}
+
+require_tier=0
+state_mode=0
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --require-tier) require_tier=1; shift ;;
+    --state) state_mode=1; shift ;;
+    --) shift; break ;;
+    -*) usage; exit 2 ;;
+    *) break ;;
+  esac
+done
+
 if [ "$#" -ne 1 ]; then
-  echo "check-plan: usage: check-plan.sh <plan>" >&2
+  usage
   exit 2
 fi
 
@@ -50,15 +77,92 @@ case "$tier_state" in
     exit 1
     ;;
   LEGACY)
+    if [ "$require_tier" -eq 1 ]; then
+      echo "check-plan: $plan: no **Tier:** header; --require-tier needs exactly one **Tier:** T1, T2, or T3" >&2
+      exit 1
+    fi
     echo "check-plan: $plan: warning: no **Tier:** header; treating as legacy" >&2
     exit 0
     ;;
 esac
 
-errors="$(awk -v tier="$tier_state" '
+errors="$(awk -v tier="$tier_state" -v state="$state_mode" '
   function add_error(reason) {
     print reason
     error_count++
+  }
+
+  # A list item whose box holds a tick other than the canonical one.
+  function noncanonical_tick(line, text) {
+    text = line
+    sub(/^[[:space:]]*/, "", text)
+    if (text ~ /^[-*+][[:space:]]+\[/) sub(/^[-*+][[:space:]]+\[/, "", text)
+    else if (text ~ /^[0-9]+[.)][[:space:]]+\[/) sub(/^[0-9]+[.)][[:space:]]+\[/, "", text)
+    else return ""
+    if (text ~ /^(x|X|✓|✔|☑)\]/) {
+      sub(/\].*$/, "", text)
+      return text
+    }
+    return ""
+  }
+
+  # --state: a box is ticked, or it carries an Open: reason of its own, of its
+  # parent task (recorded before the child), or of its phase heading.
+  function state_flush() {
+    if (state && open_wait_line > 0) {
+      add_error("line " open_wait_line ": unticked " open_wait_kind " has no Open: reason (pending, blocked, deferred, or retired)")
+    }
+    open_wait_line = 0
+  }
+
+  function state_reset_scope() {
+    state_flush()
+    scope_open = 0
+    scope_pre = 1
+    parent_open = 0
+    parent_ticked = 0
+  }
+
+  function open_reason_ok(line, text) {
+    text = substr(line, index(line, "Open:") + 5)
+    sub(/^[[:space:]]*/, "", text)
+    return text ~ /^(pending|blocked|deferred|retired)([^[:alnum:]_]|$)/
+  }
+
+  function state_open_field(line) {
+    if (!state || !has_field(line, "Open")) return
+    if (!open_reason_ok(line)) {
+      add_error("line " NR ": Open: reason must start with pending, blocked, deferred, or retired")
+    }
+    if (scope_pre) {
+      scope_open = 1
+    } else {
+      if (open_wait_line > 0) open_wait_line = 0
+      if (!last_box_is_child) parent_open = 1
+    }
+  }
+
+  function state_checkbox(is_child, kind, line) {
+    if (!state) return
+    state_flush()
+    scope_pre = 0
+    last_box_is_child = is_child
+    if (!is_child) {
+      parent_ticked = (checkbox_marker == "✅")
+      parent_open = 0
+      parent_line = NR
+    } else if (parent_ticked && checkbox_marker != "✅") {
+      add_error("line " NR ": unticked sub-task under a ticked parent (line " parent_line "); a parent is ticked only when every sub-task is")
+    }
+    if (checkbox_marker == "✅") return
+    if (has_field(task_tail, "Open")) {
+      if (!open_reason_ok(task_tail)) add_error("line " NR ": Open: reason must start with pending, blocked, deferred, or retired")
+      if (!is_child) parent_open = 1
+      return
+    }
+    if (scope_open || (is_child && parent_open)) return
+    open_wait_line = NR
+    open_wait_kind = kind
   }
 
   function finish_task() {
@@ -99,6 +203,7 @@ errors="$(awk -v tier="$tier_state" '
     close_bracket = index(remainder, "]")
     if (close_bracket == 0) return 0
     marker = substr(remainder, 1, close_bracket - 1)
+    checkbox_marker = marker
     if (marker != " " && marker != "x" && marker != "X" && marker != "✅") return 0
 
     task_tail = substr(remainder, close_bracket + 1)
@@ -187,19 +292,24 @@ errors="$(awk -v tier="$tier_state" '
 
   !in_fence && /^###[#]*[[:space:]]+/ {
     if (in_tasks) finish_task()
+    state_reset_scope()
     next
   }
 
   !in_fence && /^#[[:space:]]+/ {
     if (in_tasks) finish_task()
+    state_reset_scope()
+    in_criteria = 0
     next
   }
 
   !in_fence && /^##[[:space:]]+/ {
     finish_task()
+    state_reset_scope()
     heading = heading_text($0)
     in_tasks = (heading == "Tasks")
     in_decision = (heading == "Decision")
+    in_criteria = (heading == "Success Criteria")
 
     if (heading == "Goal") has_goal = 1
     if (heading == "Change Surface") has_change_surface = 1
@@ -220,6 +330,19 @@ errors="$(awk -v tier="$tier_state" '
       if (tolower($0) ~ /minimal/) has_minimal_option = 1
     }
 
+    if (in_tasks || in_criteria) {
+      bad_tick = noncanonical_tick($0)
+      if (bad_tick != "") {
+        add_error("line " NR ": non-canonical tick [" bad_tick "]; use [✅] once verified, or [ ] with an Open: reason")
+      }
+    }
+
+    if (in_criteria) {
+      if (is_checkbox_line($0)) state_checkbox(0, "criterion", $0)
+      else state_open_field($0)
+      next
+    }
+
     if (in_tasks && is_checkbox_line($0)) {
       if (checkbox_has_tab) {
         finish_task()
@@ -229,6 +352,7 @@ errors="$(awk -v tier="$tier_state" '
 
       if (is_task_checkbox($0)) {
         finish_task()
+        state_checkbox(0, "task", $0)
         task_number++
         in_task = 1
         task_indent = checkbox_indent
@@ -261,6 +385,7 @@ errors="$(awk -v tier="$tier_state" '
         # column, or any 4+ space checkbox, is a nested child. Same-kind items
         # at an ambiguous 0-3-space nested position are rejected. Tabs and
         # orphan 4+ items are rejected, never silently ignored.
+        state_checkbox(1, "sub-task", $0)
         child_active = 1
         child_checkbox_indent = checkbox_indent
         # Keep the outermost child boundary for the top-level parent. Deeper
@@ -280,6 +405,8 @@ errors="$(awk -v tier="$tier_state" '
       next
     }
 
+    if (in_tasks) state_open_field($0)
+
     if (in_tasks && in_task) {
       record_task_field($0, "Files")
       record_task_field($0, "Verify")
@@ -288,6 +415,7 @@ errors="$(awk -v tier="$tier_state" '
 
   END {
     finish_task()
+    state_flush()
     if (!has_goal) add_error("missing required section ## Goal")
     if (!has_change_surface) add_error("missing required section ## Change Surface")
     if (!has_tasks_heading) add_error("missing required section ## Tasks")
@@ -313,4 +441,8 @@ if [ -n "$errors" ]; then
   exit 1
 fi
 
-echo "check-plan: $plan: OK ($tier_state)"
+if [ "$state_mode" -eq 1 ]; then
+  echo "check-plan: $plan: OK ($tier_state, state)"
+else
+  echo "check-plan: $plan: OK ($tier_state)"
+fi

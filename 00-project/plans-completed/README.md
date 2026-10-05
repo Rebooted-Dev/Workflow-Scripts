@@ -36,6 +36,7 @@ Always use the `yyyy-mm-dd-` prefix for completed plans:
 
 When filing a plan as completed:
 
+0. **Reconcile the plan first** — run the terminal gate (`04-documentation/03-mark-completed.md`); every task is a checkbox, verified ones are `[✅]`, every box left `[ ]` has an `Open:` reason, and `scripts/validation/check-plan.sh --state <plan>` passes
 1. **Choose the appropriate category** based on the plan's nature
 2. **Move** the file from `plans/` or `build/` to `plans-completed/<category>/`
 3. **Rename** with `yyyy-mm-dd-` prefix (if not already present)

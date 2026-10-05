@@ -34,7 +34,7 @@ This directory contains workflows for implementing code changes with verificatio
                   host-policy archive│ active, no marker/archive
 ```
 
-**The terminal gate is mandatory for every outcome.** `01` ticks each task `[✅]` as its Verification Bar passes; `02` corrects ticks in both directions. [`03-mark-completed`](../04-documentation/03-mark-completed.md) always runs last and makes every task tick match verified reality. Only the gate applies the plan-level completion marker and archive routing (resolved from the host repository's policy), and only in Full completion mode.
+**The terminal gate is mandatory for every outcome.** `01` ticks each task `[✅]` as its Verification Bar passes; `02` corrects ticks in both directions. [`03-mark-completed`](../04-documentation/03-mark-completed.md) always runs last and makes every task tick match verified reality. Only the gate applies the plan-level completion marker and archive routing (resolved from the host repository's policy), and only in Full completion mode. Success Criteria are ticked the same way as tasks, every box left `[ ]` carries an `Open:` reason, and `check-plan.sh --state <plan>` must pass before any of these workflows reports ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)).
 
 ## Quick Decision Guide
 

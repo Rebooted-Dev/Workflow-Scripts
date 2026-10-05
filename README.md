@@ -930,7 +930,7 @@ Workflow-Scripts/
 │   ├── 00-doc-templates.md
 │   ├── 01-create-docs.md
 │   ├── 02-sync-documentation.md
-│   ├── 03-mark-completed.md (terminal gate: sole ✅/marker/archive owner)
+│   ├── 03-mark-completed.md (terminal gate: reconciles ticks; sole marker/archive owner)
 │   ├── 09-optional.md
 │   └── ascii-art-prompts.md
 ├── 05-review/

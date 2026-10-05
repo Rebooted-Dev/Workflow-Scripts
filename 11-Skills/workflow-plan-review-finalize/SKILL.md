@@ -35,7 +35,7 @@ Use this skill to turn research, a draft, a stale plan, or a review-stage plan i
     - Create a separate dated plan in `project/plans/` unless the user or workflow says otherwise.
     - If the user asks to update a named plan in place, edit that plan and add dated findings or a revision section.
     - Keep the source plan as audit trail.
-    - Use the shared [plan-template contract](../../00-Meta-Workflow/00-meta/plan-template.md) for tier, sections, Decision options, and task syntax. A Change Surface lists and classifies search hits; each top-level task has `Files:` and `Verify:` lines.
+    - Use the shared [plan-template contract](../../00-Meta-Workflow/00-meta/plan-template.md) for tier, sections, Decision options, and task syntax. A Change Surface lists and classifies search hits; each top-level task has `Files:` and `Verify:` lines. Every task and Success Criteria item is a checkbox; run `check-plan.sh --require-tier <plan>` from the Workflow-Scripts checkout on the saved plan and fix it until it prints `OK`.
     - Order phases by dependency then risk; order priority-labeled tasks P0–P3 within each phase.
    - Include success criteria, verification commands, rollback or mitigation notes, and docs/logging requirements.
 

@@ -206,6 +206,8 @@ Create the implementation plan under `<metadata-root>/plans/` per [`../00-Meta-W
 
 Use the tiered section requirements and scaffold in [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md); do not maintain a separate inline plan template here.
 
+**Lint the plan before reporting it.** Run `bash <workflow-scripts>/scripts/validation/check-plan.sh --require-tier <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)) and fix every reported line until it prints `OK`. Every task and Success Criteria item must be a checkbox ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)).
+
 ### 3.3 Add Planning Complete Marker
 
 When the plan is fully written and ready for review:
@@ -258,6 +260,7 @@ Or if you want to indicate research is complete but plan is still being written:
 - [ ] Dependencies are explicitly mapped
 - [ ] Risks are identified with mitigations
 - [ ] Plan is written to `<metadata-root>/plans/` with dated filename
+- [ ] `check-plan.sh --require-tier <plan>` was run and prints `OK`; every task and criterion is a checkbox
 - [ ] Research findings are documented under `<metadata-root>/research/`
 - [ ] No source code was modified (planning only)
 

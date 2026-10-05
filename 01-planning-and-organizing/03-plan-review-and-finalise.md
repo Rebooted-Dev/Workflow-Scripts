@@ -15,7 +15,7 @@ Use this workflow when you would otherwise ask for both:
 1. Execute [`01-plan-review.md`](./01-plan-review.md) against the supplied plan.
 2. Verify that the review output has been written or captured according to [`01-plan-review.md`](./01-plan-review.md).
 3. Execute [`02-finalise-plan.md`](./02-finalise-plan.md) using the original plan plus all review output.
-4. Verify that the finalised implementation plan satisfies the acceptance criteria in [`02-finalise-plan.md`](./02-finalise-plan.md).
+4. Verify that the finalised implementation plan satisfies the acceptance criteria in [`02-finalise-plan.md`](./02-finalise-plan.md), including a passing `check-plan.sh --require-tier` run on the saved file.
 
 ## Output
 - Review feedback produced according to [`01-plan-review.md`](./01-plan-review.md).

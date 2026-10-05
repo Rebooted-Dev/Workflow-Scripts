@@ -10,7 +10,7 @@ Declare `**Tier:** T1`, `**Tier:** T2`, or `**Tier:** T3` in every new plan head
 - **T2 — feature or changed boundary:** for example, “add X.”
 - **T3 — system, cross-cutting, or greenfield:** for example, “new project” or “re-architect.”
 
-The reviewer may raise the tier when the actual scope warrants it. Existing plans without a Tier are legacy plans: `check-plan.sh` must warn and exit successfully for them; the linter does not require retrofitting a Tier.
+The reviewer may raise the tier when the actual scope warrants it. Existing plans without a Tier are legacy plans: `check-plan.sh` must warn and exit successfully for them; the linter does not require retrofitting a Tier. That leniency is for old documents only: every workflow that creates, reviews, finalises, or starts executing a plan runs the linter with `--require-tier`, which rejects a plan without a Tier header.
 
 ## Required Sections by Tier
 
@@ -104,7 +104,18 @@ Use the shared [`severity-priority-rubric.md`](./severity-priority-rubric.md) fo
 - Every top-level task has an indented `Files:` line and an indented `Verify:` line. `Verify:` states the expected result and names cost and prerequisites (use `none` when there are none). Parent-level fields may follow a child checkbox; child-level fields do not count for the parent.
 - Give each task its own P0–P3 label. Order phases by dependency, then risk; order tasks within each phase by priority.
 - A Decision lists at least two `Option` lines, including an explicitly minimal option, then names the choice and its reversibility. Flag a one-way decision for review.
-- Checkboxes outside `## Tasks` (for example, in Success Criteria) are criteria, not tasks.
+- Checkboxes in `## Success Criteria` are criteria, not tasks: they need no `Files:` or `Verify:` lines, but their status is tracked under the [Marking Contract](#marking-contract).
+
+## Marking Contract
+
+This is the single source for how plan boxes are marked. Other workflows link here and do not restate it.
+
+- **Every task, sub-task, and Success Criteria item is a checkbox.** A plan that arrives without them (prose steps, or YAML `todos:` from another tool) gets a `## Tasks` checkbox list and a `**Tier:**` header before it is executed or archived. The conversion is additive: one checkbox per step or todo, with the original text left in place. A step the source calls done starts as `[ ]` and is ticked only when verified.
+- **Two states.** `[✅]` means verified complete. `[ ]` means not complete. `[x]`, `[X]`, and `[✓]` are not valid ticks; the linter rejects them in a tiered plan.
+- **Tick when verified.** The agent that ran the verification changes `[ ]` to `[✅]` in the same step, for tasks and for criteria. When work is delegated, the orchestrator is the only writer of the plan file and sub-agents return evidence.
+- **No silent open box once execution has started.** Each box left `[ ]` carries an `Open:` reason that begins with `pending`, `blocked`, `deferred`, or `retired`, for example `- Open: blocked — hosted CI authority missing`. Put it on an indented line directly under the box (before any sub-tasks) or at the end of the box's own line. A parent's reason covers its sub-tasks. An `Open:` line directly under a phase heading or under `## Success Criteria`, before the first box, covers every unticked box in that section.
+- **Parents.** A parent is `[✅]` only when every sub-task is.
+- **Retired or deferred work stays `[ ]`** with its reason. Do not tick it and do not delete it.
 
 ## Change Surface Requirements
 
@@ -114,4 +125,7 @@ List every relevant site that implements, restates, guards, or historically reco
 
 - Resolve the owning repository's metadata root and filenames using [`naming-conventions.md`](./naming-conventions.md#metadata-root-resolution).
 - Reviewers re-run the listed Change Surface searches. Confirmation re-runs them after the build; unexplained stale hits mean the affected task is incomplete.
-- `check-plan.sh` enforces plan structure only. A new plan declaring a Tier opts into linting; a legacy plan without a Tier remains unaffected as described above.
+- `check-plan.sh` enforces plan structure and the Marking Contract; it does not judge whether a tick is true. Run it from the Workflow-Scripts checkout ([`naming-conventions.md`](./naming-conventions.md#workflow-scripts-checkout)):
+  - `check-plan.sh <plan>` — structure and canonical ticks. Run after any edit to a tiered plan.
+  - `check-plan.sh --require-tier <plan>` — also rejects a missing Tier. Run when creating, reviewing, finalising, or starting to execute a plan.
+  - `check-plan.sh --state <plan>` — also rejects a silent open box. Run at each phase report, at confirmation, and at the terminal gate. Do not run it on a draft: every task is open before execution starts.

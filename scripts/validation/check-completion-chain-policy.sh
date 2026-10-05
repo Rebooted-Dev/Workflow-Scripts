@@ -20,6 +20,9 @@
 #   - Any 02-code-build file naming "Not Eligible" also names "Reconcile only".
 #   - The gate reconciles verified task completions and open debt separately;
 #     a debt trigger prompts reassessment and does not close the entry by itself.
+#   - The Marking Contract is enforced by command: authoring and intake run
+#     check-plan.sh --require-tier, and every step that can end an execution
+#     runs check-plan.sh --state (section 9).
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -128,5 +131,52 @@ for token in \
   printf '%s\n' "$todo_step" | grep -qiF "$token" \
     || fail "Terminal gate TODO/debt step lacks required concept: $token"
 done
+
+# --- 9. Marking contract: checkboxes exist, ticks are checked by command -------
+# Regression guard for the 2026-10-05 gaps: plans written without checkboxes,
+# Success Criteria nobody ticked, and no command checking tick state.
+PLAN="$ROOT_DIR/01-planning-and-organizing"
+META="$ROOT_DIR/00-Meta-Workflow/00-meta"
+
+grep -q '^## Marking Contract' "$META/plan-template.md" \
+  || fail "plan-template.md lacks the Marking Contract section"
+
+# Authoring, review, and execution intake must run the linter and reject
+# tier-less plans, not merely mention it.
+for f in "$PLAN/00-research-and-plan.md" "$PLAN/01-plan-review.md" \
+  "$PLAN/02-finalise-plan.md" "$CB/01-execution.md"; do
+  grep -q 'check-plan.sh --require-tier' "$f" \
+    || fail "$(basename "$f") does not run check-plan.sh --require-tier"
+done
+
+# Every step that can end an execution must run the state check.
+for f in "$CB/01-execution.md" "$CB/02-confirm-execution.md" \
+  "$CB/03-execute-and-confirm.md" "$DOC/03-mark-completed.md" "$SKILL"; do
+  grep -q 'check-plan.sh --state' "$f" \
+    || fail "$(basename "$f") does not run check-plan.sh --state before reporting"
+done
+
+# Success Criteria are status-tracked by execution, confirmation, and the gate.
+for f in "$CB/01-execution.md" "$CB/02-confirm-execution.md" "$DOC/03-mark-completed.md"; do
+  grep -q 'Success Criteria' "$f" \
+    || fail "$(basename "$f") does not tick Success Criteria items"
+done
+
+# A plan without checkboxes gets them; an addendum is not a substitute.
+if grep -RIn 'does not use task list syntax, add an addendum' "$CB/02-confirm-execution.md"; then
+  fail "02 still replaces missing checkboxes with an addendum"
+fi
+
+# Retired wording that made ticking optional or gate-only.
+if grep -InE 'may mark after applicable Verification Bar' "$META/glossary.md"; then
+  fail "glossary.md still says 01-execution \"may\" tick"
+fi
+if grep -InE 'sole ✅' "$ROOT_DIR/README.md"; then
+  fail "README.md still names the gate as the sole owner of task ticks"
+fi
+
+# The host template carries the rule even when no workflow is named.
+grep -q 'check-plan.sh --state' "$ROOT_DIR/00-project-setup/01-setup-project.md" \
+  || fail "01-setup-project.md AGENTS template lacks the always-on plan-status rule"
 
 echo "completion chain policy checks OK"

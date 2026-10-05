@@ -68,6 +68,10 @@ A root-level host location (for example a repository-root `plans/` directory) ma
 
 Authoritative policy for this section: this file. Planning and review workflows must link here rather than invent competing destinations.
 
+### Workflow-Scripts checkout
+
+`<workflow-scripts>` in a command means the Workflow-Scripts checkout that holds the workflow file you are following: the repository root when working in Workflow-Scripts itself, otherwise the host's clone or symlink (for example `Workflow-Scripts/`, `workflows/`, or `Shared-Links/Workflow-Scripts/`). Run plan commands from the host repository root, e.g. `bash <workflow-scripts>/scripts/validation/check-plan.sh --require-tier <plan>`. If the checkout cannot be found, record the check as blocked and apply the same rules by reading the plan against the [Marking Contract](./plan-template.md#marking-contract).
+
 ---
 
 ## Workflow Files

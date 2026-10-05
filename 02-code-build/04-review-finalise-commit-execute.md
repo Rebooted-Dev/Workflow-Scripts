@@ -33,6 +33,7 @@ Use this workflow when you would otherwise ask for both:
 3. **Execute and confirm** – Execute [`03-execute-and-confirm.md`](./03-execute-and-confirm.md) in full on the finalised plan:
    - Implementation via [`01-execution.md`](./01-execution.md), confirmation via [`02-confirm-execution.md`](./02-confirm-execution.md).
    - Resolve the terminal outcome and always run the terminal gate [`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md): `Verified Complete` → **Full completion**; `Not Eligible` → **Reconcile only** (reconcile verified task ticks and logs, leave the plan active, and apply no completion marker or archive).
+   - Finish with the final check in `03-execute-and-confirm.md` step 4: `check-plan.sh --state` on the plan prints `OK`.
 
 ## Output
 

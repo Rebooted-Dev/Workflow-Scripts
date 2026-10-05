@@ -130,7 +130,7 @@ Run the project verification command from `AGENTS.md`, package scripts, Makefile
   - Add a row at the top of `<metadata-root>/troubleshooting/index.md`.
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons (see the host's `troubleshooting/README.md`). The Root Cause is the one found in Step 3.
   - Reference related completed plans or earlier troubleshooting entries if applicable.
-- **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
+- **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**. Tick each task `[✅]` when its fix is verified and give anything left open an `Open:` reason ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)); after editing a tiered plan, run `check-plan.sh --state <plan>`.
 
 ### 8. Final Verification
 - Run the final project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs to confirm the repo is shippable; if none exists, state that explicitly.

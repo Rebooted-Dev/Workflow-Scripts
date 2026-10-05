@@ -104,7 +104,7 @@ In **Reconcile only** mode, individually verified tasks still get `✅`. A block
    - **Never scan host-policy archive locations by default**; archives are historical, not active claims.
    - Exclude `README.md`, `TODO.md`, review artifacts, and other navigation/report-only files unless explicitly named.
    - If multiple candidates remain, report them and ask for a named target rather than guessing.
-2. **Extract the full task list:** For each file, list **every** in-scope task/sub-task and its current state: ticked (`[✅]`, `[x]`, `[✓]`), unticked (`[ ]`), or claimed complete in prose ("COMPLETE", "Implementation Verified", a phase report, or an execution addendum). Recognise checkbox syntax in both bulleted (`- [ ]`) and numbered (`1. [ ]`) lists. **Unticked tasks are in scope:** execution often lands and verifies work without ticking the box, so a `[ ]` task whose implementation and evidence are present must be verified and ticked, not skipped. **Use only ✅ (green check mark) for marking completed items—not "x", ✓, or other symbols—for consistency.** Normalise existing `[x]`/`[✓]` ticks to `[✅]` when they verify.
+2. **Extract the full task list:** For each file, list **every** in-scope task/sub-task and its current state: ticked (`[✅]`, `[x]`, `[✓]`), unticked (`[ ]`), or claimed complete in prose ("COMPLETE", "Implementation Verified", a phase report, or an execution addendum). Recognise checkbox syntax in both bulleted (`- [ ]`) and numbered (`1. [ ]`) lists. **Unticked tasks are in scope:** execution often lands and verifies work without ticking the box, so a `[ ]` task whose implementation and evidence are present must be verified and ticked, not skipped. **Use only ✅ (green check mark) for marking completed items—not "x", ✓, or other symbols—for consistency.** Normalise existing `[x]`/`[✓]` ticks to `[✅]` when they verify, and reset them to `[ ]` when they do not. **`## Success Criteria` checkboxes are in scope** and are verified and marked like tasks. **A plan without checkboxes** (prose steps, or YAML `todos:` from another tool) is converted first, per the [Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract): add a `## Tasks` list with one checkbox per step and the `**Tier:**` header, leave the original text in place, then verify that list.
 
 ### Phase 2: Verify Implementation in Code (Sized Verification)
 Size the named plan before assigning verification. Use the smallest approach that provides complete evidence:
@@ -138,6 +138,7 @@ Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follo
 ### Phase 3: Mark Completed vs Flag False Reporting
 1. **For each task/sub-task:**
    - If verification shows the implementation **is present and correct**: mark with **✅** (green check mark) in the plan/report, whether the task was previously `[ ]` or already ticked. Ensure checkboxes are `[✅]` and any "Implementation Verified" or "Verification" section reflects reality. Parent tasks get `[✅]` only when all their sub-tasks are `[✅]`.
+   - If the task is **not complete for a known reason** (not started, blocked, deferred, or retired by the owner): leave it `[ ]` and write its `Open:` reason. A retired task is never ticked and never deleted.
    - If verification shows the implementation **is missing, partial, or incorrect**: do **not** add a green check mark. Instead **flag** the item for the developer.
 2. **Flagging convention:**
    - **False completion:** Plan says complete but code/docs show no implementation
@@ -168,6 +169,8 @@ Do not spawn unbounded agents; assign only bounded, plan-derived tasks and follo
    - **✅** on tasks and sub-tasks that were verified complete, including tasks that were `[ ]` when this workflow started
    - **Completion marker** (e.g. `**Status:** ✅ COMPLETED`), in Full completion mode only. In Reconcile only mode, set the status line to say which tasks are verified and what blocks completion instead.
    - **Remove** or **replace** completion markers from tasks that were flagged (leave as unchecked `[ ]` or add a "⚠ False completion" / "⚠ Incomplete" note). Do not use "x" or ✓ for completed; use **✅ (green check mark)** only for consistency.
+   - **`Open:` reason** on every task and criterion left `[ ]` ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)).
+7. **State check (both modes):** run `bash <workflow-scripts>/scripts/validation/check-plan.sh --state <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)). It must print `OK (…, state)` before the plan is archived or the gate reports. Resolve each reported line by ticking a verified box or writing its `Open:` reason; include the output line in the report.
 
 ### Phase 5: Produce Flagged Issues Report
 1. **Single ordered list:** "Flagged issues" in **descending order of importance or urgency.**
@@ -200,7 +203,8 @@ Illustrative example only (hypothetical consumer project; do not treat paths or 
 - **Docs:** No claims that contradict verification (e.g. remove "API key is never sent to renderer" if P1-1 is still incomplete).
 
 ## Acceptance Criteria
-- Every task/sub-task in scope has been verified against the codebase (and docs where relevant), including tasks that were unticked when this workflow started. No verified task is left `[ ]`.
+- Every task/sub-task in scope has been verified against the codebase (and docs where relevant), including tasks that were unticked when this workflow started. No verified task or criterion is left `[ ]`, and every box that stays `[ ]` has an `Open:` reason.
+- `check-plan.sh --state <plan>` passes in both modes, and its output line is in the report.
 - The mode matches the outcome: Full completion applies the completion marker and archive; Reconcile only applies neither, and the plan stays active.
 - Verified completions are marked with ✅ (and `[✅]` where applicable); false or incomplete claims are flagged and not marked complete.
 - All flagged issues are listed in **descending order of importance or urgency** (P0→P3, S0→S3).

@@ -170,6 +170,7 @@ If you use the `project/` pattern, make sure:
 For consistent checklist marking (✅ vs `[ ]`), completion markers, and archiving completed plans, follow the single source of truth:
 
 - **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**
+- **[Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)** — the two box states, `Open:` reasons, and the `check-plan.sh` commands. When updating an existing project, add the **Plans** bullet from Step 1.2 to its `AGENTS.md`.
 
 ### Quick update checklist (existing project)
 
@@ -292,6 +293,7 @@ Read `PROJECT.md` before starting work: it holds this project's facts (repositor
   - Validating changes across multiple files concurrently
 - Always verify findings from parallel sub-agents before acting on them.
 - **Bugs:** add regression test when it fits.
+- **Plans:** this applies whenever you create, update, or execute a plan, whether or not a workflow was named. Every task and success criterion is a checkbox. Tick `[✅]` (never `[x]`) in the same step its verification passes; give any box left `[ ]` an `Open:` reason (`pending`, `blocked`, `deferred`, or `retired`). Before reporting, run `bash <workflow-scripts>/scripts/validation/check-plan.sh --state <plan>` and fix what it reports. A plan with no checkboxes gets them before it is executed or filed.
 
 ## Change Management
 <slim Change Management section from Step 2.6.2>
@@ -300,6 +302,8 @@ Read `PROJECT.md` before starting work: it holds this project's facts (repositor
 - [Changelog & Troubleshooting](docs/agents/changelog-and-troubleshooting.md) – logs, "update the logs", plans-completed filing
 - <one line per docs/agents/*.md file (Step 2.9.3)>
 ```
+
+In the **Plans** bullet, replace `<workflow-scripts>` with the project's actual Workflow-Scripts path (for example `Workflow-Scripts` or `Shared-Links/Workflow-Scripts`; see [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)).
 
 ### 1.3 Bugs / regression-test instruction
 
@@ -613,6 +617,7 @@ Same pattern as **`project/troubleshooting/`**: **category subfolders** + **`pro
 
 **When** a plan is completed, or the user asks to **"file … as completed"**:
 
+0. **Reconcile the plan first.** Run the terminal gate (`04-documentation/03-mark-completed.md` in Workflow-Scripts). At minimum, make sure every task is a checkbox, tick each verified one `[✅]`, give every box left `[ ]` an `Open:` reason, and confirm `check-plan.sh --state <plan>` passes. Do not move a plan that has no checkboxes or has silently open ones.
 1. **Move** the plan from `project/plans/` or `project/build/` to **`project/plans-completed/<category>/`**. Prepend `yyyy-mm-dd-` to the filename if missing.
 2. **Update `project/plans-completed/index.md`** — new row at the top (Date, Category, Title, File relative to `project/plans-completed/`, Notes).
 3. **Update `project/changelog/index.md`** — new row at the top with Type=`plan`, same Date/Title/Notes, **File** relative to `project/changelog/`, e.g. `../plans-completed/tooling/2026-04-02-my-plan.plan.md`.

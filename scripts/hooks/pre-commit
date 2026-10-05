@@ -11,8 +11,14 @@ bash "$validation/check-planning-build-policy.sh"
 
 while IFS= read -r path; do
   [[ -n "$path" ]] || continue
+  # Active plans get the structural lint. Archived plans also get the state
+  # check: nothing is filed as completed with a silently open box.
+  state_flag=()
   case "$path" in
     00-project/plans/*)
+      ;;
+    00-project/plans-completed/*)
+      state_flag=(--state)
       ;;
     *)
       continue
@@ -26,6 +32,6 @@ while IFS= read -r path; do
   fi
 
   if grep -qE '^[[:space:]]*\*\*Tier:\*\*[[:space:]]+T[123][[:space:]]*$' "$root/$path"; then
-    bash "$validation/check-plan.sh" "$path"
+    bash "$validation/check-plan.sh" ${state_flag[@]+"${state_flag[@]}"} "$path"
   fi
 done < <(git diff --cached --name-only --diff-filter=ACM)

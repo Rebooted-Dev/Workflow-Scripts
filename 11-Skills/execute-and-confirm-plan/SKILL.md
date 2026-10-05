@@ -26,7 +26,7 @@ Use this skill after the user has explicitly moved from planning into implementa
     - Add regression tests for bugs when practical.
     - Prefer existing repo patterns, helpers, and architecture.
     - Re-run the plan's Change Surface searches after implementation and classify the results; unresolved stale hits remain incomplete.
-   - Update the active plan as phases complete or blockers appear.
+   - Update the active plan as phases complete or blockers appear: tick each verified task and Success Criteria item `[✅]` in the same step, and give anything left `[ ]` an `Open:` reason ([Marking Contract](../../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)). If the plan has no checkboxes, add them before implementing.
 
 3. Verify (match `02-code-build` Verification Bar).
    - Run the plan's specified tests/builds first; prefer the project verify path from `AGENTS.md`, package scripts, Makefile, or test docs over a single generic build.
@@ -39,7 +39,7 @@ Use this skill after the user has explicitly moved from planning into implementa
    - Always run the terminal gate `04-documentation/03-mark-completed.md`. It verifies every task, ticked or not, and ticks each verified one `[✅]`.
    - If fully verified complete (all applicable Verification Bar items passed, evidence present, no blocker): run the gate in **Full completion** mode. It is the **only** workflow that applies the plan completion marker and archive routing (resolved from the host repository's policy). Do **not** finalize or archive outside the gate.
    - If partial, blocked, skipped, failed, or under-evidenced (`Not Eligible`): run the gate in **Reconcile only** mode. Verified tasks still get `[✅]`. Leave the plan **active**, record landed work/blocker evidence/next verification, and apply **no** completion marker and **no** archive.
-   - Before reporting, confirm no verified task is still `[ ]`.
+   - Before reporting, run `check-plan.sh --state <plan>` from the Workflow-Scripts checkout and resolve every line it reports. Do not report until it prints `OK`.
 
 5. Sync repo records.
    - Add changelog entries for code changes.

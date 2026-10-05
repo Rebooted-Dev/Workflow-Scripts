@@ -5,6 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-10-05 | fixed | Plans always have checkboxes, and tick state is checked by command | fixed/2026-10-05-fixed-plan-checkbox-and-tick-consistency.md | `[x]` now fails in tiered plans; planning runs `--require-tier`; execution chain runs `--state`; Success Criteria ticked; always-on host rule |
+| 2026-10-05 | docs | File plan for consistent plan checkboxes and completion ticks | docs/2026-10-05-docs-plan-checkbox-and-tick-consistency-plan.md | Investigation and finalised T2 plan; executed the same day (see the fixed row above) |
 | 2026-10-04 | plan | Skills stack in Workflow-Scripts only | ../plans-completed/tooling/2026-10-04-skills-stack-workflow-scripts-only.md | Verified Complete; portable skills/; no swe-skills.md dependency |
 | 2026-10-04 | plan | Simplify setup: 01 is the skills-stack front door | ../plans-completed/tooling/2026-10-04-simplify-setup-front-door.md | Verified Complete; Step 2.12; skills/ is detail only |
 | 2026-10-04 | docs | 01-setup-project is the skills-stack front door | docs/2026-10-04-docs-01-skills-front-door.md | Step 2.12; skills/ is detail only |

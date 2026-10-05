@@ -103,7 +103,7 @@ After trust is established, run the project verification command from `AGENTS.md
   - Create `<metadata-root>/troubleshooting/security/<yyyy-mm-dd>-security-<short-title>.md`
   - Update `<metadata-root>/troubleshooting/index.md` (add the new entry at the top)
   - Include: Date, Category, Status, Symptom, Root Cause, Fix, Verification, Notes/Lessons
-- **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**.
+- **Update the implementation plan (if applicable):** For task marking, completion markers, and archiving completed plans, follow the single source of truth: **[`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md)**. Tick each task `[✅]` when its fix is verified and give anything left open an `Open:` reason ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)); after editing a tiered plan, run `check-plan.sh --state <plan>`.
 
 ### 8. Final Verification
 - After trust is established, run the final project verification command from `AGENTS.md`, package scripts, Makefile, or local test docs to confirm the repo is shippable; if none exists, state that explicitly.

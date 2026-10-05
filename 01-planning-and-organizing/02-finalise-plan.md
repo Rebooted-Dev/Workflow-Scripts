@@ -40,7 +40,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
       - Any inline addenda in the original file
       - Any reports in `PLAN.reviews/` (if present)
     - Use the shared [`../00-Meta-Workflow/00-meta/plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) for tier-specific sections, Decisions, task fields, and Change Surface requirements.
-    - Reference `check-plan.sh` in acceptance criteria; the finalised plan must pass its structural checks.
+    - Run `bash <workflow-scripts>/scripts/validation/check-plan.sh --require-tier <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)) on the saved plan and fix every reported line until it prints `OK`. Do not report the plan as finalised before this passes. Every task and Success Criteria item is a checkbox ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)); when the source plan has prose steps or YAML `todos:`, convert them.
 8. Mark the source plan `**Status:** Superseded by <link>` to the new consolidated plan after that plan is saved.
 9. Archive temporary review artifacts after finalisation by default:
    - If a `PLAN.reviews/` subdirectory exists, move it to the adjacent `PLAN.reviews-archive/` directory after confirming the new plan has been saved.
@@ -69,7 +69,7 @@ Generate a consolidated, improved plan from the supplied plan and feedback, with
 ## Acceptance Criteria
 - Phases are ordered by dependency, then risk; tasks within each phase are labeled and ordered P0 to P3, with explicit rationale.
 - Each phase/bucket has clear entry/exit criteria.
-- The finalised plan follows [`../00-Meta-Workflow/00-meta/plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) and passes `check-plan.sh`.
+- The finalised plan follows [`../00-Meta-Workflow/00-meta/plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) and passes `check-plan.sh --require-tier`, which was run on the saved file (not only referenced).
 - The source plan is marked `**Status:** Superseded by <link>` to the new plan.
 - Dependencies are explicit (e.g., backend proxy before client changes).
 - Scope is intentionally bounded:

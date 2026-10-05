@@ -63,9 +63,11 @@ In this workflow you are **auditing**: only mark or change tasks based on what y
 - **Completed:** `- [✅]` only if the code change exists **and** applicable Verification Bar items / exit criteria were met. If the plan already has `- [✅]` and that is correct, leave it; otherwise normalize to `- [✅]`.
 - **Incomplete / open:** `- [ ]` for not started, in progress, missing code, missing or failed verification, or deferred; add a note for partial or deferred tasks.
 - **Parent tasks:** `- [✅]` only when all sub-tasks are complete (same as 01).
+- **Success Criteria:** audit and mark these the same way as tasks.
+- **Open reasons:** every box left `[ ]` carries an `Open:` reason ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)). Correct a reason that no longer matches reality.
 - **Systematic review:** Check every task in the plan; correct any misreporting.
 
-If the plan does not use task list syntax, add an addendum section instead of rewriting the whole plan.
+If the plan does not use task list syntax (prose steps, or YAML `todos:` from another tool), add a `## Tasks` checkbox list and the `**Tier:**` header per the [Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract) — one checkbox per step, original text left in place — then audit and mark that list. Do not substitute an addendum for checkboxes.
 
 ## Steps
 
@@ -80,7 +82,7 @@ If the plan does not use task list syntax, add an addendum section instead of re
    - **Spot-check user-facing or runtime behavior** when the plan's acceptance criteria depend on it (dev server, CLI, IPC, provider path, export/render, etc.)—not only static review.
    - Look for gaps: missing docs/log updates, missing edge-case handling, broken imports, false "complete" marks without verification evidence.
 
-3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3), in bulleted (`- [ ]`) or numbered (`1. [ ]`) lists. Apply the marking convention in both directions: task marked `[✅]` but code or verification is missing → change to `[ ]` and add a note; task still `[ ]` but code and applicable evidence are verified → change to `[✅]`. Leave already-correct marking as-is. Add notes for incomplete or deferred tasks.
+3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3), in bulleted (`- [ ]`) or numbered (`1. [ ]`) lists. Apply the marking convention in both directions: task marked `[✅]` but code or verification is missing → change to `[ ]` and add a note; task still `[ ]` but code and applicable evidence are verified → change to `[✅]`. Leave already-correct marking as-is. Review `## Success Criteria` items the same way. Give every box left `[ ]` an `Open:` reason, then run `bash <workflow-scripts>/scripts/validation/check-plan.sh --state <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)) and resolve every reported line before writing the addendum.
 
 4. Add a verification addendum to the plan containing:
    - A `## Current state` block at the top, with one line per open recommendation and its disposition/next action; if none remain open, state that explicitly

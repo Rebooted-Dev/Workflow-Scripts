@@ -45,11 +45,11 @@ Common terms and conventions used across Workflow-Scripts documentation.
 
 | Symbol | Meaning |
 |--------|---------|
-| `- [✅]` | **Phase checkbox** — `01-execution` may mark after applicable Verification Bar evidence passes |
-| `- [ ]` | Pending or in-progress task |
+| `- [✅]` | **Verified task or criterion** — `01-execution` ticks it in the same step its Verification Bar evidence passes; `02-confirm-execution` and the gate correct it in both directions |
+| `- [ ]` | Not complete. Once execution has started it carries an `Open:` reason (`pending`, `blocked`, `deferred`, or `retired`) |
 | `**Status:** ✅ COMPLETED` | **Plan-level marker** — only [`03-mark-completed.md`](../../04-documentation/03-mark-completed.md) may apply after whole-plan verification |
 
-Phase checkboxes and plan-level completion are distinct artifacts. See [`01-execution.md`](../../02-code-build/01-execution.md) (Verification Bar) and [`03-mark-completed.md`](../../04-documentation/03-mark-completed.md) (terminal gate).
+Task ticks and plan-level completion are distinct artifacts. The full rule is the [Marking Contract](./plan-template.md#marking-contract). See [`01-execution.md`](../../02-code-build/01-execution.md) (Verification Bar) and [`03-mark-completed.md`](../../04-documentation/03-mark-completed.md) (terminal gate).
 
 The `- [✅]` marker is intentional. Do not replace it with `- [x]`; the visual checkmark is easier to scan for users who have difficulty distinguishing red/green state markers.
 
