@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-10-06 | docs | Plan-artifact completion filing proposal (research) | docs/2026-10-06-docs-plan-artifact-completion-filing-proposal.md | PROPOSAL, not adopted; lifecycle generate → execute → package → file anchored in terminal gate + template inventory; no workflow changed |
 | 2026-10-05 | plan | Consistent plan checkboxes and completion ticks | ../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md | Verified Complete; T2; commit `28be480`; `--require-tier`/`--state`; `[x]` rejected in tiered plans |
 | 2026-10-05 | fixed | Plans always have checkboxes, and tick state is checked by command | fixed/2026-10-05-fixed-plan-checkbox-and-tick-consistency.md | `[x]` now fails in tiered plans; planning runs `--require-tier`; execution chain runs `--state`; Success Criteria ticked; always-on host rule |
 | 2026-10-05 | docs | File plan for consistent plan checkboxes and completion ticks | docs/2026-10-05-docs-plan-checkbox-and-tick-consistency-plan.md | Investigation and finalised T2 plan; executed the same day (see the fixed row above) |
