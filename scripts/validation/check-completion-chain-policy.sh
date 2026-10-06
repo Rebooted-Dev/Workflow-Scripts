@@ -23,6 +23,14 @@
 #   - The Marking Contract is enforced by command: authoring and intake run
 #     check-plan.sh --require-tier, and every step that can end an execution
 #     runs check-plan.sh --state (section 9).
+#
+# The artifact-filing lifecycle contract (Artifact lifecycle inventory, paired
+# gate-owned filing task/criterion eligibility exception, Phase 4 order with
+# steps 1, 2, 4, 5, 6, and 7 before deferred step 3, split Implementation
+# verification / Package filing report statuses, marker-only-after-verified-
+# filing, privacy/retention, idempotent resume) is enforced by the separate
+# check-artifact-lifecycle-policy.sh; this file keeps the completion-chain
+# invariants that predate it.
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -57,6 +65,9 @@ for f in "$CB/03-execute-and-confirm.md" "$DOC/03-mark-completed.md" "$SKILL"; d
   grep -q 'Reconcile only' "$f" \
     || fail "$(basename "$f") lacks the Reconcile only gate mode for Not Eligible plans"
 done
+# Both documented gate modes must remain named in the gate itself.
+grep -q 'Full completion' "$DOC/03-mark-completed.md" \
+  || fail "03-mark-completed.md lacks the Full completion gate mode"
 if grep -RInE 'a `Not Eligible` plan must not|reaches this gate only on a `Verified Complete`' \
   "$CB" "$DOC/03-mark-completed.md" "$DOC/README.md" "$SKILL"; then
   fail "Not Eligible plans still skip the gate, so verified tasks never get ticked"

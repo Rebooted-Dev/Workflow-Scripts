@@ -34,14 +34,16 @@ Always use the `yyyy-mm-dd-` prefix for completed plans:
 
 ## Filing a Completed Plan
 
-When filing a plan as completed:
+Plans are filed by the terminal gate, not moved by hand: run [`04-documentation/03-mark-completed.md`](../../../04-documentation/03-mark-completed.md) (Full completion mode), which reconciles the plan, files the completed **package** — the plan plus the task-exclusive artifacts listed in its `Artifact lifecycle` inventory ([shared contract](../../../00-Meta-Workflow/00-meta/plan-template.md#artifact-lifecycle-and-terminal-filing)) — and repairs inbound links, verifying `check-plan.sh --require-tier --state` passes at the plan's final path. The gate performs and verifies these effects, in order:
 
-0. **Reconcile the plan first** — run the terminal gate (`04-documentation/03-mark-completed.md`); every task is a checkbox, verified ones are `[✅]`, every box left `[ ]` has an `Open:` reason, and `scripts/validation/check-plan.sh --state <plan>` passes
+0. **Reconcile the plan first** — the gate itself: every task is a checkbox, verified ones are `[✅]`, every box left `[ ]` has an `Open:` reason, and `scripts/validation/check-plan.sh --state <plan>` passes
 1. **Choose the appropriate category** based on the plan's nature
-2. **Move** the file from `plans/` or `build/` to `plans-completed/<category>/`
+2. **Move** the file from `plans/` or `build/` to `plans-completed/<category>/` (with the plan's task-exclusive artifacts)
 3. **Rename** with `yyyy-mm-dd-` prefix (if not already present)
 4. **Update** `plans-completed/index.md` — new row at the **top**
 5. **Update** `changelog/index.md` — Type=`plan` row at the top; File `../plans-completed/<category>/<filename>`
+
+A `PENDING`/`BLOCKED`/`PARTIAL` gate filing status means the plan is not yet filed here; resume through the gate rather than moving files manually.
 
 ## Related Documentation
 

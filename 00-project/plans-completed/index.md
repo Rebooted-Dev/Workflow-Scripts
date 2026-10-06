@@ -4,6 +4,7 @@ Chronological index of filed plans under **`plans-completed/`**. **Newest first.
 
 | Date | Category | Title | File | Notes |
 |------|----------|-------|------|-------|
+| 2026-10-06 | implementation | Plan-artifact completion filing (T3 plan + retained proposal) | implementation/2026-10-06-plan-artifact-completion-filing-proposal-261006-1504-gpt6sol.md | Verified Complete 2026-10-06 (local, not committed): ✅ COMPLETED; Implementation VERIFIED + Package VERIFIED; all 7 tasks + 6 Success Criteria ticked; guards green (scoped links 31 CLI cases, lifecycle 29 mutations + baseline, filing rehearsal S1–S5 + S2b); post-edit combined lint + archived scoped + full active links + `git diff --check` pass |
 | 2026-10-05 | implementation | Consistent plan checkboxes and completion ticks | implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md | Verified Complete on `28be480` (`v1.82`); Marking Contract; `--require-tier`/`--state`; `[x]` rejected in tiered plans; pre-commit + host rule; 9 new fixtures |
 | 2026-10-04 | tooling | Skills stack in Workflow-Scripts only | tooling/2026-10-04-skills-stack-workflow-scripts-only.md | Verified Complete; portable `00-project-setup/skills/`; no swe-skills.md dependency; entry later via 01 Step 2.12 |
 | 2026-10-04 | tooling | Simplify setup: 01 is the skills-stack front door | tooling/2026-10-04-simplify-setup-front-door.md | Verified Complete; Step 2.12 folds curated skills into 01; skills/ detail only |

@@ -52,11 +52,13 @@ Same pattern as **`troubleshooting/`**: **category subfolders** + **`plans-compl
 
 **Categories:** `implementation/`, `investigation/`, `migration/`, `review/`, `tooling/` — see `plans-completed/README.md` for definitions.
 
-**When** a plan is completed, or the user asks to **"file … as completed"**:
+**When** a plan is completed, or the user asks to **"file … as completed"**: file it through the terminal gate only — [`04-documentation/03-mark-completed.md`](../../../04-documentation/03-mark-completed.md) in **Full completion** mode. The gate reconciles the plan, then performs and verifies these effects — filing the completed **package** (the plan plus the task-exclusive artifacts in its `Artifact lifecycle` inventory, per the [shared contract](../../../00-Meta-Workflow/00-meta/plan-template.md#artifact-lifecycle-and-terminal-filing), with links and indexes verified) — do not move plan files directly:
 
-1. **Move** the plan from `plans/` or `build/` to **`plans-completed/<category>/`**. Prepend `yyyy-mm-dd-` to the filename if missing.
+1. **Move** the plan (and its task-exclusive artifacts) from `plans/` or `build/` to **`plans-completed/<category>/`**. Prepend `yyyy-mm-dd-` to the filename if missing.
 2. **Update `plans-completed/index.md`** — new row at the top.
 3. **Update `changelog/index.md`** — new row at the top with Type=`plan`, **File** relative to `changelog/`, e.g. `../plans-completed/tooling/2026-04-02-my-plan.md`.
+
+If the gate reports filing `PENDING`/`BLOCKED`/`PARTIAL`, the plan is **not** completed-filed; resolve the blocker and resume through the gate rather than moving files by hand.
 
 ## Changelog plans archive (`changelog/plans/`)
 

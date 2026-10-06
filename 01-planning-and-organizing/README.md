@@ -79,7 +79,7 @@ Plan ordering separates phase sequence from task priority:
 - Label and order tasks within each phase P0 → P3.
 - Keep report findings and recommendations ordered P0 → P3, with severity breaking ties.
 
-Use the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract for tier-specific sections and required task fields. Priority labels mean:
+Use the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract for tier-specific sections, required task fields, and the [`Artifact lifecycle`](../00-Meta-Workflow/00-meta/plan-template.md#artifact-lifecycle-and-terminal-filing) inventory with its gate-owned terminal filing pair. Priority labels mean:
 - **P0 Blocker:** Critical path items, must complete before merge
 - **P1 Urgent:** High impact, must complete before release
 - **P2 Soon:** Medium impact, complete next sprint

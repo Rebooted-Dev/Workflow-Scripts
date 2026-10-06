@@ -64,7 +64,8 @@ In this workflow you are **auditing**: only mark or change tasks based on what y
 - **Incomplete / open:** `- [ ]` for not started, in progress, missing code, missing or failed verification, or deferred; add a note for partial or deferred tasks.
 - **Parent tasks:** `- [✅]` only when all sub-tasks are complete (same as 01).
 - **Success Criteria:** audit and mark these the same way as tasks.
-- **Open reasons:** every box left `[ ]` carries an `Open:` reason ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)). Correct a reason that no longer matches reality.
+- **Open reasons:** every box left `[ ]` carries an `Open:` reason ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)). Correct a reason that no longer matches reality — except the designated filing pair's recorded `blocked`/`pending` reason, which is never reset here (see below).
+- **Terminal filing pair:** audit the designated pair for identity and prerequisites only — exactly one designated task plus its paired criterion, `Files:`/`Verify:` present, prerequisites understood. Its filing **effects** are verified and ticked only by the gate's Phase 4 step 3. A task that implements filing behavior for other plans is an ordinary implementation task, not this plan's own filing.
 - **Systematic review:** Check every task in the plan; correct any misreporting.
 
 If the plan does not use task list syntax (prose steps, or YAML `todos:` from another tool), add a `## Tasks` checkbox list and the `**Tier:**` header per the [Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract) — one checkbox per step, original text left in place — then audit and mark that list. Do not substitute an addendum for checkboxes.
@@ -82,7 +83,7 @@ If the plan does not use task list syntax (prose steps, or YAML `todos:` from an
    - **Spot-check user-facing or runtime behavior** when the plan's acceptance criteria depend on it (dev server, CLI, IPC, provider path, export/render, etc.)—not only static review.
    - Look for gaps: missing docs/log updates, missing edge-case handling, broken imports, false "complete" marks without verification evidence.
 
-3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3), in bulleted (`- [ ]`) or numbered (`1. [ ]`) lists. Apply the marking convention in both directions: task marked `[✅]` but code or verification is missing → change to `[ ]` and add a note; task still `[ ]` but code and applicable evidence are verified → change to `[✅]`. Leave already-correct marking as-is. Review `## Success Criteria` items the same way. Give every box left `[ ]` an `Open:` reason, then run `bash <workflow-scripts>/scripts/validation/check-plan.sh --state <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)) and resolve every reported line before writing the addendum.
+3. **Systematically review every task in the plan:** Go through each task (and each priority phase if the plan uses P0/P1/P2/P3), in bulleted (`- [ ]`) or numbered (`1. [ ]`) lists. Apply the marking convention in both directions: task marked `[✅]` but code or verification is missing → change to `[ ]` and add a note; task still `[ ]` but code and applicable evidence are verified → change to `[✅]`. Leave already-correct marking as-is. Review `## Success Criteria` items the same way. The designated terminal filing pair is audited for identity and prerequisites only here — leave it `[ ]` for the gate (see step 5). Give every box left `[ ]` an `Open:` reason, then run `bash <workflow-scripts>/scripts/validation/check-plan.sh --state <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)) and resolve every reported line before writing the addendum.
 
 4. Add a verification addendum to the plan containing:
    - A `## Current state` block at the top, with one line per open recommendation and its disposition/next action; if none remain open, state that explicitly
@@ -93,9 +94,9 @@ If the plan does not use task list syntax (prose steps, or YAML `todos:` from an
    - Blocked or skipped checks and residual risk (if any)
    - Next steps (only for incomplete items)
 
-5. **No plan-level completion here.** This workflow corrects task ticks and appends evidence; it does not apply a plan-level completion marker or archive. See [`03-mark-completed.md`](../04-documentation/03-mark-completed.md).
+5. **No plan-level completion here.** This workflow corrects task ticks and appends evidence; it does not apply a plan-level completion marker or archive. The plan's designated gate-owned terminal filing task and its paired criterion are audited only for presence and accuracy — never ticked here; they stay `[ ]` with their current `Open:` reason (`pending`, or a previously recorded `blocked`/`partial` reason, which is never reset to `pending` here) until the gate verifies the filing ([Artifact Lifecycle and Terminal Filing](../00-Meta-Workflow/00-meta/plan-template.md#artifact-lifecycle-and-terminal-filing)).
 
-6. **Hand off to the gate (always):** When fully verified complete → [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) in **Full completion** mode. When blocked, partial, or under-evidenced → **`Not Eligible`** → the same gate in **Reconcile only** mode: verified tasks ticked, logs reconciled, plan stays active, no marker or archive.
+6. **Hand off to the gate (always):** When fully verified complete → [`03-mark-completed.md`](../04-documentation/03-mark-completed.md) in **Full completion** mode. When blocked, partial, or under-evidenced → **`Not Eligible`** → the same gate in **Reconcile only** mode: verified tasks ticked, logs reconciled, plan stays active, no marker or archive. Hand the gate the plan's `## Artifact lifecycle` inventory with the verification evidence — confirmation moves nothing.
 
 ## Related Workflows
 

@@ -7,6 +7,7 @@ validation="$root/scripts/validation"
 
 bash "$validation/check-meta-logs.sh" --staged
 bash "$validation/check-completion-chain-policy.sh"
+bash "$validation/check-artifact-lifecycle-policy.sh"
 bash "$validation/check-planning-build-policy.sh"
 
 while IFS= read -r path; do

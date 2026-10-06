@@ -4,13 +4,7 @@ Keep this file up to date as tasks involving the `00-project/` directory are com
 
 ## Reference — filing completed plans
 
-When a plan is finished and should be archived, follow **`plans-completed/README.md`**:
-
-1. Move the plan file from `plans/` or `build/` to **`plans-completed/<category>/`** (pick category: `implementation`, `investigation`, `migration`, `review`, or `tooling`).
-2. Add a row at the top of **`plans-completed/index.md`** (Date, Category, Title, File, Notes).
-3. Add a row at the top of **`changelog/index.md`** with Type=`plan` and File **`../plans-completed/<category>/<filename>`**.
-
-**Alternate:** If you explicitly want the plan under **`changelog/plans/`** only, file there and use File `plans/...` in the changelog index.
+When a plan is finished, file it **only through the canonical terminal gate** — [`04-documentation/03-mark-completed.md`](../../04-documentation/03-mark-completed.md) in **Full completion** mode (gate reconciliation is step 0; never move plan files directly). The gate files the completed package per the host archive policy, including the artifact-inventory moves, index rows, and link effects; see [`plans-completed/README.md`](../plans-completed/README.md) for categories and layout. **Alternate:** `changelog/plans/` only when explicitly requested by the user.
 
 ## Active
 
@@ -38,3 +32,4 @@ When a plan is finished and should be archived, follow **`plans-completed/README
 - [ ] Migrate legacy meta content from `00-Meta-Workflow/` into `00-project/` (optional follow-up)
 - [ ] Battle-test the deep-review workflow set (`2026-07-03-deep-review-00-overview.md`, `-01-review-pass.md`, `-02-verification-pass.md`) on a consumer repo, then promote it to a numbered workflow (e.g. `05-review/05-deep-review.md`) and index it in `05-review/README.md`
 - [ ] Measure `scripts/sync-workflow-scripts.sh --status` across at least 5 configured projects before considering parallel fetch optimization; if implemented later, keep fetch parallelism separate from status rendering and preserve `scripts/validation/check-sync-workflow-scripts.sh` behavior.
+- [✅] [Plan-artifact completion filing](../plans-completed/implementation/2026-10-06-plan-artifact-completion-filing-proposal-261006-1504-gpt6sol.md) (T3) — implemented, archived, and **verified complete** 2026-10-06: artifact inventory + gate-owned terminal filing lifecycle adopted; scoped archive-aware link checking (31 CLI cases + legacy built-in selftest), lifecycle policy guards (29 negative mutations + baseline), and filing rehearsal S1–S5 + S2b green in the final merged CI-equivalent suite. Final gate VERIFIED: ✅ COMPLETED, Implementation VERIFIED + Package VERIFIED, all 7 tasks + 6 Success Criteria ticked, post-edit combined lint + archived scoped/full active link checks + `git diff --check` pass (local working tree, not committed).

@@ -34,6 +34,9 @@ jobs:
       - name: Check active Markdown links
         run: bash scripts/validation/check-active-markdown-links.sh
 
+      - name: Check active Markdown links self-test
+        run: bash scripts/validation/check-active-markdown-links-selftest.sh
+
       - name: Check review workflow policy
         run: bash scripts/validation/check-review-workflow-policy.sh
 
@@ -48,6 +51,15 @@ jobs:
 
       - name: Check completion-chain policy
         run: bash scripts/validation/check-completion-chain-policy.sh
+
+      - name: Check artifact-lifecycle policy
+        run: bash scripts/validation/check-artifact-lifecycle-policy.sh
+
+      - name: Check artifact-lifecycle policy self-test
+        run: bash scripts/validation/check-artifact-lifecycle-policy-selftest.sh
+
+      - name: Check artifact-filing rehearsal self-test
+        run: bash scripts/validation/check-artifact-filing-selftest.sh
 
       - name: Check planning/build policy
         run: bash scripts/validation/check-planning-build-policy.sh

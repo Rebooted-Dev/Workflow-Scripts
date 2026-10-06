@@ -5,6 +5,7 @@ Chronological index of troubleshooting entries.
 
 | Date | Category | Title | File | Status |
 |------|----------|-------|------|--------|
+| 2026-10-06 | workflow | Plan packages had no artifact handoff, late state check, premature completion marker, and unverifiable archive links | workflow/2026-10-06-workflow-plan-artifact-completion-filing.md | resolved; verified complete — package filed, final gate check passed 2026-10-06 |
 | 2026-10-05 | workflow | Plans without checkboxes, and completed work left unticked | workflow/2026-10-05-workflow-plans-without-checkboxes-or-ticks.md | resolved |
 | 2026-09-26 | workflow | v1.82 source-integrity links and navigation were stale | workflow/2026-09-26-workflow-v182-source-integrity-links.md | corrected locally; approved commit pending parent restage/revalidation; CI pending |
 | 2026-09-26 | workflow | Plan 01 link handoff targets lost from TODO | workflow/2026-09-26-workflow-plan01-link-handoff-lost.md | resolved |

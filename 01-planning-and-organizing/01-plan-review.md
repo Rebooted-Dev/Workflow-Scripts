@@ -15,6 +15,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
 
 ## Steps
 1. Read the plan end-to-end and list its explicit goals, scope, and assumptions. Use [`../00-Meta-Workflow/00-meta/plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) to assess the declared tier and required structure; re-run every Change Surface search and classify each result, noting missing or stale sites.
+   - Check artifact coverage against the shared [Artifact Lifecycle and Terminal Filing](../00-Meta-Workflow/00-meta/plan-template.md#artifact-lifecycle-and-terminal-filing) contract: a proportional `## Artifact lifecycle` inventory is present and accurate (research, source plans, review archives, evidence; retained rows with reasons), and exactly one explicitly gate-owned terminal filing task exists with its paired filing criterion. Report each gap as a finding; reference the contract instead of restating it.
    - Run `bash <workflow-scripts>/scripts/validation/check-plan.sh --require-tier <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)). Report each failure as a finding: a plan without a Tier header, without checkbox tasks, or with non-canonical ticks is not ready to execute ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)).
    - Judge the plan's Design against the shared [engineering standards §1–§3](../00-Meta-Workflow/00-meta/engineering-standards.md): boundaries/abstraction, reuse/source of truth, and errors/fallbacks. Cite the applicable section in findings; do not restate the standard as a separate local checklist.
 2. Size any delegated validation using [`workflow-applicability.md`](../00-Meta-Workflow/00-meta/workflow-applicability.md). Select only the roles needed to check plan claims; options include API/interface compatibility, structure/dependencies, configuration/environment, existing patterns, and tests/integration. Give roles non-overlapping read-only scopes, then consolidate results and flag conflicts.
@@ -64,6 +65,7 @@ Review a user-supplied plan for correctness, risk, feasibility, and completeness
   - Add sub-headings per model, for example: `### Model: <model-name>` under the main header.
 - Sections (priority-ordered): P0, P1, P2, P3
 - Assess Decision options, reversibility, and per-task `Files:`/`Verify:` fields against the shared [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md) contract.
+- Assess the `## Artifact lifecycle` inventory and the gate-owned terminal filing pair against the same contract: coverage, ownership, disposition/retention reasons, and verification fields.
 - Assess Design against the shared [engineering standards §1–§3](../00-Meta-Workflow/00-meta/engineering-standards.md), retaining plan-review-specific checks for scope, dependencies, feasibility, and evidence.
 - Each item must include:
   - **Severity** (S0–S3): Impact level if the issue ships

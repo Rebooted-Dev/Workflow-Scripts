@@ -29,7 +29,7 @@ Conduct deep research and analysis to create a comprehensive initial implementat
 
 - **Research findings document** under `<metadata-root>/research/` using `{report-type}-YYMMDD-HHMM-{model}.md` (see [`../00-Meta-Workflow/00-meta/naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md))
 - **Initial implementation plan** under `<metadata-root>/plans/YYYY-MM-DD-{plan-name}.md` (or the host's documented filename convention); optionally add a task to `<metadata-root>/plans/TODO.md`. Use `<metadata-root>/build/` only when the host policy explicitly permits it.
-- The plan includes: research summary, recommended approach, phases, tasks, risks
+- The plan includes: research summary, recommended approach, phases, tasks, risks, and a proportional `## Artifact lifecycle` inventory with the gate-owned terminal filing pair
 
 ## Prioritization Rule
 
@@ -206,6 +206,8 @@ Create the implementation plan under `<metadata-root>/plans/` per [`../00-Meta-W
 
 Use the tiered section requirements and scaffold in [`plan-template.md`](../00-Meta-Workflow/00-meta/plan-template.md); do not maintain a separate inline plan template here.
 
+**Initialize the artifact lifecycle.** Give the plan a proportional `## Artifact lifecycle` inventory and exactly one gate-owned terminal filing task with its paired filing Success Criterion, per the shared [Artifact Lifecycle and Terminal Filing](../00-Meta-Workflow/00-meta/plan-template.md#artifact-lifecycle-and-terminal-filing) contract. List the Phase 3.1 research document as the first inventory row; give live/shared records a retained reason. Do not raise the plan's tier or add a manifest file for filing.
+
 **Lint the plan before reporting it.** Run `bash <workflow-scripts>/scripts/validation/check-plan.sh --require-tier <plan>` (path per [`naming-conventions.md`](../00-Meta-Workflow/00-meta/naming-conventions.md#workflow-scripts-checkout)) and fix every reported line until it prints `OK`. Every task and Success Criteria item must be a checkbox ([Marking Contract](../00-Meta-Workflow/00-meta/plan-template.md#marking-contract)).
 
 ### 3.3 Add Planning Complete Marker
@@ -260,6 +262,7 @@ Or if you want to indicate research is complete but plan is still being written:
 - [ ] Dependencies are explicitly mapped
 - [ ] Risks are identified with mitigations
 - [ ] Plan is written to `<metadata-root>/plans/` with dated filename
+- [ ] Plan carries a proportional `## Artifact lifecycle` inventory (research document listed) and exactly one gate-owned terminal filing task with its paired criterion
 - [ ] `check-plan.sh --require-tier <plan>` was run and prints `OK`; every task and criterion is a checkbox
 - [ ] Research findings are documented under `<metadata-root>/research/`
 - [ ] No source code was modified (planning only)

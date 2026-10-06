@@ -32,14 +32,16 @@ Use this workflow when you would otherwise ask for both:
 
 3. **Execute and confirm** – Execute [`03-execute-and-confirm.md`](./03-execute-and-confirm.md) in full on the finalised plan:
    - Implementation via [`01-execution.md`](./01-execution.md), confirmation via [`02-confirm-execution.md`](./02-confirm-execution.md).
-   - Resolve the terminal outcome and always run the terminal gate [`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md): `Verified Complete` → **Full completion**; `Not Eligible` → **Reconcile only** (reconcile verified task ticks and logs, leave the plan active, and apply no completion marker or archive).
-   - Finish with the final check in `03-execute-and-confirm.md` step 4: `check-plan.sh --state` on the plan prints `OK`.
+   - Resolve the terminal outcome and always run the terminal gate [`../04-documentation/03-mark-completed.md`](../04-documentation/03-mark-completed.md): `Verified Complete` → **Full completion** (it files the completed package per the plan's `## Artifact lifecycle` inventory and applies the marker only after filing verifies); `Not Eligible` → **Reconcile only** (reconcile verified task ticks and logs, leave the plan active, and apply no completion marker or archive).
+   - Record the gate's reported actual final path and its two status lines (`Implementation verification`, `Package filing`) in the report. A pending, blocked, or partial filing is reported as such — never as completion.
+   - This step adds no commit behavior: the planning checkpoint in step 2 is the only commit in this workflow, and it stays a user-selected boundary; do not commit or push at close unless separately authorized.
+   - Finish with the final check in `03-execute-and-confirm.md` step 4: `check-plan.sh --require-tier --state` on the plan's actual path prints `OK`.
 
 ## Output
 
 - Review feedback and a finalised implementation plan produced per [`../01-planning-and-organizing/03-plan-review-and-finalise.md`](../01-planning-and-organizing/03-plan-review-and-finalise.md).
 - A commit containing the staged planning artifacts, created before execution began.
-- Everything produced by [`03-execute-and-confirm.md`](./03-execute-and-confirm.md): implemented code, updated logs, verification addendum, and a resolved terminal outcome.
+- Everything produced by [`03-execute-and-confirm.md`](./03-execute-and-confirm.md): implemented code, updated logs, verification addendum, a resolved terminal outcome, and the gate's reported final path with its filing status.
 
 ## Quick Checklist
 

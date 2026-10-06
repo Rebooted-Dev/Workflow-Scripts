@@ -76,11 +76,24 @@ Replace placeholders. A T1 plan may use just Goal, Change Surface, and Tasks; om
 ## Rollout & Rollback
 <release/checkpoints and a reversible rollback path>
 
+## Artifact lifecycle
+| Source locator | Owner repository | Relationship | Disposition / exact destination or retained reason | Verification |
+|---|---|---|---|---|
+| `research/findings-YYMMDD-HHMM-model.md` | this repository | research | move with the completed plan per owner policy | gate filing check |
+| `plans/source-plan.md` | this repository | superseded source | move or retain per owner policy; marked superseded | gate filing check |
+| `docs/guide.md` | this repository | live product doc | retain in place — canonical live record | retained-link check |
+
 ## Tasks
 ### Phase 1: <name>
 1. [ ] <task> (P1, Effort: S)
    - Files: <paths>
    - Verify: `<command>` → <expected result> (cost/prereqs: <none | details>)
+
+### Phase N: close-out
+N. [ ] File the completed plan package via the terminal gate (P2, Effort: S)
+   - Open: pending — gate-owned terminal filing, excluded with its paired criterion from implementation-entry eligibility
+   - Files: this plan; `## Artifact lifecycle` rows
+   - Verify: gate filing verified — inventory matches disk, affected links/indexes repaired, `check-plan.sh --require-tier --state` passes at the final path (cost/prereqs: verified implementation, resolved owner archive policy)
 
 ## Dependencies
 - <dependency and ordering>
@@ -96,6 +109,7 @@ Use the shared [`severity-priority-rubric.md`](./severity-priority-rubric.md) fo
 
 ## Success Criteria
 - [ ] <observable criterion>
+- [ ] Completed plan package filed and verified at its recorded destination — Open: pending — gate-owned filing criterion paired with the terminal filing task
 ```
 
 ## Task and Decision Requirements
@@ -105,6 +119,15 @@ Use the shared [`severity-priority-rubric.md`](./severity-priority-rubric.md) fo
 - Give each task its own P0–P3 label. Order phases by dependency, then risk; order tasks within each phase by priority.
 - A Decision lists at least two `Option` lines, including an explicitly minimal option, then names the choice and its reversibility. Flag a one-way decision for review.
 - Checkboxes in `## Success Criteria` are criteria, not tasks: they need no `Files:` or `Verify:` lines, but their status is tracked under the [Marking Contract](#marking-contract).
+
+## Artifact Lifecycle and Terminal Filing
+
+This is the single source for how a plan accounts for its associated artifacts and closes its lifecycle; workflows link here and do not restate it.
+
+- **Artifact inventory.** Every generated or finalised plan carries an `## Artifact lifecycle` section with one row per associated artifact: Source locator | Owner repository | Relationship | Disposition / exact destination or retained reason | Verification. Source locators are code-form provenance; working final references are Markdown links, rebased after any move. A finalised plan keeps rows for its superseded source plan, review archives, research, and evidence. Live product docs, changelog/troubleshooting entries, and shared or cross-repository records are listed as **retained** with their reason — another repository's records are never moved by this plan's filing. No separate manifest file or parser is required; the table is agent-checked evidence.
+- **Terminal filing pair.** The final top-level task is exactly one explicitly designated gate-owned filing task, marked as gate-owned terminal filing in its `Open:` line, with the normal priority, Effort, `Files:`, and `Verify:` fields (its `Verify:` may cite the terminal gate's scoped link check). It is paired with exactly one filing criterion under `## Success Criteria`. Only the terminal gate ticks either box, and only after the filing effects verify. All other tasks — including tests, docs, acceptance obligations, and accepted deferred work — are implementation obligations.
+- **Eligibility exclusion.** Entry into the gate's Full completion mode requires every **committed in-scope** task and Success Criterion verified **except** the designated filing pair, which is excluded from implementation-entry eligibility so a plan is not blocked by its own pending bookkeeping. The exclusion applies to that pair only: deferred work committed inside the plan's scope keeps the plan `Not Eligible`, while separately documented external or non-goal debt simply stays open and routed (Deferred & Debt / host tracker) without blocking. No `closed with deferred` mode exists.
+- **Proportionality and legacy plans.** A T1 plan may use a single-row inventory and a short filing task; add only the proportional `## Artifact lifecycle` section and the paired filing criterion that filing requires — never raise a tier for filing and never pull in unrelated T2/T3 sections. Older active plans without the section get a proportional inventory and filing pair added where they are executed or at the gate, using what can be verified from the plan's own outputs — no tier upgrade, no history rewrite.
 
 ## Marking Contract
 
@@ -129,3 +152,4 @@ List every relevant site that implements, restates, guards, or historically reco
   - `check-plan.sh <plan>` — structure and canonical ticks. Run after any edit to a tiered plan.
   - `check-plan.sh --require-tier <plan>` — also rejects a missing Tier. Run when creating, reviewing, finalising, or starting to execute a plan.
   - `check-plan.sh --state <plan>` — also rejects a silent open box. Run at each phase report, at confirmation, and at the terminal gate. Do not run it on a draft: every task is open before execution starts.
+- The artifact inventory is agent-checked evidence at the terminal gate; `check-plan.sh` does not parse it. The gate's scoped `check-active-markdown-links.sh --root … --scope …` run verifies moved links only, never inventory coverage.
