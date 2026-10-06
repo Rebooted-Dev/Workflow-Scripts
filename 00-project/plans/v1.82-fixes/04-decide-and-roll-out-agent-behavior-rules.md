@@ -12,6 +12,7 @@
 
 - Raw source material: [`update-agents-files.md`](../../research/v1.82-fixes/update-agents-files.md).
 - Related workflow context: [`Workflow-Scripts meta guidelines`](../../AGENTS.md) and [`repository map`](../../docs/agents/repository-map.md).
+- Skills-stack context (2026-10-04): a curated agent-skills stack was adopted in Workflow-Scripts only ([`00-project-setup/skills/`](../../../00-project-setup/skills/), including [`precedence.md`](../../../00-project-setup/skills/precedence.md), wired as [`01-setup-project.md`](../../../00-project-setup/01-setup-project.md) Step 2.12; filed in [`2026-10-04-skills-stack-workflow-scripts-only.md`](../../plans-completed/tooling/2026-10-04-skills-stack-workflow-scripts-only.md)). Treat it as reference context only: the target/inheritance inventory must account for setup-scaffolded agent files that may now carry a skills block, and the conditional Visualize-rule decision should weigh installed curated skills — but this changes no approval gate, decision, or rollout boundary in this plan.
 - Advisory review inputs: the two independent read-only reviews and Oracle graph review supplied for this task. Their corrections are incorporated through target/inheritance inventory, per-rule adopt/adapt/reject decisions, conditional Visualize handling, explicit approval, preserved safeguards, representative checks, and rollback.
 
 ## Approval gates

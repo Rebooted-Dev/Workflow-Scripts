@@ -13,13 +13,14 @@
 ## Source and review provenance
 
 - Primary research: [`Workflow Auto-Trigger Skills Proposal`](../../research/v1.82-fixes/2026-07-04-workflow-auto-trigger-skills-proposal.md), including its review addendum and reduced verb-skill recommendation.
-- Current skill inventory entry point: [`11-Skills/README.md`](../../../11-Skills/README.md).
-- Existing setup context: [`00-project-setup/06-skills-setup.md`](../../../00-project-setup/06-skills-setup.md).
+- Held-bundles tombstone: [`11-Skills/README.md`](../../../11-Skills/README.md) — held for review, not active; the unfinished skill bundles were moved out of this repository on 2026-08-18 and the in-repo directory retains only this notice.
+- Existing setup context: [`00-project-setup/06-skills-setup.md`](../../../00-project-setup/06-skills-setup.md) — now the skills discovery catalog (storage locations, curated lists) behind the [`01-setup-project.md`](../../../00-project-setup/01-setup-project.md) front door, which pulls install/scan/scaffold detail from [`00-project-setup/skills/`](../../../00-project-setup/skills/).
 - Advisory review inputs: the two independent read-only reviews and Oracle graph review supplied for this task. Their corrections are incorporated by retaining the installation hold, requiring empirical runtime/ownership evidence, adding negative trigger checks, and bounding any pilot to one project without global or Update-AI-Tools writes.
 
 ## Deferred context and reactivation condition
 
 - The existing `11-Skills` hold remains preserved as historical decision context.
+- **Runtime context changed while KIV (2026-10-04):** a curated agent-skills stack was adopted in Workflow-Scripts only (`00-project-setup/skills/` as `01-setup-project.md` Step 2.12; plans filed [simplify setup front door](../../plans-completed/tooling/2026-10-04-simplify-setup-front-door.md) and [skills stack in Workflow-Scripts only](../../plans-completed/tooling/2026-10-04-skills-stack-workflow-scripts-only.md)). This does not reactivate this plan or narrow the KIV decision; a reactivation reassessment must account for this adopted stack, the discovery-catalog role of `06-skills-setup.md`, and the moved `11-Skills` bundles in addition to the original hold.
 - No inventory, runtime evidence collection, adoption decision, pilot, installation, updater, global target, or Update-AI-Tools work is authorized while this plan is KIV.
 - Reactivation requires an explicit future user request, followed by a fresh reassessment of the `11-Skills` hold and current runtime state.
 

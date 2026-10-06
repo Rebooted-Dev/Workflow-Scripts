@@ -6,7 +6,7 @@
 
 **Summary:** Run a bounded, disposable harness concept test that discovers the current command and permission behavior of `opencode`, `codex`, `droid`, and `claude`, launches verified non-interactive passes, proves protected-scope isolation and artifact discipline, and produces a single-writer manifest and synthesis record. This is a mechanics test, not a model-quality benchmark and not a reusable launcher project.
 
-> **Cross-reference (2026-09-25):** the archived [planning and build workflow quality plan](../../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) lists behavioral evidence (whether agents actually follow its new plan rules) under Deferred & Debt, triggered by this concept test passing. No dependency in either direction.
+> **Cross-reference (2026-09-25):** the archived [planning and build workflow quality plan](../../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) lists behavioral evidence (whether agents actually follow its new plan rules) under Deferred & Debt, triggered by this concept test passing. No dependency in either direction. That plan was archived Verified Complete on 2026-09-27; its behavioral-evidence deferred item is now tracked in [`plans/TODO.md`](../TODO.md) under "Quality-plan Deferred & Debt" with the same trigger.
 
 ## Source and review provenance
 
