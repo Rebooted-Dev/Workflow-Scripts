@@ -82,6 +82,9 @@ case "$tier_state" in
       exit 1
     fi
     echo "check-plan: $plan: warning: no **Tier:** header; treating as legacy" >&2
+    if [ "$state_mode" -eq 1 ]; then
+      echo "check-plan: $plan: OK (LEGACY, state)"
+    fi
     exit 0
     ;;
 esac
