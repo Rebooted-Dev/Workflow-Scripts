@@ -1,109 +1,210 @@
-# 2026-09-22 16:37
+# Implementation Plan: Run Astra Instruction Evaluation
 
-# Run Astra Instruction Evaluation
+**Created:** 2026-09-22 16:37
+**Updated:** 2026-10-07
+**Status:** Active — blocked on an explicit comparison-arm decision. Protocol recovery is verified complete; runtime identity/access and budget have not been tested or evidenced.
+**Tier:** T3
+**Validation owner:** Parent orchestrator
 
-**Status:** Active — blocked pending an explicit comparison-arm decision (protocol filed on `9714c15`)
+## Goal
 
-**Summary:** Evaluate GPT-6 Astra instruction behavior only after an explicit decision selects one comparison arm; the authoritative protocol is filed at `research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md`. The current-v1.82 arm is recommended for decision, but is **not selected**. Preserve the protocol core for the selected arm; if the current-v1.82 arm is selected, add a separately approved generation-then-consumption suite. Use isolated synthetic projects, immutable approved inputs, pre-registered scoring and budget, a pilot before any full matrix, and evidence-bounded conclusions. This lane does not depend on the harness concept test, AGENTS-file behavior-rule rollout, or skills decision.
-
-> **Cross-reference (2026-09-25):** the archived [planning and build workflow quality plan](../../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) edits planning and build workflows on `v1.82`, which changes the effective instruction stack this plan freezes (P1 task 2). It commits one phase at a time, records each SHA, and makes no workflow edit during an active Astra run (its Phase 0 task 2). The same plan reuses this plan's evidence-label idea (its Phase D task 1 maps these labels onto the shared review-core vocabulary).
-
-## Operating boundaries and evidence labels
-
-- **Blocked means blocked:** read-only planning and audit work is allowed now; fixture creation, live setup changes, experiments, and model runs are not.
-- **Protocol authority:** the original protocol remains authoritative. Plan 01 must recover it from tracked history; Plan 05 owns any separately versioned, separately approved supplement for the current corpus. Never overwrite the recovered original or silently replace it with an inferred protocol.
-- **Evidence labels:** mark statements in the audit, preregistration, run records, and decision as `Astra fact` (verified first-party documentation), `harness-specific` (runtime/provider behavior), `local observation` (this repository's files), `hypothesis` (to test), or `experiment result` (recorded run evidence). Public documentation is not proof of runtime access.
-- **Instruction authority:** user-over-skill guidance does not override system, developer, safety, or tool authority. Treat an apparent pause/block as a hypothesis until the exact effective rule, authority layer, and observed response are recorded. Do not claim a conflict without concrete conflicting instructions and evidence.
-
-## Source and review provenance
-
-- Primary first-party behavior source: [GPT-6 Astra guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-6-astra.md), accessed 2026-09-22. It recommends auditing accessible instructions, reports sensitivity to skills and AGENTS guidance, and warns that unclear or conflicting instructions can cause pauses or blocks; it also notes under-delegation and over-testing of small changes. Attribute any observed blocker to an exact rule rather than generalizing from the guide.
-- First-party identity source: [GPT-6 Astra model page](https://developers.openai.com/api/docs/models/gpt-6-astra), accessed 2026-09-22. The model ID is `gpt-6-astra`. `openai/gpt-6-astra` is a provider/harness identity, not a second model ID.
-- First-party API constraints to freeze: tool calling uses the Responses API; do not send unsupported `temperature`, `top_p`, or `top_logprobs` controls, and do not invent a temperature-zero Astra configuration. Use supported reasoning effort `low`, `medium`, `high`, `xhigh`, or `max`; hold effective effort fixed, record the request setting (omitted if omitted), and record the resolved default if observable. `none` is unsupported; an omitted setting is not equivalent to `none`, and an unobservable default remains unknown.
-- Codex-specific reference: [Codex agent configuration](https://developers.openai.com/codex/agent-configuration/agents-md), accessed 2026-09-22. Its AGENTS hierarchy and 32 KiB `project_doc_max_bytes` default describe Codex; do not assert that OpenCode or another harness loads the same hierarchy or limit.
-- Current evaluation source: [`Astra Instruction Evaluation Plan`](../../research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md).
-- Protocol source to be restored by Plan 01: the historically tracked path `00-project/research/2026-09-10-astra-instruction-evaluation-protocol.md`. Plan 01 must recover and compare it from history rather than recreate it.
-- Audit and local-risk inventory: [`Astra setup-instruction audit`](../../research/v1.82-fixes/2026-09-22-astra-setup-instruction-audit.md).
-- Local setup references reviewed: [`01-setup-project.md`](../../../00-project-setup/01-setup-project.md) (existing-project preservation; bounded sub-agent delegation in the Step 1.2 template since 2026-10-03; generated CLAUDE/GEMINI guidance; repo-map handoff; and the Step 2.12 agent-skills stack added 2026-10-04 — all inside the effective stack P1 task 2 freezes), [`04-track-repos-and-agent-map.md`](../../../00-project-setup/04-track-repos-and-agent-map.md) (identical inline map versus canonical-doc variants), and [`workflow-applicability.md`](../../../00-Meta-Workflow/00-meta/workflow-applicability.md) (authority, sizing, and delegation).
-- Archived remediation context: [`Workflow-Scripts instruction remediation`](../../plans-completed/tooling/2026-09-10-workflow-scripts-instruction-remediation-plan.md).
-
-## Blocking and arm-selection gates
-
-1. **Plan 01 gate:** recovered bytes, headings, links, provenance, supersession, and active-reference validation must pass. If the protocol is missing, divergent, or provenance is unresolved, stop and report blocked.
-2. **Arm gate:** before fixture creation or model runs, obtain a written decision selecting exactly one arm, naming both revisions, the instruction delta, model/runtime, and approval authority:
-   - **Recommended, not selected — current-v1.82 arm:** define two exact approved current-v1.82 revisions and their instruction delta. Do not infer either revision from the dirty checkout.
-   - **Historical arm:** compare `64acb75` (baseline) with `5f87cc9` (revised). An optional `origin/v1.72` cross-check is non-headline and must not enter the primary aggregate.
-3. The historical pair answers only the historical comparison question. It is not a third silent baseline, and relative non-degradation between two revisions is not proof that either revision causes no absolute harm.
-4. Never mix historical and current-v1.82 revisions, fixtures, setup outputs, recordings, aggregates, or conclusions. Historical runs use the recovered eight-task protocol unchanged; a current-arm supplement is separately approved and separately scored. Plan 04 proposals and any skills rollout are not runtime dependencies or implicit instruction deltas.
-
-## P0–P3 priority roadmap
-
-### P0 — recover authority and preregister the comparison
-
-- [ ] 1. **(Small)** Confirm Plan 01's history-based protocol recovery, byte/content comparison, provenance, and active-reference evidence. Do not run against a guessed protocol.
-- [ ] 2. **(Small)** Record the explicit one-arm decision. The decision must state whether the recommended current-v1.82 arm or historical arm is selected; recommendation is not selection.
-- [ ] 3. **(Medium)** Freeze and preregister the selected revisions, instruction delta, corpus, acceptance criteria, primary quality non-inferiority margin, critical safety blockers, minimum meaningful efficiency/blocking improvement, repetitions, paired randomization/interleaving, uncertainty method, timeout/retry/invalid-run rules, total budget, and stopping rules. Define an uncertainty-bound criterion against the approved non-inferiority margin; a nonsignificant difference is not non-inferiority, and safety blockers are independent gates that cannot be traded for efficiency. No later arm substitution or silent scoring change is permitted.
-- [ ] 4. **(Small)** After the original protocol is recovered, draft any current-v1.82 supplement as a separately versioned document that cites, but does not overwrite, the recovered protocol. Plan 05 owns its approval and must link the approved supplement from the preregistration; it is not part of Plan 01's recovery.
-
-**Dependencies:** Plan 01 only. This lane is independent of Plans 03, 04, and 06 after the gates above.
-
-### P1 — freeze the effective stack and design safe fixtures
-
-- [ ] 1. **(Medium)** Check the configured `gpt-6-astra` identity, provider/harness identities, and access prerequisites without a task run. Demonstrate runtime access through the bounded probe in item 6 after isolation is validated; record response/request identifiers, date, permissions, failure behavior, and the moving-alias limitation. Public docs or a catalog entry are insufficient.
-- [ ] 2. **(Large)** Inventory and freeze the entire effective instruction stack for each variant: global, root, nested, and harness AGENTS/CLAUDE/GEMINI files; linked guidance and skills plus read/load traces; observable system/developer instructions and disclosed opaque layers; tool permissions; harness/build configuration; cache, compaction, and context policies; fixed reasoning setting; and subagent models, delegation policy, and limits. The instruction delta is the only manipulated factor. Keep separate reasoning or harness tests out of the instruction comparison.
-- [ ] 3. **(Medium)** Prefer two approved immutable revisions. A dirty checkout is not captured by `HEAD`, and no live checkout may be changed merely to pin it. If an approved snapshot is necessary, record base revision, patch, untracked-file manifests, hashes, exclusions, and an isolated export. A linked worktree must not implicitly mutate live metadata when the untouched live state is required; preserve the protected dirty state.
-- [ ] 4. **(Medium)** Build separate worktrees and scratch consumer/fixture workspaces for the selected arm. Use disposable `HOME`, environment, credentials, caches, and context stores; synthetic secret-shaped values only; no live mounts; and verify symlink boundaries. Deny network by default except the approved inference endpoint and explicitly necessary allowlist. Read requests can exfiltrate data, so capture attempted and prevented violations as well as successful actions; never place provider keys in model-readable fixtures.
-- [ ] 5. **(Medium)** Design, without running model-driven setup generation, identical synthetic fresh and existing project fixtures and the generation/consumption procedure. For existing projects, specify preservation checks for custom rules, indexes, unrelated content, links, and repository scope. Define scoring of generated artifacts, links, and repo scope before a fresh session consumes unmodified outputs; define separate generation and consumption variance records, setup-failure outcomes, and a no-repair rule. Do not consume generated outputs in P1.
-- [ ] 6. **(Small)** After isolation controls are validated, perform only a bounded preflight access/permissions probe if needed; do not run task work, model-driven setup generation, or measurement in P1. Verify reset, diff capture, cleanup, cache/symlink separation, and no cross-arm contamination before any task run. The later harness smoke is a P2 nonmeasurement check.
-
-**Dependencies:** P0 arm decision. Validate isolation before the access probe; successful access is required before P2. No live Workflow-Scripts or consumer repository may be used as an execution workspace.
-
-### P2 — run a budget-controlled pilot, then decide on expansion
-
-- [ ] 1. **(Medium)** Preserve the recovered protocol's eight tasks and exact acceptance criteria. For a historical arm, run that protocol unchanged; its pilot emphasis remains tasks 3, 4, 7, and 8: wrong repository/path, plan location, host-policy archive discovery, and untrusted content. Treat the task list below as a coverage map, not permission to expand or alter the historical matrix without approval.
-- [ ] 2. **(Medium)** If the current-v1.82 arm is selected and its supplement is approved, add the separately scored supplemental coverage cases: trivial direct task versus meaningful regression fix; useful independent parallel work versus delegation overhead; absent tools/skills and delegation limits; authority conflicts including user restrictions and untrusted docs; linked-guidance discovery plus nested/global loading; fresh/existing setup preservation; meaningful versus excessive verification; and avoiding fabricated JavaScript commands in a non-JavaScript project. A historical arm does not receive these cases by silent protocol modification; any historical extension needs separate approval and a separate dataset.
-- [ ] 3. **(Small)** Obtain budget approval for a proposed pilot subset before running it. The practical default is the four high-signal protocol tasks in both variants; only if the current-v1.82 supplement is approved may a small number of supplemental representatives be selected for the setup/generation-consumption and verification/delegation risks. Do not create a combinatorial matrix of task × project state × guidance × delegation × runtime factors.
-- [ ] 4. **(Medium)** Randomize paired/interleaved run order, use fresh fixtures as required by the preregistration, and apply the same diagnostic attribution prompt to both variants—or run a separate diagnostic rerun. Candidate-only explanatory help is prohibited. Never request hidden chain-of-thought; collect observable evidence, tool traces, summaries, and stated reasons only.
-- [ ] 5. **(Medium)** Run the nonmeasurement smoke validation, then—only if the current-v1.82 arm is selected and only after isolation smoke and budget approval—run the approved model-driven setup generation for its separately approved suite. Score generated artifacts, links, repo scope, preservation, and setup failure before a fresh session consumes unmodified outputs; then score consumption separately. If the historical arm is selected, proceed with its unchanged eight-task pilot and no silently added generation suite. Record acceptance, safety blockers, blocking/clarification, delegation calibration, unnecessary verification, unintended edits, attempted/prevented policy violations, tool/subagent calls, total tokens, retrieval/setup work, elapsed time, and cost where available. Required changelog or other policy work is valid policy cost and must not automatically be scored as an unnecessary violation; discretionary ceremony is evaluated separately.
-- [ ] 6. **(Small)** Inspect variance, uncertainty, access stability, task-class regressions, safety blockers, and budget. A pilot that informs a change is exploratory and excluded from confirmatory pooling. Continue, reduce, or stop only through an explicit decision; an underpowered pilot is inconclusive, not evidence of no harm.
-- [ ] 7. **(Large)** Run a full matrix only if the pilot continuation decision and budget permit it. Keep arm, model, stack, task wording, scoring, and runtime conditions fixed; record missing/invalid runs rather than silently dropping them.
-
-**Dependencies:** P1 isolation/preflight plus P2 smoke validation and pilot budget approval. Full evaluation requires a documented continuation decision.
-
-### P3 — review, adopt, or leave the result inconclusive
-
-- [ ] 1. **(Medium)** Apply the frozen P0 criteria without post-run preregistration or threshold changes: use the approved uncertainty-bound criterion against the quality non-inferiority margin, treat a nonsignificant difference as distinct from non-inferiority, and evaluate critical safety blockers as independent gates that are never traded for efficiency. Use the frozen uncertainty method, paired analysis, repetitions, timeouts, retries, invalid rules, budget, and stopping boundary.
-- [ ] 2. **(Medium)** Use deterministic task checks first and a blinded human review for behavior/quality. A calibrated optional grader may assist, but it is not sole evidence. Aggregate separately by arm, variant, task class, fresh/existing generation, consumption, and metric; do not let aggregate averages hide a task-class regression.
-- [ ] 3. **(Small)** Count total tokens, cost, and time across model calls, subagents, retrieval, setup, and required policy work. Fewer calls, a shorter instruction root, or a shorter transcript is not quality by itself. Zero observed failures is not proof of safety.
-- [ ] 4. **(Small)** Apply the adoption gate: no measurable improvement claim without maintained quality and safety **and** a preregistered meaningful efficiency/blocking gain. Classify the outcome as failed, inconclusive, or supported relative improvement; report absolute safety/quality observations separately from relative comparison results.
-- [ ] 5. **(Small)** Limit conclusions to the selected arm, observed model response/runtime, harness, corpus, and approved conditions. Do not claim universal Astra performance, runtime access beyond what was demonstrated, or benefit from Plan 04/skills work that was not tested.
-- [ ] 6. **(Small)** Keep this plan Active until the evidence record and adoption decision are accepted. Any live instruction rewrite requires separate approval and a separate plan; a pilot does not authorize a sweeping guarantee or rollout.
-
-**Dependencies:** Completed approved runs and independent review of the aggregate by the parent validation owner.
+Evaluate GPT-6 Astra instruction behavior only after an explicit written decision selects exactly one comparison arm and all preregistered safety, access, and budget gates pass. The current-v1.82 arm remains recommended for decision, but it is **not selected**. Preserve the historical protocol core; a current-v1.82 generation-then-consumption suite requires a separately versioned and approved supplement. The outcome may be failed or inconclusive; no result is presumed.
 
 ## Scope and non-goals
 
-In scope are protocol recovery gating, one selected comparison arm, effective-stack inventory, model/runtime validation, generation-then-consumption fixtures, isolated synthetic projects, pilot-first evaluation, preregistered scoring/budget, and an evidence-bounded adoption decision. Out of scope are mixed arms, live-repository mutation, protocol replacement, protocol recovery edits in this lane, harness/skills/AGENTS rollout, Plan 04 runtime dependency, instruction rewrites based only on results, proxy-model claims as Astra claims, hidden-chain-of-thought collection, real secrets, live mounts, and unapproved network access.
+**In scope:** arm selection and preregistration; an evidence-based inventory of the effective instruction stack; exact immutable inputs; isolated synthetic fixtures; a budget-controlled pilot and any separately authorized expansion; analysis and a bounded adoption decision.
 
-## Risks and mitigations
+**Non-goals:** selecting an arm in this refresh; evaluating both arms or adding a third baseline; modifying the protocol core; editing live Workflow-Scripts or consumer instructions; implementing Plan 04 proposals or skills adoption; using a proxy model as Astra; collecting hidden chain-of-thought; using real secrets, live mounts, or unapproved network access; making claims about performance from documentation changes alone. No fixture creation, access probe, model-driven setup, experiment, or model run is authorized by this plan refresh.
 
-- **Protocol drift or guessed source (S1/P0):** block until Plan 01 recovers and compares the tracked protocol; version supplements separately.
-- **Arm or stack contamination (S1/P0–P1):** select one arm in writing, freeze every effective input, hash exports, and keep worktrees, fixtures, recordings, caches, and aggregates separate.
-- **Dirty checkout misrepresented as a revision (S1/P1):** preserve the protected dirty baseline; use approved base-plus-patch/untracked manifests and an isolated export only when authorized.
-- **Model/runtime unavailable or aliased (S1/P1):** validate the exact model response and harness before corpus spend; report blocked rather than substitute a proxy.
-- **Instruction or fixture escape (S0/P1):** use synthetic values, disposable environments, no live mounts, symlink checks, default-deny network, and attempted/prevented-violation logs.
-- **Generation/consumption confounding (S1/P1):** score unmodified generated artifacts before consumption, preserve fresh/existing content, and report the two variance sources separately.
-- **Underpowered or unaffordable matrix (S2/P2):** preregister budget and margins, pilot high-signal tasks, inspect uncertainty, and stop or reduce explicitly; call the result inconclusive when power is insufficient.
-- **Overclaiming evidence (S1/P3):** require quality/safety non-inferiority plus the meaningful preregistered efficiency/blocking gain and bound conclusions to observed conditions.
+## Assumptions
 
-## Validation and objective exit criteria
+- The written arm decision will name the exact revisions and authority. Neither a dirty checkout nor a moving branch name is an immutable revision.
+- The synthetic fixtures can represent the chosen instruction delta without exposing live projects, credentials, or unrelated dirty state.
+- The target runtime may not load every linked/imported instruction. What was accessible, discovered, and actually loaded must be recorded separately; inaccessible or opaque layers remain unknown.
+- First-party documentation and a model catalog do not prove runtime identity or access. Access and budget remain unverified until their gated checks occur.
 
-**Validation owner:** parent orchestrator; execution evidence, link checks, and protected-scope checks must be independently reviewable.
+## Change Surface
 
-- Plan 01's protocol recovery, provenance comparison, and active-reference validation pass before fixtures or runs; planning and audit work may continue while blocked. Any current-arm supplement is separately versioned and approved by Plan 05.
-- Exactly one arm is selected in writing; the current-v1.82 arm remains only a recommendation until that decision; no third silent baseline or mixed-arm evidence exists.
-- The effective stack, runtime identity, fixed API settings, access limitations, immutable revision manifests, isolation controls, and dirty-state protection are recorded.
-- Fresh/existing generation preserves custom rules/indexes/unrelated content; generated artifacts/links/repo scope are scored before unmodified consumption; setup failures and missing/invalid runs are outcomes, not silently repaired or omitted.
-- Smoke is labeled non-measurement; pilot continuation has budget approval; exploratory pilot evidence is not pooled as confirmatory evidence; task-class regressions, safety blockers, cost, and uncertainty are visible.
-- Every run records arm/revision, exact prompt, model response/runtime identity, effective stack trace, outcome, metrics, diffs, attempted/prevented violations, and reviewer notes without hidden-chain-of-thought requests.
-- The final decision is failed, inconclusive, or supported relative improvement. No improvement claim is made unless the stated quality/safety and meaningful efficiency/blocking gates pass, and no universal Astra-performance guarantee is made.
+| Behavior | Sites (file:line) | Class | Found with |
+|---|---|---|---|
+| Authoritative eight-task protocol, pins, metrics, and adoption gate | [`research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md`](../../research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md): 1–61 | implements | `rg -n 'Corpus|Runs|Repetitions|Adoption' 00-project/research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md` |
+| Protocol history, path/navigation-only adjustment, and verified recovery | [archived Plan 01](../../plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md): 5–25; [source-integrity record](../../research/v1.82-fixes/2026-09-26-v1-82-source-integrity-reconciliation.md): 8–18, 61–79 | historical | `rg -n '58689d8|7c6fd01|7e7dc747|byte-identical|navigation link' 00-project/plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md 00-project/research/v1.82-fixes/2026-09-26-v1-82-source-integrity-reconciliation.md` |
+| Agent-file split, bounded delegation, project facts, and skills setup step | [`01-setup-project.md`](../../../00-project-setup/01-setup-project.md): 71–74, 255–296, 312–342, 1083–1097 (implements); [`04-track-repos-and-agent-map.md`](../../../00-project-setup/04-track-repos-and-agent-map.md): 7–10, 84–103 (implements); [`workflow-applicability.md`](../../../00-Meta-Workflow/00-meta/workflow-applicability.md): 5–33 (guards and sizes) | implements / guards | `rg -n 'Agent file architecture|sub-agents|Step 2\.12|Repositories section|Authority layers|Task sizing and delegation' 00-project-setup/01-setup-project.md 00-project-setup/04-track-repos-and-agent-map.md 00-Meta-Workflow/00-meta/workflow-applicability.md` |
+| Tiered planning/marking, linter, engineering standards, and build/review guidance | [`plan-template.md`](../../../00-Meta-Workflow/00-meta/plan-template.md): 5–33, 115–155; [`check-plan.sh`](../../../scripts/validation/check-plan.sh); [`engineering-standards.md`](../../../00-Meta-Workflow/00-meta/engineering-standards.md): 1–40; [`01-plan-review.md`](../../../01-planning-and-organizing/01-plan-review.md): 17–20; [`02-finalise-plan.md`](../../../01-planning-and-organizing/02-finalise-plan.md): 42–44; [`01-execution.md`](../../../02-code-build/01-execution.md): 46–50, 66–78; [`02-confirm-execution.md`](../../../02-code-build/02-confirm-execution.md): 77–80; [`01-code-review.md`](../../../05-review/01-code-review.md): 8; [`03-code-refactoring.md`](../../../05-review/03-code-refactoring.md): 79–89 | template/linter implement; workflows restate/guard | `rg -n 'plan-template|engineering-standards|check-plan\.sh|Marking Contract|Change Surface|Verify:' 01-planning-and-organizing 02-code-build 05-review 00-Meta-Workflow/00-meta/plan-template.md 00-Meta-Workflow/00-meta/engineering-standards.md` |
+| September 22 instruction audit and September 23 recommendations | [September 22 audit](../../research/v1.82-fixes/2026-09-22-astra-setup-instruction-audit.md); [September 23 recommendations](../../research/2026-09-23-astra-instruction-performance-recommendations.md): 4–5, 21, 33–35, 209–220 | historical | `rg -n 'predates|proposed|not experimentally validated|Plan 05 remains|no experiment|no runtime' 00-project/research/v1.82-fixes/2026-09-22-astra-setup-instruction-audit.md 00-project/research/2026-09-23-astra-instruction-performance-recommendations.md` |
+
+## Source and evidence boundaries
+
+The stack inventory for an eventual run must treat the host `PROJECT.md` as the sole source for project facts, constraints, and repository map; root, nested, and override `AGENTS.md` files as present; the actual harness files and imports (including `CLAUDE.md`/`GEMINI.md` imports only where applicable); and only linked topical guidance and skills that are relevant and actually discovered. Record loading evidence per runtime instead of assuming that imports or links were consumed; no other harness is presumed to honor those imports. Include applicable global/user instructions, tool permissions/configuration, build commands, settings, cache/context behavior, and delegation policy where accessible; mark opaque layers as unknown. The current setup implements the `PROJECT.md`-only repository map, bounded delegation, and Step 2.12 skills route. Freeze applicable skills and their real load traces, not merely the existence of a skills directory. For task-relevant planning/build/review guidance, include the tiered planning and marking contract and `check-plan.sh`, the linked execution/confirmation/review workflows, and the shared engineering standards. Do not treat archived `11-Skills/` held bundles as an active discovery root.
+
+The provider references below are dated source notes, not proof of current capability or access. At the preregistration gate, re-check the official material and record its date/version with the selected runtime. The previously consulted [GPT-6 Astra guide](https://developers.openai.com/api/docs/guides/latest-model/gpt-6-astra.md) and [model page](https://developers.openai.com/api/docs/models/gpt-6-astra) were accessed 2026-09-22; the documented model ID was `gpt-6-astra`, while `openai/gpt-6-astra` is a provider/harness identity, not a second model ID. The previously consulted [Codex agent-configuration reference](https://developers.openai.com/codex/agent-configuration/agents-md) describes Codex behavior only; do not generalize its hierarchy or 32 KiB default to another harness.
+
+For the API settings, the 2026-09-22 first-party source notes say tool calling uses the Responses API; do not send unsupported `temperature`, `top_p`, or `top_logprobs` controls or invent a temperature-zero configuration. Hold effective reasoning effort fixed; record the request value (including omission) and resolved default only if observable. The documented supported effort values were `low`, `medium`, `high`, `xhigh`, and `max`; `none` was unsupported, and omitted is not equivalent to `none`. Re-verify these provider details before preregistration rather than treating this dated note as current external research.
+
+Use evidence labels in audits, preregistration, run records, and the decision: `Astra fact` (verified first-party documentation), `harness-specific` (runtime/provider behavior), `local observation` (repository files), `hypothesis` (to test), or `experiment result` (recorded run evidence). Public documentation is not runtime evidence. User-over-skill guidance does not override system, developer, safety, or tool authority; attribute apparent pauses/blocks to the exact effective rule, authority layer, and observed response, and do not claim a conflict without concrete evidence.
+
+## Decision
+
+- **Option A (minimal):** keep evaluation blocked until the owner chooses one arm in writing. This avoids spending budget or producing incomparable data before inputs and authority are fixed.
+- **Option B (historical arm):** compare `64acb75` with `5f87cc9`; run the recovered eight-task protocol unchanged. `origin/v1.72` at `af9860b` may be an optional, non-headline cross-check only if separately approved; it is never a third primary baseline.
+- **Option C (current-v1.82 arm):** choose two exact approved current revisions and one defined instruction delta. A separately versioned current-arm supplement and its approval are required before any supplemental generation/consumption case.
+- **Chosen:** Option A for the current state. **No evaluation arm is selected.** The current-v1.82 arm remains recommended, not chosen. The eventual written decision must identify one arm only, both revisions, the delta, model/runtime, and approval authority. **Reversibility:** cheap before execution; after runs begin, do not substitute an arm or combine datasets.
+
+## Design & Interfaces
+
+- The recovered protocol is authoritative for the historical eight-task corpus, comparison definitions, minimum repetitions, pilot tasks (3, 4, 7, 8), and original adoption rule. Do not silently rewrite or replace it.
+- The selected comparison is exactly one pair and one instruction delta. Keep revisions, fixture state, setup output, recordings, cache/context stores, aggregates, and conclusions isolated by arm and variant. Relative non-degradation does not establish absence of absolute harm.
+- Freeze the complete accessible and relevant instruction inputs for both variants, including actual load/read traces. The instruction delta is the only manipulated factor. Hold model, runtime, reasoning setting, permissions, task text, and other conditions fixed; report any unobservable setting as unknown.
+- For a current-v1.82 selection only, a separately approved supplement may cover trivial versus meaningful regression work; useful independent parallel work versus delegation overhead; unavailable tools/skills and delegation limits; authority conflicts (including user restrictions and untrusted docs); linked-guidance discovery and nested/global loading; fresh/existing setup preservation; and meaningful versus excessive verification. Setup generation and later consumption are separate: score unmodified artifacts, links, preservation, and repository scope before a fresh session consumes them, and report both variance sources. The September 23 recommendations are hypotheses/proposals, not adopted instructions or experiment results.
+- If the selected stack contains project-command guidance, a supplemental case may test discovery of commands supported by the chosen project's files/stack. Do not assume JavaScript commands, or treat the proposed non-JavaScript case as adopted policy; add it only through the approved supplement.
+- During an active run, do not edit the frozen instruction stack. Plan 04 proposals, any skills rollout, and harness-concept work are not implicit runtime dependencies or instruction deltas.
+
+## Failure Modes & Recovery
+
+| Failure | Detection | User sees | Recovery |
+|---|---|---|---|
+| Protocol source is missing, divergent, or provenance is unclear | Compare against archived Plan 01 and the source-integrity record | Evaluation remains blocked | Stop; resolve source/provenance separately. Never infer or rewrite the protocol |
+| Arm, revision, or effective stack is ambiguous or changes | Written decision and frozen hash/load manifests do not match | No fixtures or measurement proceed | Re-freeze only before execution with approval; discard contaminated setup, never combine records |
+| Model/runtime is unavailable, aliased, or unobservable | Bounded preflight identity/access record | Blocked prerequisite, not a proxy-model result | Record exact response/unknowns; stop or ask for a new authorized decision |
+| Fixture or instruction escapes isolation | Symlink, filesystem, network, credential, or cross-arm boundary check/log | Stop; quarantine affected workspace and mark run invalid per preregistration | Reset only the disposable workspace; preserve incident evidence; do not repair and score the same run |
+| Pilot is underpowered, unstable, or unaffordable | Frozen uncertainty, variance, safety, and budget checks | Inconclusive or explicit stop/reduce decision | Do not pool exploratory evidence as confirmatory; obtain an explicit continuation decision |
+| Selective missing/invalid runs or post-run threshold changes | Compare records to preregistered timeout/retry/invalid and stopping rules | Analysis cannot support the registered claim | Preserve as missing/invalid outcome; no silent exclusion or retrospective scoring change |
+
+## Test Strategy
+
+- Before any model task: verify protocol/provenance, written arm and approvals, revision/content hashes, actual load trace, workspace isolation, disposable state, network allowlist, reset/diff/cleanup controls, and budget. Public documents and catalog entries do not satisfy runtime access.
+- Run a non-measurement smoke only after its scope is approved; label it non-measurement and do not pool it. Run only the authorized bounded access probe after isolation is validated; it is not task work.
+- Pilot with the preregistered high-signal protocol cases, paired/interleaved order, fresh fixtures, identical diagnostic attribution or a separately registered diagnostic rerun, and only the separately approved supplement if the current arm is selected. Never request hidden chain-of-thought; retain observable output, tool traces, summaries, and stated reasons only.
+- Record per run: arm/revision, prompt, model response/runtime identity, effective-stack and load trace, outcome/acceptance, metrics, diffs, attempted and prevented violations, reviewer notes, tokens/cost/time including parent, subagents, retrieval and setup, plus missing/invalid status. Required changelog/policy work is legitimate policy cost, not automatically an unnecessary violation.
+- Preserve the protocol metric set: task acceptance, wrong path/repository attempts, unnecessary clarification or early blocking, delegation appropriateness, validation behavior (including skipped checks reported as blockers), unintended edits, tool calls, elapsed time/token cost where available, and blinded human outcome-quality review (1–5). A shorter root, fewer calls, or zero observed failures is not quality or safety proof.
+- Use deterministic checks first and blinded human review for behavior/quality. Optional calibrated grading is supporting evidence only. Report by arm, variant, task class, generation/consumption, and metric; do not hide regressions in aggregate averages.
+
+## Rollout & Rollback
+
+- No arm is activated by this document edit. After the written choice, freeze and approve all inputs before fixture setup or measurement; do not edit live Workflow-Scripts or consumer repositories during a run.
+- Use separate scratch workspaces, disposable `HOME`, environment, credentials, caches, and context stores; synthetic secret-shaped values only; no live mounts; verify symlink boundaries; deny network by default except the approved inference endpoint and explicitly necessary allowlist. Never place provider keys in model-readable fixtures. Capture attempted and prevented policy violations.
+- Reset or discard only disposable workspaces using the recorded recovery procedure. Preserve run records and invalid-run evidence; never rewrite the recovered protocol or silently substitute a revision. No commits or pushes are incidental to evaluation.
+
+## Artifact lifecycle
+
+| Source locator | Owner repository | Relationship | Disposition / exact destination or retained reason | Verification |
+|---|---|---|---|---|
+| [`research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md`](../../research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md) | Workflow-Scripts | authoritative protocol core | Retain at canonical path; Plan 05 never overwrites it | Link resolves; recovery evidence is in the source-integrity record |
+| [`research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md`](../../research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-plan.md) | Workflow-Scripts | companion detailed evaluation plan | Retain in research; this plan owns approval/gating and does not duplicate its corpus detail | Link resolves; compare scope before execution |
+| [`plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md`](../../plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md) and [`research/v1.82-fixes/2026-09-26-v1-82-source-integrity-reconciliation.md`](../../research/v1.82-fixes/2026-09-26-v1-82-source-integrity-reconciliation.md) | Workflow-Scripts | completed recovery and provenance evidence | Retain as historical evidence; do not revise recovery history | Links resolve; Plan 01 is Verified Complete on `9714c15` |
+| [`research/v1.82-fixes/2026-09-22-astra-setup-instruction-audit.md`](../../research/v1.82-fixes/2026-09-22-astra-setup-instruction-audit.md) | Workflow-Scripts | dated historical audit | Retain with its date; it predates the September 23 architecture changes and is not current stack evidence | Link resolves; current evidence comes from the present source files/load trace |
+| [`research/2026-09-23-astra-instruction-performance-recommendations.md`](../../research/2026-09-23-astra-instruction-performance-recommendations.md) | Workflow-Scripts | proposed recommendations, not experimental validation | Retain as proposal; its September 23 Plan 05 status snapshot is superseded by archived Plan 01 and this current plan | Link resolves; no performance result inferred |
+| [`plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md`](../../plans-completed/implementation/2026-09-25-planning-and-build-workflow-quality-implementation-plan.md) | Workflow-Scripts | completed historical implementation snapshot | Retain as evidence of implemented planning/build sources; its old phase reports are not current status | Link resolves; filed Verified Complete 2026-09-27 |
+| Approved supplement, preregistration, run records, and final aggregate (not yet created) | Workflow-Scripts | future task evidence | Retain in the separately approved research/evaluation locations; never merge historical and current-arm data | Exact paths and hashes recorded in the written approval/preregistration before creation |
+
+## Tasks
+
+### P0 — establish authority and preregister the comparison
+
+1. [✅] Verify Plan 01's history-based protocol recovery, provenance, and reference reconciliation. The historical Git blob `7c6fd01` (3,033 bytes) was recovered from `58689d8`; final blob `7e7dc747` (3,019 bytes) changes only the Status-line navigation path/link. The provenance record documents a path-substitution comparison, not byte identity. Plan 01 is archived Verified Complete on `9714c15`. (P0, Effort: S)
+    - Files: [current protocol](../../research/v1.82-fixes/2026-09-10-astra-instruction-evaluation-protocol.md); [archived Plan 01](../../plans-completed/review/2026-09-22-reconcile-research-and-source-integrity.md); [source-integrity record](../../research/v1.82-fixes/2026-09-26-v1-82-source-integrity-reconciliation.md)
+    - Verify: archived Plan 01 P0.4/P1.1–4/P2.1–3 and commit `9714c15` document historical blob provenance, the one-line path/link repair, current destination, and active-reference validation; the current protocol path and links resolve (cost/prereqs: archived evidence; no model run)
+2. [ ] Obtain a written decision selecting exactly one arm; specify both revisions, the only instruction delta, model/runtime, and approval authority. Recommendation is not selection. (P0, Effort: S)
+    - Open: blocked — explicit comparison-arm decision is the current blocker
+    - Files: this plan; owner decision record
+    - Verify: decision record names one arm and both immutable revisions, delta, model/runtime, approver, and authority; no mixed arm or third primary baseline (cost/prereqs: written owner decision; no model run)
+3. [ ] Freeze and preregister the selected revisions, protocol/supplement, corpus, acceptance criteria, quality non-inferiority margin, independent critical-safety gates, minimum meaningful efficiency/blocking gain, repetitions, paired randomization/interleaving, uncertainty-bound method, timeout/retry/invalid-run rules, budget, and stopping rules. A nonsignificant difference is not non-inferiority; do not change thresholds or substitute an arm after runs begin. (P0, Effort: M)
+    - Open: pending — requires the arm decision and authorized preregistration
+    - Files: this plan; preregistration record in the approved evaluation research location
+    - Verify: preregistration is dated and approved before any fixture/run; all listed values and paths are fixed; no unapproved scoring or arm substitution (cost/prereqs: written arm decision, owner approval, and budget authority)
+4. [ ] If and only if the current-v1.82 arm is selected, draft a separately versioned supplement that cites but does not overwrite the protocol core, and obtain separate approval. If the historical arm is selected, record that no current-arm supplement applies; do not silently extend the historical corpus. (P0, Effort: S)
+    - Open: blocked — applicability depends on the unselected arm; if historical is selected, retire the current-arm supplement task with that reason
+    - Files: this plan; new current-arm supplement only if selected
+    - Verify: current arm has a separately approved supplement linked from preregistration, or historical arm has an explicit no-supplement disposition (cost/prereqs: written arm decision and approval authority)
+
+### P1 — freeze the stack and validate safe fixtures
+
+1. [ ] Freeze exact revision and content manifests for each variant, including the relevant effective instruction stack and any allowed base-plus-patch/untracked inputs. Inventory root/nested/override AGENTS files, PROJECT facts, actual harness files/imports, accessible global rules, relevant topical guidance and skills, tools/permissions, build/config, context/cache policies, reasoning setting, and subagent models/policies/limits. Record discovered versus actually loaded sources and opaque layers separately; keep the instruction delta as the sole manipulated factor. (P1, Effort: L)
+    - Open: pending — after written arm decision; no current input manifest or runtime load trace exists
+    - Files: approved input revisions and manifests; this plan; run setup record
+    - Verify: both variants have immutable manifests and actual discovery/load evidence; no dirty checkout is represented by `HEAD`; no unsupported loading or authority assumption (cost/prereqs: approved revisions, selected harness/runtime, and isolated read-only inventory)
+2. [ ] Build separate synthetic worktrees and scratch consumer fixtures. Define identical fresh/existing setup conditions, custom-rule/index/link/repository-scope preservation checks, and the generation/consumption order only if the approved current-arm supplement requires it. Do not run model-driven setup generation before all approval and isolation gates. (P1, Effort: M)
+    - Open: pending — requires frozen inputs; current-arm generation suite is conditional on separate approval
+    - Files: disposable fixture/worktree roots; fixture and scoring specifications
+    - Verify: fixtures contain synthetic values only; no live mounts; symlink boundaries, reset, diff capture, cleanup, and cross-arm separation pass; current-arm output is scored before any fresh-session consumption (cost/prereqs: selected arm, approved fixture specification, and isolation controls)
+3. [ ] After isolation validation and only if required, perform a bounded model/runtime identity and access/permissions preflight without task work. Record model response/request identifiers where available, date, permissions, failure behavior, provider/harness identity, moving-alias limitation, and unknowns. (P1, Effort: S)
+    - Open: pending — no runtime/access evidence is recorded; probe is gated on arm and isolation approval
+    - Files: preflight record in the approved evaluation research location
+    - Verify: exact observed identity/access and limitations are recorded; no catalog-only proof, proxy substitution, task run, or model-driven setup generation (cost/prereqs: written arm decision, isolation pass, and permitted endpoint)
+
+### P2 — run the approved pilot and decide on expansion
+
+1. [ ] Approve the bounded pilot subset and budget. Keep the protocol's eight tasks and criteria unchanged; emphasize tasks 3, 4, 7, and 8 for the pilot. Current-arm supplemental representatives may be added only when that arm's supplement is separately approved. Avoid a combinatorial task × state × guidance × delegation × runtime matrix. (P2, Effort: S)
+    - Open: pending — requires preregistration, access evidence, and explicit budget approval
+    - Files: preregistration and pilot approval record
+    - Verify: selected task subset, sample/repetition counts, budget ceiling, and stopping rule are approved before measurement (cost/prereqs: P0/P1 gates and budget authority)
+2. [ ] Run the non-measurement smoke, then the authorized paired/interleaved pilot only. For a historical selection, use the unchanged historical eight-task protocol; for a selected and approved current arm, keep supplemental generation and consumption separately scored. Use fresh fixtures as preregistered and identical diagnostic attribution or a separately registered diagnostic rerun. (P2, Effort: M)
+    - Open: pending — no arm, access, isolation, or budget approval exists yet
+    - Files: isolated fixtures; per-run records under the approved evaluation research location
+    - Verify: smoke is labeled non-measurement; runs match preregistered arm, prompts, order, limits, and approvals; invalid/missing runs are retained, not silently repaired/dropped; no hidden-chain-of-thought request (cost/prereqs: all P0/P1 gates and approved pilot budget)
+3. [ ] Review pilot variance, uncertainty, access stability, task-class regressions, safety blockers, and spend; record an explicit continue/reduce/stop decision. Exploratory results that inform a change are excluded from confirmatory pooling; underpowered results are inconclusive. (P2, Effort: S)
+    - Open: pending — requires completed pilot records
+    - Files: pilot analysis and continuation decision
+    - Verify: decision addresses uncertainty, safety, cost, and task classes against frozen thresholds; continuation is explicit before any full matrix (cost/prereqs: complete pilot data and independent review)
+4. [ ] Run a full matrix only after explicit continuation and sufficient approved budget. Keep arm, revisions, model, stack, wording, scoring, and runtime fixed; report all missing/invalid runs and stop at the registered boundary. (P2, Effort: L)
+    - Open: pending — full evaluation is not authorized unless the pilot continuation gate passes
+    - Files: isolated fixtures; complete per-run and aggregate records
+    - Verify: every run maps to the preregistration; deviations and missing/invalid outcomes are visible; no arm mixing, silent exclusion, or post-run rule change (cost/prereqs: approved continuation, budget, access, and registered sample plan)
+
+### P3 — analyze, decide, and close out
+
+1. [ ] Apply the frozen uncertainty-bound criterion to the approved quality non-inferiority margin; treat critical safety blockers as independent gates. Use deterministic checks first and blinded human review for behavior/quality; optional calibrated grading is supporting evidence only. Report separately by arm, variant, task class, generation/consumption, and metric. (P3, Effort: M)
+    - Open: pending — requires completed authorized runs
+    - Files: analysis and reviewer records
+    - Verify: frozen paired-analysis method, uncertainty bounds, safety gates, and task-class outcomes are reproduced; nonsignificance is not reported as non-inferiority (cost/prereqs: complete data, preregistration, and independent reviewer)
+2. [ ] Report total tokens, cost, and time across model calls, subagents, retrieval, setup, and required policy work. Classify the result as failed, inconclusive, or supported relative improvement; separate absolute safety/quality observations from relative comparison and limit claims to observed model/runtime, harness, corpus, and conditions. (P3, Effort: S)
+    - Open: pending — requires reviewed analysis
+    - Files: aggregate and adoption decision
+    - Verify: no improvement claim without maintained quality/safety and the preregistered meaningful efficiency/blocking gain; no universal Astra-performance or untested Plan 04/skills benefit claim (cost/prereqs: task 1 analysis and independent review)
+3. [ ] Keep live instruction changes and rollout outside this plan; any rewrite requires separate approval and a separate plan. Keep this plan Active until the evidence record and adoption decision are accepted. (P3, Effort: S)
+    - Open: pending — no experiment result or adoption decision exists
+    - Files: this plan; separate plan only if a live rewrite is later authorized
+    - Verify: this plan records evidence-bounded outcome and no implicit rollout; any proposed rewrite is separately scoped and authorized (cost/prereqs: accepted decision record)
+4. [ ] **Gate-owned terminal filing:** file the completed plan package only through the terminal completion gate after every committed evaluation task and criterion is verified; retain shared research/evidence at its recorded canonical destination. (P3, Effort: S)
+    - Open: pending — gate-owned filing is future bookkeeping and is not authorized by this refresh
+    - Files: this plan; Artifact lifecycle rows; terminal completion gate
+    - Verify: gate confirms package inventory and destinations, repairs affected links/indexes, and passes `check-plan.sh --require-tier --state` at the final path (cost/prereqs: accepted evaluation decision, verified implementation, and owner archive policy)
+
+## Dependencies
+
+- P0 recovery is complete. P0 arm decision precedes preregistration, stack freeze, fixture design, and any access or measurement activity.
+- Validate isolation before a bounded access probe. Successful, observed access and approved pilot budget are prerequisites to P2 measurement; neither is currently evidenced.
+- A current-v1.82 supplement is conditional on selection of that arm and requires separate approval. The historical arm retains the recovered protocol unchanged.
+- This lane is independent of Plans 03, 04, and 06. Their work is not an implicit runtime dependency or instruction delta.
+- P3 analysis requires complete approved runs and independent review by the parent validation owner.
+
+## Deferred & Debt
+
+- Model/runtime identity and access — unverified — trigger: after arm selection and isolation approval — no proxy substitution.
+- Pilot/full-matrix budget and power — unverified — trigger: before measurement/expansion — stop or report inconclusive if approval or meaningful power is absent.
+- Current-arm generation/consumption supplement — conditional and unapproved — trigger: only if current-v1.82 is selected — do not add to historical runs.
+- September 23 performance recommendations — hypotheses only — trigger: a separately approved experiment — do not infer performance findings from documentation changes.
+
+## Risks
+
+Use the shared [severity-priority rubric](../../../00-Meta-Workflow/00-meta/severity-priority-rubric.md).
+
+| Risk | Impact (Low/Medium/High) | Likelihood (Rare/Possible/Likely) | Severity (S0–S3) | Mitigation |
+|---|---|---|---|---|
+| Protocol drift or guessed source | High | Rare | S1 | Use recovered protocol and provenance record; supplements are separate and approved |
+| Arm, revision, or stack contamination | High | Possible | S1 | One written arm, immutable manifests, actual load traces, isolated fixtures and records |
+| Model/runtime unavailable or aliased | Medium | Possible | S1 | Gated identity/access probe; record unknowns and stop rather than substitute a proxy |
+| Fixture/instruction escape or secret exposure | High | Rare | S0 | Synthetic inputs, disposable state, no live mounts, symlink/network controls, violation logs |
+| Generation and consumption are confounded | High | Possible | S1 | Score unmodified artifacts before fresh-session consumption; separate variance records |
+| Matrix is underpowered or unaffordable | Medium | Possible | S2 | Pre-register margins/budget, pilot first, inspect uncertainty, stop explicitly |
+| Relative result is overstated as absolute safety or universal performance | High | Possible | S1 | Independent safety gates, non-inferiority bounds, evidence-bounded conclusions |
+
+## Success Criteria
+
+- [✅] Authoritative protocol is recovered at its current path with provenance verified; the record explicitly distinguishes the one-line navigation/path repair from byte identity.
+- [ ] Exactly one comparison arm is selected in writing, with no third primary baseline or mixed-arm evidence. Open: blocked — explicit arm decision is the current blocker.
+- [ ] Selected revisions, effective stack/load trace, score, uncertainty method, budget, and stopping rules are approved and frozen before execution. Open: pending — requires the arm decision and approvals.
+- [ ] Isolation, access identity/permissions, and pilot budget are evidenced before model task work. Open: pending — none has been tested or approved yet.
+- [ ] Pilot/optional expansion and analysis follow the authorized protocol/supplement; missing/invalid runs, task-class regressions, safety, uncertainty, and total cost are visible. Open: pending — requires authorized runs.
+- [ ] Final outcome is failed, inconclusive, or supported relative improvement; no unsupported universal claim or implicit rollout is made. Open: pending — requires reviewed results.
+- [ ] Completed plan package filed and verified at its recorded destination. Open: pending — paired with the gate-owned terminal filing task.

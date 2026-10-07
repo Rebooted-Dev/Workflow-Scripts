@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-10-07 | docs | Refresh Astra instruction evaluation plan against current state | docs/2026-10-07-docs-refresh-astra-evaluation-plan.md | Plan 05 updated for recovered protocol/Plan 01 evidence, current instruction stack, T3 marking contract, and dated research provenance; arm still unselected; no runtime/access/budget evidence or model runs |
 | 2026-10-07 | improved | Explicit state output for legacy plans in check-plan | improved/2026-10-07-improved-check-plan-legacy-state-output.md | Legacy (untiered) plans now print `OK (LEGACY, state)` in `--state` mode; exit codes unchanged |
 | 2026-10-06 | docs | v1.82-fixes plan set refreshed against current instructions | docs/2026-10-06-docs-v182-fixes-plan-set-refresh.md | Reconcile-only; no lane status or gate changed; skills-stack, archived-quality-plan, and terminal-filing context recorded; linter + scoped links re-verified |
 | 2026-10-06 | plan | Plan-artifact completion filing (T3 plan + retained proposal) | ../plans-completed/implementation/2026-10-06-plan-artifact-completion-filing-proposal-261006-1504-gpt6sol.md | Verified Complete 2026-10-06; committed (`c4b4d15`) and pushed to `v1.82`: ✅ COMPLETED; Implementation VERIFIED + Package VERIFIED; all 7 tasks + 6 Success Criteria ticked; post-edit combined lint, archived scoped + full active links, and `git diff --check` pass |
