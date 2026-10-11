@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-10-07 | docs | Bound sub-agent concurrency at 12 in the root agent rules | docs/2026-10-07-docs-agent-concurrency-12.md | Added `## Execution` with the 12 concurrent sub-agents per task ceiling to root `AGENTS.md` and `00-project/AGENTS.md`; documents existing host-project convention, no workflow logic changed |
 | 2026-10-07 | docs | Refresh Astra instruction evaluation plan against current state | docs/2026-10-07-docs-refresh-astra-evaluation-plan.md | Plan 05 updated for recovered protocol/Plan 01 evidence, current instruction stack, T3 marking contract, and dated research provenance; arm still unselected; no runtime/access/budget evidence or model runs |
 | 2026-10-07 | improved | Explicit state output for legacy plans in check-plan | improved/2026-10-07-improved-check-plan-legacy-state-output.md | Legacy (untiered) plans now print `OK (LEGACY, state)` in `--state` mode; exit codes unchanged |
 | 2026-10-06 | docs | v1.82-fixes plan set refreshed against current instructions | docs/2026-10-06-docs-v182-fixes-plan-set-refresh.md | Reconcile-only; no lane status or gate changed; skills-stack, archived-quality-plan, and terminal-filing context recorded; linter + scoped links re-verified |
