@@ -6,7 +6,7 @@ This workflow sets up a new project, migrates a project from an older structure,
 3. **Changelog System** - Single `project/changelog/` directory: type folders (added, changed, fixed, etc.) plus optional `plans/` subdir for plans archived next to the changelog; one index for all (change entries and Type=plan); backup of existing single-file CHANGELOG if present
 4. **Project & Plans** - `project/` container: `project/KIV/`, `project/research/`, `project/build/`, `project/plans/`, `project/plans-completed/`, `project/changelog/`, `project/troubleshooting/`. **Active plans** live in `project/plans/` (and map/TODO). **Default for "file as completed":** move plans to **`project/plans-completed/<category>/`** (same pattern as troubleshooting: category folders + `plans-completed/index.md`), then add a **Type=plan** row to **`project/changelog/index.md`** with File `../plans-completed/<category>/...`. **Alternate:** archive under `project/changelog/plans/` when explicitly requested.
 5. **Agent file architecture (single source of truth)** - `AGENTS.md` holds agent rules only (same concise template in every project); `PROJECT.md` holds project facts; `docs/agents/` holds detailed guides (see [Step 1.1](#11-agent-file-architecture-single-source-of-truth))
-6. **Thin CLAUDE.md and GEMINI.md** - Each imports `@AGENTS.md` and `@PROJECT.md` and adds harness-only instructions; existing files are migrated, not duplicated (Step 2.10)
+6. **Harness files** - `CLAUDE.md` is a symlink to `AGENTS.md`; `GEMINI.md` imports `@AGENTS.md` and `@PROJECT.md`. Each adds only harness-only instructions (Claude's go in `.claude/rules/claude-code.md`); existing files are migrated, not duplicated (Step 2.10)
 7. **Track Repos** - Discover all Git repos in the project and record the repository map in `PROJECT.md` (see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 8. **Agent skills stack** - After layout and harness files: once-per-machine global installs (if needed), then scan this repo and fill Matt Pocock / Impeccable gaps (see [Step 2.12](#step-212-agent-skills-stack); details in [`skills/`](./skills/))
 9. **Claude Code cache status line** - Optional, once per machine: check the local install, then add the prompt-cache countdown line only with the user's permission (see [Step 2.13](#step-213-claude-code-cache-status-line-optional-once-per-machine); details in [`10-claude-cache-statusline.md`](./10-claude-cache-statusline.md))
@@ -102,7 +102,7 @@ This setup ensures:
 - **docs/** directory at project root (created if missing) and **docs/agents/** for agent-facing detailed documentation
 - **Single source of truth for agent guidance** (Step 1.1): concise `AGENTS.md` with agent rules only (Execution, slim Change Management, pointer to `PROJECT.md`, "Detailed Documentation" links). Changelog & Troubleshooting conventions live in `docs/agents/changelog-and-troubleshooting.md`; other long sections are relocated to topical files in `docs/agents/` (Steps 2.6, 2.9.3)
 - **`PROJECT.md`** at project root holds project facts: description, repositories, layout, project-specific constraints (Step 1.4)
-- Thin **CLAUDE.md** and **GEMINI.md** that import `AGENTS.md` and `PROJECT.md` and add harness-only instructions (Step 2.10)
+- **CLAUDE.md**, a symlink to `AGENTS.md`, and **GEMINI.md**, which imports `AGENTS.md` and `PROJECT.md`; both add harness-only instructions (Step 2.10). Claude-only instructions go in `.claude/rules/claude-code.md`.
 - **Repositories map** in `PROJECT.md` only, listing each repo’s path, remote URL, and purpose (Step 2.11; see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 
 ### Variant: Centralized `project/` meta directory
@@ -156,7 +156,7 @@ If you use the `project/` pattern, make sure:
    - **AGENTS.md / PROJECT.md** – Apply the architecture in **Step 1.1**. If `PROJECT.md` is missing, create it (Step 1.4) and move the Repository Management / Tracked Repositories block and other project facts out of `AGENTS.md` into it. Then match `AGENTS.md` to the template in **Step 1.2** (with slim Change Management from **Step 2.6.2**). Keep your project-specific values (paths, remotes, project name) in `PROJECT.md`.
    - **project/troubleshooting/README.md** – Replace the “For AI Agents / Coding Assistants” and “Maintaining the Index” parts with the current content from **Step 2.4** (Create Troubleshooting README.md) so “update the logs” and when-to-add-troubleshooting rules stay in sync.
    - **docs/agents/changelog-and-troubleshooting.md** – If present, replace its content with the full conventions block from **Step 2.6.1** so Changelog, Troubleshooting, **Plans completed (`project/plans-completed/`)**, and “Interpreting Update the Logs” match the latest workflow.
-   - **CLAUDE.md / GEMINI.md** – Migrate to the thin import form (**Step 2.10.3**): move shared content into `AGENTS.md`, `PROJECT.md`, or `docs/agents/`, add the `@AGENTS.md` / `@PROJECT.md` imports, and keep only harness-specific instructions.
+   - **CLAUDE.md** – Make it a symlink to `AGENTS.md` (**Step 2.10.3**); move its Claude-only content to `.claude/rules/claude-code.md`. **GEMINI.md** – Migrate to the thin import form (**Step 2.10.3**): move shared content into `AGENTS.md`, `PROJECT.md`, or `docs/agents/`, add the `@AGENTS.md` / `@PROJECT.md` imports, and keep only harness-specific instructions.
 
 3. **Add any new structure only if missing** (do not replace existing):
    - Missing `project/` or subdirs → create with `mkdir -p project/{KIV,research,build}` and `mkdir -p project/changelog/{added,changed,fixed,improved,docs,refactor,config,plans}` and `mkdir -p project/troubleshooting/{build,runtime,data,environment,security}` and `mkdir -p project/plans-completed/{implementation,investigation,migration,review,tooling}` (plus `project/plans-completed/README.md` and `index.md` per Step 2.8 if missing).
@@ -1255,6 +1255,17 @@ for f in CLAUDE.md GEMINI.md; do
 done
 ```
 
+### 3.6.1 Confirm the rules load from the repo root
+
+Start a headless Claude Code session **at the project root** and ask it to quote the Agent Learnings section. When this was tested (2026-10-13), sessions started in a subfolder did not load the root rules, so run this check from the root only:
+
+```bash
+cd <PROJECT_PATH>
+claude -p "Do not read any files. From your loaded instructions only: quote the bullets under the 'Agent Learnings' heading verbatim, and name the file they came from." --output-format text --allowedTools "Read,Glob,Grep"
+```
+
+Expected: the bullets, from `AGENTS.md`. If they are missing, check that `CLAUDE.md` contains `@AGENTS.md`. If the run fails on credit, an `ANTHROPIC_API_KEY` in the environment may be taking precedence over the claude.ai login; unset it for that command only. A headless run may not match an interactive one, so also start an interactive session at the root and ask the same question.
+
 ### 3.7 Verify Repositories Map (Step 2.11)
 
 After executing [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md), confirm the repo map is present:
@@ -1473,6 +1484,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] project/plans/README.md and project/plans/TODO.md verified
 - [ ] project/plans-completed/ (categories + README + index) verified (Step 3.4.1)
 - [ ] project/learnings/ created with README, index.md, and category folders; AGENTS.md has the Agent Learnings section; no root AGENT_LEARNINGS.md left (Steps 2.8.5, 3.4.2)
+- [ ] Rules load from the repo root: headless check and an interactive check both quote the Agent Learnings section (Step 3.6.1)
 - [ ] docs/ and docs/agents/ verified
 - [ ] Agent files verified (Step 3.6)
 - [ ] Step 2.12 Agent skills stack completed (global if needed; scan; Matt / Impeccable gaps); spot-check Step 3.7.1

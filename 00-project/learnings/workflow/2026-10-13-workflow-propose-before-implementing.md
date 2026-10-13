@@ -1,7 +1,8 @@
 # When asked to study and propose, do not change the target files
 **Date:** 2026-10-13
 **Category:** workflow
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** file: 00-project-setup/01-setup-project.md (no learnings changes before the implementation goal)
 
 ---
 

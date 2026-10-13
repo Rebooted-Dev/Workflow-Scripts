@@ -2,7 +2,8 @@
 
 **Date:** 2026-10-13
 **Category:** workflow
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: grep of the import chain in the CLAUDE.md files
 
 ---
 

@@ -1,7 +1,8 @@
 # macOS uses BSD userland, so GNU flags fail
 **Date:** 2026-10-13
 **Category:** tooling
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: stat -f, od -c, and sed -i '' run in the session
 
 ---
 

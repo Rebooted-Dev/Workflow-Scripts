@@ -1,7 +1,8 @@
 # Check a template's commands and rules against the project before adopting it
 **Date:** 2026-10-13
 **Category:** workflow
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: grep of NuBible docs/agents for the cargo, Flutter, and secrets rules
 
 ---
 

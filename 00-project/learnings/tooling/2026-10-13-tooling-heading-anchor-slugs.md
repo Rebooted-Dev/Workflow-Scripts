@@ -1,7 +1,8 @@
 # Heading anchors drop punctuation, so Step 2.13 becomes step-213
 **Date:** 2026-10-13
 **Category:** tooling
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: TOC anchor check on file 10 (15 anchors matched)
 
 ---
 

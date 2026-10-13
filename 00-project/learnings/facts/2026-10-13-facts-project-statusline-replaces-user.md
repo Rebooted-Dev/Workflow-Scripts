@@ -1,7 +1,8 @@
 # A project's statusLine replaces the user-level one
 **Date:** 2026-10-13
 **Category:** facts
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: scan of ~/Development on 2026-10-13 found no overrides
 
 ---
 

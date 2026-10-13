@@ -10,6 +10,12 @@ bash "$validation/check-completion-chain-policy.sh"
 bash "$validation/check-artifact-lifecycle-policy.sh"
 bash "$validation/check-planning-build-policy.sh"
 
+# A here-string, not a pipe: with pipefail, grep -q can end a pipeline early and fail it.
+staged="$(git diff --cached --name-only)"
+if grep -q '^00-project/learnings/' <<< "$staged"; then
+  bash "$validation/check-learnings.sh"
+fi
+
 while IFS= read -r path; do
   [[ -n "$path" ]] || continue
   # Active plans get the structural lint. Archived plans also get the state

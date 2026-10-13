@@ -1,7 +1,8 @@
 # check-meta-logs.sh needs a staged or ranged diff
 **Date:** 2026-10-13
 **Category:** tooling
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: check-meta-logs.sh run on the changelog entries (exit 0)
 
 ---
 

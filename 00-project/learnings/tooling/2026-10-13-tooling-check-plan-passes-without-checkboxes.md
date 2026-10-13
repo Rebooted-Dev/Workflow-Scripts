@@ -1,7 +1,8 @@
 # check-plan --state passes a plan with no checkboxes
 **Date:** 2026-10-13
 **Category:** tooling
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: check-plan.sh run after adding the Tasks and Success Criteria sections
 
 ---
 

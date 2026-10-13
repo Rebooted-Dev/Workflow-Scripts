@@ -62,6 +62,8 @@ Examples:
 **Date:** <YYYY-MM-DD>
 **Category:** <workflow|code|tooling|facts|communication>
 **Status:** <ACTIVE|NOTED|PROMOTED|SUPERSEDED>
+**Source:** <developer message|command|file|unverified>: <the developer's words, the command and its result, or the file path>
+**Approved:** <YYYY-MM-DD, the developer's approval; required for ACTIVE, omit otherwise>
 
 ---
 
@@ -69,16 +71,16 @@ Examples:
 - What happened, in one or two lines.
 
 ## Pattern to avoid
-- What was done, or what would be wrong to repeat.
+- What was done, or what would be wrong to repeat. Write `- None.` if the session shows no mistake.
 
 ## Better approach
-- What to do instead.
+- What to do instead. Write `- None.` if there is nothing to add.
 
 ## Verification
-- How this was checked (test, command, user confirmation). Write "unverified" if not.
+- How this was checked: a test, a command and its result, or a file. Write `- None.` if it was not checked, and set Source to `unverified`.
 
 ## Notes
-- Links to related troubleshooting or changelog entries. For PROMOTED, the section it moved to.
+- Links to related troubleshooting or changelog entries. For PROMOTED, the section it moved to. Write `- None.` if there are none.
 ```
 
 ## What Belongs Here
@@ -94,9 +96,17 @@ Examples:
 - Plan progress. Plans keep their checkboxes.
 - Secrets, tokens, or personal data.
 
+## Accuracy
+
+- Write only what happened in the session, and cite its source in the `**Source:**` line: the developer's message (quoted), a command and its result, or a file path. Use `unverified` when none applies.
+- Do not write that the developer confirmed or corrected something unless the conversation shows it.
+- Do not write that you made a mistake unless the session shows the mistake.
+- A section with nothing to say is written as `- None.`. Do not fill it with guesses.
+- Agents write new entries as `NOTED`. An entry becomes `ACTIVE` only when the developer approves it; the developer's approval date goes in `**Approved:**`.
+
 ## Statuses
 
-- `ACTIVE` - Verified or recurring. Agents follow it before non-trivial work. The Status cell carries the rule in one line, after `ACTIVE;`.
+- `ACTIVE` - Verified or recurring, and approved by the developer (`**Approved:**` date). Its Source is not `unverified`. Agents follow it before non-trivial work. The Status cell carries the rule in one line, after `ACTIVE;`.
 - `NOTED` - Recorded once. Not yet verified or recurring. No obligation.
 - `PROMOTED` - Moved into AGENTS.md or PROJECT.md. Names the section. The entry stays as the record.
 - `SUPERSEDED` - Replaced by a later entry. Links the replacement.
@@ -108,7 +118,7 @@ The `index.md` file is the single chronological index. **Newest entries are list
 When adding a new entry:
 1. Create the entry file in the appropriate category folder.
 2. Add a new row at the **top** of the table in `index.md` with: Date, Category, Title, File, Status.
-3. Mark it `ACTIVE` only when it is verified or recurring. Put the rule in one line after `ACTIVE;`.
+3. Write it as `NOTED`. Mark it `ACTIVE` only when the developer approves it: add the `**Approved:**` date to the entry and put the rule in one line after `ACTIVE;`.
 
 When promoting or superseding an entry:
 - **Promoted:** move the rule into AGENTS.md (or PROJECT.md for a fact), then set the row to `PROMOTED; <file>` naming the section. Do not keep the rule in two places.
@@ -140,7 +150,7 @@ Add to AGENTS.md (Step 1.2 of `01-setup-project.md`), between **Execution** and 
 ```markdown
 ## Agent Learnings
 - **Before non-trivial work:** read `project/learnings/index.md` and follow each entry marked ACTIVE.
-- **After a mistake, a correction, or a verified non-obvious fact:** add an entry under `project/learnings/<category>/` and a row at the top of `project/learnings/index.md` (conventions in `project/learnings/README.md`), then tell the user what you added and where. Mark an entry ACTIVE only when it is verified or recurring.
+- **After a mistake, a correction, or a verified non-obvious fact:** add an entry under `project/learnings/<category>/` and a row at the top of `project/learnings/index.md` (conventions in `project/learnings/README.md`), then tell the user what you added and where. Write new entries as NOTED; mark one ACTIVE only when the developer approves it.
 ```
 
 Add to PROJECT.md, under Layout (Step 1.4 of `01-setup-project.md`):
@@ -157,7 +167,7 @@ Some projects have a root `AGENT_LEARNINGS.md` from an earlier pattern. Migrate 
 
 1. **Drop placeholders and copied commands.** Remove entries such as "Example entry (delete me)". Do not copy commands from another project's template (for example `pnpm` commands). Project commands belong in `docs/agents/development-workflow.md`.
 2. **Split into entries.** Each lesson becomes one file under its category: `project/learnings/<category>/<yyyy-mm-dd>-<category>-<short-title>.md`, using the date from the old entry.
-3. **Set status.** A lesson from the old Active Rules section that was verified or recurring is `ACTIVE`. Other lessons are `NOTED`.
+3. **Set status.** Every migrated lesson is `NOTED`. A lesson from the old Active Rules section becomes `ACTIVE` only when the developer approves it, with an `**Approved:**` date. Give each entry a `**Source:**` line; use `unverified` when the old file does not show one.
 4. **Update the index.** Add one row per entry at the top of `project/learnings/index.md` (newest first).
 5. **Remove the root file.** Only after step 4 and the Step 6 check pass. Then update the AGENTS.md pointer if it still names the old file.
 
@@ -169,6 +179,7 @@ test -f project/learnings/index.md && echo "✓ project/learnings/index.md exist
 for d in workflow code tooling facts communication; do test -d "project/learnings/$d" && echo "✓ project/learnings/$d/ exists"; done
 test ! -f AGENT_LEARNINGS.md && echo "✓ no root AGENT_LEARNINGS.md"
 grep -q 'project/learnings/index.md' AGENTS.md && echo "✓ AGENTS.md points to project/learnings/index.md"
+bash <WORKFLOWS_DIR>/scripts/validation/check-learnings.sh project/learnings
 ```
 
 ---

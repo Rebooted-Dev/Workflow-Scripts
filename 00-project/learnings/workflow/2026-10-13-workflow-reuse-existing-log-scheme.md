@@ -1,7 +1,8 @@
 # Reuse the project's existing log scheme for agent-written logs
 **Date:** 2026-10-13
 **Category:** workflow
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: link check after the revised layout
 
 ---
 

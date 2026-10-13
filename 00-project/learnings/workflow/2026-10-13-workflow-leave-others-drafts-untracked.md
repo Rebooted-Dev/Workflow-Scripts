@@ -1,7 +1,8 @@
 # Leave untracked drafts you did not write out of commits
 **Date:** 2026-10-13
 **Category:** workflow
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: git status after commit e325235 (the draft stayed untracked)
 
 ---
 

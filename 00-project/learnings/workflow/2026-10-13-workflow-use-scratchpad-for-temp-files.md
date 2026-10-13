@@ -1,7 +1,8 @@
 # Write temporary files to the session scratchpad
 **Date:** 2026-10-13
 **Category:** workflow
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: rm -f of a stray /tmp file; later checks used scratchpad paths
 
 ---
 

@@ -1,7 +1,8 @@
 # In a changelog index, the File column names the entry
 **Date:** 2026-10-13
 **Category:** workflow
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: link checker run after the correction
 
 ---
 

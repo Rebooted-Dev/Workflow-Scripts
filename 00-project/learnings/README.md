@@ -30,6 +30,8 @@ Examples:
 **Date:** <YYYY-MM-DD>
 **Category:** <workflow|code|tooling|facts|communication>
 **Status:** <ACTIVE|NOTED|PROMOTED|SUPERSEDED>
+**Source:** <developer message|command|file|unverified>: <the developer's words, the command and its result, or the file path>
+**Approved:** <YYYY-MM-DD, the developer's approval; required for ACTIVE, omit otherwise>
 
 ---
 
@@ -37,16 +39,16 @@ Examples:
 - What happened, in one or two lines.
 
 ## Pattern to avoid
-- What was done, or what would be wrong to repeat.
+- What was done, or what would be wrong to repeat. Write `- None.` if the session shows no mistake.
 
 ## Better approach
-- What to do instead.
+- What to do instead. Write `- None.` if there is nothing to add.
 
 ## Verification
-- How this was checked (test, command, user confirmation). Write "unverified" if not.
+- How this was checked: a test, a command and its result, or a file. Write `- None.` if it was not checked, and set Source to `unverified`.
 
 ## Notes
-- Links to related troubleshooting or changelog entries. For PROMOTED, the section it moved to.
+- Links to related troubleshooting or changelog entries. For PROMOTED, the section it moved to. Write `- None.` if there are none.
 ```
 
 ## What Belongs Here
@@ -62,9 +64,17 @@ Examples:
 - Plan progress. Plans keep their checkboxes.
 - Secrets, tokens, or personal data.
 
+## Accuracy
+
+- Write only what happened in the session, and cite its source in the `**Source:**` line: the developer's message (quoted), a command and its result, or a file path. Use `unverified` when none applies.
+- Do not write that the developer confirmed or corrected something unless the conversation shows it.
+- Do not write that you made a mistake unless the session shows the mistake.
+- A section with nothing to say is written as `- None.`. Do not fill it with guesses.
+- Agents write new entries as `NOTED`. An entry becomes `ACTIVE` only when the developer approves it; the developer's approval date goes in `**Approved:**`.
+
 ## Statuses
 
-- `ACTIVE` - Verified or recurring. Agents follow it before non-trivial work. The Status cell carries the rule in one line, after `ACTIVE;`.
+- `ACTIVE` - Verified or recurring, and approved by the developer (`**Approved:**` date). Its Source is not `unverified`. Agents follow it before non-trivial work. The Status cell carries the rule in one line, after `ACTIVE;`.
 - `NOTED` - Recorded once. Not yet verified or recurring. No obligation.
 - `PROMOTED` - Moved into AGENTS.md or PROJECT.md. Names the section. The entry stays as the record.
 - `SUPERSEDED` - Replaced by a later entry. Links the replacement.
@@ -76,7 +86,7 @@ The `index.md` file is the single chronological index. **Newest entries are list
 When adding a new entry:
 1. Create the entry file in the appropriate category folder.
 2. Add a new row at the **top** of the table in `index.md` with: Date, Category, Title, File, Status.
-3. Mark it `ACTIVE` only when it is verified or recurring. Put the rule in one line after `ACTIVE;`.
+3. Write it as `NOTED`. Mark it `ACTIVE` only when the developer approves it: add the `**Approved:**` date to the entry and put the rule in one line after `ACTIVE;`.
 
 When promoting or superseding an entry:
 - **Promoted:** move the rule into AGENTS.md (or PROJECT.md for a fact), then set the row to `PROMOTED; <file>` naming the section. Do not keep the rule in two places.

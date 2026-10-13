@@ -2,6 +2,7 @@
 **Date:** 2026-10-13
 **Category:** facts
 **Status:** NOTED
+**Source:** command: sample-input tests of the cache line; no live session
 
 ---
 

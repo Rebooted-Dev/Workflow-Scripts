@@ -1,7 +1,8 @@
 # Use four-backtick fences around templates that contain code blocks
 **Date:** 2026-10-13
 **Category:** tooling
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** file: source read; template extracted from the outer fence (57 lines)
 
 ---
 

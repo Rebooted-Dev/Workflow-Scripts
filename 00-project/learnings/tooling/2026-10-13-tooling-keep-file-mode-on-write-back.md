@@ -1,7 +1,8 @@
 # Write private files back with cat, not mv, to keep their mode
 **Date:** 2026-10-13
 **Category:** tooling
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: stat check after a cat write-back; mode stayed -rw-------
 
 ---
 

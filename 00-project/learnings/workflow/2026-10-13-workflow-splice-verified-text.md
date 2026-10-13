@@ -1,7 +1,8 @@
 # Splice verified text into docs instead of retyping it
 **Date:** 2026-10-13
 **Category:** workflow
-**Status:** ACTIVE
+**Status:** NOTED
+**Source:** command: cmp of the cache script and the learnings README in both repos
 
 ---
 

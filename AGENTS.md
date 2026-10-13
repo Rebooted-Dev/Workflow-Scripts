@@ -11,6 +11,7 @@ These rules apply when you **change** files in this repository. If you are only 
 
 - **Before non-trivial work:** read `00-project/learnings/index.md` and follow each entry marked ACTIVE.
 - **After a mistake, a correction, or a verified non-obvious fact:** add an entry under `00-project/learnings/<category>/` and a row at the top of `00-project/learnings/index.md` (conventions in `00-project/learnings/README.md`), then tell the user what you added and where. Mark an entry ACTIVE only when it is verified or recurring. Learnings are not changelog or troubleshooting entries.
+- **Check the log:** after changing `00-project/learnings/`, run `bash scripts/validation/check-learnings.sh`. Its self-test is `scripts/validation/check-learnings-selftest.sh`.
 
 ## Logging changes to this repository
 
