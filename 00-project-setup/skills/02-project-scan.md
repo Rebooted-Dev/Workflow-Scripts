@@ -18,7 +18,6 @@ Run from project root (adjust if harness files use different names):
 test -f PROJECT.md && echo "PROJECT.md: yes" || echo "PROJECT.md: MISSING"
 test -f AGENTS.md && echo "AGENTS.md: yes" || echo "AGENTS.md: MISSING"
 test -f CLAUDE.md && echo "CLAUDE.md: yes" || echo "CLAUDE.md: MISSING"
-test -f GEMINI.md && echo "GEMINI.md: yes" || echo "GEMINI.md: MISSING"
 test -f PRODUCT.md && echo "PRODUCT.md: yes" || echo "PRODUCT.md: MISSING"
 
 # Directories
@@ -38,9 +37,6 @@ if [ -f CLAUDE.md ]; then
   test -L CLAUDE.md && [ "$(readlink CLAUDE.md)" = AGENTS.md ] || echo "CLAUDE.md: not a symlink to AGENTS.md"
   grep -q '^## Agent skills' .claude/rules/claude-code.md 2>/dev/null || echo ".claude/rules/claude-code.md: no Agent skills block"
 fi
-if [ -f GEMINI.md ]; then
-  grep -nE '^@AGENTS\.md|^@PROJECT\.md' GEMINI.md || echo "GEMINI.md: missing expected imports"
-fi
 
 # Remote (helps Matt setup choose GitHub vs other)
 git remote -v 2>/dev/null || echo "git remote: unavailable"
@@ -58,7 +54,7 @@ Also note (human/agent observation, not a file probe):
 
 | Finding | Action (Phase 3) |
 |---------|------------------|
-| Missing `PROJECT.md`, or `AGENTS.md` still holds project facts / fat rules, or harness files lack the import or symlink (`CLAUDE.md` → `AGENTS.md`; `GEMINI.md` → `@AGENTS.md` / `@PROJECT.md`) | Follow [../01-setup-project.md](../01-setup-project.md) **Updating an existing project…** (or full setup if brand-new). **Do not** wipe changelog/troubleshooting indexes. |
+| Missing `PROJECT.md`, or `AGENTS.md` still holds project facts / fat rules, or harness files lack the import or symlink (`CLAUDE.md` → `AGENTS.md`) | Follow [../01-setup-project.md](../01-setup-project.md) **Updating an existing project…** (or full setup if brand-new). **Do not** wipe changelog/troubleshooting indexes. |
 | Missing `docs/agents/changelog-and-troubleshooting.md` or `project/{changelog,troubleshooting,plans}` layout | Same: [../01-setup-project.md](../01-setup-project.md) existing-project path; create only missing folders/files. |
 | Missing `docs/agents/issue-tracker.md` or `triage-labels.md` or `domain.md`, or `.claude/rules/claude-code.md` has no `## Agent skills` | Run `/setup-matt-pocock-skills` (see [03-project-scaffold.md](./03-project-scaffold.md)). |
 | UI/product repo and no `PRODUCT.md` | Run `/impeccable init` (interview; do not invent). Approve hooks if prompted. |

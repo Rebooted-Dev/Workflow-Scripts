@@ -83,13 +83,13 @@ Key features:
 
 Discover all Git repositories in the project and write the map to `PROJECT.md`:
 - **Repo discovery** – Find all `.git` directories and list path, remote URL, branch
-- **Repository map** – Write the `## Repositories` table (directory → remote, purpose) to `PROJECT.md` — the single canonical copy; verify `AGENTS.md` still points to it, `CLAUDE.md` is still a symlink to `AGENTS.md`, and `GEMINI.md` still imports it
+- **Repository map** – Write the `## Repositories` table (directory → remote, purpose) to `PROJECT.md` — the single canonical copy; verify `AGENTS.md` still points to it and `CLAUDE.md` is still a symlink to `AGENTS.md`
 - **Sync / push / pull** – Document when to sync and per-repo Git commands; reference project-specific sync scripts (e.g. `sync-repo.sh`) and multi-project Workflow-Scripts sync (03)
 
 Key steps:
 1. Run discovery commands to list all repos
 2. Update the Repositories table in `PROJECT.md` (optionally link a longer `docs/agents/repository-map.md`)
-3. Verify `AGENTS.md`/`CLAUDE.md`/`GEMINI.md` only point to `PROJECT.md` rather than duplicating the map
+3. Verify `AGENTS.md`/`CLAUDE.md` only point to `PROJECT.md` rather than duplicating the map
 4. Document sync, pull, and push procedures for each repo
 
 ### skills/ (detail for 01 Step 2.12)

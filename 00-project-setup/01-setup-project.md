@@ -6,7 +6,7 @@ This workflow sets up a new project, migrates a project from an older structure,
 3. **Changelog System** - Single `project/changelog/` directory: type folders (added, changed, fixed, etc.) plus optional `plans/` subdir for plans archived next to the changelog; one index for all (change entries and Type=plan); backup of existing single-file CHANGELOG if present
 4. **Project & Plans** - `project/` container: `project/KIV/`, `project/research/`, `project/build/`, `project/plans/`, `project/plans-completed/`, `project/changelog/`, `project/troubleshooting/`. **Active plans** live in `project/plans/` (and map/TODO). **Default for "file as completed":** move plans to **`project/plans-completed/<category>/`** (same pattern as troubleshooting: category folders + `plans-completed/index.md`), then add a **Type=plan** row to **`project/changelog/index.md`** with File `../plans-completed/<category>/...`. **Alternate:** archive under `project/changelog/plans/` when explicitly requested.
 5. **Agent file architecture (single source of truth)** - `AGENTS.md` holds agent rules only (same concise template in every project); `PROJECT.md` holds project facts; `docs/agents/` holds detailed guides (see [Step 1.1](#11-agent-file-architecture-single-source-of-truth))
-6. **Harness files** - `CLAUDE.md` is a symlink to `AGENTS.md`; `GEMINI.md` imports `@AGENTS.md` and `@PROJECT.md`. Each adds only harness-only instructions (Claude's go in `.claude/rules/claude-code.md`); existing files are migrated, not duplicated (Step 2.10)
+6. **Harness files** - `CLAUDE.md` is a symlink to `AGENTS.md`. Claude-only instructions go in `.claude/rules/claude-code.md`; existing files are migrated, not duplicated (Step 2.10)
 7. **Track Repos** - Discover all Git repos in the project and record the repository map in `PROJECT.md` (see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 8. **Agent skills stack** - After layout and harness files: once-per-machine global installs (if needed), then scan this repo and fill Matt Pocock / Impeccable gaps (see [Step 2.12](#step-212-agent-skills-stack); details in [`skills/`](./skills/))
 9. **Claude Code cache status line** - Optional, once per machine: check the local install, then add the prompt-cache countdown line only with the user's permission (see [Step 2.13](#step-213-claude-code-cache-status-line-optional-once-per-machine); details in [`10-claude-cache-statusline.md`](./10-claude-cache-statusline.md))
@@ -84,7 +84,7 @@ ls -d docs docs/agents 2>/dev/null && echo "✓ docs/ and docs/agents/ created"
 
 For detailed prerequisite verification (git repo checks, .gitignore, workflows directory validation, placeholder checks), see **Step 0** below.
 
-For a comprehensive setup with agent files (AGENTS.md, PROJECT.md, CLAUDE.md, GEMINI.md) and backups, continue with the detailed steps below.
+For a comprehensive setup with agent files (AGENTS.md, PROJECT.md, CLAUDE.md) and backups, continue with the detailed steps below.
 
 ---
 
@@ -102,7 +102,7 @@ This setup ensures:
 - **docs/** directory at project root (created if missing) and **docs/agents/** for agent-facing detailed documentation
 - **Single source of truth for agent guidance** (Step 1.1): concise `AGENTS.md` with agent rules only (Execution, slim Change Management, pointer to `PROJECT.md`, "Detailed Documentation" links). Changelog & Troubleshooting conventions live in `docs/agents/changelog-and-troubleshooting.md`; other long sections are relocated to topical files in `docs/agents/` (Steps 2.6, 2.9.3)
 - **`PROJECT.md`** at project root holds project facts: description, repositories, layout, project-specific constraints (Step 1.4)
-- **CLAUDE.md**, a symlink to `AGENTS.md`, and **GEMINI.md**, which imports `AGENTS.md` and `PROJECT.md`; both add harness-only instructions (Step 2.10). Claude-only instructions go in `.claude/rules/claude-code.md`.
+- **CLAUDE.md**, a symlink to `AGENTS.md`. Claude-only instructions go in `.claude/rules/claude-code.md` (Step 2.10).
 - **Repositories map** in `PROJECT.md` only, listing each repo’s path, remote URL, and purpose (Step 2.11; see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 
 ### Variant: Centralized `project/` meta directory
@@ -119,7 +119,7 @@ Some projects prefer to keep all project meta directories under a single `projec
 When you see paths like `docs/`, `changelog/`, `troubleshooting/`, `plans/`, or `plans-completed/` in this workflow, apply them **either** at the repository root **or** under `project/` depending on your chosen structure.  
 If you use the `project/` pattern, make sure:
 
-- `AGENTS.md`, `PROJECT.md`, and harness-only sections of `CLAUDE.md` / `GEMINI.md` refer to `project/docs/agents/…`, `project/changelog/…`, `project/troubleshooting/…`, `project/plans/`, and `project/plans-completed/`.
+- `AGENTS.md`, `PROJECT.md`, and harness-only sections of `CLAUDE.md` refer to `project/docs/agents/…`, `project/changelog/…`, `project/troubleshooting/…`, `project/plans/`, and `project/plans-completed/`.
 - Index files (`changelog/index.md`, `troubleshooting/index.md`, `plans-completed/index.md`) store paths that include the `project/` prefix (e.g. `project/changelog/docs/2026-03-13-docs-legacy-changelog-migration.md`).
 - `project/plans-completed/` is treated as an **index of completed plans and reports**, while `project/changelog/` remains the **canonical record of code and configuration changes**; when archiving a plan that resulted in changes, ensure there is at least one corresponding changelog entry.
 
@@ -156,7 +156,7 @@ If you use the `project/` pattern, make sure:
    - **AGENTS.md / PROJECT.md** – Apply the architecture in **Step 1.1**. If `PROJECT.md` is missing, create it (Step 1.4) and move the Repository Management / Tracked Repositories block and other project facts out of `AGENTS.md` into it. Then match `AGENTS.md` to the template in **Step 1.2** (with slim Change Management from **Step 2.6.2**). Keep your project-specific values (paths, remotes, project name) in `PROJECT.md`.
    - **project/troubleshooting/README.md** – Replace the “For AI Agents / Coding Assistants” and “Maintaining the Index” parts with the current content from **Step 2.4** (Create Troubleshooting README.md) so “update the logs” and when-to-add-troubleshooting rules stay in sync.
    - **docs/agents/changelog-and-troubleshooting.md** – If present, replace its content with the full conventions block from **Step 2.6.1** so Changelog, Troubleshooting, **Plans completed (`project/plans-completed/`)**, and “Interpreting Update the Logs” match the latest workflow.
-   - **CLAUDE.md** – Make it a symlink to `AGENTS.md` (**Step 2.10.3**); move its Claude-only content to `.claude/rules/claude-code.md`. **GEMINI.md** – Migrate to the thin import form (**Step 2.10.3**): move shared content into `AGENTS.md`, `PROJECT.md`, or `docs/agents/`, add the `@AGENTS.md` / `@PROJECT.md` imports, and keep only harness-specific instructions.
+   - **CLAUDE.md** – Make it a symlink to `AGENTS.md` (**Step 2.10.2**); move its Claude-only content to `.claude/rules/claude-code.md`.
 
 3. **Add any new structure only if missing** (do not replace existing):
    - Missing `project/` or subdirs → create with `mkdir -p project/{KIV,research,build}` and `mkdir -p project/changelog/{added,changed,fixed,improved,docs,refactor,config,plans}` and `mkdir -p project/troubleshooting/{build,runtime,data,environment,security}` and `mkdir -p project/plans-completed/{implementation,investigation,migration,review,tooling}` (plus `project/plans-completed/README.md` and `index.md` per Step 2.8 if missing).
@@ -189,7 +189,7 @@ For consistent checklist marking (✅ vs `[ ]`), completion markers, and archivi
 - [ ] AGENTS.md matches Step 1.2 (agent rules only, pointer to PROJECT.md); PROJECT.md holds repositories and project facts (Step 1.4)
 - [ ] project/troubleshooting/README.md: “For AI Agents” and when-to-update-troubleshooting match Step 2.4
 - [ ] docs/agents/changelog-and-troubleshooting.md: content matches Step 2.6.1 including **Plans completed** and changelog archive sections (if you use this file)
-- [ ] CLAUDE.md is a symlink to AGENTS.md; GEMINI.md has the thin import form; Claude-only content in `.claude/rules/claude-code.md` (Step 2.10)
+- [ ] CLAUDE.md is a symlink to AGENTS.md; Claude-only content in `.claude/rules/claude-code.md` (Step 2.10)
 - [ ] Missing category/type folders created; repo map refreshed if needed (Step 2.11)
 - [ ] Step 2.12 (Agent skills stack) completed — global install if needed; scan; Matt / Impeccable gaps only
 - [ ] Step 2.13 (Claude Code cache status line) checked; installed only after the user said yes (or declined and recorded); project `statusLine` overrides checked
@@ -272,12 +272,11 @@ Every project uses the same split. Each rule or fact lives in **exactly one** fi
 
 | File | Holds | Read by |
 |------|-------|---------|
-| `AGENTS.md` | **Agent rules** for every harness: Execution (1.2), Change Management (2.6.2), a pointer to `PROJECT.md`, and "Detailed Documentation" links. Same template in every project. Target: 40 lines or fewer. | Codex, Cursor, and other AGENTS.md-aware tools natively; Claude through the `CLAUDE.md` symlink; Gemini through its import |
-| `PROJECT.md` | **Project facts**: name and description, repositories (1.4), workspace layout, project-specific constraints. | Pointer in `AGENTS.md`, which imports it for Claude; imported by `GEMINI.md` |
+| `AGENTS.md` | **Agent rules** for every harness: Execution (1.2), Change Management (2.6.2), a pointer to `PROJECT.md`, and "Detailed Documentation" links. Same template in every project. Target: 40 lines or fewer. | Codex, Cursor, and other AGENTS.md-aware tools natively; Claude through the `CLAUDE.md` symlink |
+| `PROJECT.md` | **Project facts**: name and description, repositories (1.4), workspace layout, project-specific constraints. | Pointer in `AGENTS.md`, which imports it for Claude |
 | `docs/agents/*.md` | Detailed topical guides (2.6.1, 2.9.3). | Links in `AGENTS.md` |
 | `project/learnings/` | Agent learnings: `index.md` plus category folders, one file per lesson (Step 2.8.5). Entries marked ACTIVE are the rules to follow. | Pointer in `AGENTS.md` |
 | `CLAUDE.md` | A symlink to `AGENTS.md`. Claude-only instructions go in `.claude/rules/claude-code.md` (2.10). | Claude Code |
-| `GEMINI.md` | `@AGENTS.md` and `@PROJECT.md` imports, then **Gemini-only** instructions (2.10). | Gemini CLI |
 
 **Placement test** for any new line:
 1. Does it only make sense for one harness (a harness-specific model choice, tool, or import syntax)? Put it in that harness file. Shared sub-agent preferences and concurrency limits belong in `AGENTS.md`.
@@ -327,7 +326,7 @@ In the **Plans** bullet, replace `<workflow-scripts>` with the project's actual 
 
 ### 1.3 Bugs / regression-test instruction
 
-The line `- **Bugs:** add regression test when it fits.` lives **only** in the `AGENTS.md` Execution section (1.2). `CLAUDE.md` (a symlink to `AGENTS.md`) and `GEMINI.md` (its `@AGENTS.md` import) receive it from there; do not copy it into them.
+The line `- **Bugs:** add regression test when it fits.` lives **only** in the `AGENTS.md` Execution section (1.2). `CLAUDE.md` (a symlink to `AGENTS.md`) receives it from there; do not copy it into `CLAUDE.md`.
 
 ### 1.4 Create PROJECT.md (project facts and repositories)
 
@@ -970,7 +969,7 @@ When a plan is confirmed completed, or the user asks to **"file … as completed
 
 **Alternate:** If the user explicitly asks to file under **`project/changelog/plans/`**, move there instead and use File=`plans/...` in the changelog index.
 
-`docs/agents/changelog-and-troubleshooting.md` states this rule (Step 2.6.1) and `AGENTS.md` links to it (Step 1.2); `CLAUDE.md` (a symlink) and `GEMINI.md` (its import) receive it through `AGENTS.md`.
+`docs/agents/changelog-and-troubleshooting.md` states this rule (Step 2.6.1) and `AGENTS.md` links to it (Step 1.2); `CLAUDE.md` (a symlink) receives it through `AGENTS.md`.
 
 **Human/agent shortcut:** The same filing steps are duplicated under **Reference — filing completed plans** in **`project/plans/TODO.md`** (Step 2.8.3) so they appear next to the active task list.
 
@@ -1048,13 +1047,11 @@ fi
 
 ---
 
-## Step 2.10: Set Up the Harness Files (CLAUDE.md and GEMINI.md) (Standard)
+## Step 2.10: Set Up the Harness Files (CLAUDE.md) (Standard)
 
-**Standard task:** Make `CLAUDE.md` a symlink to `AGENTS.md`, put any Claude-only instructions in `.claude/rules/claude-code.md`, and create `GEMINI.md` as a thin import file (01 §1.1).
+**Standard task:** Make `CLAUDE.md` a symlink to `AGENTS.md`, and put any Claude-only instructions in `.claude/rules/claude-code.md` (01 §1.1).
 
 Claude Code does not load an `@AGENTS.md` import from a session started in a subfolder. The root file is outside that session's working directory, and Claude Code loads such an import only after a one-time approval that headless sessions never show, so the rules are dropped silently. A symlink is read as the file it names, and that file is inside the project, so the rules load from any folder. This was verified in Workflow-Scripts on 2026-10-13 with the canary check (`scripts/validation/check-agent-rules-load.sh`). `.claude/rules/*.md` is inside the project too, so it loads from any folder.
-
-Gemini CLI still uses the import form. Its behaviour from a subfolder has not been tested.
 
 ### 2.10.1 CLAUDE.md (symlink) and Claude-only rules
 
@@ -1075,36 +1072,20 @@ Claude-only instructions. Shared rules live in `AGENTS.md`; project facts in `PR
 - <Only instructions that apply to Claude alone, e.g. subagent model selection, Claude Code hooks or skills. Omit the section if there are none.>
 ```
 
-### 2.10.2 GEMINI.md template
-
-```markdown
-# GEMINI.md
-
-Shared agent rules and project facts are imported below; they are the single source of truth. This file holds Gemini-specific instructions only. Put shared guidance in `AGENTS.md`, `PROJECT.md`, or `docs/agents/`, not here.
-
-@AGENTS.md
-@PROJECT.md
-
-## Gemini-Specific Instructions
-- <Only instructions that apply to Gemini alone. Omit the section if there are none.>
-```
-
-### 2.10.3 Create or migrate the harness files
+### 2.10.2 Create or migrate the harness files
 
 - **File missing:** create it from the template above.
 - **File exists:** do not delete content blindly; migrate it. For each section, apply the placement test (01 §1.1):
   1. Content already in `AGENTS.md`, `PROJECT.md`, or `docs/agents/` → delete it from the harness file.
   2. Content unique to the harness file but useful to every agent → move it to `AGENTS.md` (rules), `PROJECT.md` (facts), or a `docs/agents/` file (long material), then delete it here. Verify facts against the code as you move them; stale facts should be corrected, not copied.
   3. Harness-only content → keep it under the harness-specific section.
-  4. For GEMINI.md, add the `@AGENTS.md` / `@PROJECT.md` import lines if missing. For CLAUDE.md, move its Claude-only content to `.claude/rules/claude-code.md`, then replace the file with the symlink (2.10.1).
+  4. For CLAUDE.md, move its Claude-only content to `.claude/rules/claude-code.md`, then replace the file with the symlink (2.10.1).
 
 ```bash
-# From project root: CLAUDE.md is a symlink to AGENTS.md; GEMINI.md imports both files
+# From project root: CLAUDE.md is a symlink to AGENTS.md
 test -L CLAUDE.md && [ "$(readlink CLAUDE.md)" = AGENTS.md ] && echo "✓ CLAUDE.md is a symlink to AGENTS.md" || echo "✗ CLAUDE.md must be a symlink: ln -sf AGENTS.md CLAUDE.md"
-[ -f GEMINI.md ] || echo "✗ GEMINI.md missing (create from template)"
-[ -f GEMINI.md ] && { grep -q '^@AGENTS.md' GEMINI.md && grep -q '^@PROJECT.md' GEMINI.md && echo "✓ GEMINI.md imports AGENTS.md and PROJECT.md" || echo "✗ GEMINI.md is missing an import line"; }
-# CLAUDE.md is not searched: it is AGENTS.md, which legitimately has these sections
-grep -n -E '^## (Repository Management|Tracked Repositories|Repositories|Execution|Change Management|Detailed Documentation)' GEMINI.md .claude/rules/claude-code.md 2>/dev/null && echo "  ↑ restates shared sections; migrate them (2.10.3)"
+# Flag shared sections restated in the Claude-only rules file (CLAUDE.md is AGENTS.md, which legitimately has them)
+grep -n -E '^## (Repository Management|Tracked Repositories|Repositories|Execution|Change Management|Detailed Documentation)' .claude/rules/claude-code.md 2>/dev/null && echo "  ↑ restates shared sections; migrate them (2.10.2)"
 ```
 
 ---
@@ -1114,7 +1095,7 @@ grep -n -E '^## (Repository Management|Tracked Repositories|Repositories|Executi
 After setting up or updating the project (including the agent files from Steps 1 and 2.10), **activate and execute** the Track Repos and Agent Map workflow so that:
 
 1. All Git repositories in the project are discovered and listed.
-2. The **Repositories** section of `PROJECT.md` lists every repo: directory path → remote URL, purpose. `AGENTS.md` points to `PROJECT.md`; `CLAUDE.md` and `GEMINI.md` reach it through `AGENTS.md` and their imports, so the map is never copied.
+2. The **Repositories** section of `PROJECT.md` lists every repo: directory path → remote URL, purpose. `AGENTS.md` points to `PROJECT.md`; `CLAUDE.md` reaches it through `AGENTS.md`, so the map is never copied.
 3. Sync, pull, and push instructions are documented for each repo and for the project as a whole.
 
 **Action:** Follow and complete every step in [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md):
@@ -1257,9 +1238,8 @@ grep -n -E '^## (Repository Management|Tracked Repositories|Repositories)' AGENT
 # PROJECT.md: project facts
 test -f PROJECT.md && echo "✓ PROJECT.md exists"
 
-# CLAUDE.md: symlink to AGENTS.md; GEMINI.md: thin import form (full check in Step 2.10.3)
+# CLAUDE.md: symlink to AGENTS.md (full check in Step 2.10.2)
 test -L CLAUDE.md && [ "$(readlink CLAUDE.md)" = AGENTS.md ] && echo "✓ CLAUDE.md is a symlink to AGENTS.md"
-grep -q '^@AGENTS.md' GEMINI.md && grep -q '^@PROJECT.md' GEMINI.md && echo "✓ GEMINI.md imports AGENTS.md and PROJECT.md"
 grep -q '^@PROJECT.md' AGENTS.md && echo "✓ AGENTS.md imports PROJECT.md (for Claude)"
 ```
 
@@ -1344,7 +1324,7 @@ Summary of the standard setup. Details are in the referenced steps.
 - **PROJECT.md (root)** – Project facts (1.4): description, repositories, layout, project-specific constraints.
 - **Changelog & troubleshooting** – Full conventions in `docs/agents/changelog-and-troubleshooting.md` (2.6.1); AGENTS.md has a short Change Management section + link (2.6.2). Changelog directory: 2.7.
 - **docs/agents/** – Created in 2.9; long AGENTS.md sections relocated here via 2.9.3. At minimum: `changelog-and-troubleshooting.md`.
-- **CLAUDE.md** – symlink to `AGENTS.md`; Claude-only instructions in `.claude/rules/claude-code.md` (2.10). **GEMINI.md** – thin: `@AGENTS.md` + `@PROJECT.md` imports plus Gemini-only instructions (2.10). Existing files migrated (2.10.3).
+- **CLAUDE.md** – symlink to `AGENTS.md`; Claude-only instructions in `.claude/rules/claude-code.md` (2.10). Existing files migrated (2.10.2).
 - **Repositories map (PROJECT.md)** – Run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) (Step 2.11) after setup and when adding/removing repos.
 - **Agent skills stack** – Step 2.12 after layout: global install if needed, then scan and fill Matt / Impeccable gaps ([`skills/`](./skills/) for detail).
 - **Completed plans filing rule** – When the user asks to **file … as completed**, move from `project/plans/` or `project/build/` to **`project/plans-completed/<category>/`**, update **`project/plans-completed/index.md`**, and add a row at the top of **`project/changelog/index.md`** (Type=plan, File `../plans-completed/...`). Alternate: **`project/changelog/plans/`** when explicitly requested. The rule lives in `docs/agents/changelog-and-troubleshooting.md`, linked from `AGENTS.md`. See Step 2.6.1 and Step 2.8.4.
@@ -1415,7 +1395,7 @@ After any renames or moves, scan for broken links and references so nothing poin
 
 **Where references may appear:**
 
-- Markdown links in `docs/`, `plans/`, `project/`, root `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, `GEMINI.md`, and any other `.md` files.
+- Markdown links in `docs/`, `plans/`, `project/`, root `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, and any other `.md` files.
 - Table cells in `project/changelog/index.md` and `project/troubleshooting/index.md` (the "File" or "File or Directory" columns).
 - Plain text paths or filenames in prose (e.g. "see `plans/old-name.md`").
 
@@ -1482,7 +1462,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] AGENTS.md includes "Detailed Documentation" section linking to docs/agents/ (changelog-and-troubleshooting and any other topical files)
 - [ ] `docs/` and `docs/agents/` created at project root (if they didn't exist)
 - [ ] AGENTS.md holds agent rules only (≤ 40 lines target); no project facts and no long Changelog/Troubleshooting/Project Structure/Build/Coding blocks (Steps 1.2, 2.6.2, 2.9.3)
-- [ ] CLAUDE.md is a symlink to AGENTS.md; GEMINI.md is in thin import form; harness-only content in place (Step 2.10)
+- [ ] CLAUDE.md is a symlink to AGENTS.md; harness-only content in place (Step 2.10)
 - [ ] **Troubleshooting migration (when applicable):** Backup content extracted into **individual files** in `project/troubleshooting/<category>/` and rows added to `project/troubleshooting/index.md` (Step 2.7); do not leave migration as "if needed"
 - [ ] **Changelog (and plans-completed):** project/changelog/ created; existing CHANGELOG and plans-completed content migrated into it (Step 2.7, 4.2, 4.3)
 - [ ] Git configuration verified (workflows directory ignored in main repo)
@@ -1505,7 +1485,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 
 **Execution:** Read existing files first; preserve data (back up before moving/editing); replace all placeholders (`<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>`); verify after each step. Use parallel agents when appropriate; verify findings before making changes. **Do not stop after harness files** — complete **Step 2.12** (skills stack) and **Step 2.13** (cache status line; ask the user before any write outside the project, such as `~/.claude/`) before declaring setup done.
 
-**Single source of truth (mandatory):** Follow the Step 1.1 architecture. Agent rules go in AGENTS.md, project facts in PROJECT.md, long material in `docs/agents/` (Changelog/Troubleshooting/Plans in `changelog-and-troubleshooting.md`, 2.6.1; other topics per 2.9.3). CLAUDE.md is a symlink to AGENTS.md, with Claude-only instructions in `.claude/rules/claude-code.md`; GEMINI.md imports AGENTS.md and PROJECT.md and holds Gemini-only instructions. Migrate existing files (2.10.3) rather than overwriting or duplicating.
+**Single source of truth (mandatory):** Follow the Step 1.1 architecture. Agent rules go in AGENTS.md, project facts in PROJECT.md, long material in `docs/agents/` (Changelog/Troubleshooting/Plans in `changelog-and-troubleshooting.md`, 2.6.1; other topics per 2.9.3). CLAUDE.md is a symlink to AGENTS.md, with Claude-only instructions in `.claude/rules/claude-code.md`. Migrate existing files (2.10.2) rather than overwriting or duplicating.
 
 **Skills stack (Step 2.12):** After Steps 1–2.11, run global install only if missing, then project scan, then fill Matt/Impeccable gaps only. Prefer chat skills over hand-copying; never wipe changelog/troubleshooting indexes; never invent PRODUCT.md.
 

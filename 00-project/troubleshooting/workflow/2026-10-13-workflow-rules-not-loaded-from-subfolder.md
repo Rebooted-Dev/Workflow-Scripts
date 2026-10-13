@@ -27,4 +27,4 @@
 ## Notes / Lessons
 - Open: an interactive check at a subfolder (developer). The headless canary is the automated check.
 - The checker cannot judge whether an entry's claims are true. Only the developer's approval (`**Approved:**`) makes an entry ACTIVE.
-- `/setup-matt-pocock-skills` (outside this repo) writes its `## Agent skills` block to `CLAUDE.md` when that file exists. With the symlink, the block would land in the shared `AGENTS.md`. The docs now place the Claude-only block in `.claude/rules/claude-code.md`; the external skill is not yet changed.
+- `/setup-matt-pocock-skills` (outside this repo) writes its `## Agent skills` block to `CLAUDE.md` when that file exists. With the symlink, the block would land in the shared `AGENTS.md`. The docs now place the Claude-only block in `.claude/rules/claude-code.md`. The external skill was changed on 2026-10-13 to write there when `CLAUDE.md` is a symlink (outside this repository, so it is not in git).

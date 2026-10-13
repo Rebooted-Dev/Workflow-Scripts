@@ -334,8 +334,15 @@ The developer chose the recommendations in the session before this one: `PROJECT
 
 **Not verified, or open:**
 - An interactive session in a subfolder has not been run. The headless canary is the automated check.
-- `/setup-matt-pocock-skills` (outside these repos) writes its `## Agent skills` block to `CLAUDE.md` when that file exists. With the symlink, that block would land in the shared `AGENTS.md`. The external skill has not been changed.
-- `GEMINI.md` keeps the import form and has not been tested from a subfolder.
+- `/setup-matt-pocock-skills` (outside these repos) wrote its `## Agent skills` block to `CLAUDE.md` when that file exists. With the symlink, that block would have landed in the shared `AGENTS.md`. Resolved on 2026-10-13 (see below).
+- `GEMINI.md` was removed on 2026-10-13 (see the resolved list below), so its subfolder behaviour no longer matters.
 - Under option A, a subfolder session reads `PROJECT.md` only when it reads the file.
 - NuBible-App `project/learnings/workflow/2026-10-13-workflow-read-learning-index-before-work.md` is another session's untracked entry. It has no `**Source:**` line, so `check-learnings.sh` fails on that project's log until its author fixes it. It was left unchanged (open item 6).
 
+
+**Resolved on 2026-10-13 (goal run, after the third session):**
+- Decision 1, `PROJECT.md`: option A kept. Subfolder sessions read `PROJECT.md` on request.
+- Decision 2, demoted entries: the 15 entries stay NOTED until the developer records an approval. Nothing was re-promoted.
+- Decision 3, commit `3020bf4`: kept as it is. It is local and unpushed. No history was rewritten.
+- Decision 5, setup skill: the external `/setup-matt-pocock-skills` skill now writes its block to `.claude/rules/claude-code.md` when `CLAUDE.md` is a symlink. Its earlier version was backed up first.
+- `GEMINI.md` was deleted from NuBible-App and its harness references were removed from Workflow-Scripts, because the Gemini CLI is no longer used. Gemini API reference material was left alone. Historical records were not rewritten.

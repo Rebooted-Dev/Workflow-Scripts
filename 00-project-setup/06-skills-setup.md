@@ -2,7 +2,7 @@
 
 > **Curated stack (project setup):** use **[`01-setup-project.md`](./01-setup-project.md)** — Step 2.12 pulls in [`skills/`](./skills/) for install/scan/scaffold detail. That keeps one front door for new and existing projects. **This file** remains the discovery catalog (storage locations, Top-N / Top-250, topic indexes). Install ≠ project context: global packs alone do not create `PROJECT.md` / Matt docs / `PRODUCT.md`.
 
-Checklist for configuring **Agent Skills** in **Cursor**, **Codex**, **Kilo Code CLI**, and **Gemini CLI**: where they live, how to add personal vs project skills, and how to install or create skills so the AI uses them in the right contexts.
+Checklist for configuring **Agent Skills** in **Cursor**, **Codex**, and **Kilo Code CLI**: where they live, how to add personal vs project skills, and how to install or create skills so the AI uses them in the right contexts.
 
 **Principles:** Skills are packaged, reusable instructions that give agents on-demand expertise. They are built on an [open standard](https://agentskills.io/) adopted by many agent platforms. Install a skill package once; the agent loads it when the task matches. Skills fix **prompt drift** (same ask, different results), **lost workflow conventions** (quality checks, formats, decision criteria), and **instruction sprawl** (long playbooks buried in prompts). Centralize instructions in a versioned, reviewable place so the agent "actually knows how we do things here." See [Vercel: Agent skills explained (FAQ)](https://vercel.com/blog/agent-skills-explained-an-faq) for more.
 
@@ -17,7 +17,7 @@ Checklist for configuring **Agent Skills** in **Cursor**, **Codex**, **Kilo Code
 | **Setup & reference** | |
 | Principles, what skills solve, open standard | § Intro (above); § Skills vs MCP… |
 | Skills vs MCP, tools, rules, system prompts | § Skills vs MCP… |
-| Storage (Cursor, Codex, Kilo Code CLI, Gemini CLI, project) | § Storage locations |
+| Storage (Cursor, Codex, Kilo Code CLI, project) | § Storage locations |
 | Top 20 recommended skills | § Top 20 recommended |
 | Top 250 from skills.sh (no Azure) | § Top 250 from skills.sh |
 | Recommended categories | § Recommended skill categories |
@@ -51,9 +51,9 @@ Checklist for configuring **Agent Skills** in **Cursor**, **Codex**, **Kilo Code
 | **Apple / iOS** | |
 | Swift, SwiftUI, UIKit, Objective-C, React Native on iOS | § Apple / iOS development |
 | **Tasks** | |
-| Workflow-Scripts sync; Cursor, Codex, Kilo Code CLI, Gemini CLI install; create skill; verify | § 1–7 (numbered sections) |
+| Workflow-Scripts sync; Cursor, Codex, Kilo Code CLI install; create skill; verify | § 1–7 (numbered sections) |
 | Workflow-Scripts tracked skills (install & tracking) | § Workflow-Scripts: tracked skills and installation |
-| Managing install for Cursor, Codex, Kilo Code CLI, Gemini CLI; tracking skill changes | § Managing installation and tracking |
+| Managing install for Cursor, Codex, Kilo Code CLI; tracking skill changes | § Managing installation and tracking |
 | Automated install and version tracking (manifest, lockfile, script) | § Automated install and version tracking |
 | Further reading (Vercel FAQ, agentskills.io, skills.sh) | § Further reading |
 
@@ -103,8 +103,6 @@ You typically set up **MCP** for capabilities (search, DB, deploy); you set up *
 | **Codex** | `$CODEX_HOME/skills/<skill-name>/` (default `~/.codex/skills/`) | Skills available to Codex; install via skill-installer or manual copy |
 | **Kilo Code CLI (user)** | `~/.kilocode/skills/<skill-name>/` (Mac/Linux) | User-level skills for Kilo Code CLI |
 | **Kilo Code CLI (project)** | `<project>/.kilocode/skills/<skill-name>/` | Project skills for Kilo Code CLI (workspace-level) |
-| **Gemini CLI (user)** | `~/.gemini/skills/<skill-name>/` or `~/.agents/skills/<skill-name>/` | User-level skills for Gemini CLI (all workspaces) |
-| **Gemini CLI (workspace)** | `<project>/.gemini/skills/<skill-name>/` or `<project>/.agents/skills/<skill-name>/` | Workspace skills for Gemini CLI (shared via repo) |
 | **Claude Code (plugins)** | Plugin-specific, e.g. `.claude/plugins/.../skills/` | Skills bundled with Claude Code plugins |
 
 **Important:** Do **not** create or edit skills under `~/.cursor/skills-cursor/`. That directory is reserved for Cursor’s built-in skills and is managed by the app.
@@ -140,9 +138,9 @@ This installs the Vercel agent-skills package (which includes these four). If us
 
 ## Managing installation and tracking
 
-Skills are installed **per tool**: Cursor, Codex, Kilo Code CLI, and Gemini CLI each use their own directories and do not share a single install. This section covers how to handle installation for all of them and how to keep track of changes to individual skill files.
+Skills are installed **per tool**: Cursor, Codex, and Kilo Code CLI each use their own directories and do not share a single install. This section covers how to handle installation for all of them and how to keep track of changes to individual skill files.
 
-### Installation: Cursor, Codex, Kilo Code CLI, and Gemini CLI
+### Installation: Cursor, Codex, and Kilo Code CLI
 
 - **Cursor** reads skills from:
   - Personal: `~/.cursor/skills/<skill-name>/`
@@ -152,9 +150,6 @@ Skills are installed **per tool**: Cursor, Codex, Kilo Code CLI, and Gemini CLI 
 - **Kilo Code CLI** reads skills from:
   - User: `~/.kilocode/skills/<skill-name>/` (Mac/Linux; Windows: `\Users\<username>\.kilocode\`)
   - Project: `<project>/.kilocode/skills/<skill-name>/`
-- **Gemini CLI** reads skills from:
-  - User: `~/.gemini/skills/<skill-name>/` or `~/.agents/skills/<skill-name>/`
-  - Workspace: `<project>/.gemini/skills/<skill-name>/` or `<project>/.agents/skills/<skill-name>/`
 
 There is no single "install once, use everywhere" path. If you use multiple tools, install (or copy) the skill into each tool's directory.
 
@@ -163,9 +158,8 @@ There is no single "install once, use everywhere" path. If you use multiple tool
 | **Use a skill in Cursor only** | Install (or copy) into `~/.cursor/skills/` or the project's `.cursor/skills/`. Use `npx skills add <owner/repo>` if the CLI targets Cursor, or copy the skill folder. |
 | **Use a skill in Codex only** | Install into `$CODEX_HOME/skills/` via the Codex skill-installer or by copying the skill directory. |
 | **Use a skill in Kilo Code CLI only** | Copy (or install) into `~/.kilocode/skills/` (user) or `<project>/.kilocode/skills/` (project). See [Kilo Code – Skills](https://kilo.ai/docs/features/skills). |
-| **Use a skill in Gemini CLI only** | Run `gemini skills install <url-or-path>` or copy into `~/.gemini/skills/` (user) or `<project>/.gemini/skills/` or `<project>/.agents/skills/` (workspace). See [Gemini CLI – Agent Skills](https://geminicli.com/docs/cli/skills/). |
-| **Use the same skill in multiple tools** | Install (or copy) into **each** tool's path: Cursor, Codex, Kilo Code CLI, and/or Gemini CLI as needed. Optionally use a small script that installs from one source (e.g. a repo or `npx skills add`) into all desired directories. |
-| **Cursor built-in skills** | Many skills (e.g. vercel-react-best-practices) are built into Cursor; you don't need to install those for Cursor. You still need to install them in Codex, Kilo Code CLI, or Gemini CLI if you want them there. |
+| **Use the same skill in multiple tools** | Install (or copy) into **each** tool's path: Cursor, Codex, and/or Kilo Code CLI as needed. Optionally use a small script that installs from one source (e.g. a repo or `npx skills add`) into all desired directories. |
+| **Cursor built-in skills** | Many skills (e.g. vercel-react-best-practices) are built into Cursor; you don't need to install those for Cursor. You still need to install them in Codex or Kilo Code CLI if you want them there. |
 
 ### Tracking changes to individual skill files
 
@@ -173,15 +167,15 @@ Skills are just files on disk. How you track changes depends on whether they are
 
 | Situation | How to track / update |
 |-----------|------------------------|
-| **Project/workspace skills** (e.g. `<project>/.cursor/skills/`, `.kilocode/skills/`, `.gemini/skills/`, `.agents/skills/`) | They are in the repo; use **git** (commit, diff, history). Everyone on the project gets the same skills and changes. |
-| **Personal skills** (e.g. `~/.cursor/skills/`, `$CODEX_HOME/skills/`, `~/.kilocode/skills/`, `~/.gemini/skills/`) | Not versioned unless you put them in a repo (e.g. dotfiles or a private "my-skills" repo). To track changes: add that folder to git elsewhere, or keep a short changelog (e.g. in this doc or a `SKILL_CHANGELOG.md`) listing what you changed and when. |
+| **Project/workspace skills** (e.g. `<project>/.cursor/skills/`, `.kilocode/skills/`, `.agents/skills/`) | They are in the repo; use **git** (commit, diff, history). Everyone on the project gets the same skills and changes. |
+| **Personal skills** (e.g. `~/.cursor/skills/`, `$CODEX_HOME/skills/`, `~/.kilocode/skills/`) | Not versioned unless you put them in a repo (e.g. dotfiles or a private "my-skills" repo). To track changes: add that folder to git elsewhere, or keep a short changelog (e.g. in this doc or a `SKILL_CHANGELOG.md`) listing what you changed and when. |
 | **Third-party skills** (installed from `npx skills add` or GitHub) | Installed copies do **not** auto-update. To get upstream changes: re-run the install (e.g. `npx skills add <owner/repo>` or Codex skill-installer). To track "which skills I care about" and where they came from: use a **manifest** (e.g. the Workflow-Scripts table in this doc or a small table listing skill name, source repo, and install path). |
 | **Edited third-party skills** | If you edit an installed skill, your changes will be overwritten if you re-run the same install. Options: (1) keep your fork in a repo and install from the fork; (2) don't re-install that skill and document your overrides (e.g. in this doc or a changelog); (3) use project or personal skills (in git) that wrap or replace the third-party one. |
 
 **Practical checklist**
 
-- **List what you use:** Keep a table (like § Workflow-Scripts: tracked skills and installation) of skills you rely on, with source (repo or package) and which tool(s) they're installed for (Cursor, Codex, Kilo Code CLI, Gemini CLI).
-- **Project conventions:** Prefer **project/workspace** skills (e.g. `.cursor/skills/`, `.kilocode/skills/`, `.gemini/skills/` or `.agents/skills/`) for team-wide workflows so changes are reviewed and tracked in the repo.
+- **List what you use:** Keep a table (like § Workflow-Scripts: tracked skills and installation) of skills you rely on, with source (repo or package) and which tool(s) they're installed for (Cursor, Codex, Kilo Code CLI).
+- **Project conventions:** Prefer **project/workspace** skills (e.g. `.cursor/skills/`, `.kilocode/skills/` or `.agents/skills/`) for team-wide workflows so changes are reviewed and tracked in the repo.
 - **Updates:** Periodically re-run installs for third-party skills you care about, or subscribe to the upstream repo for release notes.
 - **Your edits:** If you customize a skill, put the customized version in a location that's in version control (project or personal repo) so you can diff and revert changes.
 
@@ -191,7 +185,7 @@ For the **curated list** (e.g. Top 20, Top 250 in this doc), you can use a **man
 
 | Item | Location | Purpose |
 |------|----------|---------|
-| **Manifest** | `Workflow-Scripts/00-project-setup/skills-manifest.yaml` (or project root) | Lists **sources** (repo + optional `path` + optional `ref`) and which **agents** to install to (Cursor, Codex, Kilo Code CLI, Gemini CLI). One entry per repo; the script discovers all skills (dirs with `SKILL.md`) in that repo. |
+| **Manifest** | `Workflow-Scripts/00-project-setup/skills-manifest.yaml` (or project root) | Lists **sources** (repo + optional `path` + optional `ref`) and which **agents** to install to (Cursor, Codex, Kilo Code CLI). One entry per repo; the script discovers all skills (dirs with `SKILL.md`) in that repo. |
 | **Lockfile** | Same dir as manifest: `skills-lock.yaml` | Generated by the script. Records per source: **resolved SHA**, installed skill names, and timestamp. Use for reproducibility (reinstall same versions) or audit ("what do I have?"). Can be gitignored (per-machine) or committed (team reproducibility). |
 | **Install script** | `Workflow-Scripts/scripts/install-curated-skills` (or `.sh` / `.mjs`) | Reads the manifest, clones each repo at the given ref, finds all skill directories, copies each into each agent's skills folder, and writes/updates the lockfile. |
 
@@ -204,13 +198,13 @@ For the **curated list** (e.g. Top 20, Top 250 in this doc), you can use a **man
 - **Pin versions:**  
   In the manifest, set `ref` to a tag (e.g. `v1.0.0`) or a full git SHA. Re-run the install script to apply; the lockfile records that SHA for audit.
 - **Limit agents (optional):**  
-  The script can support a flag (e.g. `--agents cursor,gemini`) so only those agents receive the skills; default is all four.
+  The script can support a flag (e.g. `--agents cursor,kilocode`) so only those agents receive the skills; default is all three.
 
 **Manifest format (example):**
 
 ```yaml
 # skills-manifest.yaml
-agents: [cursor, codex, kilocode, gemini]
+agents: [cursor, codex, kilocode]
 sources:
   - repo: vercel-labs/agent-skills
     ref: main
@@ -221,7 +215,7 @@ sources:
     ref: main
 ```
 
-**Agent paths used by the script (user-level):** Cursor: `~/.cursor/skills/<skill-name>/`; Codex: `$CODEX_HOME/skills/<skill-name>/` (default `~/.codex/skills/`); Kilo Code CLI: `~/.kilocode/skills/<skill-name>/`; Gemini CLI: `~/.gemini/skills/<skill-name>/` or `~/.agents/skills/<skill-name>/`.
+**Agent paths used by the script (user-level):** Cursor: `~/.cursor/skills/<skill-name>/`; Codex: `$CODEX_HOME/skills/<skill-name>/` (default `~/.codex/skills/`); Kilo Code CLI: `~/.kilocode/skills/<skill-name>/`.
 
 When the script is implemented, this subsection will reference its exact path and any extra flags. The curated list in this doc (Top 20, Top 250) can be used to populate the manifest (one entry per unique repo; group skills by repo).
 
@@ -779,8 +773,6 @@ Check the framework or plugin docs for “skills” or “agent skills” to see
 | Codex | `$CODEX_HOME/skills/<skill-name>/` | Codex skills (install via skill-installer or copy) |
 | Kilo Code CLI (user) | `~/.kilocode/skills/<skill-name>/` | User-level Kilo Code CLI skills |
 | Kilo Code CLI (project) | `<project>/.kilocode/skills/<skill-name>/` | Project-level Kilo Code CLI skills |
-| Gemini CLI (user) | `~/.gemini/skills/<skill-name>/` or `~/.agents/skills/<skill-name>/` | User-level Gemini CLI skills |
-| Gemini CLI (workspace) | `<project>/.gemini/skills/<skill-name>/` or `<project>/.agents/skills/<skill-name>/` | Workspace-level Gemini CLI skills |
 | Claude Code | Plugin dir, e.g. `.../skills/` | Skills bundled with plugins |
 
 ---
@@ -793,12 +785,11 @@ Check the framework or plugin docs for “skills” or “agent skills” to see
 - **Cursor:** Full path to `npx`/scripts is rarely needed for skills (unlike MCP stdio servers); skills are just files on disk.
 - **Codex:** Default install location is `~/.codex/skills`. Use the skill-installer skill to list and install from openai/skills curated or experimental lists; for private repos you may need `GITHUB_TOKEN` or `GH_TOKEN`.
 - **Kilo Code CLI:** User skills: `~/.kilocode/skills/`; project: `.kilocode/skills/`. Mode-specific: `skills-{mode-slug}` (e.g. `skills-code`, `skills-architect`). See [Kilo Code – Skills](https://kilo.ai/docs/features/skills).
-- **Gemini CLI:** User: `~/.gemini/skills/` or `~/.agents/skills/`; workspace: `.gemini/skills/` or `.agents/skills/`. Install with `gemini skills install <url-or-path>`; link with `gemini skills link <path>`. Precedence: workspace > user > extension. See [Gemini CLI – Agent Skills](https://geminicli.com/docs/cli/skills/).
 - **Project vs personal:** Prefer project/workspace skills for team conventions (changelog, commits, review); use personal skills for individual workflow or tooling preferences.
 - **Apple / iOS:** Use **skills** for workflow and context (e.g. vercel-react-native-skills, frontend-design, or a custom “use Apple Doc + XcodeBuild MCP for Swift/UIKit” skill). Use **MCPs** for the actual tools (Apple Doc MCP, XcodeBuild MCP, or Xcode 26.3+ `xcrun mcpbridge`). See the “Apple / iOS development” section above and [05-mcp-and-config-setup.md](05-mcp-and-config-setup.md).
 - **By topic:** For UI/visual design, image gen (including Nano Banana), cybersecurity/code review, and deployment, see the “Skills by topic (curated)” section; it lists skills and any related MCPs (e.g. Nano Banana) with sources and config pointers.
 - **Latest skills:** Check [skills.sh](https://skills.sh/) for current leaderboard, install counts, and install command (`npx skills add <owner/repo>`). The “Top 250 from skills.sh” table in this doc excludes Azure skills; re-check the site for updates. Ranks 179–250 in the table are a placeholder—fill from the current [skills.sh](https://skills.sh/) leaderboard (excluding Azure) when maintaining the doc.
-- **Automated install (curated list):** For the long curated list (Top 20, Top 250), use the **manifest + lockfile + install script** scheme: one manifest lists repos (and optional path/ref), one script installs all into Cursor, Codex, Kilo Code CLI, and Gemini CLI, and a lockfile records installed SHAs. See § Automated install and version tracking.
+- **Automated install (curated list):** For the long curated list (Top 20, Top 250), use the **manifest + lockfile + install script** scheme: one manifest lists repos (and optional path/ref), one script installs all into Cursor, Codex, and Kilo Code CLI, and a lockfile records installed SHAs. See § Automated install and version tracking.
 - **Maintaining this doc:** When you add a skill → update the Topic list. When you add a new topic → search [skills.sh](https://skills.sh/) for top-ranking matching skills and add them to the Topic list and Skills by technology / platform table. See **Maintaining this doc** under the Topic list.
 
 ---

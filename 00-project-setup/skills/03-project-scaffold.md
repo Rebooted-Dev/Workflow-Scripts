@@ -41,7 +41,7 @@ Run only what the scan requested, in this order:
 |------|---------|------------|
 | `PROJECT.md` | Repos, layout, constraints | 01-setup-project |
 | `AGENTS.md` | Shared agent rules + links | 01-setup-project |
-| `CLAUDE.md` / `GEMINI.md` | `CLAUDE.md` is a symlink to `AGENTS.md`; `GEMINI.md` has `@AGENTS.md` `@PROJECT.md` + harness-only; Claude-only content in `.claude/rules/claude-code.md` | 01-setup-project; the `## Agent skills` block belongs in `.claude/rules/claude-code.md`. The external setup skill may still target `CLAUDE.md`, so check where it wrote |
+| `CLAUDE.md` | Symlink to `AGENTS.md`; Claude-only content in `.claude/rules/claude-code.md` | 01-setup-project; the `## Agent skills` block goes in `.claude/rules/claude-code.md`. The setup skill writes there when `CLAUDE.md` is a symlink |
 | `docs/agents/changelog-and-troubleshooting.md` | Log / plans-completed conventions | 01-setup-project |
 | `docs/agents/issue-tracker.md` | Where tickets live | `/setup-matt-pocock-skills` |
 | `docs/agents/triage-labels.md` | Label vocabulary | `/setup-matt-pocock-skills` |

@@ -17,7 +17,6 @@ repo-root/
 ├── AGENTS.md
 ├── PROJECT.md                 # project facts (repositories, layout, constraints)
 ├── CLAUDE.md                  # main-level Claude instruction file
-├── GEMINI.md                  # main-level Gemini instruction file
 ├── README.md                  # main project README
 ├── docs/                      # project documentation
 ├── project/                   # changelog, plans, troubleshooting, tracking
@@ -47,7 +46,7 @@ repo-root/Project-App/
 Keep at the root:
 
 - Git control files and folders: `.git/`, `.gitignore`, `.gitattributes`.
-- Agent instruction files at the main repository level: `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, `GEMINI.md`, and similar agent-specific root files.
+- Agent instruction files at the main repository level: `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, and similar agent-specific root files.
 - The main project README: `README.md`.
 - Project documentation: `docs/`.
 - Project tracking and operational records: `project/`, including changelog, plans, troubleshooting, results, research, and archives.
@@ -69,7 +68,7 @@ Do not move:
 - `.git/`.
 - Separate nested repositories unless the user explicitly asks.
 - Root workflow directories that are not part of the app.
-- Main-level agent instruction files: `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, `GEMINI.md`, and equivalents.
+- Main-level agent instruction files: `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, and equivalents.
 - The main root README: `README.md`.
 - Root documentation and project-management directories: `docs/`, `project/`.
 - Files whose purpose is to describe the whole monorepo or repository shell.
@@ -227,7 +226,7 @@ Replace `Project-App` below with your actual app directory name (for example `Ic
 
 Include:
 
-- Repository root: `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`, `.gitignore`, `.github/`, `.vscode/`, root scripts, env examples.
+- Repository root: `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, `README.md`, `.gitignore`, `.github/`, `.vscode/`, root scripts, env examples.
 - App workspace: `Project-App/` (configs, source, scripts, tests, assets).
 - Live documentation: `docs/`, root `README.md`, and any `*.md` under `project/` that agents or developers use for setup (exclude pure archives unless they are linked from indexes).
 - Build and tooling configs: `package.json` scripts, bundler configs, `tsconfig.json`, `electron-builder` configs, shell scripts, Makefile, Docker files.
@@ -254,7 +253,7 @@ Also search for **old app-directory names** if you renamed during the move (for 
 
 ```bash
 rg -n 'Project-App|Icon-Maker-codebase|/src/|npm run|npm install' \
-  README.md AGENTS.md PROJECT.md CLAUDE.md GEMINI.md docs project .github .vscode 2>/dev/null
+  README.md AGENTS.md PROJECT.md CLAUDE.md docs project .github .vscode 2>/dev/null
 ```
 
 Flag every hit: update the path, add `cd ${APP_DIR}` to command examples, or mark the doc as historical.
@@ -264,7 +263,7 @@ Flag every hit: update the path, add `cd ${APP_DIR}` to command examples, or mar
 Confirm all **current** setup instructions tell developers where to run commands:
 
 ```bash
-rg -n 'npm (run|install|ci)|yarn |pnpm |bun |cd ' README.md docs AGENTS.md PROJECT.md CLAUDE.md GEMINI.md
+rg -n 'npm (run|install|ci)|yarn |pnpm |bun |cd ' README.md docs AGENTS.md PROJECT.md CLAUDE.md
 ```
 
 Each app command block should either:
@@ -315,7 +314,7 @@ Broken relative links are a common failure mode after a move:
 
 ```bash
 # Markdown links to paths that may no longer exist at repo root
-rg -n '\]\((\./|\.\./)[^)]+\)' README.md docs project AGENTS.md PROJECT.md CLAUDE.md GEMINI.md
+rg -n '\]\((\./|\.\./)[^)]+\)' README.md docs project AGENTS.md PROJECT.md CLAUDE.md
 
 # Optional: list tracked paths still referenced from docs but missing on disk
 while IFS= read -r path; do
@@ -357,7 +356,7 @@ Re-run targeted searches after fixes until live docs and configs are clean.
 ## Completion Checklist
 
 - The app directory exists and contains all app code, configs, tests, assets, scripts, package files, and app-local dependencies.
-- The root contains repository/meta/workflow files and directories, main-level agent instruction files including `CLAUDE.md` and `GEMINI.md`, the main README, `docs/`, and `project/`.
+- The root contains repository/meta/workflow files and directories, main-level agent instruction files including `CLAUDE.md`, the main README, `docs/`, and `project/`.
 - Root instructions explain where to run Git commands and where to run app commands.
 - `.gitignore` patterns still ignore generated app artifacts in their new locations.
 - Live setup docs point developers into the app directory before running app commands.
@@ -373,7 +372,7 @@ Re-run targeted searches after fixes until live docs and configs are clean.
 ## Practical Notes
 
 - Moving app source and app tooling as a coherent unit usually preserves relative imports. Broken references most often come from root docs, scripts, `.gitignore`, config file paths, and commands that assume the repository root is also the app root.
-- Keep `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, `GEMINI.md`, the main `README.md`, `docs/`, and `project/` at the root for consistent agent and project governance across the repository.
+- Keep `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, the main `README.md`, `docs/`, and `project/` at the root for consistent agent and project governance across the repository.
 - Do not rewrite historical archive documents unless they are used as current instructions. Old absolute paths in archived plans may be part of the record.
 - Do not move nested repositories by accident. Check for nested `.git/` directories before bulk moves.
 - Do not use destructive cleanup until you have inspected what will be removed.

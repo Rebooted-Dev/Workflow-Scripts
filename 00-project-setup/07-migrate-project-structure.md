@@ -73,7 +73,7 @@ Follow [01-setup-project.md Step 1](./01-setup-project.md#step-1-set-up-the-agen
 
 - `AGENTS.md` gets the Execution section, the slim Change Management section (linking to `project/docs/agents/`), a pointer to `PROJECT.md`, and Detailed Documentation links — no project facts and no repo map.
 - `PROJECT.md` gets the project description, the Repositories table and repo management bullets (critical for multi-repo), Layout, and Project Constraints.
-- `CLAUDE.md` is a symlink to `AGENTS.md` (Claude-only instructions in `.claude/rules/claude-code.md`). `GEMINI.md` imports `@AGENTS.md` and `@PROJECT.md`, then keeps only harness-only instructions.
+- `CLAUDE.md` is a symlink to `AGENTS.md` (Claude-only instructions in `.claude/rules/claude-code.md`).
 
 **Key**: Update all paths to use `project/` prefix for changelog, troubleshooting, and docs — in `AGENTS.md`, `PROJECT.md`, and `docs/agents/` as applicable.
 
@@ -337,9 +337,9 @@ Ensure all paths are updated to use `project/` prefix, wherever they appear — 
 | `plans/` | `project/plans/` |
 | `plans-completed/` | `project/plans-completed/` |
 
-### 7.2 Update CLAUDE.md and GEMINI.md (if present)
+### 7.2 Update CLAUDE.md (if present)
 
-`CLAUDE.md` is a symlink to `AGENTS.md`, and `GEMINI.md` imports it, so both inherit these path updates automatically. Edit `.claude/rules/claude-code.md` or `GEMINI.md` directly only if their own harness-only sections (01 §2.10) reference one of these paths. Edit `AGENTS.md`, never `CLAUDE.md`: the Edit tool refuses to write through a symlink.
+`CLAUDE.md` is a symlink to `AGENTS.md`, so it inherits these path updates automatically. Edit `.claude/rules/claude-code.md` directly only if its Claude-only section (01 §2.10) references one of these paths. Edit `AGENTS.md`, never `CLAUDE.md`: the Edit tool refuses to write through a symlink.
 
 ### 7.3 Verify Repository Information
 
@@ -435,7 +435,7 @@ git status
 You should see:
 - New `project/` directory with all contents
 - Deleted old root-level directories (if removed)
-- Modified `AGENTS.md`, `PROJECT.md`, `CLAUDE.md`, `GEMINI.md` (if updated)
+- Modified `AGENTS.md`, `PROJECT.md`, `CLAUDE.md` (if updated)
 - Modified `.gitignore` (if updated)
 
 ### 9.3 Test Links
@@ -515,7 +515,7 @@ git commit -m "refactor: migrate to standardized project structure
 
 - Consolidate changelog, troubleshooting, plans under project/
 - Add dual-repo management documentation
-- Update AGENTS.md, PROJECT.md, CLAUDE.md, GEMINI.md with new paths
+- Update AGENTS.md, PROJECT.md, CLAUDE.md with new paths
 - Add README and TODO files for project organization"
 ```
 
