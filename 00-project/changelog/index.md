@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-10-13 | docs | Retain agent learnings patch source in agents-patches | docs/2026-10-13-docs-agents-patches-source.md | Filed `plans/agents-patches/patch-info.md`, the source patch cited by the agent learnings proposal; retention only, no behaviour or workflow change |
 | 2026-10-13 | fixed | Agent learnings rule moved to the root AGENTS.md | fixed/2026-10-13-fixed-agent-learnings-rule-in-root-agents.md | Rule was only in the nested 00-project/AGENTS.md, so workflow changes never loaded it; now in root AGENTS.md with a pointer left in 00-project; troubleshooting entry filed |
 | 2026-10-13 | added | Agent learnings log in 00-project/learnings | added/2026-10-13-added-agent-learnings-meta-dir.md | `00-project/learnings/` with README, index, and category folders; `00-project/AGENTS.md` Agent Learnings section; `00-project/README.md` tree line |
 | 2026-10-13 | added | Agent learnings log in project/learnings (setup file 11 and Step 2.8.5) | added/2026-10-13-added-agent-learnings-setup.md | New `00-project-setup/11-agent-learnings.md` (README, `index.md`, category folders, AGENTS.md pointer, migration); 01 gains intro item 10, Step 2.8.5, Step 3.4.2, Step 4.2 migration, and template and checklist edits; proposal marked implemented; NuBible-App not changed |
