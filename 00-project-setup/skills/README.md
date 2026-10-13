@@ -47,7 +47,7 @@ Also see:
 
 ### After Phase 3 (application repo)
 
-- [ ] If using Matt Pocock engineering chain: `docs/agents/issue-tracker.md`, `triage-labels.md`, `domain.md`, and `## Agent skills` in `CLAUDE.md`
+- [ ] If using Matt Pocock engineering chain: `docs/agents/issue-tracker.md`, `triage-labels.md`, `domain.md`, and `## Agent skills` in `.claude/rules/claude-code.md`
 - [ ] If the project has (or will have) UI/design work: `PRODUCT.md` from `/impeccable init` (interview-driven; do not fabricate)
 - [ ] Changelog / troubleshooting indexes unchanged except intentional new rows
 - [ ] Layout/harness already verified via 01 Step 3 (PROJECT.md, AGENTS.md, thin CLAUDE/GEMINI)

@@ -6,7 +6,7 @@ This workflow helps you:
 
 1. **Discover and track** all Git repositories in the current project (root repo + any nested repos, e.g. Workflow-Scripts, submodules, or other nested checkouts).
 2. **Write the repository map to `PROJECT.md`** — under the agent-file scheme in [01-setup-project.md §1](./01-setup-project.md#step-1-set-up-the-agent-files-agentsmd-projectmd-harness-files), the repo map lives **only** in `PROJECT.md`'s `## Repositories` section, not duplicated into `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`.
-3. **Verify** `AGENTS.md` still points to `PROJECT.md` and `CLAUDE.md`/`GEMINI.md` still import it.
+3. **Verify** `AGENTS.md` still points to `PROJECT.md`, `CLAUDE.md` is still a symlink to `AGENTS.md`, and `GEMINI.md` still imports both files.
 4. **Document sync, pull, and push** procedures for each repo and when to run them.
 
 ---
@@ -98,7 +98,7 @@ Open `PROJECT.md` at the project root and update the `## Repositories` section (
 This workflow does not write a repo map into any of these files. It only verifies the pointers set up by [01-setup-project.md §1](./01-setup-project.md#step-1-set-up-the-agent-files-agentsmd-projectmd-harness-files) are intact:
 
 - **AGENTS.md** — confirm it contains the "Read `PROJECT.md` before starting work" pointer. It should **not** contain a repo map, a "Tracked Repositories" section, or a "Repository Management" section. If it does (e.g. from an older version of this workflow), delete that block — don't leave a competing copy alongside the one in `PROJECT.md`.
-- **CLAUDE.md / GEMINI.md** — confirm each still imports `@AGENTS.md` and `@PROJECT.md`. They should not restate the repo map or repository management instructions; delete any that snuck in.
+- **CLAUDE.md** — confirm it is still a symlink to `AGENTS.md`. **GEMINI.md** — confirm it still imports `@AGENTS.md` and `@PROJECT.md`. Neither should restate the repo map or repository management instructions; delete any that snuck in.
 
 Whenever the repo map changes, you only ever edit `PROJECT.md`. There is nothing else to keep "in sync."
 
@@ -188,7 +188,7 @@ After completing this workflow, you should have:
 
 1. **Discovery** – A list of all Git repos under the project (path, remote, branch).
 2. **PROJECT.md** – The `## Repositories` table updated with every discovered repo: Path, Repository, Remote, Purpose, plus the three standing bullets. This is the single canonical copy.
-3. **Verified pointers** – `AGENTS.md` still has the "Read `PROJECT.md`" line; `CLAUDE.md`/`GEMINI.md` still import `@AGENTS.md` and `@PROJECT.md`; none of the three restate the repo map.
+3. **Verified pointers** – `AGENTS.md` still has the "Read `PROJECT.md`" line; `CLAUDE.md` is still a symlink to `AGENTS.md`, `GEMINI.md` still imports `@AGENTS.md` and `@PROJECT.md`; none of the three restate the repo map.
 4. **Sync/push/pull** – Documented when to sync, and per-repo commands (and any project-specific sync script for the primary repo).
 
 ---
@@ -222,6 +222,6 @@ After completing this workflow, you should have:
 
 1. **Discover first** – Run the `find` + `git remote get-url` / `git branch --show-current` commands from the project root and collect the list of directories and their remotes/branches.
 2. **Update PROJECT.md only** – Write the discovered repos into `PROJECT.md`'s `## Repositories` table (path, repository, remote, purpose) plus the three standing bullets. Use the project's actual paths and remote URLs; do not leave placeholders like `<PROJECT_PATH>` unless the user has not provided them.
-3. **Verify, don't duplicate** – Check that `AGENTS.md` has the "Read `PROJECT.md`" pointer and that `CLAUDE.md`/`GEMINI.md` import `@AGENTS.md` and `@PROJECT.md`. Delete any repo map or "Tracked Repositories"/"Repository Management" section you find inline in those files instead of updating it in place.
+3. **Verify, don't duplicate** – Check that `AGENTS.md` has the "Read `PROJECT.md`" pointer and that `CLAUDE.md` is a symlink to `AGENTS.md` and `GEMINI.md` imports `@AGENTS.md` and `@PROJECT.md`. Delete any repo map or "Tracked Repositories"/"Repository Management" section you find inline in those files instead of updating it in place.
 4. **Document sync/push/pull** – Include the when-to-sync rules and the per-repo commands (and any project-specific sync script) in Step 3, referenced from `PROJECT.md` if useful.
 5. **Do not invent repos** – Only list repositories that the discovery step actually found; do not add placeholder "Repo 2" entries without corresponding directories.

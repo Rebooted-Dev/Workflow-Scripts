@@ -152,7 +152,7 @@ Run the project verification command from `AGENTS.md`, package scripts, Makefile
 - **Add a regression test when it fits** – Add regression tests to prevent the bug from recurring
 - Test edge cases and similar scenarios
 - Verify the fix doesn't break existing functionality
-- **Agent file instruction:** Ensure the project's `AGENTS.md` includes the line **Bugs: add regression test when it fits.** so that all coding agents (Codex, Cursor, Claude, etc.) add regression tests when fixing bugs. If the line is missing, add it to AGENTS.md only (CLAUDE.md and GEMINI.md receive it through their `@AGENTS.md` import) as part of the fix or in a follow-up. See [00-project-setup/01-setup-project.md](../00-project-setup/01-setup-project.md) Step 1.3 for setup instructions.
+- **Agent file instruction:** Ensure the project's `AGENTS.md` includes the line **Bugs: add regression test when it fits.** so that all coding agents (Codex, Cursor, Claude, etc.) add regression tests when fixing bugs. If the line is missing, add it to AGENTS.md only (CLAUDE.md, a symlink to AGENTS.md, and GEMINI.md receive it from there) as part of the fix or in a follow-up. See [00-project-setup/01-setup-project.md](../00-project-setup/01-setup-project.md) Step 1.3 for setup instructions.
 
 ### Code Quality
 - Make minimal, focused changes that address the root cause

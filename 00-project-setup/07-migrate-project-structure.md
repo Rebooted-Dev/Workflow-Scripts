@@ -73,7 +73,7 @@ Follow [01-setup-project.md Step 1](./01-setup-project.md#step-1-set-up-the-agen
 
 - `AGENTS.md` gets the Execution section, the slim Change Management section (linking to `project/docs/agents/`), a pointer to `PROJECT.md`, and Detailed Documentation links — no project facts and no repo map.
 - `PROJECT.md` gets the project description, the Repositories table and repo management bullets (critical for multi-repo), Layout, and Project Constraints.
-- `CLAUDE.md` / `GEMINI.md` import `@AGENTS.md` and `@PROJECT.md`, then keep only harness-only instructions.
+- `CLAUDE.md` is a symlink to `AGENTS.md` (Claude-only instructions in `.claude/rules/claude-code.md`). `GEMINI.md` imports `@AGENTS.md` and `@PROJECT.md`, then keeps only harness-only instructions.
 
 **Key**: Update all paths to use `project/` prefix for changelog, troubleshooting, and docs — in `AGENTS.md`, `PROJECT.md`, and `docs/agents/` as applicable.
 
@@ -339,7 +339,7 @@ Ensure all paths are updated to use `project/` prefix, wherever they appear — 
 
 ### 7.2 Update CLAUDE.md and GEMINI.md (if present)
 
-`CLAUDE.md` and `GEMINI.md` import `@AGENTS.md` and `@PROJECT.md`, so they inherit these path updates automatically. Edit them directly only if their own harness-only sections (01 §2.10) reference one of these paths.
+`CLAUDE.md` is a symlink to `AGENTS.md`, and `GEMINI.md` imports it, so both inherit these path updates automatically. Edit `.claude/rules/claude-code.md` or `GEMINI.md` directly only if their own harness-only sections (01 §2.10) reference one of these paths. Edit `AGENTS.md`, never `CLAUDE.md`: the Edit tool refuses to write through a symlink.
 
 ### 7.3 Verify Repository Information
 

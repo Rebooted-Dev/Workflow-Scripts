@@ -41,7 +41,7 @@ Run only what the scan requested, in this order:
 |------|---------|------------|
 | `PROJECT.md` | Repos, layout, constraints | 01-setup-project |
 | `AGENTS.md` | Shared agent rules + links | 01-setup-project |
-| `CLAUDE.md` / `GEMINI.md` | `@AGENTS.md` `@PROJECT.md` + harness-only | 01-setup-project; Matt adds `## Agent skills` on CLAUDE |
+| `CLAUDE.md` / `GEMINI.md` | `CLAUDE.md` is a symlink to `AGENTS.md`; `GEMINI.md` has `@AGENTS.md` `@PROJECT.md` + harness-only; Claude-only content in `.claude/rules/claude-code.md` | 01-setup-project; the `## Agent skills` block belongs in `.claude/rules/claude-code.md`. The external setup skill may still target `CLAUDE.md`, so check where it wrote |
 | `docs/agents/changelog-and-troubleshooting.md` | Log / plans-completed conventions | 01-setup-project |
 | `docs/agents/issue-tracker.md` | Where tickets live | `/setup-matt-pocock-skills` |
 | `docs/agents/triage-labels.md` | Label vocabulary | `/setup-matt-pocock-skills` |
@@ -57,7 +57,7 @@ Create these when `/domain-modeling` (or equivalent) needs them.
 
 ## Stub fallback
 
-If `/setup-matt-pocock-skills` cannot run (offline / skill missing), you may paste [stubs/claude-agent-skills-block.md](./stubs/claude-agent-skills-block.md) into `CLAUDE.md` and write minimal `docs/agents/*` by following the Matt skill seed files under `~/.agents/skills/setup-matt-pocock-skills/` (or re-install Phase 1 first). Prefer fixing the skill install over maintaining hand-copied seeds.
+If `/setup-matt-pocock-skills` cannot run (offline / skill missing), you may paste [stubs/claude-agent-skills-block.md](./stubs/claude-agent-skills-block.md) into `.claude/rules/claude-code.md` and write minimal `docs/agents/*` by following the Matt skill seed files under `~/.agents/skills/setup-matt-pocock-skills/` (or re-install Phase 1 first). Prefer fixing the skill install over maintaining hand-copied seeds.
 
 ## Explicit non-goals
 

@@ -1,7 +1,7 @@
 # Agent learnings: rules did not load from subfolder sessions, and entries made unsupported claims
 
 **Date:** 2026-10-13
-**Status:** Cause established, solution proposed, nothing implemented yet (updated 2026-10-13, second session; see section 11). The subfolder failure is Claude Code's external-import approval rule, reproduced with canary files. The proposed fix is a `CLAUDE.md` symlink to `AGENTS.md` in place of the `@AGENTS.md` import. The root-start workaround stays in force until the fix is applied.
+**Status:** Implemented on 2026-10-13 (third session, goal run; see section 12). Open items are listed there. The subfolder failure is Claude Code's external-import approval rule, reproduced with canary files. The proposed fix is a `CLAUDE.md` symlink to `AGENTS.md` in place of the `@AGENTS.md` import. The root-start workaround stays in force until the fix is applied.
 **Question investigated:** Does the agent learnings system work for NuBible-App and for Workflow-Scripts? What failed, and what has been done about it?
 **Method:** Structural checks on both learnings logs and on a sandbox replica of the project layout. Headless `claude -p` sessions, read-only and one write test, started at repo roots and at subfolders. Inspection of the repo files involved. Changes described in section 6.
 **Related:** [`../changelog/fixed/2026-10-13-fixed-learnings-subfolder-and-accuracy.md`](../changelog/fixed/2026-10-13-fixed-learnings-subfolder-and-accuracy.md), [`../troubleshooting/workflow/2026-10-13-workflow-rules-not-loaded-from-subfolder.md`](../troubleshooting/workflow/2026-10-13-workflow-rules-not-loaded-from-subfolder.md), [`../plans/agents-patches/agent-learnings-proposal.md`](../plans/agents-patches/agent-learnings-proposal.md), [`../../00-project-setup/11-agent-learnings.md`](../../00-project-setup/11-agent-learnings.md).
@@ -316,4 +316,25 @@ Proposed changes, in order of value:
 - The choice between step 3 and step 4 in 11.4 for `PROJECT.md`.
 - Whether `ACTIVE` should need developer approval (11.5, item 3).
 - Open items 6 and 7 in section 8 are unchanged.
+
+## 12. Implementation (third session, 2026-10-13)
+
+The developer chose the recommendations in the session before this one: `PROJECT.md` through `@PROJECT.md` in `AGENTS.md` (option A), `ACTIVE` gated on developer approval, both repos in one pass, `GEMINI.md` left as an import, and local commits without a push.
+
+**Verified in the real repos (headless, Claude Code 2.1.296 as in section 11):**
+- Workflow-Scripts, session in `00-project-setup/`. Before: the rules were not loaded (`NONE`). After `CLAUDE.md` became a symlink: the Agent Learnings bullets were quoted from `CLAUDE.md`.
+- NuBible-App, session in `docs/agents/`. The Agent Learnings bullets loaded. `PROJECT.md` did not load without a Read, which is the trade-off accepted under option A.
+- `scripts/validation/check-agent-rules-load.sh` passes on both repos. Run against the old `@AGENTS.md` layout, it fails.
+- The Edit tool refuses to write through a symlink and names the target path.
+
+**Changed:**
+- Workflow-Scripts: `CLAUDE.md` symlink; `check-agent-rules-load.sh` (new); `check-learnings.sh` and its selftest check `**Source:**` and `**Approved:**`; the pre-commit hook runs the learnings check; the learnings template and both READMEs; the learnings entries (15 ACTIVE demoted to NOTED, one SUPERSEDED, three new NOTED); the setup docs. The report's list of six files was incomplete. A grep found about fifteen. The setup doc changes are the 01, 04, 07, 08, 03-debugging and skills files.
+- NuBible-App (commit `8046ef8`): `CLAUDE.md` symlink; `.claude/rules/claude-code.md`; `@PROJECT.md` in `AGENTS.md`; changelog and troubleshooting entries.
+
+**Not verified, or open:**
+- An interactive session in a subfolder has not been run. The headless canary is the automated check.
+- `/setup-matt-pocock-skills` (outside these repos) writes its `## Agent skills` block to `CLAUDE.md` when that file exists. With the symlink, that block would land in the shared `AGENTS.md`. The external skill has not been changed.
+- `GEMINI.md` keeps the import form and has not been tested from a subfolder.
+- Under option A, a subfolder session reads `PROJECT.md` only when it reads the file.
+- NuBible-App `project/learnings/workflow/2026-10-13-workflow-read-learning-index-before-work.md` is another session's untracked entry. It has no `**Source:**` line, so `check-learnings.sh` fails on that project's log until its author fixes it. It was left unchanged (open item 6).
 

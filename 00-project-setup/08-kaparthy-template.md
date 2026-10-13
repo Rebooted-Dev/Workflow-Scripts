@@ -1,4 +1,4 @@
-> **Placement note:** under the agent-file scheme in [01-setup-project.md §1.1](./01-setup-project.md#11-agent-file-architecture-single-source-of-truth), this content isn't Claude-specific — it's coding-discipline guidance any harness can use. Install it as `docs/agents/coding-discipline.md` (retitle the heading below to match) and link it from `AGENTS.md`'s Detailed Documentation section. Only put it in `CLAUDE.md` directly if it should apply to Claude alone.
+> **Placement note:** under the agent-file scheme in [01-setup-project.md §1.1](./01-setup-project.md#11-agent-file-architecture-single-source-of-truth), this content isn't Claude-specific — it's coding-discipline guidance any harness can use. Install it as `docs/agents/coding-discipline.md` (retitle the heading below to match) and link it from `AGENTS.md`'s Detailed Documentation section. Only put it in `.claude/rules/claude-code.md` if it should apply to Claude alone.
 
 # CLAUDE.md
 
