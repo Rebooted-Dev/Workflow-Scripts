@@ -321,7 +321,7 @@ Proposed changes, in order of value:
 
 The developer chose the recommendations in the session before this one: `PROJECT.md` through `@PROJECT.md` in `AGENTS.md` (option A), `ACTIVE` gated on developer approval, both repos in one pass, `GEMINI.md` left as an import, and local commits without a push.
 
-**Verified in the real repos (headless, Claude Code 2.1.296 as in section 11):**
+**Verified in the real repos (headless; the installed Claude Code version was not checked):**
 - Workflow-Scripts, session in `00-project-setup/`. Before: the rules were not loaded (`NONE`). After `CLAUDE.md` became a symlink: the Agent Learnings bullets were quoted from `CLAUDE.md`.
 - NuBible-App, session in `docs/agents/`. The Agent Learnings bullets loaded. `PROJECT.md` did not load without a Read, which is the trade-off accepted under option A.
 - `scripts/validation/check-agent-rules-load.sh` passes on both repos. Run against the old `@AGENTS.md` layout, it fails.
