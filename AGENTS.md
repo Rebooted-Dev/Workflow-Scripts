@@ -7,6 +7,11 @@ These rules apply when you **change** files in this repository. If you are only 
 - Use parallel sub-agents only for independent scopes where doing so materially reduces latency or improves confidence. Keep dependent work sequential; assign non-overlapping write ownership and verify findings before acting on them. Handle small localized work directly.
 - Use at most **12 concurrent sub-agents per task**, including any nested sub-agents, subject to the runtime's available concurrency limit. This is a ceiling, not a target.
 
+## Agent Learnings
+
+- **Before non-trivial work:** read `00-project/learnings/index.md` and follow each entry marked ACTIVE.
+- **After a mistake, a correction, or a verified non-obvious fact:** add an entry under `00-project/learnings/<category>/` and a row at the top of `00-project/learnings/index.md` (conventions in `00-project/learnings/README.md`), then tell the user what you added and where. Mark an entry ACTIVE only when it is verified or recurring. Learnings are not changelog or troubleshooting entries.
+
 ## Logging changes to this repository
 
 - Every change to Workflow-Scripts is logged in **`00-project/`**, even when the session started in a host project that has this repository cloned or linked inside it. Never log Workflow-Scripts changes in a host project's `project/` directory.

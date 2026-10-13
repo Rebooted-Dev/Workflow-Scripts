@@ -5,6 +5,7 @@ Chronological index of troubleshooting entries.
 
 | Date | Category | Title | File | Status |
 |------|----------|-------|------|--------|
+| 2026-10-13 | workflow | Agent learnings rule was only in a nested AGENTS.md | workflow/2026-10-13-workflow-learnings-rule-only-in-nested-agents.md | resolved |
 | 2026-10-07 | workflow | Plan 05's protocol-recovery gate and instruction snapshot were stale | workflow/2026-10-07-workflow-astra-plan-stale-recovery-state.md | resolved for plan documentation; evaluation remains blocked on arm decision; no runtime or model fault |
 | 2026-10-06 | workflow | Plan packages had no artifact handoff, late state check, premature completion marker, and unverifiable archive links | workflow/2026-10-06-workflow-plan-artifact-completion-filing.md | resolved; verified complete — package filed, final gate check passed 2026-10-06 |
 | 2026-10-05 | workflow | Plans without checkboxes, and completed work left unticked | workflow/2026-10-05-workflow-plans-without-checkboxes-or-ticks.md | resolved |

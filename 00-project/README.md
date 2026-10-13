@@ -13,6 +13,7 @@ This directory is the **project meta workspace** for the [Workflow-Scripts](http
 ├── plans/                 # Active plans, README map, TODO
 ├── plans-completed/       # Filed completed plans by category
 ├── troubleshooting/       # Troubleshooting entries by category
+├── learnings/             # Agent learnings: index + category folders
 ├── KIV/                   # Keep in view / backlog
 ├── research/              # Research and discovery
 └── build/                 # Build artifacts; active plans may also live here

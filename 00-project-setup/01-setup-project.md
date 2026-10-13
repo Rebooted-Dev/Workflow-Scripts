@@ -10,6 +10,7 @@ This workflow sets up a new project, migrates a project from an older structure,
 7. **Track Repos** - Discover all Git repos in the project and record the repository map in `PROJECT.md` (see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 8. **Agent skills stack** - After layout and harness files: once-per-machine global installs (if needed), then scan this repo and fill Matt Pocock / Impeccable gaps (see [Step 2.12](#step-212-agent-skills-stack); details in [`skills/`](./skills/))
 9. **Claude Code cache status line** - Optional, once per machine: check the local install, then add the prompt-cache countdown line only with the user's permission (see [Step 2.13](#step-213-claude-code-cache-status-line-optional-once-per-machine); details in [`10-claude-cache-statusline.md`](./10-claude-cache-statusline.md))
+10. **Agent learnings** - `project/learnings/`: an index and category folders, the same scheme as the changelog and troubleshooting logs. Entries marked ACTIVE are read before non-trivial work; AGENTS.md points there (Step 2.8.5; details in [`11-agent-learnings.md`](./11-agent-learnings.md))
 
 ---
 
@@ -41,6 +42,11 @@ echo "# Troubleshooting Index" > project/troubleshooting/index.md
 echo "" >> project/troubleshooting/index.md
 echo "| Date | Category | Title | File | Status |" >> project/troubleshooting/index.md
 echo "|------|----------|-------|------|--------|" >> project/troubleshooting/index.md
+mkdir -p project/learnings/{workflow,code,tooling,facts,communication}
+echo "# Agent Learnings Index" > project/learnings/index.md
+echo "" >> project/learnings/index.md
+echo "| Date | Category | Title | File | Status |" >> project/learnings/index.md
+echo "|------|----------|-------|------|--------|" >> project/learnings/index.md
 mkdir -p project/plans-completed/{implementation,investigation,migration,review,tooling}
 echo "# Plans completed – index" > project/plans-completed/index.md
 echo "" >> project/plans-completed/index.md
@@ -61,6 +67,7 @@ git status | grep <WORKFLOWS_DIR> || echo "✓ Workflows ignored"
 ls project/ && echo "✓ project/ structure created"
 ls project/changelog/ && echo "✓ project/changelog/ (type folders + plans) and index created"
 ls project/troubleshooting/ && echo "✓ project/troubleshooting/ created"
+test -f project/learnings/index.md && echo "✓ project/learnings/ (categories + index) created"
 test -f project/plans-completed/index.md && echo "✓ project/plans-completed/ (category folders + index) created"
 test -d project/plans && echo "✓ project/plans/ exists (add README.md and TODO.md per Step 2.8)"
 ls -d docs docs/agents 2>/dev/null && echo "✓ docs/ and docs/agents/ created"
@@ -155,6 +162,7 @@ If you use the `project/` pattern, make sure:
    - Missing `project/` or subdirs → create with `mkdir -p project/{KIV,research,build}` and `mkdir -p project/changelog/{added,changed,fixed,improved,docs,refactor,config,plans}` and `mkdir -p project/troubleshooting/{build,runtime,data,environment,security}` and `mkdir -p project/plans-completed/{implementation,investigation,migration,review,tooling}` (plus `project/plans-completed/README.md` and `index.md` per Step 2.8 if missing).
    - Missing `plans/README.md` or `plans/TODO.md` → add per Step 2.8.
    - Missing `docs/` or `docs/agents/` → create with `mkdir -p docs docs/agents`.
+   - Missing `project/learnings/` → create per Step 2.8.5 (create `README.md` and `index.md` only if they are missing).
 
 4. **Optionally refresh repo map and sync instructions:** If you added/removed repos or changed remotes, run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) (see Step 2.11).
 
@@ -164,7 +172,7 @@ If you use the `project/` pattern, make sure:
 
 ### What not to do
 
-- **Do not** overwrite `project/changelog/index.md` or `project/troubleshooting/index.md` with empty or template tables — preserve existing rows.
+- **Do not** overwrite `project/changelog/index.md`, `project/troubleshooting/index.md`, or `project/learnings/index.md` with empty or template tables — preserve existing rows.
 - **Do not** re-back up `CHANGELOG.md` or `TROUBLESHOOTING.md` unless you are doing a first-time migration from single-file logs.
 - **Do not** delete or rename existing project/changelog or project/troubleshooting files or directories as part of an “update”; only add or edit convention/instruction content.
 
@@ -267,6 +275,7 @@ Every project uses the same split. Each rule or fact lives in **exactly one** fi
 | `AGENTS.md` | **Agent rules** for every harness: Execution (1.2), Change Management (2.6.2), a pointer to `PROJECT.md`, and "Detailed Documentation" links. Same template in every project. Target: 40 lines or fewer. | Codex, Cursor, and other AGENTS.md-aware tools natively; Claude and Gemini through imports |
 | `PROJECT.md` | **Project facts**: name and description, repositories (1.4), workspace layout, project-specific constraints. | Pointer in `AGENTS.md`; imported by `CLAUDE.md` / `GEMINI.md` |
 | `docs/agents/*.md` | Detailed topical guides (2.6.1, 2.9.3). | Links in `AGENTS.md` |
+| `project/learnings/` | Agent learnings: `index.md` plus category folders, one file per lesson (Step 2.8.5). Entries marked ACTIVE are the rules to follow. | Pointer in `AGENTS.md` |
 | `CLAUDE.md` | `@AGENTS.md` and `@PROJECT.md` imports, then **Claude-only** instructions (2.10). | Claude Code |
 | `GEMINI.md` | `@AGENTS.md` and `@PROJECT.md` imports, then **Gemini-only** instructions (2.10). | Gemini CLI |
 
@@ -274,6 +283,7 @@ Every project uses the same split. Each rule or fact lives in **exactly one** fi
 1. Does it only make sense for one harness (a harness-specific model choice, tool, or import syntax)? Put it in that harness file. Shared sub-agent preferences and concurrency limits belong in `AGENTS.md`.
 2. Is it a fact about this project (repos, paths, commands, architecture, constraints)? Put it in `PROJECT.md`, or in `docs/agents/` if it is long.
 3. Otherwise it is an agent rule: put it in `AGENTS.md`, or in `docs/agents/` if it is long.
+4. Is it a lesson learned from a mistake, a correction, or a verified fact? Record it as an entry in `project/learnings/`. It reaches AGENTS.md only when it is PROMOTED, and the developer approves that.
 
 Harness files never restate `AGENTS.md` or `PROJECT.md` content. When a canonical source changes, **delete superseded blocks** in the other files; do not append a competing block. Re-run repository discovery and path checks before marking setup complete.
 
@@ -298,6 +308,10 @@ Read `PROJECT.md` before starting work: it holds this project's facts (repositor
 - Always verify findings from parallel sub-agents before acting on them.
 - **Bugs:** add regression test when it fits.
 - **Plans:** this applies whenever you create, update, or execute a plan, whether or not a workflow was named. Every task and success criterion is a checkbox. Tick `[✅]` (never `[x]`) in the same step its verification passes; give any box left `[ ]` an `Open:` reason (`pending`, `blocked`, `deferred`, or `retired`). Before reporting, run `bash <workflow-scripts>/scripts/validation/check-plan.sh --state <plan>` and fix what it reports. A plan with no checkboxes gets them before it is executed or filed.
+
+## Agent Learnings
+- **Before non-trivial work:** read `project/learnings/index.md` and follow each entry marked ACTIVE.
+- **After a mistake, a correction, or a verified non-obvious fact:** add an entry under `project/learnings/<category>/` and a row at the top of `project/learnings/index.md` (conventions in `project/learnings/README.md`), then tell the user what you added and where. Mark an entry ACTIVE only when it is verified or recurring.
 
 ## Change Management
 <slim Change Management section from Step 2.6.2>
@@ -338,6 +352,7 @@ This project has **multiple independent git repositories**; do not assume one re
 
 ## Layout
 - <Where app commands run (e.g. an app workspace subdirectory) versus git commands; link docs/agents/development-workflow.md for commands.>
+- **Agent learnings:** `project/learnings/` — `index.md` and category folders; conventions in `README.md`.
 
 ## Project Constraints
 - <Rules that apply only to this project. Omit the section if there are none.>
@@ -372,17 +387,20 @@ mkdir -p project/{KIV,research,build}
 mkdir -p project/changelog/{added,changed,fixed,improved,docs,refactor,config,plans}
 mkdir -p project/troubleshooting/{build,runtime,data,environment,security}
 mkdir -p docs project/plans
+mkdir -p project/learnings/{workflow,code,tooling,facts,communication}
 # Verify
 test -d project && echo "✓ project/ exists"
 test -d project/changelog && test -d project/changelog/plans && echo "✓ project/changelog/ (with plans subdir) exists"
 test -d project/troubleshooting && echo "✓ project/troubleshooting/ exists"
 test -d docs && echo "✓ docs/ exists"
 test -d project/plans && echo "✓ project/plans/ exists"
+test -d project/learnings && echo "✓ project/learnings/ exists"
 ```
 
 - **project/** – Container for KIV, research, build, changelog (type folders + plans subdir, one index), and troubleshooting (category folders + index).
 - **project/plans/** – README (map to project dir) and **TODO.md** (current tasks + **Reference — filing completed plans** per Step 2.8.3). **Active plan documents live here** (e.g. `project/plans/yyyy-mm-dd-plan-name.md`). Default: completed plans go to **`project/plans-completed/<category>/`** plus both indexes; see Step 2.8.4.
 - **docs/** – Long-lived documentation (user-facing or project docs).
+- **project/learnings/** – Agent learnings: `index.md`, `README.md`, and category folders (Step 2.8.5).
 
 ### 2.1 Check for Existing Troubleshooting Files
 
@@ -610,8 +628,9 @@ When instructed to "update the logs" or "update the log files", this refers to:
 1. **Changelog** – Create a new entry in `project/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add a row at the top of `project/changelog/index.md`. Use the appropriate type folder (added, changed, fixed, improved, docs, refactor, config). For a **completed plan**, follow § **Plans completed** below unless the user specifies **`project/changelog/plans/`**.
 2. **Troubleshooting entries** – Add entries to `project/troubleshooting/` **only when** the work involved fixing a bug, resolving an issue that required debugging/workarounds, or solving a non-trivial problem (investigation, multiple steps, or lessons worth preserving). **Do not** add troubleshooting entries for simple code changes, routine refactors, or straightforward feature additions — use the changelog only for those.
 3. **Both** – When a bug/issue/non-trivial fix requires both a troubleshooting entry (for the problem-solving process) **and** a changelog entry (for the change itself).
+4. **Agent learnings** – After a mistake, a correction from the user, or a verified non-obvious fact, add an entry under `project/learnings/<category>/` and a row at the top of `project/learnings/index.md` (see `project/learnings/README.md`). These are not changelog or troubleshooting entries.
 
-**Note**: This project does NOT use application logging files (`.log` files). The "logs" refer to the `project/changelog/` directory and the troubleshooting knowledge base in `project/troubleshooting/`.
+**Note**: This project does NOT use application logging files (`.log` files). The "logs" refer to the `project/changelog/` directory, the troubleshooting knowledge base in `project/troubleshooting/`, and the agent learnings in `project/learnings/`.
 
 ## Plans completed (`project/plans-completed/`) — default for "file as completed"
 
@@ -636,6 +655,7 @@ Use when the user **explicitly** asks to file under **`changelog/plans`**, or fo
 - **Changelog**: `project/changelog/` — one index for change entries and Type=`plan` rows. Always update `project/changelog/index.md` (new row at top).
 - **Troubleshooting**: `project/troubleshooting/` — category folders + `index.md`.
 - **Plans completed**: `project/plans-completed/` — category folders + `index.md`; default target for "file as completed".
+- **Agent learnings**: `project/learnings/` — `index.md` and category folders; not changelog or troubleshooting entries.
 - **Docs**: `docs/` holds project documentation; `docs/agents/` holds agent-facing detailed guides. Root AGENTS.md stays slim and links to `docs/agents/`.
 - **Plans**: `project/plans/README.md` maps the project dir. `project/plans/TODO.md` holds current tasks. Active plan documents live in `project/plans/` or `project/build/`. **Default filing:** § **Plans completed** above; **alternate:** § **Changelog plans archive** above.
 ```
@@ -904,6 +924,7 @@ This directory holds the **map** to the project structure and is the place for *
 - **Change entry** → `project/changelog/<type>/` + row in `project/changelog/index.md`
 - **Completed plan ("file as completed")** → **move** from `project/plans/` or `project/build/` to **`project/plans-completed/<category>/`**, update **`project/plans-completed/index.md`**, add a row at the top of **`project/changelog/index.md`** with Type=plan and File `../plans-completed/<category>/<file>`. **Alternate:** archive under **`project/changelog/plans/`** if requested.
 - **Troubleshooting entry** → `project/troubleshooting/<category>/` + row in `project/troubleshooting/index.md`
+- **Agent learning** → `project/learnings/<category>/` + row in `project/learnings/index.md`
 
 ## Current tasks
 
@@ -950,6 +971,21 @@ When a plan is confirmed completed, or the user asks to **"file … as completed
 `docs/agents/changelog-and-troubleshooting.md` states this rule (Step 2.6.1) and `AGENTS.md` links to it (Step 1.2); `CLAUDE.md` and `GEMINI.md` receive it through their `@AGENTS.md` import.
 
 **Human/agent shortcut:** The same filing steps are duplicated under **Reference — filing completed plans** in **`project/plans/TODO.md`** (Step 2.8.3) so they appear next to the active task list.
+
+---
+
+### 2.8.5 Create project/learnings/ (agent learnings)
+
+Agent learnings use the same scheme as the changelog and troubleshooting logs: a `README.md`, a chronological `index.md` (newest first), category sub-folders, and one file per entry. The full procedure, templates, and migration steps are in [`11-agent-learnings.md`](./11-agent-learnings.md).
+
+```bash
+mkdir -p project/learnings/{workflow,code,tooling,facts,communication}
+```
+
+Then:
+1. Create `project/learnings/README.md` and `project/learnings/index.md` from the templates in `11-agent-learnings.md` (Steps 2 and 3) if they are missing. **Never overwrite** an existing index or entry.
+2. Add the **Agent Learnings** section to AGENTS.md (Step 1.2 here) and the Layout line to PROJECT.md (Step 1.4 here). Both are in `11-agent-learnings.md`, Step 4.
+3. If a root `AGENT_LEARNINGS.md` exists, migrate it (`11-agent-learnings.md`, Step 5).
 
 ---
 
@@ -1184,6 +1220,16 @@ test -f project/plans-completed/index.md && echo "✓ project/plans-completed/in
 test -f project/plans-completed/README.md && echo "✓ project/plans-completed/README.md exists"
 ```
 
+### 3.4.2 Verify project/learnings/ (index and categories)
+
+```bash
+test -f project/learnings/README.md && echo "✓ project/learnings/README.md exists"
+test -f project/learnings/index.md && echo "✓ project/learnings/index.md exists"
+for d in workflow code tooling facts communication; do test -d "project/learnings/$d" && echo "✓ project/learnings/$d/ exists"; done
+test ! -f AGENT_LEARNINGS.md && echo "✓ no root AGENT_LEARNINGS.md"
+grep -q 'project/learnings/index.md' AGENTS.md && echo "✓ AGENTS.md points to project/learnings/index.md"
+```
+
 ### 3.5 Verify docs and docs/agents
 
 ```bash
@@ -1316,6 +1362,8 @@ If you're migrating an existing project that already has files or directories in
 3. **Update index** – Add a row at the top of `project/troubleshooting/index.md` for each new file (Date, Category, Title, File path, Status).
 4. **Remove old files** – Only after migration and link check (Step 4.4); keep `docs/TROUBLESHOOTING.md` if it is a user-facing guide.
 
+**Agent learnings (root `AGENT_LEARNINGS.md`):** Follow Step 5 of `11-agent-learnings.md`. Each lesson becomes one file under its category in `project/learnings/`, with one index row (newest first). Drop placeholder entries and copied commands. Remove the root file only after the migration and the Step 3.4.2 check pass.
+
 **Changelog (single-file) and plans-completed:**
 1. **Review backup files** – Check `project/changelog/CHANGELOG-backup-*.md` for entries from the old CHANGELOG.
 2. **Migrate changelog entries** – Create one file per change in `project/changelog/<type>/<yyyy-mm-dd>-<type>-<short-title>.md` and add rows to `project/changelog/index.md` (newest first).
@@ -1424,6 +1472,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] project/changelog structure verified (type folders + plans/ + single index)
 - [ ] project/plans/README.md and project/plans/TODO.md verified
 - [ ] project/plans-completed/ (categories + README + index) verified (Step 3.4.1)
+- [ ] project/learnings/ created with README, index.md, and category folders; AGENTS.md has the Agent Learnings section; no root AGENT_LEARNINGS.md left (Steps 2.8.5, 3.4.2)
 - [ ] docs/ and docs/agents/ verified
 - [ ] Agent files verified (Step 3.6)
 - [ ] Step 2.12 Agent skills stack completed (global if needed; scan; Matt / Impeccable gaps); spot-check Step 3.7.1

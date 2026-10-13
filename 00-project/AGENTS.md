@@ -34,6 +34,9 @@ git push
 - Changelog, plans, troubleshooting, and docs live directly under `00-project/`.
 - Workflow instruction files remain in their topical directories at repo root (e.g. `00-project-setup/`, `04-documentation/`).
 
+## Agent Learnings
+- The rule applies to every Workflow-Scripts change and lives in the root [`AGENTS.md`](../AGENTS.md#agent-learnings). This directory holds the log: `00-project/learnings/`.
+
 ## Change Management
 
 - Unless instructed by the developer, do not make code changes to consumer-project application code from this repo.
