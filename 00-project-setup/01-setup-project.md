@@ -9,6 +9,7 @@ This workflow sets up a new project, migrates a project from an older structure,
 6. **Thin CLAUDE.md and GEMINI.md** - Each imports `@AGENTS.md` and `@PROJECT.md` and adds harness-only instructions; existing files are migrated, not duplicated (Step 2.10)
 7. **Track Repos** - Discover all Git repos in the project and record the repository map in `PROJECT.md` (see [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md))
 8. **Agent skills stack** - After layout and harness files: once-per-machine global installs (if needed), then scan this repo and fill Matt Pocock / Impeccable gaps (see [Step 2.12](#step-212-agent-skills-stack); details in [`skills/`](./skills/))
+9. **Claude Code cache status line** - Optional, once per machine: check the local install, then add the prompt-cache countdown line only with the user's permission (see [Step 2.13](#step-213-claude-code-cache-status-line-optional-once-per-machine); details in [`10-claude-cache-statusline.md`](./10-claude-cache-statusline.md))
 
 ---
 
@@ -71,6 +72,8 @@ ls -d docs docs/agents 2>/dev/null && echo "✓ docs/ and docs/agents/ created"
 **9. Agent skills stack (Step 2.12)** — After layout + agent files exist, complete the curated skills step in this same workflow:
 - Fresh machine: follow [`skills/01-global-install.md`](./skills/01-global-install.md) (skip what `npx skills list -g` already shows).
 - Then scan this app repo ([`skills/02-project-scan.md`](./skills/02-project-scan.md)) and fill only Matt / Impeccable / `PRODUCT.md` gaps ([`skills/03-project-scaffold.md`](./skills/03-project-scaffold.md)). Do not invent product truth.
+
+**10. Claude Code cache status line (Step 2.13)** — Optional, once per machine. Check the local Claude Code install first, ask before changing anything under `~/.claude/`, and only then follow [`10-claude-cache-statusline.md`](./10-claude-cache-statusline.md).
 
 For detailed prerequisite verification (git repo checks, .gitignore, workflows directory validation, placeholder checks), see **Step 0** below.
 
@@ -155,7 +158,7 @@ If you use the `project/` pattern, make sure:
 
 4. **Optionally refresh repo map and sync instructions:** If you added/removed repos or changed remotes, run [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md) (see Step 2.11).
 
-5. **Complete Step 2.12 (Agent skills stack):** Global install only if this machine still lacks the curated packs; then scan this repo and fill Matt / Impeccable gaps. Do **not** re-do layout already refreshed above; do **not** wipe indexes.
+5. **Complete Step 2.12 (Agent skills stack):** Global install only if this machine still lacks the curated packs; then scan this repo and fill Matt / Impeccable gaps. Do **not** re-do layout already refreshed above; do **not** wipe indexes. Then complete **Step 2.13** (Claude Code cache status line: the local check, and the project `statusLine` override check).
 
 6. **Verify:** Run the checks in **Step 3** (Verification) that apply to the files you changed (e.g. directory structure, agent files present). Do **not** re-run backup or migration steps (Step 2.3, 2.7.3, Step 4) unless you are actually migrating from an old structure.
 
@@ -181,6 +184,7 @@ For consistent checklist marking (✅ vs `[ ]`), completion markers, and archivi
 - [ ] CLAUDE.md / GEMINI.md: thin import form, harness-only content (Step 2.10.3)
 - [ ] Missing category/type folders created; repo map refreshed if needed (Step 2.11)
 - [ ] Step 2.12 (Agent skills stack) completed — global install if needed; scan; Matt / Impeccable gaps only
+- [ ] Step 2.13 (Claude Code cache status line) checked; installed only after the user said yes (or declined and recorded); project `statusLine` overrides checked
 - [ ] Verification (Step 3) run for changed areas; indexes and existing data preserved
 
 ---
@@ -1098,6 +1102,22 @@ Stubs (fallback only): [`skills/stubs/`](./skills/stubs/).
 
 ---
 
+## Step 2.13: Claude Code cache status line (optional, once per machine)
+
+This step adds a second status line that shows the prompt-cache countdown: when the cache expires, how much of it is used, and how many tokens the next message re-caches if it has gone cold. The setting is **user-level** (`~/.claude/`), so it covers every project on the computer, not just this one. The full procedure is in [`10-claude-cache-statusline.md`](./10-claude-cache-statusline.md).
+
+**Order:**
+
+1. **Check (read-only)** — Run Step 1 of `10-claude-cache-statusline.md`: Claude Code version (2.1.251 or later), `jq`, and the current `statusLine` in `~/.claude/settings.json`. Write nothing yet.
+2. **Ask** — Tell the user what you found and ask whether to install or change the status line. If the cache line is already installed, say so and go to step 4. Do not write under `~/.claude/`, install a package, or change a project's settings without a yes for that specific change.
+3. **Install (only after a yes)** — Follow Steps 2 and 3 of `10-claude-cache-statusline.md`. If the computer already has a status line, keep its output (variant B). Then run its Step 4 test.
+4. **Project overrides** — Check the project's `.claude/settings.json` and `.claude/settings.local.json` for a `statusLine` key (Step 6 of `10`). A project-level `statusLine` replaces the user-level one in that project only. Report it, and change it only with a yes.
+5. **Verify** — Step 3.7.2.
+
+If the user declines, record "Claude Code cache status line: declined" in the setup notes and continue with Step 3.
+
+---
+
 ## Step 3: Verification
 
 After setup, verify everything is correct:
@@ -1217,6 +1237,26 @@ grep -q '^## Agent skills' CLAUDE.md 2>/dev/null && echo "✓ CLAUDE.md Agent sk
 # Machine globals (spot-check; full list in skills/README.md)
 # npx skills list -g
 ```
+
+### 3.7.2 Verify Claude Code cache status line (Step 2.13)
+
+Skip this if the user declined. Otherwise:
+
+```bash
+# Installed and valid (user-level)
+test -f ~/.claude/statusline.sh && bash -n ~/.claude/statusline.sh && echo "✓ statusline.sh present and valid"
+jq -e '.statusLine.command | test("statusline.sh")' ~/.claude/settings.json >/dev/null && echo "✓ user statusLine runs statusline.sh"
+jq -e '.statusLine.refreshInterval >= 1' ~/.claude/settings.json >/dev/null && echo "✓ refreshInterval set"
+jq empty ~/.claude/settings.json && echo "✓ settings.json is valid JSON"
+claude --version
+
+# This project does not override it (Step 2.13, step 4)
+for f in .claude/settings.json .claude/settings.local.json; do
+  [ -f "$f" ] && jq -e 'has("statusLine")' "$f" >/dev/null 2>&1 && echo "⚠ $f sets its own statusLine (replaces the user-level one here)"
+done
+```
+
+Line 2 can only be confirmed in a new Claude Code session. Ask the user to start one and look (Step 5 of `10-claude-cache-statusline.md`).
 
 ### 3.8 Check for Backups
 
@@ -1387,6 +1427,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] docs/ and docs/agents/ verified
 - [ ] Agent files verified (Step 3.6)
 - [ ] Step 2.12 Agent skills stack completed (global if needed; scan; Matt / Impeccable gaps); spot-check Step 3.7.1
+- [ ] Step 2.13 Claude Code cache status line: checked; installed only after the user said yes (or declined and recorded); project `statusLine` overrides checked; spot-check Step 3.7.2
 - [ ] Backup files reviewed; migration completed before removing old monolithic troubleshooting file (if applicable)
 - [ ] If migrated: index files updated with new paths; link/reference scan run and broken links fixed (Step 4.4)
 
@@ -1394,7 +1435,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 
 ## For AI Agents Executing This Setup
 
-**Execution:** Read existing files first; preserve data (back up before moving/editing); replace all placeholders (`<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>`); verify after each step. Use parallel agents when appropriate; verify findings before making changes. **Do not stop after harness files** — complete **Step 2.12** (skills stack) before declaring setup done.
+**Execution:** Read existing files first; preserve data (back up before moving/editing); replace all placeholders (`<PROJECT_NAME>`, `<PROJECT_PATH>`, `<GIT_REMOTE>`, `<WORKFLOWS_DIR>`, `<WORKFLOWS_REMOTE>`); verify after each step. Use parallel agents when appropriate; verify findings before making changes. **Do not stop after harness files** — complete **Step 2.12** (skills stack) and **Step 2.13** (cache status line; ask the user before any write outside the project, such as `~/.claude/`) before declaring setup done.
 
 **Single source of truth (mandatory):** Follow the Step 1.1 architecture. Agent rules go in AGENTS.md, project facts in PROJECT.md, long material in `docs/agents/` (Changelog/Troubleshooting/Plans in `changelog-and-troubleshooting.md`, 2.6.1; other topics per 2.9.3). CLAUDE.md and GEMINI.md import AGENTS.md and PROJECT.md and hold harness-only instructions; migrate existing ones (2.10.3) rather than overwriting or duplicating.
 

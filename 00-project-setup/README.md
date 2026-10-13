@@ -14,11 +14,15 @@ This directory contains workflows for setting up new projects and optimizing exi
 | [`06-skills-setup.md`](./06-skills-setup.md) | Skills discovery catalog: personal vs project skills, storage locations, Top-N / Top-250 recommendations | Exploring skills.sh, onboarding to skills-based workflows, troubleshooting skill loading |
 | [`skills/`](./skills/) | Detail playbook for **01 Step 2.12** (global install, scan, Matt/Impeccable scaffold, precedence) | Invoked from `01-setup-project.md`; also machine-only reinstall of curated packs |
 | [`09-seo-skill-setup.md`](./09-seo-skill-setup.md) | SEO skill setup: install the `seo` CLI + agent skill + MCP across Cursor/Claude Code/Codex/OpenCode/pi, guided Google/Search Console wiring, verification checklist | Setting up the iannuttall/seo toolchain, SEO evidence reports, or troubleshooting the seo skill/MCP |
+| [`10-claude-cache-statusline.md`](./10-claude-cache-statusline.md) | Claude Code prompt-cache status line: check the local install, then (with the user's permission) add the cache countdown on line 2; user-level, once per machine | Setting up or checking the cache countdown in Claude Code's status line; **Step 2.13** of `01-setup-project.md` calls it |
 
 ## Quick Decision Guide
 
 **Are you setting up a new project or updating an existing project’s setup / harness (including curated skills)?**
-- Yes → Use [`01-setup-project.md`](./01-setup-project.md) (skills are Step 2.12; detail in [`skills/`](./skills/))
+- Yes → Use [`01-setup-project.md`](./01-setup-project.md) (skills are Step 2.12; detail in [`skills/`](./skills/); cache status line is Step 2.13)
+
+**Do you want the Claude Code prompt-cache countdown in the status line, or is it already set up and needs checking?**
+- Yes → Use [`10-claude-cache-statusline.md`](./10-claude-cache-statusline.md) (it checks the local install first and asks before changing `~/.claude/`)
 
 **Are you reviewing/cleaning up existing workflow scripts?**
 - Yes → Use [`02-optimize-workflow-scripts.md`](./02-optimize-workflow-scripts.md)
