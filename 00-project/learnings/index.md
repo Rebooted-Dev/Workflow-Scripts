@@ -5,6 +5,8 @@ Chronological index of agent learnings.
 
 | Date       | Category | Title | File | Status |
 |-----------|----------|-------|------|--------|
+| 2026-10-14 | workflow | Verify gate order before claiming a filing-sequence violation | workflow/2026-10-14-workflow-verify-gate-order-before-claiming-violation.md | NOTED |
+| 2026-10-14 | facts | `git -C` can resolve an ancestor repository for a subdirectory | facts/2026-10-14-facts-git-subdirectory-inherits-parent-repository.md | NOTED |
 | 2026-10-13 | tooling | Edit and Write refuse to write through a symlink | tooling/2026-10-13-tooling-edit-tool-refuses-symlinks.md | NOTED; edit AGENTS.md, not CLAUDE.md, when CLAUDE.md is a symlink to it |
 | 2026-10-13 | workflow | A canary check must test the repo's real layout | workflow/2026-10-13-workflow-canary-test-uses-real-layout.md | NOTED; copy the repo's real CLAUDE.md into a canary test and keep a negative case |
 | 2026-10-13 | workflow | Grep the whole repo for a rule's wording before listing the files to change | workflow/2026-10-13-workflow-grep-all-references-before-editing.md | NOTED; take the file list from a grep of the wording, not from a proposal |

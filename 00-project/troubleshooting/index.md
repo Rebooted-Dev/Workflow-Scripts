@@ -5,6 +5,7 @@ Chronological index of troubleshooting entries.
 
 | Date | Category | Title | File | Status |
 |------|----------|-------|------|--------|
+| 2026-10-14 | git | Health-check H02 must reject an inherited parent Git repository | git/2026-10-14-git-health-check-parent-repository-detection.md | RESOLVED; H02 requires an empty `--show-prefix` and matching repository root |
 | 2026-10-13 | workflow | Rules did not load from a subfolder session; learnings entries could state unsupported claims | workflow/2026-10-13-workflow-rules-not-loaded-from-subfolder.md | resolved; CLAUDE.md is a symlink to AGENTS.md; canary check and source/approval checks added; interactive check open |
 | 2026-10-13 | workflow | Agent learnings rule was only in a nested AGENTS.md | workflow/2026-10-13-workflow-learnings-rule-only-in-nested-agents.md | resolved |
 | 2026-10-07 | workflow | Plan 05's protocol-recovery gate and instruction snapshot were stale | workflow/2026-10-07-workflow-astra-plan-stale-recovery-state.md | resolved for plan documentation; evaluation remains blocked on arm decision; no runtime or model fault |

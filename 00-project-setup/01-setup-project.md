@@ -1147,12 +1147,20 @@ If the user declines, record "Claude Code cache status line: declined" in the se
 
 After setup, verify everything is correct:
 
+### 3.0 Run the consumer health-check subset
+
+This command covers only the deterministic checks listed in [12-health-check.md](./12-health-check.md). A PASS does not certify that every interactive, content-based, migration, or user-level setup step is complete.
+
+```bash
+# From the consumer project root. H12 is skipped unless --canary is requested in Step 3.6.1.
+bash <WORKFLOWS_DIR>/scripts/validation/health-check.sh <PROJECT_PATH>
+```
+
 ### 3.1 Verify Git Configuration
 
 ```bash
-# From project root - workflows should be ignored
-cd <PROJECT_PATH>
-git status | grep <WORKFLOWS_DIR> || echo "✓ <WORKFLOWS_DIR>/ is properly ignored"
+# H03 in the health-check verifies the Workflow-Scripts path is ignored by
+# the consumer root .gitignore. Inspect that entry if H03 reports a failure.
 
 # From workflows directory - should be separate repo
 cd <WORKFLOWS_DIR>
@@ -1166,31 +1174,12 @@ git remote -v && echo "✓ workflows is separate repo"
 test -d project && echo "✓ project/ exists"
 test -d project/KIV && test -d project/research && test -d project/build && echo "✓ project/ subdirs (KIV, research, build) exist"
 
-# Troubleshooting under project/
-test -d project/troubleshooting/build && echo "✓ project/troubleshooting/build/ exists"
-test -d project/troubleshooting/runtime && echo "✓ project/troubleshooting/runtime/ exists"
-test -d project/troubleshooting/data && echo "✓ project/troubleshooting/data/ exists"
-test -d project/troubleshooting/environment && echo "✓ project/troubleshooting/environment/ exists"
-test -d project/troubleshooting/security && echo "✓ project/troubleshooting/security/ exists"
-test -f project/troubleshooting/README.md && echo "✓ project/troubleshooting/README.md exists"
-test -f project/troubleshooting/index.md && echo "✓ project/troubleshooting/index.md exists"
+# H10 in the health-check verifies the troubleshooting structure.
 ```
 
 ### 3.3 Verify Changelog Structure
 
-```bash
-# Check project/changelog (type folders + plans subdir + single index)
-test -d project/changelog/added && echo "✓ project/changelog/added/ exists"
-test -d project/changelog/changed && echo "✓ project/changelog/changed/ exists"
-test -d project/changelog/fixed && echo "✓ project/changelog/fixed/ exists"
-test -d project/changelog/improved && echo "✓ project/changelog/improved/ exists"
-test -d project/changelog/docs && echo "✓ project/changelog/docs/ exists"
-test -d project/changelog/refactor && echo "✓ project/changelog/refactor/ exists"
-test -d project/changelog/config && echo "✓ project/changelog/config/ exists"
-test -d project/changelog/plans && echo "✓ project/changelog/plans/ exists"
-test -f project/changelog/README.md && echo "✓ project/changelog/README.md exists"
-test -f project/changelog/index.md && echo "✓ project/changelog/index.md exists"
-```
+H10 in the health-check verifies the changelog type folders, README, index, and header row.
 
 ### 3.4 Verify project/plans/ (README and TODO)
 
@@ -1211,11 +1200,9 @@ test -f project/plans-completed/README.md && echo "✓ project/plans-completed/R
 
 ### 3.4.2 Verify project/learnings/ (index and categories)
 
+H09, H11, and H14 in the health-check cover learnings structure, the structural checker, and the legacy root file. Retain the AGENTS.md pointer check here; it is not part of the automated subset.
+
 ```bash
-test -f project/learnings/README.md && echo "✓ project/learnings/README.md exists"
-test -f project/learnings/index.md && echo "✓ project/learnings/index.md exists"
-for d in workflow code tooling facts communication; do test -d "project/learnings/$d" && echo "✓ project/learnings/$d/ exists"; done
-test ! -f AGENT_LEARNINGS.md && echo "✓ no root AGENT_LEARNINGS.md"
 grep -q 'project/learnings/index.md' AGENTS.md && echo "✓ AGENTS.md points to project/learnings/index.md"
 ```
 
@@ -1230,57 +1217,33 @@ test -d docs/agents && echo "✓ docs/agents/ exists"
 ### 3.6 Verify the agent files (Step 1.1)
 
 ```bash
-# AGENTS.md: concise, points to PROJECT.md, holds no repo map
-test -f AGENTS.md && echo "✓ AGENTS.md exists ($(wc -l < AGENTS.md) lines; target ≤ 40)"
-grep -q 'PROJECT.md' AGENTS.md && echo "✓ AGENTS.md points to PROJECT.md"
+# H04–H08 in the health-check report the AGENTS.md pointer and length, the CLAUDE.md symlink, the @PROJECT.md import, and whether a recognized Claude-only heading has its rules file.
+# Keep the following manual scan: repository-section duplication is outside the automated subset.
 grep -n -E '^## (Repository Management|Tracked Repositories|Repositories)' AGENTS.md && echo "✗ Move repository content to PROJECT.md"
-
-# PROJECT.md: project facts
-test -f PROJECT.md && echo "✓ PROJECT.md exists"
-
-# CLAUDE.md: symlink to AGENTS.md (full check in Step 2.10.2)
-test -L CLAUDE.md && [ "$(readlink CLAUDE.md)" = AGENTS.md ] && echo "✓ CLAUDE.md is a symlink to AGENTS.md"
-grep -q '^@PROJECT.md' AGENTS.md && echo "✓ AGENTS.md imports PROJECT.md (for Claude)"
 ```
 
 ### 3.6.1 Confirm the rules load from a subfolder
 
-Run the canary check from the project root. It checks that `CLAUDE.md` is the symlink, then starts a headless Claude Code session in a subfolder and checks that the session can see the rules. The check copies the repo's `AGENTS.md` and `CLAUDE.md` into a throwaway folder, so the project files are not changed.
+H12 is opt-in because it makes a headless Claude model call. It checks the `CLAUDE.md` symlink and starts a subfolder session using a throwaway copy, so the consumer files are not changed.
 
 ```bash
-bash <WORKFLOWS_DIR>/scripts/validation/check-agent-rules-load.sh <PROJECT_PATH>
+bash <WORKFLOWS_DIR>/scripts/validation/health-check.sh <PROJECT_PATH> --canary
 ```
 
-Expected: `✓ CLAUDE.md is a symlink to AGENTS.md` and `✓ rules load from a session started in a subfolder`. If the run fails on credit, an `ANTHROPIC_API_KEY` in the environment may be taking precedence over the claude.ai login; the script unsets it for its own call only. A headless run may not match an interactive one, so also start an interactive session in a subfolder and ask it to quote the Agent Learnings section.
+Expected: `PASS H12` when the rules load. A CLI/login/credit/service issue is `WARN H12` and inconclusive; a confirmed canary miss is `FAIL H12`. A headless run may not match an interactive one, so also start an interactive session in a subfolder and ask it to quote the Agent Learnings section.
 
 ### 3.7 Verify Repositories Map (Step 2.11)
 
-After executing [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md), confirm the repo map is present:
+After executing [04-track-repos-and-agent-map.md](./04-track-repos-and-agent-map.md), the health-check's H01/H02 output confirms the Repositories table and Workflow-Scripts checkout. Keep the optional detail-doc check:
 
 ```bash
-# PROJECT.md holds the only repository map
-grep -q '^## Repositories' PROJECT.md && echo "✓ Repo map present in PROJECT.md"
 # Optional detail doc, linked from PROJECT.md:
 test -f docs/agents/repository-map.md && echo "✓ docs/agents/repository-map.md exists"
 ```
 
 ### 3.7.1 Verify Agent Skills Stack (Step 2.12)
 
-After Step 2.12, confirm what applies to this repo:
-
-```bash
-# Matt Pocock context (when using the engineering chain)
-test -f docs/agents/issue-tracker.md && echo "✓ issue-tracker.md"
-test -f docs/agents/triage-labels.md && echo "✓ triage-labels.md"
-test -f docs/agents/domain.md && echo "✓ domain.md"
-grep -q '^## Agent skills' .claude/rules/claude-code.md 2>/dev/null && echo "✓ .claude/rules/claude-code.md Agent skills block"
-
-# Impeccable (UI/design repos only)
-# test -f PRODUCT.md && echo "✓ PRODUCT.md"
-
-# Machine globals (spot-check; full list in skills/README.md)
-# npx skills list -g
-```
+After Step 2.12, H13 in the health-check verifies the three Matt Pocock docs when the `## Agent skills` block is present. Impeccable and machine-global checks remain governed by the [skills playbook](./skills/README.md).
 
 ### 3.7.2 Verify Claude Code cache status line (Step 2.13)
 
@@ -1448,6 +1411,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] AGENTS.md matches the Step 1.2 template: Execution (appropriate parallel sub-agents, maximum 12 concurrent sub-agents per task, GPT 6 Luna / `xhigh` preference when available, **Bugs: add regression test when it fits.**), pointer to PROJECT.md
 - [ ] Completed plans filing rule reachable from AGENTS.md via docs/agents/changelog-and-troubleshooting.md
 - [ ] `.gitignore` includes the workflows directory (e.g. `Workflow-Scripts/` or `workflows/` — replace `<WORKFLOWS_DIR>` in Step 1.4)
+- [ ] Run the bounded health-check in Step 3.0; review its findings, then complete the manual Step 3 checks that the script does not cover
 - [ ] project/troubleshooting directory structure created
 - [ ] Existing troubleshooting files backed up (root-level, docs/, and project/troubleshooting/ checked)
 - [ ] `project/troubleshooting/README.md` created
@@ -1471,7 +1435,7 @@ When checking off completed items below, use **`- [✅]`** (green check mark); l
 - [ ] project/plans/README.md and project/plans/TODO.md verified
 - [ ] project/plans-completed/ (categories + README + index) verified (Step 3.4.1)
 - [ ] project/learnings/ created with README, index.md, and category folders; AGENTS.md has the Agent Learnings section; no root AGENT_LEARNINGS.md left (Steps 2.8.5, 3.4.2)
-- [ ] Rules load from a subfolder: the canary check passes and an interactive subfolder session quotes the Agent Learnings section (Step 3.6.1)
+- [ ] Rules load from a subfolder: health-check `--canary` passes and an interactive subfolder session quotes the Agent Learnings section (Step 3.6.1)
 - [ ] docs/ and docs/agents/ verified
 - [ ] Agent files verified (Step 3.6)
 - [ ] Step 2.12 Agent skills stack completed (global if needed; scan; Matt / Impeccable gaps); spot-check Step 3.7.1

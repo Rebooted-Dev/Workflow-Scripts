@@ -8,6 +8,12 @@ When a plan is finished, file it **only through the canonical terminal gate** �
 
 ## Active
 
+- [ ] **Consumer health-check Deferred & Debt** (from completed [implementation plan](../plans-completed/implementation/2026-10-14-consumer-health-check-implementation-plan.md); triggers unchanged):
+  - [ ] Windows symlink support — `scripts/validation/health-check.sh`; trigger: a Windows consumer is in scope; severity: low.
+  - [ ] Machine-readable `--json` output — health-check CLI; trigger: another tool needs structured output; severity: low.
+  - [ ] Run the check across every consumer in the repo map — acceptance suite; trigger: the NuBible-App first-consumer run is stable; severity: low.
+  - [ ] Reconcile the remaining GEMINI references and decide whether a presence/absence check is appropriate — setup docs and health-check catalog; trigger: `00-project-setup/README.md` and `skills/README.md` policy is reconciled; severity: medium.
+  - [ ] Define backup retention/cleanup policy — consumer `project/build/health-check/`; trigger: backups accumulate enough to warrant a documented cleanup action; severity: low.
 - [✅] [Consistent plan checkboxes and completion ticks](../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md) — verified complete 2026-10-05; committed and pushed (`28be480`, `v1.82`); filed to `plans-completed/implementation/`. Open Deferred & Debt carried below.
 - [ ] **Consistent plan checkboxes Deferred & Debt** (from archived [`../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md`](../plans-completed/implementation/2026-10-05-plan-checkbox-and-tick-consistency-implementation-plan.md); triggers unchanged):
   - Refresh other host projects' `AGENTS.md` **Plans** rule and filing step — each host repository; trigger: next setup or update run in that host; S3.

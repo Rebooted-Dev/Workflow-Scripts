@@ -7,6 +7,8 @@ This directory contains workflows for setting up new projects and optimizing exi
 | File | Purpose | When to Use |
 |------|---------|-------------|
 | [`01-setup-project.md`](./01-setup-project.md) | **Front door:** set up or update a project (multi-repo, `project/` logs, agent harness) **including** curated skills Step 2.12 | New projects, migrating or refreshing an existing project’s setup and harness |
+| [`12-health-check.md`](./12-health-check.md) | Bounded consumer-project setup checks with a read-only default and individually confirmed mechanical repairs | Checking a consumer setup or explicitly repairing supported structural findings |
+| [`12-health-check.md`](./12-health-check.md) | Bounded consumer-project setup checks with read-only default and individually confirmed mechanical repairs | Checking a consumer setup or explicitly repairing supported structural findings |
 | [`02-optimize-workflow-scripts.md`](./02-optimize-workflow-scripts.md) | Analyze, optimize, and verify workflow scripts | Periodic maintenance, after workflows accumulate, before sharing workflows |
 | [`03-sync-workflow-scripts.md`](./03-sync-workflow-scripts.md) | Automate syncing Workflow-Scripts across multiple projects | When managing multiple projects, want to update all at once, or need to track sync status |
 | [`04-track-repos-and-agent-map.md`](./04-track-repos-and-agent-map.md) | Discover repos in the project and write the repository map to `PROJECT.md`, with sync/push/pull instructions | New projects with multiple repos, onboarding agents, or when adding a new nested repo |
