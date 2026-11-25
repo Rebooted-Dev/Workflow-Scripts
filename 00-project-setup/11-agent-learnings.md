@@ -23,9 +23,15 @@ Agent learnings are not changelog or troubleshooting entries. A non-trivial bug 
 
 ```bash
 mkdir -p project/learnings/{workflow,code,tooling,facts,communication}
+for category in workflow code tooling facts communication; do
+  dir="project/learnings/$category"
+  if [ -z "$(ls -A "$dir")" ]; then
+    : > "$dir/.gitkeep"
+  fi
+done
 ```
 
-Then create `README.md` (Step 2) and `index.md` (Step 3) if they are missing. **Never overwrite** an existing index or entry.
+The `.gitkeep` files preserve empty category directories in Git. Track them with the rest of the setup; retain existing contents and do not overwrite existing files. Then create `README.md` (Step 2) and `index.md` (Step 3) if they are missing. **Never overwrite** an existing index or entry.
 
 ## Step 2: Create `project/learnings/README.md`
 

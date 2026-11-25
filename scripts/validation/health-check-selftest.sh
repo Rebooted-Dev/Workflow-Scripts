@@ -59,6 +59,25 @@ make_case() {
       ln -s "$(dirname "$workflow_repo_path")" "$root/Shared-Links"
       printf 'Shared-Links\n' >> "$root/.gitignore"
       ;;
+    external-workflow|external-missing|external-not-root|external-escape-back)
+      sed 's#Workflow-Scripts/#../shared-'"$name"'/Workflow-Scripts/#' "$root/PROJECT.md" > "$root/PROJECT.md.new"
+      mv "$root/PROJECT.md.new" "$root/PROJECT.md"
+      workflow_repo_path="$tmp_dir/cases/shared-$name/Workflow-Scripts"
+      mkdir -p "$(dirname "$workflow_repo_path")"
+      mv "$root/Workflow-Scripts" "$workflow_repo_path"
+      if [ "$name" = external-not-root ]; then
+        mkdir -p "$workflow_repo_path/nested"
+        sed 's#Workflow-Scripts/#Workflow-Scripts/nested/#' "$root/PROJECT.md" > "$root/PROJECT.md.new"
+        mv "$root/PROJECT.md.new" "$root/PROJECT.md"
+      elif [ "$name" = external-escape-back ]; then
+        rm -rf "$workflow_repo_path"
+        ln -s "$root" "$workflow_repo_path"
+      fi
+      ;;
+    unsafe-traversal)
+      sed 's#Workflow-Scripts/#Workflow-Scripts/../Workflow-Scripts/#' "$root/PROJECT.md" > "$root/PROJECT.md.new"
+      mv "$root/PROJECT.md.new" "$root/PROJECT.md"
+      ;;
     bad-gitignore)
       awk '!/^Workflow-Scripts\/$/' "$root/.gitignore" > "$root/.gitignore.new"
       mv "$root/.gitignore.new" "$root/.gitignore"
@@ -115,6 +134,17 @@ make_case() {
       printf '\n## Agent skills\n' >> "$root/.claude/rules/claude-code.md"
       rm -f "$root/docs/agents/domain.md"
       ;;
+    skills-centralized|skills-mixed|skills-root)
+      printf '\n## Agent skills\n' >> "$root/.claude/rules/claude-code.md"
+      if [ "$name" != skills-root ]; then
+        mkdir -p "$root/project/docs"
+        mv "$root/docs/agents" "$root/project/docs/"
+        if [ "$name" = skills-mixed ]; then
+          mkdir -p "$root/docs/agents"
+          mv "$root/project/docs/agents/domain.md" "$root/docs/agents/domain.md"
+        fi
+      fi
+      ;;
     legacy-agent-learnings)
       printf '# Legacy agent learnings\n' > "$root/AGENT_LEARNINGS.md"
       ;;
@@ -122,8 +152,11 @@ make_case() {
   esac
 
   git -C "$root" init -q
-  if [ "$name" != bad-workflow-repo ]; then
+  if [ "$name" != bad-workflow-repo ] && [ "$name" != external-missing ] && [ "$name" != external-escape-back ]; then
     git -C "$workflow_repo_path" init -q
+  fi
+  if [ "$name" = external-missing ]; then
+    rm -rf "$workflow_repo_path"
   fi
   printf '%s\n' "$root"
 }
@@ -153,6 +186,11 @@ run_case no-project 1 'FAIL  H01'
 run_case no-agents 1 'FAIL  H04'
 run_case bad-workflow-repo 1 'FAIL  H02'
 run_case symlink-workflow-parent 0 'PASS  H03'
+run_case external-workflow 0 'PASS  H03'
+run_case external-missing 1 'FAIL  H02'
+run_case external-not-root 1 'FAIL  H02'
+run_case external-escape-back 1 'FAIL  H02'
+run_case unsafe-traversal 1 'FAIL  H02'
 run_case bad-gitignore 1 'FAIL  H03'
 global_excludes="$tmp_dir/global-excludes"
 global_config="$tmp_dir/global-gitconfig"
@@ -175,6 +213,9 @@ run_case no-project-metadata 1 'FAIL  H09'
 run_case missing-logs 0 'WARN  H10'
 run_case invalid-learnings 0 'WARN  H11'
 run_case skills-incomplete 0 'WARN  H13'
+run_case skills-root 0 'PASS  H13'
+run_case skills-centralized 0 'PASS  H13'
+run_case skills-mixed 0 'WARN  H13'
 run_case legacy-agent-learnings 0 'WARN  H14'
 run_case not-a-project 2 'not a consumer project'
 run_case workflow-root 2 'Workflow-Scripts root'
@@ -203,6 +244,17 @@ pty_run() { # pty_run <project-root> <answers> <output-file>
     printf '0\n'
   fi
 }
+
+# An external path that cannot be verified must never offer an ignore repair.
+root="$(make_case external-missing)"
+before="$tmp_dir/external-missing-repair-before"
+cp -RP "$root" "$before"
+code="$(pty_run "$root" "$(repeat_answer y 1)" "$tmp_dir/external-missing-repair.out")"
+[ "$code" -eq 1 ] || fail 'missing external repository should remain a FAIL'
+if tr -d '\r' < "$tmp_dir/external-missing-repair.out" | grep -Fq 'repair H03:'; then
+  fail 'external path offered an H03 ignore repair'
+fi
+diff -qr "$before" "$root" >/dev/null || fail 'missing external repository repair changed the project'
 
 stub_bin="$tmp_dir/bin"
 mkdir -p "$stub_bin"

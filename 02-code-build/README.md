@@ -10,6 +10,7 @@ This directory contains workflows for implementing code changes with verificatio
 | [`02-confirm-execution.md`](./02-confirm-execution.md) | Validate that implementation matches the plan | After completing implementation |
 | [`03-execute-and-confirm.md`](./03-execute-and-confirm.md) | Run 01 then 02 in one workflow | Execute plan and confirm completion in one go |
 | [`04-review-finalise-commit-execute.md`](./04-review-finalise-commit-execute.md) | Review + finalise a plan, commit the planning artifacts, then run 03 | Full plan-to-code pipeline in one workflow |
+| [`05-sustained-autonomous-execution.md`](./05-sustained-autonomous-execution.md) | Sustain scoped, evidence-driven work across turns | Long-running authorized projects with durable goals and review boundaries |
 
 ## Workflow Sequence
 

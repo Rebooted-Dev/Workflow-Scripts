@@ -5,6 +5,8 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-11-25 | added | Sustained autonomous execution workflow | added/2026-11-25-added-sustained-autonomous-execution.md | Goal continuation, scoped execution, verification, resource checkpoints and honest handoff |
+| 2026-11-20 | fixed | Consumer health check supports external and centralized layouts | fixed/2026-11-20-fixed-consumer-health-check-layouts.md | External Git-root validation, safe ignore behavior, both skills-doc layouts, durable learning categories and canary scope |
 | 2026-10-14 | plan | Consumer project health check with confirmed repairs | ../plans-completed/implementation/2026-10-14-consumer-health-check-implementation-plan.md | Verified Complete by terminal gate; package filed at the recorded implementation path; final-path lint and links passed |
 | 2026-10-14 | added | Consumer project health-check CLI | added/2026-10-14-added-consumer-health-check.md | Selected checks, confirmed repairs, opt-in canary, and setup docs verified; selftest/ShellCheck/links pass; NuBible-App default exit 0 with H11 warning and unchanged status snapshots |
 | 2026-10-14 | docs | Finalise the consumer health check plan in place | docs/2026-10-14-docs-finalise-consumer-health-check-plan.md | In-place T2 review/finalisation: repaired task dependencies, bounded per-target backups, clarified opt-in canary behavior, deferred GEMINI check pending source reconciliation; no implementation changed |

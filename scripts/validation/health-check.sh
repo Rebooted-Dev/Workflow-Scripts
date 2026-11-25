@@ -76,6 +76,8 @@ workflow_rel=''
 workflow_path=''
 workflow_ignore_probe=''
 workflow_row_valid=0
+workflow_external=0
+workflow_git_valid=0
 repo_table_valid=0
 if [ -f "$project_root/PROJECT.md" ]; then
   if grep -q '^## Repositories[[:space:]]*$' "$project_root/PROJECT.md" && \
@@ -111,26 +113,32 @@ if [ -f "$project_root/PROJECT.md" ]; then
     workflow_rel="$workflow_rows"
     case "$workflow_rel" in
       ''|/*|.) workflow_rel='' ;;
+      ../*) workflow_external=1 ;;
     esac
-    case "/$workflow_rel/" in
+    workflow_tail="$workflow_rel"
+    if [ "$workflow_external" -eq 1 ]; then workflow_tail="${workflow_rel#../}"; fi
+    case "/$workflow_tail/" in
       */../*) workflow_rel='' ;;
     esac
+    [ -n "$workflow_tail" ] || workflow_rel=''
     if [ -n "$workflow_rel" ] && printf '%s\n' "$workflow_rel" | grep -Eq '[^[:alnum:]_./ -]'; then
       workflow_rel=''
     fi
     if [ -n "$workflow_rel" ]; then
       workflow_path="$project_root/$workflow_rel"
       workflow_row_valid=1
-      current_rel=''
-      IFS=/ read -r -a workflow_components <<< "$workflow_rel"
-      for component in "${workflow_components[@]}"; do
-        current_rel="${current_rel:+$current_rel/}$component"
-        if [ -L "$project_root/$current_rel" ]; then
-          workflow_ignore_probe="$current_rel"
-          break
-        fi
-      done
-      [ -n "$workflow_ignore_probe" ] || workflow_ignore_probe="$workflow_rel"
+      if [ "$workflow_external" -eq 0 ]; then
+        current_rel=''
+        IFS=/ read -r -a workflow_components <<< "$workflow_rel"
+        for component in "${workflow_components[@]}"; do
+          current_rel="${current_rel:+$current_rel/}$component"
+          if [ -L "$project_root/$current_rel" ]; then
+            workflow_ignore_probe="$current_rel"
+            break
+          fi
+        done
+        [ -n "$workflow_ignore_probe" ] || workflow_ignore_probe="$workflow_rel"
+      fi
     fi
   fi
 fi
@@ -285,6 +293,7 @@ check_h01() {
 
 check_h02() {
   local top prefix physical
+  workflow_git_valid=0
   if [ "$workflow_row_valid" -ne 1 ] || [ ! -d "$workflow_path" ]; then
     emit FAIL H02 'Workflow-Scripts repository row is missing, unsafe, or absent'
     return
@@ -294,7 +303,13 @@ check_h02() {
   prefix="$(git -C "$workflow_path" rev-parse --show-prefix 2>/dev/null)"
   set -e
   physical="$(cd "$workflow_path" 2>/dev/null && pwd -P)" || physical=''
+  if [ "$workflow_external" -eq 1 ]; then
+    case "$physical/" in
+      "$project_root/"*) emit FAIL H02 'external Workflow-Scripts path resolves inside the project'; return ;;
+    esac
+  fi
   if [ -n "$top" ] && [ -n "$physical" ] && [ -z "$prefix" ] && [ "$top" = "$physical" ]; then
+    workflow_git_valid=1
     emit PASS H02 "Workflow-Scripts path is its own Git root ($workflow_rel)"
   else
     emit FAIL H02 'Workflow-Scripts path does not resolve to its own Git root'
@@ -304,6 +319,12 @@ check_h02() {
 check_h03() {
   if [ "$workflow_row_valid" -ne 1 ]; then
     emit FAIL H03 'cannot check the workflow ignore rule without one safe Workflow-Scripts path'
+  elif [ "$workflow_external" -eq 1 ]; then
+    if [ "$workflow_git_valid" -eq 1 ]; then
+      emit PASS H03 'external Workflow-Scripts repository needs no project ignore rule'
+    else
+      emit FAIL H03 'cannot confirm external repository; no ignore repair offered'
+    fi
   elif workflow_path_ignored_by_project; then
     emit PASS H03 "Workflow-Scripts path is ignored ($workflow_rel)"
   else
@@ -497,24 +518,22 @@ check_h11() {
 }
 
 check_h13() {
-  local rules="$project_root/.claude/rules/claude-code.md" missing=() path
+  local rules="$project_root/.claude/rules/claude-code.md" path dir complete
   if [ ! -f "$rules" ] || ! grep -Eq '^## Agent skills[[:space:]]*$' "$rules"; then
     emit PASS H13 'Agent skills block is absent; no skill-owned docs are required by this check'
     return
   fi
-  for path in issue-tracker.md triage-labels.md domain.md; do
-    [ -f "$project_root/docs/agents/$path" ] || missing+=("docs/agents/$path")
-  done
-  if [ "${#missing[@]}" -eq 0 ]; then
-    emit PASS H13 'Agent skills block has all three docs/agents files'
-  else
-    local detail item
-    detail=''
-    for item in "${missing[@]}"; do
-      [ -z "$detail" ] && detail="$item" || detail="$detail, $item"
+  for dir in docs/agents project/docs/agents; do
+    complete=1
+    for path in issue-tracker.md triage-labels.md domain.md; do
+      [ -f "$project_root/$dir/$path" ] || complete=0
     done
-    emit WARN H13 "Agent skills block is missing skill-owned docs: $detail"
-  fi
+    if [ "$complete" -eq 1 ]; then
+      emit PASS H13 "Agent skills block has all three $dir files"
+      return
+    fi
+  done
+  emit WARN H13 'Agent skills requires all three files in either docs/agents or project/docs/agents: issue-tracker.md, triage-labels.md, domain.md'
 }
 
 check_h14() {

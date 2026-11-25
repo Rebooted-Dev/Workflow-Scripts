@@ -43,6 +43,10 @@ echo "" >> project/troubleshooting/index.md
 echo "| Date | Category | Title | File | Status |" >> project/troubleshooting/index.md
 echo "|------|----------|-------|------|--------|" >> project/troubleshooting/index.md
 mkdir -p project/learnings/{workflow,code,tooling,facts,communication}
+for category in workflow code tooling facts communication; do
+  dir="project/learnings/$category"
+  if [ -z "$(ls -A "$dir")" ]; then : > "$dir/.gitkeep"; fi
+done
 echo "# Agent Learnings Index" > project/learnings/index.md
 echo "" >> project/learnings/index.md
 echo "| Date | Category | Title | File | Status |" >> project/learnings/index.md
@@ -389,6 +393,7 @@ mkdir -p project/changelog/{added,changed,fixed,improved,docs,refactor,config,pl
 mkdir -p project/troubleshooting/{build,runtime,data,environment,security}
 mkdir -p docs project/plans
 mkdir -p project/learnings/{workflow,code,tooling,facts,communication}
+# Preserve empty categories as described in 11-agent-learnings.md, Step 1.
 # Verify
 test -d project && echo "✓ project/ exists"
 test -d project/changelog && test -d project/changelog/plans && echo "✓ project/changelog/ (with plans subdir) exists"
@@ -984,7 +989,7 @@ mkdir -p project/learnings/{workflow,code,tooling,facts,communication}
 ```
 
 Then:
-1. Create `project/learnings/README.md` and `project/learnings/index.md` from the templates in `11-agent-learnings.md` (Steps 2 and 3) if they are missing. **Never overwrite** an existing index or entry.
+1. Preserve empty category folders using `11-agent-learnings.md` Step 1, and track the placeholders. Create `project/learnings/README.md` and `project/learnings/index.md` from its templates (Steps 2 and 3) if they are missing. **Never overwrite** an existing index or entry.
 2. Add the **Agent Learnings** section to AGENTS.md (Step 1.2 here) and the Layout line to PROJECT.md (Step 1.4 here). Both are in `11-agent-learnings.md`, Step 4.
 3. If a root `AGENT_LEARNINGS.md` exists, migrate it (`11-agent-learnings.md`, Step 5).
 
