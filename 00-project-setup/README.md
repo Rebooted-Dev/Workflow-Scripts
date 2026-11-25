@@ -6,6 +6,7 @@ This directory contains workflows for setting up new projects and optimizing exi
 
 | File | Purpose | When to Use |
 |------|---------|-------------|
+| [`13-guided-project-intake.md`](./13-guided-project-intake.md) | Guide an idea into project context with focused questions and documented assumptions | Starting or clarifying an idea before research and planning |
 | [`01-setup-project.md`](./01-setup-project.md) | **Front door:** set up or update a project (multi-repo, `project/` logs, agent harness) **including** curated skills Step 2.12 | New projects, migrating or refreshing an existing project’s setup and harness |
 | [`12-health-check.md`](./12-health-check.md) | Bounded consumer-project setup checks with a read-only default and individually confirmed mechanical repairs | Checking a consumer setup or explicitly repairing supported structural findings |
 | [`12-health-check.md`](./12-health-check.md) | Bounded consumer-project setup checks with read-only default and individually confirmed mechanical repairs | Checking a consumer setup or explicitly repairing supported structural findings |

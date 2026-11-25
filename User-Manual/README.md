@@ -4,6 +4,8 @@ Workflow-Scripts is a library of Markdown instructions, shell helpers, optional 
 
 This manual is for developers using Workflow-Scripts inside a host project. Maintainers editing Workflow-Scripts itself should also read [00-project/AGENTS.md](../00-project/AGENTS.md).
 
+Start with the [idea-to-autonomous-build guide](from-idea-to-autonomous-build.md) for a step-by-step project journey.
+
 ## Quick start
 
 ### 1. Create or open the host repository

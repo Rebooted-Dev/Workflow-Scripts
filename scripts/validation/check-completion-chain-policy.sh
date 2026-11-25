@@ -139,7 +139,7 @@ for token in \
   "retir" \
   "both Full completion and Reconcile only" \
   "unresolved"; do
-  printf '%s\n' "$todo_step" | grep -qiF "$token" \
+  grep -qiF "$token" <<< "$todo_step" \
     || fail "Terminal gate TODO/debt step lacks required concept: $token"
 done
 

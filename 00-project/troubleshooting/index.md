@@ -5,6 +5,7 @@ Chronological index of troubleshooting entries.
 
 | Date | Category | Title | File | Status |
 |------|----------|-------|------|--------|
+| 2026-11-25 | workflow | Completion policy check fails on an existing phrase | workflow/2026-11-25-workflow-completion-policy-sigpipe.md | FIXED |
 | 2026-11-20 | workflow | Consumer health check rejected valid layouts and empty categories were not durable | workflow/2026-11-20-workflow-consumer-health-check-layouts.md | RESOLVED |
 | 2026-10-14 | git | Health-check H02 must reject an inherited parent Git repository | git/2026-10-14-git-health-check-parent-repository-detection.md | RESOLVED; H02 requires an empty `--show-prefix` and matching repository root |
 | 2026-10-13 | workflow | Rules did not load from a subfolder session; learnings entries could state unsupported claims | workflow/2026-10-13-workflow-rules-not-loaded-from-subfolder.md | resolved; CLAUDE.md is a symlink to AGENTS.md; canary check and source/approval checks added; interactive check open |
