@@ -5,6 +5,7 @@ Chronological index of changelog entries and completed plans.
 
 | Date | Type | Title | File | Notes |
 |------|------|-------|------|-------|
+| 2026-11-26 | docs | Update default sub-agent model preference to GPT 6.1 Terra (medium) | docs/2026-11-26-docs-subagent-model-gpt-6-1-terra.md | Replaced `gpt-6-luna` / `xhigh` with `gpt-6.1-terra` / `medium` in `01-setup-project.md` |
 | 2026-11-25 | fixed | Fix completion policy check under pipefail | fixed/2026-11-25-fixed-completion-policy-sigpipe.md | Avoid false missing-phrase failures and test both outcomes |
 | 2026-11-25 | added | Idea-to-build guide and guided project intake | added/2026-11-25-added-idea-to-build-guidance.md | Practical project journey, adaptive intake and optional sustained-build shortcut |
 | 2026-11-25 | added | Sustained autonomous execution workflow | added/2026-11-25-added-sustained-autonomous-execution.md | Goal continuation, scoped execution, verification, resource checkpoints and honest handoff |

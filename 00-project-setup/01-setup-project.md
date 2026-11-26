@@ -304,7 +304,7 @@ Read `PROJECT.md` before starting work: it holds this project's facts (repositor
 ## Execution
 
 - Use parallel sub-agents only for independent scopes where doing so materially reduces latency or improves confidence. Keep dependent work sequential; assign non-overlapping write ownership and coordinate shared-file changes to avoid conflicting edits. Handle small localized work directly. Follow the task-specific workflow only when it was selected for the request.
-- When sub-agents are used, prefer GPT 6 Luna (`gpt-6-luna`) with `xhigh` reasoning effort when available. Use at most **12 concurrent sub-agents per task**, including any nested sub-agents, subject to the runtime's available concurrency limit. This is a ceiling, not a target.
+- When sub-agents are used, prefer GPT 6.1 Terra (`gpt-6.1-terra`) with `medium` reasoning effort when available (`fork_turns: "none"`). Use at most **12 concurrent sub-agents per task**, including any nested sub-agents, subject to the runtime's available concurrency limit. This is a ceiling, not a target.
 - Parallel sub-agents can be used for:
   - Scanning codebases across different directories simultaneously
   - Reviewing different aspects of code (security, performance, style) in parallel
@@ -1413,7 +1413,7 @@ If you also adopt the centralized `project/` meta directory, follow the addition
 When checking off completed items below, use **`- [✅]`** (green check mark); leave incomplete as **`- [ ]`** (see [Checklist marking convention](#checklist-marking-convention) above).
 
 - [ ] PROJECT.md states clearly that the project has **multiple repositories** (not a single repo), with the Repositories table (Step 1.4)
-- [ ] AGENTS.md matches the Step 1.2 template: Execution (appropriate parallel sub-agents, maximum 12 concurrent sub-agents per task, GPT 6 Luna / `xhigh` preference when available, **Bugs: add regression test when it fits.**), pointer to PROJECT.md
+- [ ] AGENTS.md matches the Step 1.2 template: Execution (appropriate parallel sub-agents, maximum 12 concurrent sub-agents per task, GPT 6.1 Terra / `medium` preference when available, **Bugs: add regression test when it fits.**), pointer to PROJECT.md
 - [ ] Completed plans filing rule reachable from AGENTS.md via docs/agents/changelog-and-troubleshooting.md
 - [ ] `.gitignore` includes the workflows directory (e.g. `Workflow-Scripts/` or `workflows/` — replace `<WORKFLOWS_DIR>` in Step 1.4)
 - [ ] Run the bounded health-check in Step 3.0; review its findings, then complete the manual Step 3 checks that the script does not cover
